@@ -90,8 +90,6 @@
 -   `name`
 -   `happiness` (0-100)
 -   `hunger` (0-100)
--   `breed`
--   `adoptionDate`
 
 ### Timer
 
