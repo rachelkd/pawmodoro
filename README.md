@@ -80,13 +80,11 @@
 
 1. User clicks cat
 2. System randomly decides between:
-    - Playing meow sound and animation
     - Displaying a cat fact
     - Showing cat statistics
 3. Statistics view includes:
     - Visual representation of happiness (0-100%)
     - Visual representation of hunger (0-100%)
-    - Basic cat information
 
 ### Music Integration (Assigned to: Jeha)
 
