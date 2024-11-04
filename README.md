@@ -73,3 +73,65 @@
 -   Select playlists
 -   Adjust volume
 -   Track music preferences
+
+## Entities
+
+### User
+
+-   `username`
+-   `password`
+-   `level`
+-   `levelProgress`
+-   `totalFocusTime`
+-   `List<Cat> cats`
+
+### Cat
+
+-   `name`
+-   `happiness` (0-100)
+-   `hunger` (0-100)
+-   `breed`
+-   `adoptionDate`
+
+### Timer
+
+-   `workDuration`
+-   `shortBreakDuration`
+-   `longBreakDuration`
+-   `currentState` (enum: WORKING, SHORT_BREAK, LONG_BREAK, PAUSED)
+-   `startTime`
+-   `completedIntervals`
+-   `cyclePosition` (0-3: tracks position in the work-break cycle)
+
+### Food (Interface)
+
+Methods:
+
+-   `getHungerRestoration()`
+-   `getHappinessBoost()`
+-   `getName()`
+
+Implementations:
+
+-   WetFood
+-   DryFood
+-   Milk
+
+### Statistics
+
+-   `totalFocusMinutes`
+-   `totalBreakMinutes`
+-   `completedWorkIntervals`
+-   `completedFullCycles`
+-   `interruptedSessions`
+-   `date`
+-   `foodItemsUsed`
+-   `previousCats` (tracks runaway cats)
+
+### MusicPlayer
+
+-   `currentPlaylist`
+-   `isPlaying`
+-   `volume`
+-   `currentTrack`
+-   `spotifyAccessToken`
