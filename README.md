@@ -56,12 +56,37 @@
 
 ### Cat Interaction (Assigned to: Rachel)
 
-**User Story:** As a user, I want to interact with my virtual cat through clicks and learn cat facts.
+**User Stories:**
+
+1. As a user, I want to interact with my virtual cat through clicks to hear meows and learn cat facts.
+2. As a user, I want to view my cat's statistics (hunger and happiness levels) when I click on the cat.
 
 **Use Cases:**
 
 -   Display cat animations
--   Show random cat facts on click
+-   Show random cat facts
+-   Display cat statistics
+    -   Show current happiness level
+    -   Show current hunger level
+-   Update statistics display in real-time
+
+**Interactions:**
+
+-   `CatInteractionInteractor` → `InteractionController` → `InteractionPresenter`
+-   `FactDisplayInteractor` → `FactController` → `FactPresenter`
+-   `CatStatisticsInteractor` → `StatisticsController` → `StatisticsPresenter`
+
+**Data Flow:**
+
+1. User clicks cat
+2. System randomly decides between:
+    - Playing meow sound and animation
+    - Displaying a cat fact
+    - Showing cat statistics
+3. Statistics view includes:
+    - Visual representation of happiness (0-100%)
+    - Visual representation of hunger (0-100%)
+    - Basic cat information
 
 ### Music Integration (Assigned to: Jeha)
 
