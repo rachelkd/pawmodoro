@@ -14,14 +14,16 @@ class SignupInteractorTest {
 
     @Test
     void successTest() {
-        SignupInputData inputData = new SignupInputData("Paul", "password", "password");
-        SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+        final SignupInputData inputData = new SignupInputData("Paul", "password", "password");
+        final SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // This creates a successPresenter that tests whether the test case is as we expect.
-        SignupOutputBoundary successPresenter = new SignupOutputBoundary() {
+        // This creates a successPresenter that tests whether the test case is as we
+        // expect.
+        final SignupOutputBoundary successPresenter = new SignupOutputBoundary() {
             @Override
             public void prepareSuccessView(SignupOutputData user) {
-                // 2 things to check: the output data is correct, and the user has been created in the DAO.
+                // 2 things to check: the output data is correct, and the user has been created
+                // in the DAO.
                 assertEquals("Paul", user.getUsername());
                 assertTrue(userRepository.existsByName("Paul"));
             }
@@ -37,17 +39,18 @@ class SignupInteractorTest {
             }
         };
 
-        SignupInputBoundary interactor = new SignupInteractor(userRepository, successPresenter, new CommonUserFactory());
+        final SignupInputBoundary interactor = new SignupInteractor(userRepository, successPresenter,
+                new CommonUserFactory());
         interactor.execute(inputData);
     }
 
     @Test
     void failurePasswordMismatchTest() {
-        SignupInputData inputData = new SignupInputData("Paul", "password", "wrong");
-        SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+        final SignupInputData inputData = new SignupInputData("Paul", "password", "wrong");
+        final SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         // This creates a presenter that tests whether the test case is as we expect.
-        SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
+        final SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
             @Override
             public void prepareSuccessView(SignupOutputData user) {
                 // this should never be reached since the test case should fail
@@ -65,22 +68,23 @@ class SignupInteractorTest {
             }
         };
 
-        SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter, new CommonUserFactory());
+        final SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter,
+                new CommonUserFactory());
         interactor.execute(inputData);
     }
 
     @Test
     void failureUserExistsTest() {
-        SignupInputData inputData = new SignupInputData("Paul", "password", "wrong");
-        SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+        final SignupInputData inputData = new SignupInputData("Paul", "password", "wrong");
+        final SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         // Add Paul to the repo so that when we check later they already exist
-        UserFactory factory = new CommonUserFactory();
-        User user = factory.create("Paul", "pwd");
+        final UserFactory factory = new CommonUserFactory();
+        final User user = factory.create("Paul", "pwd");
         userRepository.save(user);
 
         // This creates a presenter that tests whether the test case is as we expect.
-        SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
+        final SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
             @Override
             public void prepareSuccessView(SignupOutputData user) {
                 // this should never be reached since the test case should fail
@@ -98,7 +102,8 @@ class SignupInteractorTest {
             }
         };
 
-        SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter, new CommonUserFactory());
+        final SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter,
+                new CommonUserFactory());
         interactor.execute(inputData);
     }
 }

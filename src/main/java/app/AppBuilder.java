@@ -45,10 +45,10 @@ import view.ViewManager;
  * This is done by adding each View and then adding related Use Cases.
  */
 // Checkstyle note: you can ignore the "Class Data Abstraction Coupling"
-//                  and the "Class Fan-Out Complexity" issues for this lab; we encourage
-//                  your team to think about ways to refactor the code to resolve these
-//                  if your team decides to work with this as your starter code
-//                  for your final project this term.
+// and the "Class Fan-Out Complexity" issues for this lab; we encourage
+// your team to think about ways to refactor the code to resolve these
+// if your team decides to work with this as your starter code
+// for your final project this term.
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
@@ -73,6 +73,7 @@ public class AppBuilder {
 
     /**
      * Adds the Signup View to the application.
+     * 
      * @return this builder
      */
     public AppBuilder addSignupView() {
@@ -84,6 +85,7 @@ public class AppBuilder {
 
     /**
      * Adds the Login View to the application.
+     * 
      * @return this builder
      */
     public AppBuilder addLoginView() {
@@ -95,6 +97,7 @@ public class AppBuilder {
 
     /**
      * Adds the LoggedIn View to the application.
+     * 
      * @return this builder
      */
     public AppBuilder addLoggedInView() {
@@ -106,6 +109,7 @@ public class AppBuilder {
 
     /**
      * Adds the Signup Use Case to the application.
+     * 
      * @return this builder
      */
     public AppBuilder addSignupUseCase() {
@@ -121,6 +125,7 @@ public class AppBuilder {
 
     /**
      * Adds the Login Use Case to the application.
+     * 
      * @return this builder
      */
     public AppBuilder addLoginUseCase() {
@@ -136,31 +141,32 @@ public class AppBuilder {
 
     /**
      * Adds the Change Password Use Case to the application.
+     * 
      * @return this builder
      */
     public AppBuilder addChangePasswordUseCase() {
-        final ChangePasswordOutputBoundary changePasswordOutputBoundary =
-                new ChangePasswordPresenter(loggedInViewModel);
+        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(
+                loggedInViewModel);
 
-        final ChangePasswordInputBoundary changePasswordInteractor =
-                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
+        final ChangePasswordInputBoundary changePasswordInteractor = new ChangePasswordInteractor(userDataAccessObject,
+                changePasswordOutputBoundary, userFactory);
 
-        final ChangePasswordController changePasswordController =
-                new ChangePasswordController(changePasswordInteractor);
+        final ChangePasswordController changePasswordController = new ChangePasswordController(
+                changePasswordInteractor);
         loggedInView.setChangePasswordController(changePasswordController);
         return this;
     }
 
     /**
      * Adds the Logout Use Case to the application.
+     * 
      * @return this builder
      */
     public AppBuilder addLogoutUseCase() {
         final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
                 loggedInViewModel, loginViewModel);
 
-        final LogoutInputBoundary logoutInteractor =
-                new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
+        final LogoutInputBoundary logoutInteractor = new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         loggedInView.setLogoutController(logoutController);
@@ -168,7 +174,9 @@ public class AppBuilder {
     }
 
     /**
-     * Creates the JFrame for the application and initially sets the SignupView to be displayed.
+     * Creates the JFrame for the application and initially sets the SignupView to
+     * be displayed.
+     * 
      * @return the application
      */
     public JFrame build() {

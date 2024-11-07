@@ -1,3 +1,7 @@
+/**
+ * TODO: Implement PostgreSQL DAO.
+ */
+
 package data_access;
 
 import java.io.IOException;
@@ -35,7 +39,8 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
 
     public DBUserDataAccessObject(UserFactory userFactory) {
         this.userFactory = userFactory;
-        // No need to do anything to reinitialize a user list! The data is the cloud that may be miles away.
+        // No need to do anything to reinitialize a user list! The data is the cloud
+        // that may be miles away.
     }
 
     @Override
@@ -44,7 +49,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
         final OkHttpClient client = new OkHttpClient().newBuilder().build();
         final Request request = new Request.Builder()
                 .url(String.format("http://vm003.teach.cs.toronto.edu:20112/user?username=%s", username))
-                .addHeader("Content-Type", CONTENT_TYPE_JSON)
+                .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_JSON)
                 .build();
         try {
             final Response response = client.newCall(request).execute();
