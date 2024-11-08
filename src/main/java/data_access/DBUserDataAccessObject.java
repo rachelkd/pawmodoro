@@ -16,10 +16,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import use_case.change_password.ChangePasswordUserDataAccessInterface;
-import use_case.login.LoginUserDataAccessInterface;
-import use_case.logout.LogoutUserDataAccessInterface;
-import use_case.signup.SignupUserDataAccessInterface;
+import use_case.authentication.change_password.ChangePasswordUserDataAccessInterface;
+import use_case.authentication.login.LoginUserDataAccessInterface;
+import use_case.authentication.logout.LogoutUserDataAccessInterface;
+import use_case.authentication.signup.SignupUserDataAccessInterface;
 
 /**
  * The DAO for user data.

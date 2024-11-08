@@ -5,8 +5,8 @@ import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
-import use_case.logout.LogoutOutputBoundary;
-import use_case.logout.LogoutOutputData;
+import use_case.authentication.logout.LogoutOutputBoundary;
+import use_case.authentication.logout.LogoutOutputData;
 
 /**
  * The Presenter for the Logout Use Case.

@@ -1,7 +1,7 @@
 package interface_adapter.login;
 
-import use_case.login.LoginInputBoundary;
-import use_case.login.LoginInputData;
+import use_case.authentication.login.LoginInputBoundary;
+import use_case.authentication.login.LoginInputData;
 
 /**
  * The controller for the Login Use Case.
@@ -16,6 +16,7 @@ public class LoginController {
 
     /**
      * Executes the Login Use Case.
+     * 
      * @param username the username of the user logging in
      * @param password the password of the user logging in
      */
