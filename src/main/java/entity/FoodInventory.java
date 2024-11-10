@@ -1,43 +1,54 @@
 package entity;
 
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * Represents a user's inventory of food items.
- * Different implementations can handle storage and validation differently.
- */
-public interface FoodInventory {
+public class FoodInventory implements Inventory {
+    private final String ownerId;
+    private final Map<String,AbstractFoodItem> items;
 
-    /**
-     * Validates if a food item can be used.
-     *
-     * @param foodId the ID of the food to validate
-     * @return true if the food exists and has quantity > 0
-     * @throws IllegalArgumentException if foodId is null or empty
-     */
-    boolean canUseFood(String foodId);
+    public FoodInventory(String ownerId) {
+        this.ownerId = ownerId;
+        this.items = new HashMap<>();
+    }
 
-    /**
-     * Gets all food items in the inventory.
-     *
-     * @return the collection of food items
-     */
-    Collection<FoodItem> getItems();
+    public Map<String, AbstractFoodItem> getItems() {
+        return new HashMap<>(items);
+    }
 
-    /**
-     * Adds a food item to the inventory.
-     *
-     * @param item the food item to add
-     * @throws IllegalArgumentException if item is null
-     */
-    void addItem(FoodItem item);
+    public String getOwnerId() {
+        return ownerId;
+    }
 
-    /**
-     * Removes one unit of the specified food from inventory.
-     *
-     * @param foodId the ID of the food to use
-     * @return true if the food was successfully used, false if not available
-     * @throws IllegalArgumentException if foodId is null or empty
-     */
-    boolean useFood(String foodId);
+    @Override
+    public boolean canUseFood(String foodId) {
+
+        return items.containsKey(foodId);
+    }
+
+    @Override
+    public void addItem(AbstractFoodItem item) {
+
+        if (items.containsKey(item.getFoodId())) {
+            item.setQuantity(item.getQuantity() + 1);
+        }
+        else {
+            items.put(item.getFoodId(), item);
+            item.setQuantity(1);
+        }
+
+    }
+
+    @Override
+    public boolean useFood(String foodId) {
+
+        if (canUseFood(foodId)) {
+            AbstractFoodItem item = items.get(foodId);
+            item.setQuantity(item.getQuantity() - 1);
+            return true;
+        }
+        return false;
+    }
+
+
 }

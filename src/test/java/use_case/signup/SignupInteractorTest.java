@@ -12,6 +12,7 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.User;
 import entity.UserFactory;
+import use_case.authentication.signup.*;
 
 class SignupInteractorTest {
 

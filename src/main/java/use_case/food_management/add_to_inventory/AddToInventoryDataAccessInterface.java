@@ -1,37 +1,35 @@
-package use_case.food_management;
+package use_case.food_management.add_to_inventory;
 
-import java.util.Collection;
-
-import entity.FoodItem;
+import entity.Inventory;
 
 /**
  * Repository interface for managing food inventory persistence.
  * This interface defines the contract for storing and retrieving food items
  * associated with users.
  */
-public interface FoodInventoryDataAccessInterface {
+public interface AddToInventoryDataAccessInterface {
 
     /**
-     * Saves a food item to the repository.
-     * If the item already exists, it will be updated.
+     * Saves inventory to the repository.
+     * If the inventory already exists, it will be updated.
      *
-     * @param item
-     *            the food item to save
+     * @param inventory
+     *            the inventory to save
      * @throws IllegalArgumentException
      *             if item is null
      */
-    void save(FoodItem item);
+    void save(Inventory inventory);
 
     /**
-     * Retrieves all food items owned by a specific user.
+     * Retrieves the inventory of food items owned by a specific user.
      *
      * @param ownerId
      *            the ID of the owner whose food items to retrieve
-     * @return a collection of food items owned by the user
+     * @return a map of food items owned by the user
      * @throws IllegalArgumentException
      *             if ownerId is null or empty
      */
-    Collection<FoodItem> findByOwnerId(String ownerId);
+     Inventory getInventory(String ownerId);
 
     /**
      * Updates the quantity of a specific food item for a user.

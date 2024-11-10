@@ -30,14 +30,14 @@ public interface Timer {
      * 
      * @return the current TimerState
      */
-    TimerState getState();
+    // TimerState getState();
 
     /**
      * Gets the current interval type.
      * 
      * @return the current TimerInterval
      */
-    TimerInterval getCurrentInterval();
+    // TimerInterval getCurrentInterval();
 
     /**
      * Gets the elapsed time in milliseconds.
