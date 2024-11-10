@@ -20,35 +20,4 @@ public class FoodInventory implements Inventory {
         return ownerId;
     }
 
-    @Override
-    public boolean canUseFood(String foodId) {
-
-        return items.containsKey(foodId);
-    }
-
-    @Override
-    public void addItem(AbstractFoodItem item) {
-
-        if (items.containsKey(item.getFoodId())) {
-            item.setQuantity(item.getQuantity() + 1);
-        }
-        else {
-            items.put(item.getFoodId(), item);
-            item.setQuantity(1);
-        }
-
-    }
-
-    @Override
-    public boolean useFood(String foodId) {
-
-        if (canUseFood(foodId)) {
-            AbstractFoodItem item = items.get(foodId);
-            item.setQuantity(item.getQuantity() - 1);
-            return true;
-        }
-        return false;
-    }
-
-
 }

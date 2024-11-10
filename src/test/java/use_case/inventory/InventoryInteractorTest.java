@@ -48,9 +48,9 @@ public class InventoryInteractorTest {
         final CreateInventoryOutputBoundary successPresenter = new CreateInventoryOutputBoundary() {
 
             @Override
-            public void prepareSuccessView(CreateInventoryOutputData user) {
-                assertEquals("chiually", user.getOwnerId());
-                assertTrue(inventoryRepository.existsByOwnerId(user.getOwnerId()));
+            public void prepareSuccessView(CreateInventoryOutputData inventory) {
+                assertEquals("chiually", inventory.getOwnerId());
+                assertTrue(inventoryRepository.existsByOwnerId(inventory.getOwnerId()));
             }
         };
 
