@@ -1,11 +1,11 @@
 package use_case.authentication.create_inventory;
 
 public class CreateInventoryOutputData {
-    private final String ownerId;
+    private final boolean success;
 
-    public CreateInventoryOutputData(String ownerId) {
-        this.ownerId = ownerId;
+    public CreateInventoryOutputData(boolean success) {
+        this.success = success;
     }
 
-    public String getOwnerId() {return ownerId;}
+    public boolean isSuccess() {return success;}
 }

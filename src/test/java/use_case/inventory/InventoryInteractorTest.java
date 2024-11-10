@@ -12,13 +12,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class InventoryInteractorTest {
 
     @Test
-    void AddToInventoryTest() {
+    void addToEmptyInventoryTest() {
         final AddToInventoryInputData inputData = new AddToInventoryInputData("chiually", "milk");
         final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
 
 
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
+        // create inventory for user
         final Inventory inventory = inventoryFactory.create("chiually");
         inventoryRepository.save(inventory);
 
@@ -26,8 +27,7 @@ public class InventoryInteractorTest {
             @Override
             public void prepareSuccessView(AddToInventoryOutputData inventory) {
                 // check that output data contains username and food id
-                assertEquals("chiually", inventory.getOwnerId());
-                assertEquals("milk", inventory.getFoodId());
+                assertTrue(inventory.isSuccess());
             }
         };
 
@@ -38,7 +38,33 @@ public class InventoryInteractorTest {
     }
 
     @Test
-    void CreateInventoryTest() {
+    void addToInventoryWithItemTest() {
+        final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
+        final AddToInventoryInputData inputData = new AddToInventoryInputData("chiually", "milk");
+        final InventoryFactory inventoryFactory = new FoodInventoryFactory();
+        final FoodItemFactory foodItemFactory = new FoodItemFactory();
+
+        // create inventory for user
+        final Inventory inventory = inventoryFactory.create("chiually");
+        //add same food item
+        inventory.getItems().put("milk", foodItemFactory.create("milk", "temp"));
+        inventoryRepository.save(inventory);
+
+
+        final AddToInventoryOutputBoundary successPresenter = new AddToInventoryOutputBoundary() {
+
+            @Override
+            public void prepareSuccessView(AddToInventoryOutputData inventory) {
+                assertTrue(inventory.isSuccess());
+            }
+        };
+        final AddToInventoryInputBoundary interactor = new AddToInventoryInteractor(inventoryRepository,
+                successPresenter, foodItemFactory);
+        interactor.execute(inputData);
+    }
+
+    @Test
+    void createInventoryTest() {
         final CreateInventoryInputData inputData = new CreateInventoryInputData("chiually");
         final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
 
@@ -49,8 +75,7 @@ public class InventoryInteractorTest {
 
             @Override
             public void prepareSuccessView(CreateInventoryOutputData inventory) {
-                assertEquals("chiually", inventory.getOwnerId());
-                assertTrue(inventoryRepository.existsByOwnerId(inventory.getOwnerId()));
+                assertTrue(inventory.isSuccess());
             }
         };
 

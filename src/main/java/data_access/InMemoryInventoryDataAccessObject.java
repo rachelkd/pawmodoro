@@ -38,4 +38,8 @@ public class InMemoryInventoryDataAccessObject implements AddToInventoryDataAcce
         }
 
     }
+
+    public Map<String, Inventory> getInventoryStorage() {
+        return new HashMap<>(inventoryStorage);
+    }
 }

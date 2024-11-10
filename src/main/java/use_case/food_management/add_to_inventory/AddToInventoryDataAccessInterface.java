@@ -16,7 +16,7 @@ public interface AddToInventoryDataAccessInterface {
      * @param inventory
      *            the inventory to save
      * @throws IllegalArgumentException
-     *             if item is null
+     *             if inventory is null
      */
     void save(Inventory inventory);
 

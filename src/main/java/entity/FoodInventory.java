@@ -13,7 +13,7 @@ public class FoodInventory implements Inventory {
     }
 
     public Map<String, AbstractFoodItem> getItems() {
-        return new HashMap<>(items);
+        return items;
     }
 
     public String getOwnerId() {
