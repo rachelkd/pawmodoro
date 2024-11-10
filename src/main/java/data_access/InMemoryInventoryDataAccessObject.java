@@ -2,17 +2,24 @@ package data_access;
 
 import entity.AbstractFoodItem;
 import entity.Inventory;
+import use_case.authentication.create_inventory.CreateInventoryInventoryDataAccessInterface;
 import use_case.food_management.add_to_inventory.AddToInventoryDataAccessInterface;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryInventoryDataAccessObject implements AddToInventoryDataAccessInterface {
+public class InMemoryInventoryDataAccessObject implements AddToInventoryDataAccessInterface,
+        CreateInventoryInventoryDataAccessInterface {
     private final Map<String, Inventory> inventoryStorage = new HashMap<>();
 
     @Override
     public void save(Inventory inventory) {
         inventoryStorage.put(inventory.getOwnerId(), inventory);
+    }
+
+    @Override
+    public boolean existsByOwnerId(String ownerId) {
+        return inventoryStorage.containsKey(ownerId);
     }
 
     @Override

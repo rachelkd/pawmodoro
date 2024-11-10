@@ -7,7 +7,7 @@ public interface AddToInventoryOutputBoundary {
 
     /**
      * Prepares the success view for the Add To Inventory Use Case.
-     * @param outputData the output data (just the user)
+     * @param outputData the output data
      */
     void prepareSuccessView(AddToInventoryOutputData outputData);
 }

@@ -17,6 +17,7 @@ import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.logout.LogoutController;
 
 /**
@@ -30,6 +31,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private ChangePasswordController changePasswordController;
     private LogoutController logoutController;
     private AddToInventoryController addToInventoryController;
+    private CreateInventoryController createInventoryController;
 
     private final JLabel username;
 
@@ -140,6 +142,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setChangePasswordController(ChangePasswordController changePasswordController) {
         this.changePasswordController = changePasswordController;
+    }
+
+    public void setCreateInventoryController(CreateInventoryController createInventoryController) {
+        this.createInventoryController = createInventoryController;
     }
 
     public void setAddToInventoryController(AddToInventoryController addToInventoryController) {

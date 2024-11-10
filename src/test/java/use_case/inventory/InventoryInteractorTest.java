@@ -1,13 +1,12 @@
 package use_case.inventory;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import data_access.InMemoryInventoryDataAccessObject;
 import entity.*;
 import org.junit.jupiter.api.Test;
+import use_case.authentication.create_inventory.*;
 import use_case.food_management.add_to_inventory.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class InventoryInteractorTest {
@@ -36,6 +35,28 @@ public class InventoryInteractorTest {
                 successPresenter, foodItemFactory);
         interactor.execute(inputData);
 
+    }
+
+    @Test
+    void CreateInventoryTest() {
+        final CreateInventoryInputData inputData = new CreateInventoryInputData("chiually");
+        final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
+
+        final InventoryFactory inventoryFactory = new FoodInventoryFactory();
+
+
+        final CreateInventoryOutputBoundary successPresenter = new CreateInventoryOutputBoundary() {
+
+            @Override
+            public void prepareSuccessView(CreateInventoryOutputData user) {
+                assertEquals("chiually", user.getOwnerId());
+                assertTrue(inventoryRepository.existsByOwnerId(user.getOwnerId()));
+            }
+        };
+
+        final CreateInventoryInputBoundary interactor = new CreateInventoryInteractor(inventoryRepository,
+                successPresenter, inventoryFactory);
+        interactor.execute(inputData);
     }
 
 }
