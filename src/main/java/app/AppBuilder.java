@@ -14,6 +14,9 @@ import entity.FoodItemFactory;
 import entity.InventoryFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.adoption.AdoptionController;
+import interface_adapter.adoption.AdoptionPresenter;
+import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.add_to_inventory.AddToInventoryPresenter;
 import interface_adapter.change_password.ChangePasswordController;
@@ -33,6 +36,19 @@ import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import use_case.authentication.change_password.ChangePasswordInputBoundary;
+import use_case.authentication.change_password.ChangePasswordInteractor;
+import use_case.authentication.change_password.ChangePasswordOutputBoundary;
+import use_case.authentication.login.LoginInputBoundary;
+import use_case.authentication.login.LoginInteractor;
+import use_case.authentication.login.LoginOutputBoundary;
+import use_case.authentication.logout.LogoutInputBoundary;
+import use_case.authentication.logout.LogoutInteractor;
+import use_case.authentication.logout.LogoutOutputBoundary;
+import use_case.authentication.signup.SignupInputBoundary;
+import use_case.authentication.signup.SignupInteractor;
+import use_case.authentication.signup.SignupOutputBoundary;
+import view.AdoptionView;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
 import use_case.authentication.create_inventory.CreateInventoryInputBoundary;
@@ -100,6 +116,8 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+    private AdoptionView adoptionView;
+    private AdoptionViewModel adoptionViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -114,6 +132,18 @@ public class AppBuilder {
         signupViewModel = new SignupViewModel();
         signupView = new SignupView(signupViewModel);
         cardPanel.add(signupView, signupView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Adoption View to the application.
+     *
+     * @return this builder
+     */
+    public AppBuilder addAdoptionView() {
+        adoptionViewModel = new AdoptionViewModel();
+        adoptionView = new AdoptionView(adoptionViewModel);
+        cardPanel.add(adoptionView, adoptionView.getViewName());
         return this;
     }
 
@@ -138,7 +168,6 @@ public class AppBuilder {
         maxCatsErrorViewModel = new MaxCatsErrorViewModel();
         maxCatsErrorView = new MaxCatsErrorView(maxCatsErrorViewModel);
         cardPanel.add(maxCatsErrorView, maxCatsErrorView.getViewName());
-
         return this;
     }
 
