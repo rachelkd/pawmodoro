@@ -13,10 +13,8 @@ public class CatHouse {
     /**
      * Creates a new CatHouse for a specific owner.
      *
-     * @param ownerId
-     *            the ID of the owner
-     * @param cats
-     *            the initial collection of cats
+     * @param ownerId the ID of the owner
+     * @param cats the initial collection of cats
      */
     public CatHouse(String ownerId, Collection<Cat> cats) {
         this.ownerId = ownerId;
@@ -26,11 +24,9 @@ public class CatHouse {
     /**
      * Validates if a cat can be added to this house.
      *
-     * @param cat
-     *            the cat to validate
-     * @throws IllegalArgumentException
-     *             if the cat's name is already taken or if the cat belongs to a
-     *             different owner
+     * @param cat the cat to validate
+     * @throws IllegalArgumentException if the cat's name is already taken or if the
+     *             cat belongs to a different owner
      */
     public void validateNewCat(Cat cat) {
         if (!cat.getOwnerId().equals(ownerId)) {
@@ -44,8 +40,7 @@ public class CatHouse {
     /**
      * Checks if a cat name is already taken.
      *
-     * @param name
-     *            the name to check
+     * @param name the name to check
      * @return true if the name is already in use, false otherwise
      */
     public boolean isNameTaken(String name) {
@@ -64,8 +59,7 @@ public class CatHouse {
     /**
      * Gets the owner ID of this cat house.
      *
-     * @return the
-     *         owner ID
+     * @return the owner ID
      */
     public String getOwnerId() {
         return ownerId;
