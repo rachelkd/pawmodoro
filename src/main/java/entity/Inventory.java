@@ -13,7 +13,7 @@ public interface Inventory {
      *
      * @return the map of food items to the user's quantity
      */
-    Map<String, AbstractFoodItem> getItems();
+    Map<String, AbstractFood> getItems();
 
     /**
      * Gets the owner id of the inventory.
