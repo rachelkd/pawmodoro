@@ -37,9 +37,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
-        final JLabel Pawmodoro = new JLabel("\uD83D\uDC31 Pawmodoro \uD83D\uDC31");
-        Pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Pawmodoro.setFont(new Font("Serif", Font.BOLD, 25));
+        final JLabel pawmodoro = new JLabel("Pawmodor \uD83D\uDC31");
+        pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pawmodoro.setFont(new Font("Serif", Font.BOLD, 25));
 
         final JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -123,7 +123,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         });
 
         this.add(Box.createRigidArea(new Dimension(40, 40)));
-        this.add(Pawmodoro);
+        this.add(pawmodoro);
         this.add(Box.createRigidArea(new Dimension(40, 40)));
         this.add(title);
         this.add(usernameInfo);
