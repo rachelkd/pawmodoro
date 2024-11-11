@@ -22,10 +22,10 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
-import interface_adapter.setupsession.SetupSessionViewModel;
-import interface_adapter.setupsession.SetupSessionPresenter;
-import interface_adapter.setupsession.SetupSessionController;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
+import interface_adapter.setupsession.SetupSessionController;
+import interface_adapter.setupsession.SetupSessionPresenter;
+import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -41,12 +41,12 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import view.*;
 import view.LoggedInView;
 import view.LoginView;
-import view.SignupView;
 import view.MaxCatsErrorView;
+import view.SignupView;
 import view.ViewManager;
-import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -111,6 +111,7 @@ public class AppBuilder {
         cardPanel.add(setupSessionView, setupSessionView.getViewName());
         return this;
     }
+
     /**
      * Adds the Maximum Cats Error View to the application.
      */
@@ -197,14 +198,14 @@ public class AppBuilder {
     }
 
     public AppBuilder addCreateInventoryUseCase() {
-        final CreateInventoryOutputBoundary createInventoryOutputBoundary =
-                new CreateInventoryPresenter(loggedInViewModel);
+        final CreateInventoryOutputBoundary createInventoryOutputBoundary = new CreateInventoryPresenter(
+                loggedInViewModel);
 
-        final CreateInventoryInputBoundary createInventoryInteractor = new CreateInventoryInteractor
-                (inventoryDataAccessObject, createInventoryOutputBoundary, inventoryFactory);
+        final CreateInventoryInputBoundary createInventoryInteractor = new CreateInventoryInteractor(
+                inventoryDataAccessObject, createInventoryOutputBoundary, inventoryFactory);
 
-        final CreateInventoryController createInventoryController =
-                new CreateInventoryController(createInventoryInteractor);
+        final CreateInventoryController createInventoryController = new CreateInventoryController(
+                createInventoryInteractor);
         loggedInView.setCreateInventoryController(createInventoryController);
         return this;
     }
@@ -213,10 +214,12 @@ public class AppBuilder {
         final AddToInventoryOutputBoundary addToInventoryOutputBoundary = new AddToInventoryPresenter(
                 loggedInViewModel);
 
-        final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor(inventoryDataAccessObject,
+        final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor(
+                inventoryDataAccessObject,
                 addToInventoryOutputBoundary, foodItemFactory);
 
-        final AddToInventoryController addToInventoryController = new AddToInventoryController(addToInventoryInteractor);
+        final AddToInventoryController addToInventoryController = new AddToInventoryController(
+                addToInventoryInteractor);
         loggedInView.setAddToInventoryController(addToInventoryController);
         return this;
     }
