@@ -10,6 +10,9 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.adoption.AdoptionController;
+import interface_adapter.adoption.AdoptionPresenter;
+import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
@@ -33,6 +36,7 @@ import use_case.authentication.logout.LogoutOutputBoundary;
 import use_case.authentication.signup.SignupInputBoundary;
 import use_case.authentication.signup.SignupInteractor;
 import use_case.authentication.signup.SignupOutputBoundary;
+import view.AdoptionView;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
@@ -66,6 +70,8 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+    private AdoptionView adoptionView;
+    private AdoptionViewModel adoptionViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -80,6 +86,18 @@ public class AppBuilder {
         signupViewModel = new SignupViewModel();
         signupView = new SignupView(signupViewModel);
         cardPanel.add(signupView, signupView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Adoption View to the application.
+     *
+     * @return this builder
+     */
+    public AppBuilder addAdoptionView() {
+        adoptionViewModel = new AdoptionViewModel();
+        adoptionView = new AdoptionView(adoptionViewModel);
+        cardPanel.add(adoptionView, adoptionView.getViewName());
         return this;
     }
 

@@ -25,10 +25,12 @@ import interface_adapter.adoption.AdoptionViewModel;
  */
 public class AdoptionView extends JPanel implements ActionListener, PropertyChangeListener {
     private final AdoptionViewModel adoptionViewModel;
+    private final String viewName = "adoption";
     private final JLabel name = new JLabel("Enter your new cat's name: ");
     private final JTextField nameField = new JTextField(15);
     private final String confirm = "Adopt now!";
     private final JButton confirmButton = new JButton(confirm);
+    private final JButton cancelButton = new JButton("Cancel");
 
     public AdoptionView(AdoptionViewModel adoptionViewModel) {
         this.adoptionViewModel = adoptionViewModel;
@@ -37,6 +39,7 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
         information.add(nameField);
         JPanel finish = new JPanel();
         finish.add(confirmButton);
+        finish.add(cancelButton);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -51,5 +54,9 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+    }
+
+    public String getViewName() {
+        return viewName;
     }
 }
