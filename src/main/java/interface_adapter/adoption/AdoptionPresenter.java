@@ -1,5 +1,6 @@
 package interface_adapter.adoption;
 
+import interface_adapter.setupsession.SetupSessionViewModel;
 
 /**
  * The presenter for the adoption Use Case.
@@ -7,13 +8,15 @@ package interface_adapter.adoption;
 public class AdoptionPresenter {
     private final SetupSessionViewModel setUpSessionViewModel;
 
+    public AdoptionPresenter(SetupSessionViewModel setUpSessionViewModel) {
+        this.setUpSessionViewModel = setUpSessionViewModel;
+    }
+
     public void prepareSuccessView() {
-        setupSessionViewMode.firePropertyChanged("confirm");
+        // TODO: Implement this method
     }
 
     public void prepareFailView() {
-
+        // TODO: Implement this method
     }
-
-
 }

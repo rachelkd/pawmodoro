@@ -18,7 +18,7 @@ public class FoodInventory implements Inventory {
      * @return an unmodifiable view of the items map
      */
     @Override
-    public Map<String, ? extends Food> getItems() {
+    public Map<String, AbstractFood> getItems() {
         return Map.copyOf(items);
     }
 
