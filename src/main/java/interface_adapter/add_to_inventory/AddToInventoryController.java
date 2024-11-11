@@ -15,8 +15,8 @@ public class AddToInventoryController {
 
     /**
      * Executes the Add to Inventory Use Case.
-     * @param ownerId
-     * @param foodId
+     * @param ownerId id of owner
+     * @param foodId id of food item
      */
     public void execute(String ownerId, String foodId) {
         final AddToInventoryInputData addToInventoryInputData = new AddToInventoryInputData(ownerId, foodId);

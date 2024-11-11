@@ -6,13 +6,14 @@ import entity.InventoryFactory;
 /**
  * The Create Inventory Interctor.
  */
-public class CreateInventoryInteractor implements  CreateInventoryInputBoundary{
+public class CreateInventoryInteractor implements CreateInventoryInputBoundary {
     private final CreateInventoryInventoryDataAccessInterface createInventoryDataAccessObject;
     private final CreateInventoryOutputBoundary createInventoryPresenter;
     private final InventoryFactory inventoryFactory;
 
     public CreateInventoryInteractor(CreateInventoryInventoryDataAccessInterface createInventoryDataAccessObject,
-                                     CreateInventoryOutputBoundary createInventoryPresenter, InventoryFactory inventoryFactory) {
+                                     CreateInventoryOutputBoundary createInventoryPresenter,
+                                     InventoryFactory inventoryFactory) {
         this.createInventoryPresenter = createInventoryPresenter;
         this.createInventoryDataAccessObject = createInventoryDataAccessObject;
         this.inventoryFactory = inventoryFactory;
@@ -21,10 +22,10 @@ public class CreateInventoryInteractor implements  CreateInventoryInputBoundary{
     @Override
     public void execute(CreateInventoryInputData createInventoryInputData) {
 
-        Inventory inventory = inventoryFactory.create(createInventoryInputData.getOwnerId());
+        final Inventory inventory = inventoryFactory.create(createInventoryInputData.getOwnerId());
         createInventoryDataAccessObject.save(inventory);
 
-        boolean isSuccess = createInventoryDataAccessObject.existsByOwnerId(inventory.getOwnerId());
+        final boolean isSuccess = createInventoryDataAccessObject.existsByOwnerId(inventory.getOwnerId());
 
         final CreateInventoryOutputData createinventoryOutputData =
                 new CreateInventoryOutputData(isSuccess);

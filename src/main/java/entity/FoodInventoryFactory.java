@@ -1,7 +1,7 @@
 package entity;
 
 /**
-Factory for building Inventory objects
+* Factory for building Inventory objects.
  */
 public class FoodInventoryFactory implements InventoryFactory {
 

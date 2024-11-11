@@ -3,7 +3,7 @@ package use_case.food_management.use_item_in_inventory;
 import entity.Inventory;
 
 /**
- * DAO for teh Add Item Use Case
+ * DAO for teh Add Item Use Case.
  */
 public interface UseItemDataAccessInterface {
     /**
@@ -32,6 +32,7 @@ public interface UseItemDataAccessInterface {
      * Removes one of a specific food from the inventory of the user.
      * @param ownerId the ID of the ownerof food items
      * @param foodId the ID  of the food item to use
+     * @return bool of whether you can use items
      */
 
     boolean canUseItem(String ownerId, String foodId);

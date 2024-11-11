@@ -7,9 +7,12 @@ public class UseItemOutputData {
     private final boolean isSuccess;
 
     public UseItemOutputData(boolean isSuccess) {
+
         this.isSuccess = isSuccess;
     }
 
-    public boolean isSuccess() {return isSuccess;}
+    public boolean isSuccess() {
+        return isSuccess;
+    }
 
 }

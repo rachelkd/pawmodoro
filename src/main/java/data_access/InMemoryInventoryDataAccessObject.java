@@ -1,14 +1,19 @@
 package data_access;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import entity.AbstractFood;
 import entity.Inventory;
 import use_case.authentication.create_inventory.CreateInventoryInventoryDataAccessInterface;
 import use_case.food_management.add_to_inventory.AddToInventoryDataAccessInterface;
 import use_case.food_management.use_item_in_inventory.UseItemDataAccessInterface;
 
-import java.util.HashMap;
-import java.util.Map;
-
+/**
+ * In-memory implementation of the DAO for storing user's inventory data. This
+ * implementation does
+ * NOT persist data between runs of the program.
+ */
 public class InMemoryInventoryDataAccessObject implements AddToInventoryDataAccessInterface,
         CreateInventoryInventoryDataAccessInterface, UseItemDataAccessInterface {
     private final Map<String, Inventory> inventoryStorage = new HashMap<>();
@@ -36,10 +41,10 @@ public class InMemoryInventoryDataAccessObject implements AddToInventoryDataAcce
     @Override
     public void updateQuantity(String ownerId, String foodId, int quantity) {
 
-        Inventory inventory = inventoryStorage.get(ownerId);
+        final Inventory inventory = inventoryStorage.get(ownerId);
 
         if (inventory.getItems().containsKey(foodId)) {
-            AbstractFood item = inventory.getItems().get(foodId);
+            final AbstractFood item = inventory.getItems().get(foodId);
             item.setQuantity(quantity);
         }
 

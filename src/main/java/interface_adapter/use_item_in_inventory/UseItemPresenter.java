@@ -4,6 +4,9 @@ import interface_adapter.change_password.LoggedInViewModel;
 import use_case.food_management.use_item_in_inventory.UseItemOutputBoundary;
 import use_case.food_management.use_item_in_inventory.UseItemOutputData;
 
+/**
+ * Use Item Use Case Presenter.
+ */
 public class UseItemPresenter implements UseItemOutputBoundary {
     private LoggedInViewModel loggedInViewModel;
 
@@ -13,7 +16,7 @@ public class UseItemPresenter implements UseItemOutputBoundary {
 
     @Override
     public void prepareSuccessView(UseItemOutputData useInventoryOutputData) {
-        //do nothing for now
+        // do nothing for now
         loggedInViewModel.firePropertyChanged("inventory_item_used");
     }
 }
