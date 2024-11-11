@@ -13,6 +13,9 @@ import entity.CommonUserFactory;
 import entity.User;
 import entity.UserFactory;
 
+import use_case.signup.*;
+
+
 class SignupInteractorTest {
 
     @Test

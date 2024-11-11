@@ -3,6 +3,8 @@ package view;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,6 +22,8 @@ import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.use_item_in_inventory.UseItemController;
+import interface_adapter.timer.TimerViewModel;
+import interface_adapter.timer.TimerController;
 
 /**
  * The View for when the user is logged into the program.
@@ -34,6 +38,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private AddToInventoryController addToInventoryController;
     private CreateInventoryController createInventoryController;
     private UseItemController useItemController;
+    private final TimerViewModel timerViewModel;
+    private final TimerView timerView;
+    private TimerController timerController;
 
     private final JLabel username;
 
@@ -42,9 +49,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, TimerViewModel timerViewModel) {
         this.loggedInViewModel = loggedInViewModel;
+        this.timerViewModel = timerViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
+        this.timerViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel("Logged In Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -112,7 +121,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                     }
                 });
 
+        // Create timer view component
+        this.timerView = new TimerView(timerViewModel);
+
         this.add(title);
+
+        this.add(timerView);
         this.add(usernameInfo);
         this.add(username);
 
@@ -139,7 +153,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             JOptionPane.showMessageDialog(null, "item used for " + state.getUsername());
         }
-
+        // Note: Timer-related property change is now handled by TimerView
     }
 
     public String getViewName() {
@@ -164,5 +178,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
+    }
+
+    public void setTimerController(TimerController timerController) {
+        this.timerController = timerController;
     }
 }

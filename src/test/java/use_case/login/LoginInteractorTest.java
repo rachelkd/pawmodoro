@@ -9,6 +9,8 @@ import entity.CommonUserFactory;
 import entity.User;
 import entity.UserFactory;
 
+import use_case.login.*;
+
 class LoginInteractorTest {
 
     @Test

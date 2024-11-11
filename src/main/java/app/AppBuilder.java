@@ -36,18 +36,18 @@ import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-//import use_case.authentication.change_password.ChangePasswordInputBoundary;
-//import use_case.authentication.change_password.ChangePasswordInteractor;
-//import use_case.authentication.change_password.ChangePasswordOutputBoundary;
-//import use_case.authentication.login.LoginInputBoundary;
-//import use_case.authentication.login.LoginInteractor;
-//import use_case.authentication.login.LoginOutputBoundary;
-//import use_case.authentication.logout.LogoutInputBoundary;
-//import use_case.authentication.logout.LogoutInteractor;
-//import use_case.authentication.logout.LogoutOutputBoundary;
-//import use_case.authentication.signup.SignupInputBoundary;
-//import use_case.authentication.signup.SignupInteractor;
-//import use_case.authentication.signup.SignupOutputBoundary;
+// import use_case.authentication.change_password.ChangePasswordInputBoundary;
+// import use_case.authentication.change_password.ChangePasswordInteractor;
+// import use_case.authentication.change_password.ChangePasswordOutputBoundary;
+// import use_case.authentication.login.LoginInputBoundary;
+// import use_case.authentication.login.LoginInteractor;
+// import use_case.authentication.login.LoginOutputBoundary;
+// import use_case.authentication.logout.LogoutInputBoundary;
+// import use_case.authentication.logout.LogoutInteractor;
+// import use_case.authentication.logout.LogoutOutputBoundary;
+// import use_case.authentication.signup.SignupInputBoundary;
+// import use_case.authentication.signup.SignupInteractor;
+// import use_case.authentication.signup.SignupOutputBoundary;
 import view.AdoptionView;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
@@ -78,6 +78,12 @@ import view.MaxCatsErrorView;
 import view.SetupSessionView;
 import view.SignupView;
 import view.ViewManager;
+import interface_adapter.timer.TimerViewModel;
+import interface_adapter.timer.TimerPresenter;
+import interface_adapter.timer.TimerController;
+import use_case.timer.display_timer.*;
+import data_access.InMemoryTimerDataAccessObject;
+import entity.TimerFactory;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -118,6 +124,10 @@ public class AppBuilder {
     private LoginView loginView;
     private AdoptionView adoptionView;
     private AdoptionViewModel adoptionViewModel;
+
+    private final TimerViewModel timerViewModel = new TimerViewModel();
+    private final InMemoryTimerDataAccessObject timerDataAccessObject = new InMemoryTimerDataAccessObject();
+    private final TimerFactory timerFactory = new TimerFactory();
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -190,7 +200,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
+        loggedInView = new LoggedInView(loggedInViewModel, timerViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
@@ -311,6 +321,27 @@ public class AppBuilder {
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         loggedInView.setLogoutController(logoutController);
+        return this;
+    }
+
+    /**
+     * Adds the Display Timer Use Case to the application.
+     * 
+     * @return this builder
+     */
+    public AppBuilder addDisplayTimerUseCase() {
+        final DisplayTimerOutputBoundary timerOutputBoundary = new TimerPresenter(timerViewModel);
+
+        final DisplayTimerInputBoundary timerInteractor = new DisplayTimerInteractor(timerDataAccessObject,
+                timerOutputBoundary);
+
+        final TimerController timerController = new TimerController(timerInteractor);
+
+        // If LoggedInView needs to trigger timer updates
+        if (loggedInView != null) {
+            loggedInView.setTimerController(timerController);
+        }
+
         return this;
     }
 
