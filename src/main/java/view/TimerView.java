@@ -37,7 +37,7 @@ public class TimerView extends JPanel implements PropertyChangeListener {
         timerLabel = new JLabel(timeFormat.format(new Date(initialDuration)));
 
         timerLabel.setFont(new Font(
-                Constants.TIMER_FONT_FAMILY,
+                Constants.FONT_FAMILY,
                 Font.BOLD,
                 Constants.TIMER_FONT_SIZE));
         timerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
