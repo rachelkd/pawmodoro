@@ -70,4 +70,8 @@ public class SetupSessionView extends JPanel implements ActionListener, Property
     public void propertyChange(PropertyChangeEvent evt) {
 
     }
+
+    public String getViewName() {
+        return viewName;
+    }
 }

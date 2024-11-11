@@ -22,6 +22,9 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.setupsession.SetupSessionViewModel;
+import interface_adapter.setupsession.SetupSessionPresenter;
+import interface_adapter.setupsession.SetupSessionController;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -54,6 +57,7 @@ import view.LoginView;
 import view.SignupView;
 import view.MaxCatsErrorView;
 import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -82,8 +86,13 @@ public class AppBuilder {
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
+
+    private SetupSessionView setupSessionView;
+    private SetupSessionViewModel setupSessionViewModel;
+
     private MaxCatsErrorView maxCatsErrorView;
     private MaxCatsErrorViewModel maxCatsErrorViewModel;
+
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
@@ -106,12 +115,22 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Setup Study Session View to the application.
+     */
+    public AppBuilder addSetupSessionView() {
+        setupSessionViewModel = new SetupSessionViewModel();
+        setupSessionView = new SetupSessionView(setupSessionViewModel);
+        cardPanel.add(setupSessionView, setupSessionView.getViewName());
+        return this;
+    }
+    /**
      * Adds the Maximum Cats Error View to the application.
      */
     public AppBuilder addMaxCatsErrorView() {
         maxCatsErrorViewModel = new MaxCatsErrorViewModel();
         maxCatsErrorView = new MaxCatsErrorView(maxCatsErrorViewModel);
         cardPanel.add(maxCatsErrorView, maxCatsErrorView.getViewName());
+
         return this;
     }
 
