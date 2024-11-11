@@ -19,6 +19,7 @@ public class Main {
                 .addLoggedInView()
                 .addSignupUseCase()
                 .addLoginUseCase()
+                .addMaxCatsErrorView()
                 .addLogoutUseCase()
                 .addChangePasswordUseCase()
                 .addCreateInventoryUseCase()
