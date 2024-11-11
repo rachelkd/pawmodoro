@@ -21,6 +21,7 @@ public class Main {
                 .addSetupSessionView()
                 .addSignupUseCase()
                 .addLoginUseCase()
+                .addDisplayTimerUseCase()
                 .addMaxCatsErrorView()
                 .addLogoutUseCase()
                 .addChangePasswordUseCase()

@@ -73,7 +73,7 @@ public class InventoryInteractorTest {
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
         final Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFoodItem foodItem = foodItemFactory.create("milk", "temp");
+        final AbstractFood foodItem = foodItemFactory.create("milk", "temp");
         foodItem.setQuantity(1);
         inventory.getItems().put("milk", foodItem);
         inventoryRepository.save(inventory);
@@ -98,7 +98,7 @@ public class InventoryInteractorTest {
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
         final Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFoodItem foodItem = foodItemFactory.create("milk", "temp");
+        final AbstractFood foodItem = foodItemFactory.create("milk", "temp");
         foodItem.setQuantity(2);
         inventory.getItems().put("milk", foodItem);
         inventoryRepository.save(inventory);
