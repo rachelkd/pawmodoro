@@ -32,12 +32,17 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
     private final JButton confirmButton = new JButton(confirm);
     private final JButton cancelButton = new JButton("Cancel");
 
+    /**
+     * Creates a new AdoptionView.
+     * 
+     * @param adoptionViewModel the view model for the adoption use case
+     */
     public AdoptionView(AdoptionViewModel adoptionViewModel) {
         this.adoptionViewModel = adoptionViewModel;
-        JPanel information = new JPanel();
+        final JPanel information = new JPanel();
         information.add(name);
         information.add(nameField);
-        JPanel finish = new JPanel();
+        final JPanel finish = new JPanel();
         finish.add(confirmButton);
         finish.add(cancelButton);
 
@@ -46,16 +51,22 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
         this.add(information);
         this.add(finish);
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        // TODO: Implement action handling
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        // TODO: Implement property change handling
     }
 
+    /**
+     * Gets the name of this view.
+     * 
+     * @return the view name
+     */
     public String getViewName() {
         return viewName;
     }

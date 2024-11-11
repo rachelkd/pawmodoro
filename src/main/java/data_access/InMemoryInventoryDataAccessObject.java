@@ -1,6 +1,6 @@
 package data_access;
 
-import entity.AbstractFoodItem;
+import entity.AbstractFood;
 import entity.Inventory;
 import use_case.authentication.create_inventory.CreateInventoryInventoryDataAccessInterface;
 import use_case.food_management.add_to_inventory.AddToInventoryDataAccessInterface;
@@ -39,7 +39,7 @@ public class InMemoryInventoryDataAccessObject implements AddToInventoryDataAcce
         Inventory inventory = inventoryStorage.get(ownerId);
 
         if (inventory.getItems().containsKey(foodId)) {
-            AbstractFoodItem item = inventory.getItems().get(foodId);
+            AbstractFood item = inventory.getItems().get(foodId);
             item.setQuantity(quantity);
         }
 

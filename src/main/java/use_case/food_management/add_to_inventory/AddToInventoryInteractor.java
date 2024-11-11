@@ -1,6 +1,6 @@
 package use_case.food_management.add_to_inventory;
 
-import entity.AbstractFoodItem;
+import entity.AbstractFood;
 import entity.FoodItemFactory;
 import entity.InventoryFactory;
 
@@ -46,7 +46,7 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary{
 
         } // item not in inventory
         else {
-            AbstractFoodItem foodItem = foodFactory.create(addToInventoryInputData.getFoodId(), "temp");
+            AbstractFood foodItem = foodFactory.create(addToInventoryInputData.getFoodId(), "temp");
             foodItem.setQuantity(1);
 
             addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
