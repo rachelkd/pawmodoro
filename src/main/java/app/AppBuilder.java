@@ -18,6 +18,7 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -36,6 +37,7 @@ import use_case.authentication.signup.SignupOutputBoundary;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
+import view.MaxCatsErrorView;
 import view.ViewManager;
 
 /**
@@ -62,6 +64,8 @@ public class AppBuilder {
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
+    private MaxCatsErrorView maxCatsErrorView;
+    private MaxCatsErrorViewModel maxCatsErrorViewModel;
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
@@ -80,6 +84,16 @@ public class AppBuilder {
         signupViewModel = new SignupViewModel();
         signupView = new SignupView(signupViewModel);
         cardPanel.add(signupView, signupView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Maximum Cats Error View to the application.
+     */
+    public AppBuilder addMaxCatsErrorView() {
+        maxCatsErrorViewModel = new MaxCatsErrorViewModel();
+        maxCatsErrorView = new MaxCatsErrorView(maxCatsErrorViewModel);
+        cardPanel.add(maxCatsErrorView, maxCatsErrorView.getViewName());
         return this;
     }
 

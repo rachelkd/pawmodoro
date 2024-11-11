@@ -48,4 +48,8 @@ public class MaxCatsErrorView extends JPanel implements PropertyChangeListener, 
     public void actionPerformed(ActionEvent e) {
 
     }
+
+    public String getViewName() {
+        return viewName;
+    }
 }
