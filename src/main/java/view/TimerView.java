@@ -12,7 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import constants.TimerConstants;
+import constants.Constants;
 import interface_adapter.timer.TimerViewModel;
 
 /**
@@ -23,7 +23,7 @@ import interface_adapter.timer.TimerViewModel;
 public class TimerView extends JPanel implements PropertyChangeListener {
     private final TimerViewModel timerViewModel;
     private final JLabel timerLabel;
-    private final SimpleDateFormat timeFormat = new SimpleDateFormat(TimerConstants.TIME_FORMAT_PATTERN);
+    private final SimpleDateFormat timeFormat = new SimpleDateFormat(Constants.TIME_FORMAT_PATTERN);
 
     public TimerView(TimerViewModel timerViewModel) {
         this.timerViewModel = timerViewModel;
@@ -37,14 +37,14 @@ public class TimerView extends JPanel implements PropertyChangeListener {
         timerLabel = new JLabel(timeFormat.format(new Date(initialDuration)));
 
         timerLabel.setFont(new Font(
-                TimerConstants.TIMER_FONT_FAMILY,
+                Constants.TIMER_FONT_FAMILY,
                 Font.BOLD,
-                TimerConstants.TIMER_FONT_SIZE));
+                Constants.TIMER_FONT_SIZE));
         timerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        add(Box.createVerticalStrut(TimerConstants.TIMER_VERTICAL_SPACING));
+        add(Box.createVerticalStrut(Constants.TIMER_VERTICAL_SPACING));
         add(timerLabel);
-        add(Box.createVerticalStrut(TimerConstants.TIMER_VERTICAL_SPACING));
+        add(Box.createVerticalStrut(Constants.TIMER_VERTICAL_SPACING));
     }
 
     @Override

@@ -1,6 +1,6 @@
 package interface_adapter.timer;
 
-import constants.TimerConstants;
+import constants.Constants;
 
 /**
  * Represents the current state of a timer, including its status, interval type,
@@ -8,10 +8,10 @@ import constants.TimerConstants;
  * timer information between different layers of the application.
  */
 public class TimerState {
-    private String status = TimerConstants.STATUS_STOPPED;
-    private String currentInterval = TimerConstants.INTERVAL_WORK;
+    private String status = Constants.STATUS_STOPPED;
+    private String currentInterval = Constants.INTERVAL_WORK;
     private long elapsedTime;
-    private long intervalDuration = TimerConstants.DEFAULT_WORK_DURATION_MS;
+    private long intervalDuration = Constants.DEFAULT_WORK_DURATION_MS;
 
     // Copy constructor
     public TimerState(TimerState copy) {
