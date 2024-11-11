@@ -1,16 +1,18 @@
 package use_case.food_management.use_item_in_inventory;
 
-import entity.FoodItemFactory;
+import java.util.Map;
+
+import entity.AbstractFood;
 
 /**
  * The Use Item Interactor.
  */
-public class UseItemInteractor implements UseItemInputBoundary{
+public class UseItemInteractor implements UseItemInputBoundary {
     private final UseItemDataAccessInterface useItemDataAccessObject;
     private final UseItemOutputBoundary useItemPresenter;
 
-
-    public UseItemInteractor(UseItemDataAccessInterface useItemDataAccessObject, UseItemOutputBoundary useItemOutputBoundary) {
+    public UseItemInteractor(UseItemDataAccessInterface useItemDataAccessObject,
+                             UseItemOutputBoundary useItemOutputBoundary) {
         this.useItemDataAccessObject = useItemDataAccessObject;
         this.useItemPresenter = useItemOutputBoundary;
     }
@@ -21,17 +23,25 @@ public class UseItemInteractor implements UseItemInputBoundary{
 
         // if you can use item
         if (useItemDataAccessObject.canUseItem(useItemInputData.getOwnerId(), useItemInputData.getFoodId())) {
-            Integer quantity = useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).getItems()
+            final Integer quantity = useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).getItems()
                     .get(useItemInputData.getFoodId()).getQuantity();
             // if quantity greater than 1
             if (quantity > 1) {
-                useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).getItems()
-                        .get(useItemInputData.getFoodId()).setQuantity(quantity - 1);
-                isSuccess = (quantity - 1) == useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).getItems()
-                        .get(useItemInputData.getFoodId()).getQuantity();
-            } else {
-                useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).getItems().remove(useItemInputData.getFoodId());
-                isSuccess = !(useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).getItems().containsKey(useItemInputData.getFoodId()));
+                final Map<String, AbstractFood> inventoryItems = useItemDataAccessObject.getInventory(useItemInputData
+                        .getOwnerId()).getItems();
+                inventoryItems.get(useItemInputData.getFoodId()).setQuantity(quantity - 1);
+                useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).setItems(inventoryItems);
+                isSuccess = (quantity - 1) == useItemDataAccessObject.getInventory(useItemInputData.getOwnerId())
+                        .getItems().get(useItemInputData.getFoodId()).getQuantity();
+            }
+            else {
+                final Map<String, AbstractFood> inventoryItems = useItemDataAccessObject.getInventory(useItemInputData
+                        .getOwnerId()).getItems();
+                inventoryItems.remove(useItemInputData.getFoodId());
+                useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).setItems(inventoryItems);
+
+                isSuccess = !(useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).getItems()
+                        .containsKey(useItemInputData.getFoodId()));
             }
         }
 

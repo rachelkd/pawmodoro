@@ -4,7 +4,7 @@ import use_case.food_management.use_item_in_inventory.UseItemInputBoundary;
 import use_case.food_management.use_item_in_inventory.UseItemInputData;
 
 /**
- * Controller for the Use Item Use Case
+ * Controller for the Use Item Use Case.
  */
 public class UseItemController {
     private final UseItemInputBoundary inventoryUseItemUseCaseInteractor;
@@ -15,8 +15,8 @@ public class UseItemController {
 
     /**
      * Executes the Use Item Use Case.
-     * @param ownerId
-     * @param foodId
+     * @param ownerId id of owner
+     * @param foodId id of food item
      */
     public void execute(String ownerId, String foodId) {
         final UseItemInputData useItemInputData = new UseItemInputData(ownerId, foodId);

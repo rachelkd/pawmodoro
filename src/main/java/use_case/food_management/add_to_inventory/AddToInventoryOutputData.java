@@ -11,5 +11,7 @@ public class AddToInventoryOutputData {
         this.success = success;
     }
 
-    public boolean isSuccess() {return success;}
+    public boolean isSuccess() {
+        return success;
+    }
 }

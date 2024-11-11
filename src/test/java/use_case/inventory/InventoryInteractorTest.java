@@ -7,10 +7,12 @@ import use_case.authentication.create_inventory.*;
 import use_case.food_management.add_to_inventory.*;
 import use_case.food_management.use_item_in_inventory.*;
 
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class InventoryInteractorTest {
+class InventoryInteractorTest {
 
     @Test
     void addToEmptyInventoryTest() {
@@ -48,7 +50,9 @@ public class InventoryInteractorTest {
         // create inventory for user
         final Inventory inventory = inventoryFactory.create("chiually");
         //add same food item
-        inventory.getItems().put("milk", foodItemFactory.create("milk", "temp"));
+        Map<String, AbstractFood> inventoryItems = inventory.getItems();
+        inventoryItems.put("milk", foodItemFactory.create("milk", "temp"));
+        inventory.setItems(inventoryItems);
         inventoryRepository.save(inventory);
 
 
@@ -75,7 +79,9 @@ public class InventoryInteractorTest {
         final Inventory inventory = inventoryFactory.create("chiually");
         final AbstractFood foodItem = foodItemFactory.create("milk", "temp");
         foodItem.setQuantity(1);
-        inventory.getItems().put("milk", foodItem);
+        Map<String, AbstractFood> inventoryItems = inventory.getItems();
+        inventoryItems.put("milk", foodItem);
+        inventory.setItems(inventoryItems);
         inventoryRepository.save(inventory);
 
         final UseItemOutputBoundary successPresenter = new UseItemOutputBoundary() {
@@ -100,7 +106,9 @@ public class InventoryInteractorTest {
         final Inventory inventory = inventoryFactory.create("chiually");
         final AbstractFood foodItem = foodItemFactory.create("milk", "temp");
         foodItem.setQuantity(2);
-        inventory.getItems().put("milk", foodItem);
+        Map<String, AbstractFood> inventoryItems = inventory.getItems();
+        inventoryItems.put("milk", foodItem);
+        inventory.setItems(inventoryItems);
         inventoryRepository.save(inventory);
 
         final UseItemOutputBoundary successPresenter = new UseItemOutputBoundary() {

@@ -17,6 +17,11 @@ public interface CreateInventoryInventoryDataAccessInterface {
      */
     void save(Inventory inventory);
 
+    /**
+     * Return True if owner is already in inventory repository.
+     * @param ownerId the id of the owner/user
+     * @return a boolean indicating whether the user is in the current repository of inventories
+     */
     boolean existsByOwnerId(String ownerId);
 
 }

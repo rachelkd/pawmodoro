@@ -1,7 +1,7 @@
 package entity;
 
 /**
-Factory for creating Inventories
+* Factory for creating Inventories.
  */
 public interface InventoryFactory {
 

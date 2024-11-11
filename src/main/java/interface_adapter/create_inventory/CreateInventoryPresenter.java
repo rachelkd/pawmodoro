@@ -4,6 +4,9 @@ import interface_adapter.change_password.LoggedInViewModel;
 import use_case.authentication.create_inventory.CreateInventoryOutputBoundary;
 import use_case.authentication.create_inventory.CreateInventoryOutputData;
 
+/**
+ * Create Inventory Use Case Presenter.
+ */
 public class CreateInventoryPresenter implements CreateInventoryOutputBoundary {
     private LoggedInViewModel loggedInViewModel;
 
@@ -13,7 +16,7 @@ public class CreateInventoryPresenter implements CreateInventoryOutputBoundary {
 
     @Override
     public void prepareSuccessView(CreateInventoryOutputData outputData) {
-        //do nothing for now
+        // do nothing for now
         loggedInViewModel.firePropertyChanged("inventory_created");
     }
 }

@@ -7,7 +7,7 @@ public interface UseItemInputBoundary {
 
     /**
      * Executes the use item use case.
-     * @param useItemInputData
+     * @param useItemInputData input data
      */
     void execute(UseItemInputData useItemInputData);
 }

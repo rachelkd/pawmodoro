@@ -12,7 +12,11 @@ public class UseItemInputData {
         this.foodId = foodId;
     }
 
-    public String getOwnerId() {return ownerId;}
+    public String getOwnerId() {
+        return ownerId;
+    }
 
-    public String getFoodId() {return foodId;}
+    public String getFoodId() {
+        return foodId;
+    }
 }

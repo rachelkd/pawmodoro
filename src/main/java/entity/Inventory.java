@@ -16,6 +16,12 @@ public interface Inventory {
     Map<String, AbstractFood> getItems();
 
     /**
+     * Set the items map in to the given mapping.
+     * @param items a mapping of food ids to food objects
+     */
+    void setItems(Map<String, AbstractFood> items);
+
+    /**
      * Gets the owner id of the inventory.
      *
      * @return the owner id string

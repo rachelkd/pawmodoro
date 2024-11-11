@@ -15,7 +15,7 @@ public class CreateInventoryController {
 
     /**
      * Executes the Create Inventory Use Case.
-     * @param ownerId
+     * @param ownerId id of the owner/user
      */
     public void execute(String ownerId) {
         final CreateInventoryInputData createInventoryInputData = new CreateInventoryInputData(ownerId);
