@@ -20,6 +20,7 @@ public class Main {
                 .addSetupSessionView()
                 .addSignupUseCase()
                 .addLoginUseCase()
+                .addMaxCatsErrorView()
                 .addLogoutUseCase()
                 .addChangePasswordUseCase()
                 .addCreateInventoryUseCase()
