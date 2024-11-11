@@ -17,9 +17,9 @@ public class TimerInteractor implements TimerInputBoundary {
      * @param timerPresenter the output boundary
      * @param timerFactory the timer factory
      */
-    public TimerInteractor(Timer timer, 
-                          TimerOutputBoundary timerPresenter,
-                          TimerFactory timerFactory) {
+    public TimerInteractor(Timer timer,
+            TimerOutputBoundary timerPresenter,
+            TimerFactory timerFactory) {
         this.timer = timer;
         this.timerPresenter = timerPresenter;
         this.timerFactory = timerFactory;
@@ -27,17 +27,21 @@ public class TimerInteractor implements TimerInputBoundary {
 
     @Override
     public void execute(TimerInputData timerInputData) {
-        try {
-            switch (timerInputData.getAction()) {
-                case "start" -> executeStart();
-                case "pause" -> executePause();
-                case "resume" -> executeResume();
-                case "stop" -> executeStop();
-                default -> timerPresenter.prepareFailView(
-                        "Invalid timer action: " + timerInputData.getAction());
-            }
-        } catch (Exception exception) {
-            timerPresenter.prepareFailView(exception.getMessage());
+        final String action = timerInputData.getAction();
+        if ("start".equals(action)) {
+            executeStart();
+        }
+        else if ("pause".equals(action)) {
+            executePause();
+        }
+        else if ("resume".equals(action)) {
+            executeResume();
+        }
+        else if ("stop".equals(action)) {
+            executeStop();
+        }
+        else {
+            timerPresenter.prepareFailView("Invalid timer action: " + action);
         }
     }
 
@@ -45,8 +49,7 @@ public class TimerInteractor implements TimerInputBoundary {
         this.timer = timerFactory.createRunningTimer(
                 timer.getCurrentInterval(),
                 timer.getElapsedTime(),
-                timer.getIntervalDuration()
-        );
+                timer.getIntervalDuration());
         updatePresenter();
     }
 
@@ -54,8 +57,7 @@ public class TimerInteractor implements TimerInputBoundary {
         this.timer = timerFactory.createPausedTimer(
                 timer.getCurrentInterval(),
                 timer.getElapsedTime(),
-                timer.getIntervalDuration()
-        );
+                timer.getIntervalDuration());
         updatePresenter();
     }
 
@@ -63,16 +65,14 @@ public class TimerInteractor implements TimerInputBoundary {
         this.timer = timerFactory.createRunningTimer(
                 timer.getCurrentInterval(),
                 timer.getElapsedTime(),
-                timer.getIntervalDuration()
-        );
+                timer.getIntervalDuration());
         updatePresenter();
     }
 
     private void executeStop() {
         this.timer = timerFactory.createStoppedTimer(
                 timer.getCurrentInterval(),
-                timer.getIntervalDuration()
-        );
+                timer.getIntervalDuration());
         updatePresenter();
     }
 
@@ -81,8 +81,7 @@ public class TimerInteractor implements TimerInputBoundary {
                 timer.getState(),
                 timer.getCurrentInterval(),
                 timer.getElapsedTime(),
-                false
-        );
+                false);
         timerPresenter.prepareSuccessView(outputData);
     }
-} 
+}

@@ -6,7 +6,9 @@ package use_case.timer;
 public interface TimerInputBoundary {
     /**
      * Executes the timer operation specified in the input data.
+     * 
      * @param timerInputData the input data containing the timer action
      */
     void execute(TimerInputData timerInputData);
-} 
+}
+
