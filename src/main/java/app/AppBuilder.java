@@ -8,7 +8,11 @@ import javax.swing.WindowConstants;
 
 import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
-import entity.*;
+import entity.CommonUserFactory;
+import entity.FoodInventoryFactory;
+import entity.FoodItemFactory;
+import entity.InventoryFactory;
+import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.add_to_inventory.AddToInventoryPresenter;
@@ -52,10 +56,10 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.*;
 import view.LoggedInView;
 import view.LoginView;
 import view.MaxCatsErrorView;
+import view.SetupSessionView;
 import view.SignupView;
 import view.ViewManager;
 
@@ -115,6 +119,8 @@ public class AppBuilder {
 
     /**
      * Adds the Setup Study Session View to the application.
+     * 
+     * @return this builder
      */
     public AppBuilder addSetupSessionView() {
         setupSessionViewModel = new SetupSessionViewModel();
@@ -125,6 +131,8 @@ public class AppBuilder {
 
     /**
      * Adds the Maximum Cats Error View to the application.
+     * 
+     * @return this builder
      */
     public AppBuilder addMaxCatsErrorView() {
         maxCatsErrorViewModel = new MaxCatsErrorViewModel();
@@ -208,6 +216,11 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Create Inventory Use Case to the application.
+     * 
+     * @return this builder
+     */
     public AppBuilder addCreateInventoryUseCase() {
         final CreateInventoryOutputBoundary createInventoryOutputBoundary = new CreateInventoryPresenter(
                 loggedInViewModel);
@@ -221,6 +234,11 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Add To Inventory Use Case to the application.
+     * 
+     * @return this builder
+     */
     public AppBuilder addAddToInventoryUseCase() {
         final AddToInventoryOutputBoundary addToInventoryOutputBoundary = new AddToInventoryPresenter(
                 loggedInViewModel);
@@ -235,6 +253,11 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Use Item Use Case to the application.
+     * 
+     * @return this builder
+     */
     public AppBuilder addUseItemUseCase() {
         final UseItemOutputBoundary useItemOutputBoundary = new UseItemPresenter(loggedInViewModel);
 
