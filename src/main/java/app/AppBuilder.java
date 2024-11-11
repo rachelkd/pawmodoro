@@ -21,27 +21,29 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import use_case.authentication.change_password.ChangePasswordInputBoundary;
-import use_case.authentication.change_password.ChangePasswordInteractor;
-import use_case.authentication.change_password.ChangePasswordOutputBoundary;
-import use_case.authentication.login.LoginInputBoundary;
-import use_case.authentication.login.LoginInteractor;
-import use_case.authentication.login.LoginOutputBoundary;
-import use_case.authentication.logout.LogoutInputBoundary;
-import use_case.authentication.logout.LogoutInteractor;
-import use_case.authentication.logout.LogoutOutputBoundary;
-import use_case.authentication.signup.SignupInputBoundary;
-import use_case.authentication.signup.SignupInteractor;
-import use_case.authentication.signup.SignupOutputBoundary;
+import interface_adapter.timer.*;
+import use_case.change_password.ChangePasswordInputBoundary;
+import use_case.change_password.ChangePasswordInteractor;
+import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.login.LoginInputBoundary;
+import use_case.login.LoginInteractor;
+import use_case.login.LoginOutputBoundary;
+import use_case.logout.LogoutInputBoundary;
+import use_case.logout.LogoutInteractor;
+import use_case.logout.LogoutOutputBoundary;
+import use_case.signup.SignupInputBoundary;
+import use_case.signup.SignupInteractor;
+import use_case.signup.SignupOutputBoundary;
+import use_case.timer.*;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
+import view.TimerView;
 import view.ViewManager;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
  * our CA architecture; piece by piece.
- * <p/>
  * This is done by adding each View and then adding related Use Cases.
  */
 // Checkstyle note: you can ignore the "Class Data Abstraction Coupling"
@@ -66,6 +68,8 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+    private TimerViewModel timerViewModel;
+    private TimerView timerView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -170,6 +174,36 @@ public class AppBuilder {
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         loggedInView.setLogoutController(logoutController);
+        return this;
+    }
+
+    /**
+     * Adds the Timer View to the application.
+     * 
+     * @return this builder
+     */
+    public AppBuilder addTimerView() {
+        timerViewModel = new TimerViewModel();
+        timerView = new TimerView(timerViewModel);
+        cardPanel.add(timerView, timerView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Timer Use Case to the application.
+     * 
+     * @return this builder
+     */
+    public AppBuilder addTimerUseCase() {
+        final TimerOutputBoundary timerOutputBoundary = new TimerPresenter(
+                timerViewModel,
+                viewManagerModel);
+
+        final TimerInputBoundary timerInteractor = new TimerInteractor(
+                timerOutputBoundary);
+
+        final TimerController timerController = new TimerController(timerInteractor);
+        timerView.setTimerController(timerController);
         return this;
     }
 
