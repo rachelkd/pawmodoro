@@ -193,4 +193,13 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     public void clearPasswordField() {
         passwordInputField.setText("");
     }
+
+    /**
+     * Adds a cat image view to this panel.
+     *
+     * @param catImageView the cat image view to add
+     */
+    public void addCatImageView(CatImageView catImageView) {
+        add(catImageView);
+    }
 }

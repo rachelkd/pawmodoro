@@ -36,18 +36,6 @@ import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-// import use_case.authentication.change_password.ChangePasswordInputBoundary;
-// import use_case.authentication.change_password.ChangePasswordInteractor;
-// import use_case.authentication.change_password.ChangePasswordOutputBoundary;
-// import use_case.authentication.login.LoginInputBoundary;
-// import use_case.authentication.login.LoginInteractor;
-// import use_case.authentication.login.LoginOutputBoundary;
-// import use_case.authentication.logout.LogoutInputBoundary;
-// import use_case.authentication.logout.LogoutInteractor;
-// import use_case.authentication.logout.LogoutOutputBoundary;
-// import use_case.authentication.signup.SignupInputBoundary;
-// import use_case.authentication.signup.SignupInteractor;
-// import use_case.authentication.signup.SignupOutputBoundary;
 import view.AdoptionView;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
@@ -84,6 +72,15 @@ import interface_adapter.timer.TimerController;
 import use_case.timer.display_timer.*;
 import data_access.InMemoryTimerDataAccessObject;
 import entity.TimerFactory;
+import interface_adapter.cat_image.CatImageViewModel;
+import use_case.cat_image.CatImageDataAccessInterface;
+import use_case.cat_image.CatImageOutputBoundary;
+import use_case.cat_image.CatImageInputBoundary;
+import use_case.cat_image.CatImageInteractor;
+import interface_adapter.cat_image.CatImageController;
+import interface_adapter.cat_image.CatImagePresenter;
+import data_access.ApiCatImageDataAccessObject;
+import view.CatImageView;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -342,6 +339,24 @@ public class AppBuilder {
             loggedInView.setTimerController(timerController);
         }
 
+        return this;
+    }
+
+    /**
+     * Adds the cat image view to the application.
+     *
+     * @param allowRefresh whether to allow refreshing images
+     * @return this builder
+     */
+    public AppBuilder addCatImageView(boolean allowRefresh) {
+        final CatImageViewModel viewModel = new CatImageViewModel(allowRefresh);
+        final CatImageDataAccessInterface dataAccess = new ApiCatImageDataAccessObject();
+        final CatImageOutputBoundary presenter = new CatImagePresenter(viewModel);
+        final CatImageInputBoundary interactor = new CatImageInteractor(dataAccess, presenter);
+        final CatImageController controller = new CatImageController(interactor);
+        final CatImageView catImageView = new CatImageView(viewModel, controller);
+
+        loggedInView.addCatImageView(catImageView);
         return this;
     }
 

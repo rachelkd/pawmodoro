@@ -9,6 +9,7 @@ public final class Constants {
     private Constants() {
         // Prevent instantiation
     }
+
     // Global constants
     public static final String FONT_FAMILY = Font.SANS_SERIF;
     // Timer constants
@@ -23,4 +24,7 @@ public final class Constants {
     public static final int TIMER_FONT_SIZE = 48;
     public static final int TIMER_VERTICAL_SPACING = 20;
     public static final String TIME_FORMAT_PATTERN = "mm:ss";
+
+    // Cat Image constants
+    public static final int CAT_IMAGE_SIZE = 300;
 }

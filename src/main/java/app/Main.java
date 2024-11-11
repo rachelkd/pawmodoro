@@ -26,6 +26,7 @@ public class Main {
                 .addLogoutUseCase()
                 .addChangePasswordUseCase()
                 .addCreateInventoryUseCase()
+                .addCatImageView(true)
                 .build();
 
         application.pack();
