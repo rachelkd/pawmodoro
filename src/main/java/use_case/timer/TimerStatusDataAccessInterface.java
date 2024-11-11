@@ -5,7 +5,7 @@ import entity.Timer;
 /**
  * Interface for persisting timer state.
  */
-public interface TimerStateDataAccessInterface {
+public interface TimerStatusDataAccessInterface {
     /**
      * Saves the current state of a timer.
      * 
