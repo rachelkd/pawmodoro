@@ -5,7 +5,7 @@ package entity;
  * Different types of food can extend this class to provide specific
  * implementations.
  */
-public abstract class AbstractFoodItem {
+public abstract class AbstractFood {
     // Unique identifier (e.g., "tuna_can", "dry_kibble")
     private final String foodId;
     // Display name (e.g., "Tuna Can", "Dry Kibble")
@@ -31,7 +31,7 @@ public abstract class AbstractFoodItem {
      *             - points is negative
      *             - quantity is negative
      */
-    protected AbstractFoodItem(String foodId, String name, int points, int quantity) {
+    protected AbstractFood(String foodId, String name, int points, int quantity) {
         if (foodId == null || foodId.trim().isEmpty() || foodId.contains(" ")) {
             throw new IllegalArgumentException("Food ID cannot be null, empty, or contain spaces");
         }
