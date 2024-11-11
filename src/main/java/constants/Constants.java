@@ -9,6 +9,8 @@ public final class Constants {
     private Constants() {
         // Prevent instantiation
     }
+    // Global constants
+    public static final String FONT_FAMILY = Font.SANS_SERIF;
     // Timer constants
     public static final int DEFAULT_WORK_MINUTES = 25;
     public static final int MINUTES_TO_SECONDS = 60;
@@ -20,6 +22,5 @@ public final class Constants {
 
     public static final int TIMER_FONT_SIZE = 48;
     public static final int TIMER_VERTICAL_SPACING = 20;
-    public static final String TIMER_FONT_FAMILY = Font.SANS_SERIF;
     public static final String TIME_FORMAT_PATTERN = "mm:ss";
 }
