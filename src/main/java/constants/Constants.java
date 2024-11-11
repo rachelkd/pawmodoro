@@ -3,7 +3,7 @@ package constants;
 import java.awt.Font;
 
 /**
- * Constants used throughout the timer-related classes.
+ * Constants used throughout the program.
  */
 public final class Constants {
     private Constants() {
