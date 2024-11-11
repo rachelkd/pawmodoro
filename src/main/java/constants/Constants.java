@@ -5,11 +5,11 @@ import java.awt.Font;
 /**
  * Constants used throughout the timer-related classes.
  */
-public final class TimerConstants {
-    private TimerConstants() {
+public final class Constants {
+    private Constants() {
         // Prevent instantiation
     }
-
+    // Timer constants
     public static final int DEFAULT_WORK_MINUTES = 25;
     public static final int MINUTES_TO_SECONDS = 60;
     public static final int SECONDS_TO_MILLIS = 1000;
