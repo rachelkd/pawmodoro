@@ -1,4 +1,4 @@
-package use_case.authentication.change_password;
+package use_case.change_password;
 
 /**
  * Output Data for the Change Password Use Case.
