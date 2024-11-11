@@ -19,6 +19,7 @@ import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.use_item_in_inventory.UseItemController;
 
 /**
  * The View for when the user is logged into the program.
@@ -32,6 +33,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private LogoutController logoutController;
     private AddToInventoryController addToInventoryController;
     private CreateInventoryController createInventoryController;
+    private UseItemController useItemController;
 
     private final JLabel username;
 
@@ -133,6 +135,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             JOptionPane.showMessageDialog(null, "item added to inventory for " + state.getUsername());
         }
+        else if (evt.getPropertyName().equals("inventory_item_used")) {
+            final LoggedInState state = (LoggedInState) evt.getNewValue();
+            JOptionPane.showMessageDialog(null, "item used for " + state.getUsername());
+        }
 
     }
 
@@ -150,6 +156,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setAddToInventoryController(AddToInventoryController addToInventoryController) {
         this.addToInventoryController = addToInventoryController;
+    }
+
+    public void setUseItemController(UseItemController useItemController) {
+        this.useItemController = useItemController;
     }
 
     public void setLogoutController(LogoutController logoutController) {

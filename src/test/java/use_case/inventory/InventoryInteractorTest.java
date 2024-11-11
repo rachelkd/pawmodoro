@@ -5,6 +5,7 @@ import entity.*;
 import org.junit.jupiter.api.Test;
 import use_case.authentication.create_inventory.*;
 import use_case.food_management.add_to_inventory.*;
+import use_case.food_management.use_item_in_inventory.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,6 +61,56 @@ public class InventoryInteractorTest {
         };
         final AddToInventoryInputBoundary interactor = new AddToInventoryInteractor(inventoryRepository,
                 successPresenter, foodItemFactory);
+        interactor.execute(inputData);
+    }
+
+    @Test
+    void useLastItemTest() {
+        final UseItemInputData inputData = new UseItemInputData("chiually", "milk");
+        final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
+
+        final InventoryFactory inventoryFactory = new FoodInventoryFactory();
+        final FoodItemFactory foodItemFactory = new FoodItemFactory();
+
+        final Inventory inventory = inventoryFactory.create("chiually");
+        final AbstractFoodItem foodItem = foodItemFactory.create("milk", "temp");
+        foodItem.setQuantity(1);
+        inventory.getItems().put("milk", foodItem);
+        inventoryRepository.save(inventory);
+
+        final UseItemOutputBoundary successPresenter = new UseItemOutputBoundary() {
+
+            @Override
+            public void prepareSuccessView(UseItemOutputData useInventoryOutputData) {
+                assertTrue(useInventoryOutputData.isSuccess());
+            }
+        };
+        final UseItemInputBoundary interactor = new UseItemInteractor(inventoryRepository, successPresenter);
+        interactor.execute(inputData);
+    }
+
+    @Test
+    void useOneOfMultipleItemTest() {
+        final UseItemInputData inputData = new UseItemInputData("chiually", "milk");
+        final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
+
+        final InventoryFactory inventoryFactory = new FoodInventoryFactory();
+        final FoodItemFactory foodItemFactory = new FoodItemFactory();
+
+        final Inventory inventory = inventoryFactory.create("chiually");
+        final AbstractFoodItem foodItem = foodItemFactory.create("milk", "temp");
+        foodItem.setQuantity(2);
+        inventory.getItems().put("milk", foodItem);
+        inventoryRepository.save(inventory);
+
+        final UseItemOutputBoundary successPresenter = new UseItemOutputBoundary() {
+
+            @Override
+            public void prepareSuccessView(UseItemOutputData useInventoryOutputData) {
+                assertTrue(useInventoryOutputData.isSuccess());
+            }
+        };
+        final UseItemInputBoundary interactor = new UseItemInteractor(inventoryRepository, successPresenter);
         interactor.execute(inputData);
     }
 

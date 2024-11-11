@@ -25,6 +25,8 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.use_item_in_inventory.UseItemController;
+import interface_adapter.use_item_in_inventory.UseItemPresenter;
 import use_case.authentication.change_password.ChangePasswordInputBoundary;
 import use_case.authentication.change_password.ChangePasswordInteractor;
 import use_case.authentication.change_password.ChangePasswordOutputBoundary;
@@ -43,6 +45,9 @@ import use_case.authentication.signup.SignupOutputBoundary;
 import use_case.food_management.add_to_inventory.AddToInventoryInputBoundary;
 import use_case.food_management.add_to_inventory.AddToInventoryInteractor;
 import use_case.food_management.add_to_inventory.AddToInventoryOutputBoundary;
+import use_case.food_management.use_item_in_inventory.UseItemInputBoundary;
+import use_case.food_management.use_item_in_inventory.UseItemInteractor;
+import use_case.food_management.use_item_in_inventory.UseItemOutputBoundary;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
@@ -192,6 +197,17 @@ public class AppBuilder {
 
         final AddToInventoryController addToInventoryController = new AddToInventoryController(addToInventoryInteractor);
         loggedInView.setAddToInventoryController(addToInventoryController);
+        return this;
+    }
+
+    public AppBuilder addUseItemUseCase() {
+        final UseItemOutputBoundary useItemOutputBoundary = new UseItemPresenter(loggedInViewModel);
+
+        final UseItemInputBoundary useItemInteractor = new UseItemInteractor(inventoryDataAccessObject,
+                useItemOutputBoundary);
+
+        final UseItemController useItemController = new UseItemController(useItemInteractor);
+        loggedInView.setUseItemController(useItemController);
         return this;
     }
 
