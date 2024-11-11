@@ -34,10 +34,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.signupViewModel = signupViewModel;
         signupViewModel.addPropertyChangeListener(this);
 
-        final JLabel Pawmodoro = new JLabel("\uD83D\uDC31 Pawmodoro \uD83D\uDC31");
-        Pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Pawmodoro.setFont(new Font("Serif", Font.BOLD, 25));
-        Pawmodoro.setForeground(Color.PINK);
+        final JLabel pawmodoro = new JLabel("Pawmodoro");
+        pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pawmodoro.setFont(new Font("Serif", Font.BOLD, 25));
+        pawmodoro.setForeground(Color.PINK);
 
         final JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -85,7 +85,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         cancel.addActionListener(this);
 
         this.add(Box.createRigidArea(new Dimension(40, 40)));
-        this.add(Pawmodoro);
+        this.add(pawmodoro);
         this.add(Box.createRigidArea(new Dimension(40, 40)));
         addUsernameListener();
         addPasswordListener();

@@ -50,9 +50,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.loggedInViewModel.addPropertyChangeListener(this);
         this.timerViewModel.addPropertyChangeListener(this);
 
-        final JLabel Pawmodoro = new JLabel("\uD83D\uDC31 Pawmodoro \uD83D\uDC31");
-        Pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Pawmodoro.setFont(new Font("Serif", Font.BOLD, 25));
+        final JLabel pawmodoro = new JLabel("Pawmodoro");
+        pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pawmodoro.setFont(new Font("Serif", Font.BOLD, 25));
 
         final JLabel title = new JLabel("Logged In Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -125,7 +125,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.timerView = new TimerView(timerViewModel);
 
         this.add(Box.createRigidArea(new Dimension(40, 40)));
-        this.add(Pawmodoro);
+        this.add(pawmodoro);
         this.add(Box.createRigidArea(new Dimension(40, 40)));
         this.add(title);
 
