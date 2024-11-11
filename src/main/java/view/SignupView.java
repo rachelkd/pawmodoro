@@ -37,6 +37,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         final JLabel Pawmodoro = new JLabel("\uD83D\uDC31 Pawmodoro \uD83D\uDC31");
         Pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
         Pawmodoro.setFont(new Font("Serif", Font.BOLD, 25));
+        Pawmodoro.setForeground(Color.PINK);
 
         final JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
