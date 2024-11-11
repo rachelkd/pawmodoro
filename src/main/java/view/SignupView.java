@@ -1,18 +1,12 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -39,6 +33,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     public SignupView(SignupViewModel signupViewModel) {
         this.signupViewModel = signupViewModel;
         signupViewModel.addPropertyChangeListener(this);
+
+        final JLabel Pawmodoro = new JLabel("\uD83D\uDC31 Pawmodoro \uD83D\uDC31");
+        Pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
+        Pawmodoro.setFont(new Font("Serif", Font.BOLD, 25));
 
         final JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -85,6 +83,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         cancel.addActionListener(this);
 
+        this.add(Box.createRigidArea(new Dimension(40, 40)));
+        this.add(Pawmodoro);
+        this.add(Box.createRigidArea(new Dimension(40, 40)));
         addUsernameListener();
         addPasswordListener();
         addRepeatPasswordListener();
@@ -96,6 +97,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(passwordInfo);
         this.add(repeatPasswordInfo);
         this.add(buttons);
+        this.add(Box.createRigidArea(new Dimension(40, 40)));
     }
 
     private void addUsernameListener() {
