@@ -3,7 +3,7 @@ package entity;
 /**
  * Represents dry food items like kibble that provide a moderate hunger boost.
  */
-public class DryFood extends FoodItem {
+public class DryFood extends AbstractFoodItem {
     private static final int DEFAULT_POINTS = 15;
 
     /**

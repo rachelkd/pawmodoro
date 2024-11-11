@@ -1,48 +1,68 @@
 package entity;
 
 /**
- * Represents a timer that can track different intervals for the Pomodoro
- * technique.
+ * A simple implementation of the Timer interface.
  */
-public interface Timer {
+public class CommonTimer implements Timer {
     /**
      * Starts or resumes the timer.
      */
-    void start();
+    @Override
+    public void start() {
+
+    }
 
     /**
      * Pauses the timer, preserving the elapsed time.
      */
-    void pause();
+    @Override
+    public void pause() {
+
+    }
 
     /**
      * Resumes the timer from its paused state.
      */
-    void resume();
+    @Override
+    public void resume() {
+
+    }
 
     /**
      * Stops the timer and resets elapsed time.
      */
-    void stop();
+    @Override
+    public void stop() {
+
+    }
 
     /**
      * Gets the current state of the timer.
-     * 
+     *
      * @return the current TimerState
      */
-    // TimerState getState();
+    @Override
+    public TimerState getState() {
+        return null;
+    }
 
     /**
      * Gets the current interval type.
-     * 
+     *
      * @return the current TimerInterval
      */
-    // TimerInterval getCurrentInterval();
+    @Override
+    public TimerInterval getCurrentInterval() {
+        return null;
+    }
 
     /**
      * Gets the elapsed time in milliseconds.
-     * 
+     *
      * @return the elapsed time
      */
-    long getElapsedTime();
+    @Override
+    public long getElapsedTime() {
+        return 0;
+    }
 }

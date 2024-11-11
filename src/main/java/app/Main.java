@@ -22,9 +22,12 @@ public class Main {
                 .addLoginUseCase()
                 .addLogoutUseCase()
                 .addChangePasswordUseCase()
+                .addCreateInventoryUseCase()
                 .build();
 
         application.pack();
         application.setVisible(true);
     }
 }
+
+//.addAddToInventoryUseCase()
