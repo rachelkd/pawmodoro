@@ -21,15 +21,15 @@ public interface AddToInventoryDataAccessInterface {
     void save(Inventory inventory);
 
     /**
-     * Retrieves the inventory of food items owned by a specific user.
-     *
-     * @param ownerId
-     *            the ID of the owner whose food items to retrieve
-     * @return a map of food items owned by the user
-     * @throws IllegalArgumentException
-     *             if ownerId is null or empty
-     */
-     Inventory getInventory(String ownerId);
+    * Retrieves the inventory of food items owned by a specific user.
+    *
+    * @param ownerId
+    *            the ID of the owner whose food items to retrieve
+    * @return a map of food items owned by the user
+    * @throws IllegalArgumentException
+    *             if ownerId is null or empty
+    */
+    Inventory getInventory(String ownerId);
 
     /**
      * Updates the quantity of a specific food item for a user.

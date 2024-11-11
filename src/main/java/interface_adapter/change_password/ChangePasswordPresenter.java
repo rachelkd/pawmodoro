@@ -1,7 +1,7 @@
 package interface_adapter.change_password;
 
-import use_case.authentication.change_password.ChangePasswordOutputBoundary;
-import use_case.authentication.change_password.ChangePasswordOutputData;
+import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.change_password.ChangePasswordOutputData;
 
 /**
  * The Presenter for the Change Password Use Case.

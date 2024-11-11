@@ -3,7 +3,7 @@ package entity;
 /**
  * Represents a treat food item that provides a small hunger boost.
  */
-public class TreatFood extends AbstractFoodItem{
+public class TreatFood extends AbstractFood {
     private static final int DEFAULT_POINTS = 10;
 
     /**

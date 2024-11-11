@@ -5,15 +5,21 @@ import java.util.Map;
 
 public class FoodInventory implements Inventory {
     private final String ownerId;
-    private final Map<String,AbstractFoodItem> items;
+    private final Map<String, AbstractFood> items;
 
     public FoodInventory(String ownerId) {
         this.ownerId = ownerId;
         this.items = new HashMap<>();
     }
 
-    public Map<String, AbstractFoodItem> getItems() {
-        return items;
+    /**
+     * Returns the items in the inventory.
+     *
+     * @return an unmodifiable view of the items map
+     */
+    @Override
+    public Map<String, ? extends Food> getItems() {
+        return Map.copyOf(items);
     }
 
     public String getOwnerId() {
