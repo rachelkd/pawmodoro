@@ -1,48 +1,43 @@
 package entity;
 
 /**
- * Represents a timer that can track different intervals for the Pomodoro
- * technique.
+ * Represents a timer entity in our program.
  */
-public interface Timer {
-    /**
-     * Starts or resumes the timer.
-     */
-    void start();
+public class Timer {
+    private final String state;
+    private final String currentInterval;
+    private final long elapsedTime;
+    private final long intervalDuration;
 
     /**
-     * Pauses the timer, preserving the elapsed time.
-     */
-    void pause();
-
-    /**
-     * Resumes the timer from its paused state.
-     */
-    void resume();
-
-    /**
-     * Stops the timer and resets elapsed time.
-     */
-    void stop();
-
-    /**
-     * Gets the current state of the timer.
+     * Creates a new Timer with the specified properties.
      * 
-     * @return the current TimerState
+     * @param state the current state of the timer
+     * @param currentInterval the current interval type
+     * @param elapsedTime the elapsed time in milliseconds
+     * @param intervalDuration the total duration of the interval in milliseconds
      */
-    TimerState getState();
+    public Timer(String state, String currentInterval,
+            long elapsedTime, long intervalDuration) {
+        this.state = state;
+        this.currentInterval = currentInterval;
+        this.elapsedTime = elapsedTime;
+        this.intervalDuration = intervalDuration;
+    }
 
-    /**
-     * Gets the current interval type.
-     * 
-     * @return the current TimerInterval
-     */
-    TimerInterval getCurrentInterval();
+    public String getState() {
+        return state;
+    }
 
-    /**
-     * Gets the elapsed time in milliseconds.
-     * 
-     * @return the elapsed time
-     */
-    long getElapsedTime();
+    public String getCurrentInterval() {
+        return currentInterval;
+    }
+
+    public long getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public long getIntervalDuration() {
+        return intervalDuration;
+    }
 }
