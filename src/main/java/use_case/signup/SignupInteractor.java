@@ -33,6 +33,7 @@ public class SignupInteractor implements SignupInputBoundary {
 
             final SignupOutputData signupOutputData = new SignupOutputData(user.getName(), false);
             userPresenter.prepareSuccessView(signupOutputData);
+            //create inventory here???
         }
     }
 

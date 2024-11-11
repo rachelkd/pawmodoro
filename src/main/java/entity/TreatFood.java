@@ -10,7 +10,7 @@ public class TreatFood extends AbstractFood {
      * Creates a new treat food item.
      *
      * @param foodId
-     *            the unique identifier for this food item
+     *            unique identifier (e.g., "tuna_can", "salmon_paste")
      * @param name
      *            the unique name of this treat (e.g., "cookie", "snack")
      * @param quantity

@@ -6,13 +6,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
-import entity.CommonUserFactory;
-import entity.UserFactory;
+import entity.*;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_to_inventory.AddToInventoryController;
+import interface_adapter.add_to_inventory.AddToInventoryPresenter;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.create_inventory.CreateInventoryController;
+import interface_adapter.create_inventory.CreateInventoryPresenter;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -52,12 +56,15 @@ public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
+    private final FoodItemFactory foodItemFactory = new FoodItemFactory();
+    private final InventoryFactory inventoryFactory = new FoodInventoryFactory();
     private final UserFactory userFactory = new CommonUserFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+    private final InMemoryInventoryDataAccessObject inventoryDataAccessObject = new InMemoryInventoryDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -153,6 +160,42 @@ public class AppBuilder {
         final ChangePasswordController changePasswordController = new ChangePasswordController(
                 changePasswordInteractor);
         loggedInView.setChangePasswordController(changePasswordController);
+        return this;
+    }
+
+    public AppBuilder addCreateInventoryUseCase() {
+        final CreateInventoryOutputBoundary createInventoryOutputBoundary =
+                new CreateInventoryPresenter(loggedInViewModel);
+
+        final CreateInventoryInputBoundary createInventoryInteractor = new CreateInventoryInteractor
+                (inventoryDataAccessObject, createInventoryOutputBoundary, inventoryFactory);
+
+        final CreateInventoryController createInventoryController =
+                new CreateInventoryController(createInventoryInteractor);
+        loggedInView.setCreateInventoryController(createInventoryController);
+        return this;
+    }
+
+    public AppBuilder addAddToInventoryUseCase() {
+        final AddToInventoryOutputBoundary addToInventoryOutputBoundary = new AddToInventoryPresenter(
+                loggedInViewModel);
+
+        final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor(inventoryDataAccessObject,
+                addToInventoryOutputBoundary, foodItemFactory);
+
+        final AddToInventoryController addToInventoryController = new AddToInventoryController(addToInventoryInteractor);
+        loggedInView.setAddToInventoryController(addToInventoryController);
+        return this;
+    }
+
+    public AppBuilder addUseItemUseCase() {
+        final UseItemOutputBoundary useItemOutputBoundary = new UseItemPresenter(loggedInViewModel);
+
+        final UseItemInputBoundary useItemInteractor = new UseItemInteractor(inventoryDataAccessObject,
+                useItemOutputBoundary);
+
+        final UseItemController useItemController = new UseItemController(useItemInteractor);
+        loggedInView.setUseItemController(useItemController);
         return this;
     }
 
