@@ -5,8 +5,8 @@ import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
-import use_case.authentication.logout.LogoutOutputBoundary;
-import use_case.authentication.logout.LogoutOutputData;
+import use_case.logout.LogoutOutputBoundary;
+import use_case.logout.LogoutOutputData;
 
 /**
  * The Presenter for the Logout Use Case.
@@ -52,6 +52,7 @@ public class LogoutPresenter implements LogoutOutputBoundary {
         final LoginState loginState = loginViewModel.getState();
         loginState.setUsername("");
         loginState.setPassword("");
+        loginState.setLoginError("");
         loginViewModel.setState(loginState);
         loginViewModel.firePropertyChanged();
 

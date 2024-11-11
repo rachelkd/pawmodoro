@@ -1,48 +1,43 @@
-//package entity;
-//
-///**
-// * Represents a timer that can track different intervals for the Pomodoro
-// * technique.
-// */
-//public interface Timer {
-//    /**
-//     * Starts or resumes the timer.
-//     */
-//    void start();
-//
-//    /**
-//     * Pauses the timer, preserving the elapsed time.
-//     */
-//    void pause();
-//
-//    /**
-//     * Resumes the timer from its paused state.
-//     */
-//    void resume();
-//
-//    /**
-//     * Stops the timer and resets elapsed time.
-//     */
-//    void stop();
-//
-//    /**
-//     * Gets the current state of the timer.
-//     *
-//     * @return the current TimerState
-//     */
-//    TimerState getState();
-//
-//    /**
-//     * Gets the current interval type.
-//     *
-//     * @return the current TimerInterval
-//     */
-//    TimerInterval getCurrentInterval();
-//
-//    /**
-//     * Gets the elapsed time in milliseconds.
-//     *
-//     * @return the elapsed time
-//     */
-//    long getElapsedTime();
-//}
+package entity;
+
+/**
+ * Represents a timer entity in our program.
+ */
+public class Timer {
+    private final String status;
+    private final String currentInterval;
+    private final long elapsedTime;
+    private final long intervalDuration;
+
+    /**
+     * Creates a new Timer with the specified properties.
+     * 
+     * @param status the current status of the timer (RUNNING, PAUSED, STOPPED)
+     * @param currentInterval the current interval type
+     * @param elapsedTime the elapsed time in milliseconds
+     * @param intervalDuration the total duration of the interval in milliseconds
+     */
+    public Timer(String status, String currentInterval,
+            long elapsedTime, long intervalDuration) {
+        this.status = status;
+        this.currentInterval = currentInterval;
+        this.elapsedTime = elapsedTime;
+        this.intervalDuration = intervalDuration;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getCurrentInterval() {
+        return currentInterval;
+    }
+
+    public long getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public long getIntervalDuration() {
+        return intervalDuration;
+    }
+}

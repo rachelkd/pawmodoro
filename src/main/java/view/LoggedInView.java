@@ -3,15 +3,22 @@ package view;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.use_item_in_inventory.UseItemController;
+import interface_adapter.timer.TimerViewModel;
+import interface_adapter.timer.TimerController;
 
 /**
  * The View for when the user is logged into the program.
@@ -23,6 +30,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JLabel passwordErrorField = new JLabel();
     private ChangePasswordController changePasswordController;
     private LogoutController logoutController;
+    private AddToInventoryController addToInventoryController;
+    private CreateInventoryController createInventoryController;
+    private UseItemController useItemController;
+    private final TimerViewModel timerViewModel;
+    private final TimerView timerView;
+    private TimerController timerController;
 
     private final JLabel username;
 
@@ -31,9 +44,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, TimerViewModel timerViewModel) {
         this.loggedInViewModel = loggedInViewModel;
+        this.timerViewModel = timerViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
+        this.timerViewModel.addPropertyChangeListener(this);
 
         final JLabel Pawmodoro = new JLabel("\uD83D\uDC31 Pawmodoro \uD83D\uDC31");
         Pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -105,10 +120,15 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                     }
                 });
 
+        // Create timer view component
+        this.timerView = new TimerView(timerViewModel);
+
         this.add(Box.createRigidArea(new Dimension(40, 40)));
         this.add(Pawmodoro);
         this.add(Box.createRigidArea(new Dimension(40, 40)));
         this.add(title);
+
+        this.add(timerView);
         this.add(usernameInfo);
         this.add(username);
 
@@ -127,7 +147,15 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             JOptionPane.showMessageDialog(null, "password updated for " + state.getUsername());
         }
-
+        else if (evt.getPropertyName().equals("inventory_add")) {
+            final LoggedInState state = (LoggedInState) evt.getNewValue();
+            JOptionPane.showMessageDialog(null, "item added to inventory for " + state.getUsername());
+        }
+        else if (evt.getPropertyName().equals("inventory_item_used")) {
+            final LoggedInState state = (LoggedInState) evt.getNewValue();
+            JOptionPane.showMessageDialog(null, "item used for " + state.getUsername());
+        }
+        // Note: Timer-related property change is now handled by TimerView
     }
 
     public String getViewName() {
@@ -138,7 +166,23 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.changePasswordController = changePasswordController;
     }
 
+    public void setCreateInventoryController(CreateInventoryController createInventoryController) {
+        this.createInventoryController = createInventoryController;
+    }
+
+    public void setAddToInventoryController(AddToInventoryController addToInventoryController) {
+        this.addToInventoryController = addToInventoryController;
+    }
+
+    public void setUseItemController(UseItemController useItemController) {
+        this.useItemController = useItemController;
+    }
+
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
+    }
+
+    public void setTimerController(TimerController timerController) {
+        this.timerController = timerController;
     }
 }

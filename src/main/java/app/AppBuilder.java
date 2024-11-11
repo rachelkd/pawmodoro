@@ -6,42 +6,88 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
+import entity.FoodInventoryFactory;
+import entity.FoodItemFactory;
+import entity.InventoryFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.adoption.AdoptionController;
+import interface_adapter.adoption.AdoptionPresenter;
+import interface_adapter.adoption.AdoptionViewModel;
+import interface_adapter.add_to_inventory.AddToInventoryController;
+import interface_adapter.add_to_inventory.AddToInventoryPresenter;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.create_inventory.CreateInventoryController;
+import interface_adapter.create_inventory.CreateInventoryPresenter;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
+import interface_adapter.setupsession.SetupSessionController;
+import interface_adapter.setupsession.SetupSessionPresenter;
+import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import use_case.authentication.change_password.ChangePasswordInputBoundary;
-import use_case.authentication.change_password.ChangePasswordInteractor;
-import use_case.authentication.change_password.ChangePasswordOutputBoundary;
-import use_case.authentication.login.LoginInputBoundary;
-import use_case.authentication.login.LoginInteractor;
-import use_case.authentication.login.LoginOutputBoundary;
-import use_case.authentication.logout.LogoutInputBoundary;
-import use_case.authentication.logout.LogoutInteractor;
-import use_case.authentication.logout.LogoutOutputBoundary;
-import use_case.authentication.signup.SignupInputBoundary;
-import use_case.authentication.signup.SignupInteractor;
-import use_case.authentication.signup.SignupOutputBoundary;
+// import use_case.authentication.change_password.ChangePasswordInputBoundary;
+// import use_case.authentication.change_password.ChangePasswordInteractor;
+// import use_case.authentication.change_password.ChangePasswordOutputBoundary;
+// import use_case.authentication.login.LoginInputBoundary;
+// import use_case.authentication.login.LoginInteractor;
+// import use_case.authentication.login.LoginOutputBoundary;
+// import use_case.authentication.logout.LogoutInputBoundary;
+// import use_case.authentication.logout.LogoutInteractor;
+// import use_case.authentication.logout.LogoutOutputBoundary;
+// import use_case.authentication.signup.SignupInputBoundary;
+// import use_case.authentication.signup.SignupInteractor;
+// import use_case.authentication.signup.SignupOutputBoundary;
+import view.AdoptionView;
+import interface_adapter.use_item_in_inventory.UseItemController;
+import interface_adapter.use_item_in_inventory.UseItemPresenter;
+import use_case.authentication.create_inventory.CreateInventoryInputBoundary;
+import use_case.authentication.create_inventory.CreateInventoryInteractor;
+import use_case.authentication.create_inventory.CreateInventoryOutputBoundary;
+import use_case.change_password.ChangePasswordInputBoundary;
+import use_case.change_password.ChangePasswordInteractor;
+import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.food_management.add_to_inventory.AddToInventoryInputBoundary;
+import use_case.food_management.add_to_inventory.AddToInventoryInteractor;
+import use_case.food_management.add_to_inventory.AddToInventoryOutputBoundary;
+import use_case.food_management.use_item_in_inventory.UseItemInputBoundary;
+import use_case.food_management.use_item_in_inventory.UseItemInteractor;
+import use_case.food_management.use_item_in_inventory.UseItemOutputBoundary;
+import use_case.login.LoginInputBoundary;
+import use_case.login.LoginInteractor;
+import use_case.login.LoginOutputBoundary;
+import use_case.logout.LogoutInputBoundary;
+import use_case.logout.LogoutInteractor;
+import use_case.logout.LogoutOutputBoundary;
+import use_case.signup.SignupInputBoundary;
+import use_case.signup.SignupInteractor;
+import use_case.signup.SignupOutputBoundary;
 import view.LoggedInView;
 import view.LoginView;
+import view.MaxCatsErrorView;
+import view.SetupSessionView;
 import view.SignupView;
 import view.ViewManager;
+import interface_adapter.timer.TimerViewModel;
+import interface_adapter.timer.TimerPresenter;
+import interface_adapter.timer.TimerController;
+import use_case.timer.display_timer.*;
+import data_access.InMemoryTimerDataAccessObject;
+import entity.TimerFactory;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
  * our CA architecture; piece by piece.
- * <p/>
  * This is done by adding each View and then adding related Use Cases.
  */
 // Checkstyle note: you can ignore the "Class Data Abstraction Coupling"
@@ -53,19 +99,35 @@ public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
+    private final FoodItemFactory foodItemFactory = new FoodItemFactory();
+    private final InventoryFactory inventoryFactory = new FoodInventoryFactory();
     private final UserFactory userFactory = new CommonUserFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+    private final InMemoryInventoryDataAccessObject inventoryDataAccessObject = new InMemoryInventoryDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
+
+    private SetupSessionView setupSessionView;
+    private SetupSessionViewModel setupSessionViewModel;
+
+    private MaxCatsErrorView maxCatsErrorView;
+    private MaxCatsErrorViewModel maxCatsErrorViewModel;
+
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+    private AdoptionView adoptionView;
+    private AdoptionViewModel adoptionViewModel;
+
+    private final TimerViewModel timerViewModel = new TimerViewModel();
+    private final InMemoryTimerDataAccessObject timerDataAccessObject = new InMemoryTimerDataAccessObject();
+    private final TimerFactory timerFactory = new TimerFactory();
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -80,6 +142,42 @@ public class AppBuilder {
         signupViewModel = new SignupViewModel();
         signupView = new SignupView(signupViewModel);
         cardPanel.add(signupView, signupView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Adoption View to the application.
+     *
+     * @return this builder
+     */
+    public AppBuilder addAdoptionView() {
+        adoptionViewModel = new AdoptionViewModel();
+        adoptionView = new AdoptionView(adoptionViewModel);
+        cardPanel.add(adoptionView, adoptionView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Setup Study Session View to the application.
+     * 
+     * @return this builder
+     */
+    public AppBuilder addSetupSessionView() {
+        setupSessionViewModel = new SetupSessionViewModel();
+        setupSessionView = new SetupSessionView(setupSessionViewModel);
+        cardPanel.add(setupSessionView, setupSessionView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Maximum Cats Error View to the application.
+     * 
+     * @return this builder
+     */
+    public AppBuilder addMaxCatsErrorView() {
+        maxCatsErrorViewModel = new MaxCatsErrorViewModel();
+        maxCatsErrorView = new MaxCatsErrorView(maxCatsErrorViewModel);
+        cardPanel.add(maxCatsErrorView, maxCatsErrorView.getViewName());
         return this;
     }
 
@@ -102,7 +200,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
+        loggedInView = new LoggedInView(loggedInViewModel, timerViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
@@ -158,6 +256,59 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Create Inventory Use Case to the application.
+     * 
+     * @return this builder
+     */
+    public AppBuilder addCreateInventoryUseCase() {
+        final CreateInventoryOutputBoundary createInventoryOutputBoundary = new CreateInventoryPresenter(
+                loggedInViewModel);
+
+        final CreateInventoryInputBoundary createInventoryInteractor = new CreateInventoryInteractor(
+                inventoryDataAccessObject, createInventoryOutputBoundary, inventoryFactory);
+
+        final CreateInventoryController createInventoryController = new CreateInventoryController(
+                createInventoryInteractor);
+        loggedInView.setCreateInventoryController(createInventoryController);
+        return this;
+    }
+
+    /**
+     * Adds the Add To Inventory Use Case to the application.
+     * 
+     * @return this builder
+     */
+    public AppBuilder addAddToInventoryUseCase() {
+        final AddToInventoryOutputBoundary addToInventoryOutputBoundary = new AddToInventoryPresenter(
+                loggedInViewModel);
+
+        final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor(
+                inventoryDataAccessObject,
+                addToInventoryOutputBoundary, foodItemFactory);
+
+        final AddToInventoryController addToInventoryController = new AddToInventoryController(
+                addToInventoryInteractor);
+        loggedInView.setAddToInventoryController(addToInventoryController);
+        return this;
+    }
+
+    /**
+     * Adds the Use Item Use Case to the application.
+     * 
+     * @return this builder
+     */
+    public AppBuilder addUseItemUseCase() {
+        final UseItemOutputBoundary useItemOutputBoundary = new UseItemPresenter(loggedInViewModel);
+
+        final UseItemInputBoundary useItemInteractor = new UseItemInteractor(inventoryDataAccessObject,
+                useItemOutputBoundary);
+
+        final UseItemController useItemController = new UseItemController(useItemInteractor);
+        loggedInView.setUseItemController(useItemController);
+        return this;
+    }
+
+    /**
      * Adds the Logout Use Case to the application.
      * 
      * @return this builder
@@ -170,6 +321,27 @@ public class AppBuilder {
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         loggedInView.setLogoutController(logoutController);
+        return this;
+    }
+
+    /**
+     * Adds the Display Timer Use Case to the application.
+     * 
+     * @return this builder
+     */
+    public AppBuilder addDisplayTimerUseCase() {
+        final DisplayTimerOutputBoundary timerOutputBoundary = new TimerPresenter(timerViewModel);
+
+        final DisplayTimerInputBoundary timerInteractor = new DisplayTimerInteractor(timerDataAccessObject,
+                timerOutputBoundary);
+
+        final TimerController timerController = new TimerController(timerInteractor);
+
+        // If LoggedInView needs to trigger timer updates
+        if (loggedInView != null) {
+            loggedInView.setTimerController(timerController);
+        }
+
         return this;
     }
 
