@@ -117,6 +117,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                         // 2. Execute the logout Controller.
                         final LoggedInState currentState = loggedInViewModel.getState();
                         this.logoutController.execute(currentState.getUsername());
+                        clearPasswordField();
                     }
                 });
 
@@ -155,7 +156,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             JOptionPane.showMessageDialog(null, "item used for " + state.getUsername());
         }
-        // Note: Timer-related property change is now handled by TimerView
+        // Timer-related property change is handled by TimerView
     }
 
     public String getViewName() {
@@ -184,5 +185,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setTimerController(TimerController timerController) {
         this.timerController = timerController;
+    }
+
+    /**
+     * Clears the password field (for logging out).
+     */
+    public void clearPasswordField() {
+        passwordInputField.setText("");
     }
 }
