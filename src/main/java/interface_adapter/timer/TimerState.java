@@ -21,10 +21,10 @@ public class TimerState {
         this.intervalDuration = copy.intervalDuration;
     }
 
-    // Default constructor
-    public TimerState() {}
+    public TimerState() {
+        // Default constructor
+    }
 
-    // Getters and setters
     public String getStatus() {
         return status;
     }

@@ -1,12 +1,15 @@
 package use_case.timer;
 
-public class GetTimerOutputData {
+/**
+ * Output data for Timer Use Cases.
+ */
+public class TimerOutputData {
     private final String status;
     private final String currentInterval;
     private final long elapsedTime;
     private final long intervalDuration;
 
-    public GetTimerOutputData(String status, String currentInterval,
+    public TimerOutputData(String status, String currentInterval,
             long elapsedTime, long intervalDuration) {
         this.status = status;
         this.currentInterval = currentInterval;

@@ -1,9 +1,12 @@
 package use_case.timer;
 
-public class GetTimerInputData {
+/**
+ * Input data for Timer Use Cases.
+ */
+public class TimerInputData {
     private final String username;
 
-    public GetTimerInputData(String username) {
+    public TimerInputData(String username) {
         this.username = username;
     }
 
