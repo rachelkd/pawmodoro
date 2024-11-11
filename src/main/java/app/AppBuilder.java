@@ -25,9 +25,20 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.use_item_in_inventory.UseItemController;
+import interface_adapter.use_item_in_inventory.UseItemPresenter;
+import use_case.authentication.create_inventory.CreateInventoryInputBoundary;
+import use_case.authentication.create_inventory.CreateInventoryInteractor;
+import use_case.authentication.create_inventory.CreateInventoryOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.food_management.add_to_inventory.AddToInventoryInputBoundary;
+import use_case.food_management.add_to_inventory.AddToInventoryInteractor;
+import use_case.food_management.add_to_inventory.AddToInventoryOutputBoundary;
+import use_case.food_management.use_item_in_inventory.UseItemInputBoundary;
+import use_case.food_management.use_item_in_inventory.UseItemInteractor;
+import use_case.food_management.use_item_in_inventory.UseItemOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -164,14 +175,14 @@ public class AppBuilder {
     }
 
     public AppBuilder addCreateInventoryUseCase() {
-        final CreateInventoryOutputBoundary createInventoryOutputBoundary =
-                new CreateInventoryPresenter(loggedInViewModel);
+        final CreateInventoryOutputBoundary createInventoryOutputBoundary = new CreateInventoryPresenter(
+                loggedInViewModel);
 
-        final CreateInventoryInputBoundary createInventoryInteractor = new CreateInventoryInteractor
-                (inventoryDataAccessObject, createInventoryOutputBoundary, inventoryFactory);
+        final CreateInventoryInputBoundary createInventoryInteractor = new CreateInventoryInteractor(
+                inventoryDataAccessObject, createInventoryOutputBoundary, inventoryFactory);
 
-        final CreateInventoryController createInventoryController =
-                new CreateInventoryController(createInventoryInteractor);
+        final CreateInventoryController createInventoryController = new CreateInventoryController(
+                createInventoryInteractor);
         loggedInView.setCreateInventoryController(createInventoryController);
         return this;
     }
@@ -180,10 +191,12 @@ public class AppBuilder {
         final AddToInventoryOutputBoundary addToInventoryOutputBoundary = new AddToInventoryPresenter(
                 loggedInViewModel);
 
-        final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor(inventoryDataAccessObject,
+        final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor(
+                inventoryDataAccessObject,
                 addToInventoryOutputBoundary, foodItemFactory);
 
-        final AddToInventoryController addToInventoryController = new AddToInventoryController(addToInventoryInteractor);
+        final AddToInventoryController addToInventoryController = new AddToInventoryController(
+                addToInventoryInteractor);
         loggedInView.setAddToInventoryController(addToInventoryController);
         return this;
     }
