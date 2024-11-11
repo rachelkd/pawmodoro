@@ -3,7 +3,7 @@ package entity;
 /**
  * Represents wet food items like canned food that provide a high hunger boost.
  */
-public class WetFood extends FoodItem {
+public class WetFood extends AbstractFood {
     private static final int DEFAULT_POINTS = 25;
 
     /**
