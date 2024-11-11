@@ -2,7 +2,7 @@ package use_case.food_management;
 
 import java.util.Collection;
 
-import entity.FoodItem;
+import entity.AbstractFood;
 
 /**
  * Repository interface for managing food inventory persistence.
@@ -20,7 +20,7 @@ public interface FoodInventoryDataAccessInterface {
      * @throws IllegalArgumentException
      *             if item is null
      */
-    void save(FoodItem item);
+    void save(AbstractFood item);
 
     /**
      * Retrieves all food items owned by a specific user.
@@ -31,7 +31,7 @@ public interface FoodInventoryDataAccessInterface {
      * @throws IllegalArgumentException
      *             if ownerId is null or empty
      */
-    Collection<FoodItem> findByOwnerId(String ownerId);
+    Collection<AbstractFood> findByOwnerId(String ownerId);
 
     /**
      * Updates the quantity of a specific food item for a user.

@@ -10,7 +10,7 @@ public class Cat {
     private static final int INITIAL_LEVEL = 100;
     private static final int MAX_LEVEL = 100;
     private static final int MIN_LEVEL = 0;
-    
+
     private final String name;
     private final String ownerId;
     private int hungerLevel;
@@ -74,7 +74,7 @@ public class Cat {
      *
      * @param food the food item to feed to the cat
      */
-    public void feed(AbstractFoodItem food) {
+    public void feed(AbstractFood food) {
         this.updateHunger(food.getPoints());
     }
 

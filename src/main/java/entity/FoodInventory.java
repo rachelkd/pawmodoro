@@ -22,7 +22,7 @@ public interface FoodInventory {
      *
      * @return the collection of food items
      */
-    Collection<FoodItem> getItems();
+    Collection<AbstractFood> getItems();
 
     /**
      * Adds a food item to the inventory.
@@ -30,7 +30,7 @@ public interface FoodInventory {
      * @param item the food item to add
      * @throws IllegalArgumentException if item is null
      */
-    void addItem(FoodItem item);
+    void addItem(AbstractFood item);
 
     /**
      * Removes one unit of the specified food from inventory.

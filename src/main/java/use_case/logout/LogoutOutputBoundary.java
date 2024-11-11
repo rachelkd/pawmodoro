@@ -1,15 +1,15 @@
-package use_case.authentication.login;
+package use_case.logout;
 
 /**
  * The output boundary for the Login Use Case.
  */
-public interface LoginOutputBoundary {
+public interface LogoutOutputBoundary {
     /**
      * Prepares the success view for the Login Use Case.
      * 
      * @param outputData the output data
      */
-    void prepareSuccessView(LoginOutputData outputData);
+    void prepareSuccessView(LogoutOutputData outputData);
 
     /**
      * Prepares the failure view for the Login Use Case.
