@@ -26,6 +26,10 @@ public final class Constants {
     public static final int CAT_IMAGE_MAX_HEIGHT = 200;
     public static final int CAT_IMAGE_SIZE = 300;
 
+    // Signup, Login, Loggedin view model constants
+    public static final int SPACING = 40;
+    public static final int TITLE = 25;
+
     private Constants() {
         // Prevent instantiation
     }
