@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import constants.Constants;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -39,7 +40,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         final JLabel pawmodoro = new JLabel("Pawmodoro");
         pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
-        pawmodoro.setFont(new Font("Serif", Font.BOLD, 25));
+        pawmodoro.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TITLE));
+        pawmodoro.setForeground(Color.PINK);
 
         final JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -120,9 +122,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             }
         });
 
-        this.add(Box.createRigidArea(new Dimension(40, 40)));
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         this.add(pawmodoro);
-        this.add(Box.createRigidArea(new Dimension(40, 40)));
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         this.add(title);
         this.add(usernameInfo);
         this.add(usernameErrorField);
