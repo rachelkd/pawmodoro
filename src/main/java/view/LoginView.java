@@ -37,7 +37,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
-        final JLabel pawmodoro = new JLabel("Pawmodor \uD83D\uDC31");
+        final JLabel pawmodoro = new JLabel("Pawmodoro");
         pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
         pawmodoro.setFont(new Font("Serif", Font.BOLD, 25));
 
@@ -63,12 +63,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
                             loginController.execute(
                                     currentState.getUsername(),
-                                    currentState.getPassword()
-                            );
+                                    currentState.getPassword());
                         }
                     }
-                }
-        );
+                });
 
         cancel.addActionListener(this);
 
@@ -134,6 +132,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     /**
      * React to a button click that results in evt.
+     * 
      * @param evt the ActionEvent to react to
      */
     public void actionPerformed(ActionEvent evt) {
