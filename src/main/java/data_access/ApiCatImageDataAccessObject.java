@@ -15,8 +15,11 @@ import use_case.cat_image.CatImageDataAccessInterface;
  * Cat API.
  */
 public class ApiCatImageDataAccessObject implements CatImageDataAccessInterface {
-    // Query API for only jpg and png images
-    private static final String API_ENDPOINT = "https://api.thecatapi.com/v1/images/search?mime_types=jpg,png";
+    // Query API for jpg/png images with small/medium size
+    private static final String API_ENDPOINT = "https://api.thecatapi.com/v1/images/search"
+            + "?mime_types=jpg,png"
+            + "&size=small";
+
     private final HttpClient client;
     private final ObjectMapper objectMapper;
 
