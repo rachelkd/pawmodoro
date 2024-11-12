@@ -51,8 +51,14 @@ public class CatImageView extends JPanel implements PropertyChangeListener {
 
         if (viewModel.isRefreshAllowed()) {
             final JButton refreshButton = new JButton("New Cat");
+
+            // Create a panel to hold the button and center it
+            final JPanel buttonPanel = new JPanel();
+            refreshButton.setPreferredSize(new Dimension(100, 30));
+            buttonPanel.add(refreshButton);
+
             refreshButton.addActionListener(event -> controller.fetchNewImage());
-            add(refreshButton, BorderLayout.SOUTH);
+            add(buttonPanel, BorderLayout.SOUTH);
         }
 
         // Fetch initial image
@@ -67,18 +73,26 @@ public class CatImageView extends JPanel implements PropertyChangeListener {
                 final ImageIcon originalIcon = new ImageIcon(imageUrl);
                 final Image originalImage = originalIcon.getImage();
 
-                // Calculate height to maintain aspect ratio
-                final double aspectRatio = (double) originalImage.getHeight(null) / originalImage.getWidth(null);
-                final int scaledHeight = (int) (Constants.CAT_IMAGE_SIZE * aspectRatio);
+                final int originalWidth = originalImage.getWidth(null);
+                final int originalHeight = originalImage.getHeight(null);
+
+                // Calculate scaling factor to fit within max dimensions
+                final double widthScale = (double) Constants.CAT_IMAGE_MAX_WIDTH / originalWidth;
+                final double heightScale = (double) Constants.CAT_IMAGE_MAX_HEIGHT / originalHeight;
+                final double scale = Math.min(widthScale, heightScale);
+
+                // Calculate new dimensions
+                final int scaledWidth = (int) (originalWidth * scale);
+                final int scaledHeight = (int) (originalHeight * scale);
 
                 final Image scaledImage = originalImage.getScaledInstance(
-                        Constants.CAT_IMAGE_SIZE,
+                        scaledWidth,
                         scaledHeight,
                         Image.SCALE_SMOOTH);
                 imageLabel.setIcon(new ImageIcon(scaledImage));
 
-                // Update panel size to match image
-                setPreferredSize(new Dimension(Constants.CAT_IMAGE_SIZE, scaledHeight));
+                // Update panel size to match scaled image
+                setPreferredSize(new Dimension(scaledWidth, scaledHeight));
             }
             catch (final MalformedURLException exception) {
                 imageLabel.setText("Failed to load image: Invalid URL");
