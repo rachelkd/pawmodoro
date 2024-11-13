@@ -23,7 +23,7 @@ public final class Constants {
 
     // Cat Image constants
     public static final int CAT_IMAGE_MAX_WIDTH = 300;
-    public static final int CAT_IMAGE_MAX_HEIGHT = 200;
+    public static final int CAT_IMAGE_MAX_HEIGHT = 150;
     public static final int CAT_IMAGE_SIZE = 300;
 
     // Signup, Login, Loggedin view model constants
