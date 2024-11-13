@@ -8,7 +8,7 @@ import java.net.http.HttpResponse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.CatImage;
-import use_case.cat_image.CatImageDataAccessInterface;
+import use_case.display_cat_image.CatImageDataAccessInterface;
 
 /**
  * Implementation of CatImageDataAccessInterface that fetches images from The

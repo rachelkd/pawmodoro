@@ -1,7 +1,7 @@
 package interface_adapter.cat_image;
 
-import use_case.cat_image.CatImageOutputBoundary;
-import use_case.cat_image.CatImageOutputData;
+import use_case.display_cat_image.CatImageOutputBoundary;
+import use_case.display_cat_image.CatImageOutputData;
 
 /**
  * Presenter for the cat image feature.

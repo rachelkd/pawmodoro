@@ -1,4 +1,4 @@
-package use_case.cat_image;
+package use_case.display_cat_image;
 
 /**
  * Output data from the cat image use case.

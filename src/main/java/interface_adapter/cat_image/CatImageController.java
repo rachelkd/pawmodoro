@@ -1,7 +1,7 @@
 package interface_adapter.cat_image;
 
-import use_case.cat_image.CatImageInputBoundary;
-import use_case.cat_image.CatImageInputData;
+import use_case.display_cat_image.CatImageInputBoundary;
+import use_case.display_cat_image.CatImageInputData;
 
 /**
  * Controller for the cat image feature.
