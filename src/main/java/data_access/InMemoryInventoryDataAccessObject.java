@@ -29,6 +29,11 @@ public class InMemoryInventoryDataAccessObject implements AddToInventoryDataAcce
     }
 
     @Override
+    public Map<String, AbstractFood> getInventoryItems(String ownerId) {
+        return new HashMap<>(inventoryStorage.get(ownerId).getItems());
+    }
+
+    @Override
     public Inventory getInventory(String ownerId) {
         return inventoryStorage.get(ownerId);
     }
@@ -47,10 +52,9 @@ public class InMemoryInventoryDataAccessObject implements AddToInventoryDataAcce
             final AbstractFood item = inventory.getItems().get(foodId);
             item.setQuantity(quantity);
         }
-
     }
 
-    public Map<String, Inventory> getInventoryStorage() {
-        return inventoryStorage;
+    public boolean isEmpty(String ownerId) {
+        return inventoryStorage.get(ownerId).getItems().isEmpty();
     }
 }

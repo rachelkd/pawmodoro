@@ -48,7 +48,7 @@ public class InventoryExample {
         final CreateInventoryInputBoundary interactor = new CreateInventoryInteractor(dataAccessObject, presenter,
                 inventoryFactory);
         final CreateInventoryController controller = new CreateInventoryController(interactor);
-        final InventoryView inventoryView = new InventoryView(viewModel, controller);
+        final InventoryView inventoryView = new InventoryView(viewModel);
 
 
         final JFrame application = new JFrame("Pllllssssss");

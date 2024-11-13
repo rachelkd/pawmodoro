@@ -24,6 +24,7 @@ import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.CreateInventoryPresenter;
+import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -36,7 +37,7 @@ import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import view.AdoptionView;
+import view.*;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
 import use_case.authentication.create_inventory.CreateInventoryInputBoundary;
@@ -60,12 +61,6 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.LoggedInView;
-import view.LoginView;
-import view.MaxCatsErrorView;
-import view.SetupSessionView;
-import view.SignupView;
-import view.ViewManager;
 import interface_adapter.timer.TimerViewModel;
 import interface_adapter.timer.TimerPresenter;
 import interface_adapter.timer.TimerController;
@@ -80,7 +75,6 @@ import use_case.cat_image.CatImageInteractor;
 import interface_adapter.cat_image.CatImageController;
 import interface_adapter.cat_image.CatImagePresenter;
 import data_access.ApiCatImageDataAccessObject;
-import view.CatImageView;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -105,6 +99,9 @@ public class AppBuilder {
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
     private final InMemoryInventoryDataAccessObject inventoryDataAccessObject = new InMemoryInventoryDataAccessObject();
+
+    private final InventoryViewModel inventoryViewModel = new InventoryViewModel();
+    private final InventoryView inventoryView = new InventoryView(inventoryViewModel);
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -266,7 +263,7 @@ public class AppBuilder {
 
         final CreateInventoryController createInventoryController = new CreateInventoryController(
                 createInventoryInteractor);
-        loggedInView.setCreateInventoryController(createInventoryController);
+        inventoryView.setCreateInventoryController(createInventoryController);
         return this;
     }
 
@@ -277,7 +274,7 @@ public class AppBuilder {
      */
     public AppBuilder addAddToInventoryUseCase() {
         final AddToInventoryOutputBoundary addToInventoryOutputBoundary = new AddToInventoryPresenter(
-                loggedInViewModel);
+                inventoryViewModel);
 
         final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor(
                 inventoryDataAccessObject,
@@ -285,7 +282,7 @@ public class AppBuilder {
 
         final AddToInventoryController addToInventoryController = new AddToInventoryController(
                 addToInventoryInteractor);
-        loggedInView.setAddToInventoryController(addToInventoryController);
+        inventoryView.setAddToInventoryController(addToInventoryController);
         return this;
     }
 
@@ -301,7 +298,7 @@ public class AppBuilder {
                 useItemOutputBoundary);
 
         final UseItemController useItemController = new UseItemController(useItemInteractor);
-        loggedInView.setUseItemController(useItemController);
+        inventoryView.setUseItemController(useItemController);
         return this;
     }
 

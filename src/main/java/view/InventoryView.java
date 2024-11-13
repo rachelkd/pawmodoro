@@ -1,32 +1,36 @@
 package view;
 
 import interface_adapter.add_to_inventory.AddToInventoryController;
+import interface_adapter.change_password.LoggedInState;
 import interface_adapter.create_inventory.CreateInventoryController;
+import interface_adapter.create_inventory.InventoryState;
 import interface_adapter.create_inventory.InventoryViewModel;
+import interface_adapter.use_item_in_inventory.UseItemController;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * The View when user is viewing contents of their inventory.
  */
-public class InventoryView extends JPanel implements ActionListener {
+public class InventoryView extends JPanel implements ActionListener, PropertyChangeListener {
     private final InventoryViewModel viewModel;
-    private final CreateInventoryController createInventoryController;
-    // private final AddToInventoryController addToInventoryController;
+    private CreateInventoryController createInventoryController;
+    private AddToInventoryController addToInventoryController;
+    private UseItemController useItemController;
 
     /**
      * Creates the Inventory View.
      * @param viewModel the view model
-     * @param createInventoryController the controller
      */
-    public InventoryView(InventoryViewModel viewModel, CreateInventoryController createInventoryController) {
+    public InventoryView(InventoryViewModel viewModel) {
         this.viewModel = viewModel;
-        // use diff inventory controller?
-        this.createInventoryController = createInventoryController;
+
 
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(500, 200));
@@ -51,5 +55,34 @@ public class InventoryView extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JOptionPane.showMessageDialog(this, "HELPPPPP");
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+        if (evt.getPropertyName().equals("create_inventory")) {
+            final InventoryState state = (InventoryState) evt.getNewValue();
+
+        }
+        else if (evt.getPropertyName().equals("inventory_add")) {
+            final InventoryState state = (InventoryState) evt.getNewValue();
+            // JOptionPane.showMessageDialog(null, "item added to inventory for " + state.getUsername());
+        }
+        else if (evt.getPropertyName().equals("inventory_item_used")) {
+            final InventoryState state = (InventoryState) evt.getNewValue();
+            // JOptionPane.showMessageDialog(null, "item used for " + state.getUsername());
+        }
+    }
+
+    public void setCreateInventoryController(CreateInventoryController createInventoryController) {
+        this.createInventoryController = createInventoryController;
+    }
+
+    public void setAddToInventoryController(AddToInventoryController addToInventoryController) {
+        this.addToInventoryController = addToInventoryController;
+    }
+
+    public void setUseItemController(UseItemController useItemController) {
+        this.useItemController = useItemController;
     }
 }

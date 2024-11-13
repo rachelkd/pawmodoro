@@ -1,6 +1,9 @@
 package use_case.authentication.create_inventory;
 
+import entity.AbstractFood;
 import entity.Inventory;
+
+import java.util.Map;
 
 /**
  * DAO for the Create Inventory Use Case.
@@ -23,5 +26,7 @@ public interface CreateInventoryInventoryDataAccessInterface {
      * @return a boolean indicating whether the user is in the current repository of inventories
      */
     boolean existsByOwnerId(String ownerId);
+
+    Map<String, AbstractFood> getInventoryItems(String ownerId);
 
 }
