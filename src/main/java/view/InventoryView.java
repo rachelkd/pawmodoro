@@ -53,7 +53,7 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(this, "HELPPPPP");
+        JOptionPane.showMessageDialog(this, "");
     }
 
     @Override
@@ -104,9 +104,13 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
                 this.add(selectItemButton, BorderLayout.SOUTH);
                 selectItemButton.addActionListener(
                         e -> {
-
+                            if (selectedLabel[0] != null) {
+                                String selectedText = selectedLabel[0].getText();
+                                JOptionPane.showMessageDialog(null, "Selected Item: " + selectedText);
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Please select an item first.");
+                            }
                 });
-
             }
             else {
                 // user does not have an existing inventory or their inventory is empty

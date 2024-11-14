@@ -16,6 +16,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
+// for showing on monday
+
 public class InventoryExample {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
@@ -52,7 +54,7 @@ public class InventoryExample {
         controller.execute("chiually");
 
 
-        final JFrame application = new JFrame("Pllllssssss");
+        final JFrame application = new JFrame("");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
@@ -82,7 +84,7 @@ public class InventoryExample {
 
         controller.execute("chiually");
 
-        final JFrame application = new JFrame("Pllllssssss");
+        final JFrame application = new JFrame();
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
@@ -92,6 +94,7 @@ public class InventoryExample {
     }
 
     void createInventory(CreateInventoryInventoryDataAccessInterface inventoryRepository) {
+
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
         Inventory inventory = inventoryFactory.create("chiually");
