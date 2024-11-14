@@ -1,54 +1,55 @@
 package app;
 
 import data_access.InMemoryInventoryDataAccessObject;
-import entity.FoodInventoryFactory;
-import entity.InventoryFactory;
+import entity.*;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.CreateInventoryPresenter;
 import interface_adapter.create_inventory.InventoryViewModel;
-import use_case.authentication.create_inventory.CreateInventoryInputBoundary;
-import use_case.authentication.create_inventory.CreateInventoryInteractor;
-import use_case.authentication.create_inventory.CreateInventoryInventoryDataAccessInterface;
-import use_case.authentication.create_inventory.CreateInventoryOutputBoundary;
+import use_case.authentication.create_inventory.*;
 import view.InventoryView;
 import view.LoggedInView;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Map;
 
 public class InventoryExample {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     private InventoryView inventoryView;
-    private LoggedInViewModel loggedInView = new LoggedInViewModel();
+    private InventoryViewModel inventoryViewModel = new InventoryViewModel();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
 
     public static void main(String[] args) {
         final InventoryExample inventoryExample = new InventoryExample();
-        JFrame pawmodoro = inventoryExample.build();
+        JFrame pawmodoro = inventoryExample.buildExistingInventory();
 
         pawmodoro.pack();
         pawmodoro.setVisible(true);
     }
 
     public JFrame build() {
+        inventoryView = new InventoryView(inventoryViewModel);
+        cardPanel.add(inventoryView, inventoryViewModel.getViewName());
 
-        final InventoryViewModel viewModel = new InventoryViewModel();
         final CreateInventoryInventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
-        final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter(loggedInView);
+        final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter(viewManagerModel, inventoryViewModel);
 
-        // empty inventory
+
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
 
         final CreateInventoryInputBoundary interactor = new CreateInventoryInteractor(dataAccessObject, presenter,
                 inventoryFactory);
         final CreateInventoryController controller = new CreateInventoryController(interactor);
-        final InventoryView inventoryView = new InventoryView(viewModel);
+        inventoryView.setCreateInventoryController(controller);
+
+        // inventory does not exist yet
+        controller.execute("chiually");
 
 
         final JFrame application = new JFrame("Pllllssssss");
@@ -58,5 +59,50 @@ public class InventoryExample {
         application.add(inventoryView);
 
         return application;
+    }
+
+    public JFrame buildExistingInventory() {
+        // makes the property fire properly
+        inventoryView = new InventoryView(inventoryViewModel);
+        cardPanel.add(inventoryView, inventoryViewModel.getViewName());
+
+        final CreateInventoryInventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
+        final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter( viewManagerModel, inventoryViewModel);
+
+        // add inventory
+        createInventory(dataAccessObject);
+
+        final InventoryFactory inventoryFactory = new FoodInventoryFactory();
+
+        final CreateInventoryInputBoundary interactor = new CreateInventoryInteractor(dataAccessObject, presenter,
+                inventoryFactory);
+
+        final CreateInventoryController controller = new CreateInventoryController(interactor);
+        inventoryView.setCreateInventoryController(controller);
+
+        controller.execute("chiually");
+
+        final JFrame application = new JFrame("Pllllssssss");
+        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        application.add(cardPanel);
+        application.add(inventoryView);
+
+        return application;
+    }
+
+    void createInventory(CreateInventoryInventoryDataAccessInterface inventoryRepository) {
+        final InventoryFactory inventoryFactory = new FoodInventoryFactory();
+        final FoodItemFactory foodItemFactory = new FoodItemFactory();
+        Inventory inventory = inventoryFactory.create("chiually");
+        final AbstractFood foodItem = foodItemFactory.create("milk", "Milk");
+        final AbstractFood anotherFoodItem = foodItemFactory.create("tuna", "Tuna");
+        foodItem.setQuantity(2);
+        anotherFoodItem.setQuantity(1);
+        Map<String, AbstractFood> inventoryItems = inventory.getItems();
+        inventoryItems.put("milk", foodItem);
+        inventoryItems.put("tuna", anotherFoodItem);
+        inventory.setItems(inventoryItems);
+        inventoryRepository.save(inventory);
     }
 }

@@ -100,8 +100,8 @@ public class AppBuilder {
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
     private final InMemoryInventoryDataAccessObject inventoryDataAccessObject = new InMemoryInventoryDataAccessObject();
 
-    private final InventoryViewModel inventoryViewModel = new InventoryViewModel();
-    private final InventoryView inventoryView = new InventoryView(inventoryViewModel);
+    private InventoryViewModel inventoryViewModel;
+    private InventoryView inventoryView;
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -199,6 +199,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addInventoryView() {
+        inventoryViewModel = new InventoryViewModel();
+        inventoryView = new InventoryView(inventoryViewModel);
+        cardPanel.add(inventoryView, inventoryViewModel.getViewName());
+        return this;
+    }
+
     /**
      * Adds the Signup Use Case to the application.
      * 
@@ -256,7 +263,7 @@ public class AppBuilder {
      */
     public AppBuilder addCreateInventoryUseCase() {
         final CreateInventoryOutputBoundary createInventoryOutputBoundary = new CreateInventoryPresenter(
-                loggedInViewModel);
+                viewManagerModel, inventoryViewModel);
 
         final CreateInventoryInputBoundary createInventoryInteractor = new CreateInventoryInteractor(
                 inventoryDataAccessObject, createInventoryOutputBoundary, inventoryFactory);

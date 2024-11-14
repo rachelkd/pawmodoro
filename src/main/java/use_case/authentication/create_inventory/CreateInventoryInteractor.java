@@ -39,7 +39,7 @@ public class CreateInventoryInteractor implements CreateInventoryInputBoundary {
                 && inventory.getItems().equals(createInventoryDataAccessObject.getInventoryItems(inventory.getOwnerId()));
 
         final CreateInventoryOutputData createinventoryOutputData =
-                new CreateInventoryOutputData(isSuccess, inventory.getItems());
+                new CreateInventoryOutputData(inventory.getOwnerId(), isSuccess, inventory.getItems());
         createInventoryPresenter.prepareSuccessView(createinventoryOutputData);
     }
 }

@@ -8,10 +8,12 @@ import java.util.Map;
  * Create Inventory Use Case.
  */
 public class CreateInventoryOutputData {
+    private final String ownerId;
     private final boolean success;
     private final Map<String, AbstractFood> inventoryItems;
 
-    public CreateInventoryOutputData(boolean success, Map<String, AbstractFood> inventoryItems) {
+    public CreateInventoryOutputData(String ownerId, boolean success, Map<String, AbstractFood> inventoryItems) {
+        this.ownerId = ownerId;
         this.success = success;
         this.inventoryItems = inventoryItems;
     }
@@ -30,5 +32,13 @@ public class CreateInventoryOutputData {
      */
     public Map<String, AbstractFood> getInventoryItems() {
         return inventoryItems;
+    }
+
+    /**
+     * Return the owner id.
+     * @return
+     */
+    public String getOwnerId() {
+        return ownerId;
     }
 }

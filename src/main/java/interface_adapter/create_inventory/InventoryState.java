@@ -10,11 +10,11 @@ import entity.AbstractFood;
  */
 public class InventoryState {
     private String ownerId;
-    private Map<String, AbstractFood> inventory = new HashMap<>();
+    private Map<String, AbstractFood> inventoryItems = new HashMap<>();
 
     public InventoryState(InventoryState copy) {
         this.ownerId = copy.ownerId;
-        this.inventory = copy.inventory;
+        this.inventoryItems = copy.inventoryItems;
     }
 
     // default constructor
@@ -23,15 +23,16 @@ public class InventoryState {
     public String getOwnerId() {
         return ownerId;
     }
+
     public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
     }
 
-    public Map<String, AbstractFood> getInventory() {
-        return inventory;
+    public Map<String, AbstractFood> getInventoryItems() {
+        return inventoryItems;
     }
 
-    public void setInventory(Map<String, AbstractFood> inventory) {
-        this.inventory = inventory;
+    public void setInventoryItems(Map<String, AbstractFood> inventoryItems) {
+        this.inventoryItems = inventoryItems;
     }
 }
