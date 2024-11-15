@@ -1,16 +1,15 @@
 package app;
 
 import java.awt.CardLayout;
-import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.ApiCatImageDataAccessObject;
+import data_access.DBUserDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
-import data_access.JdbcUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.FoodInventoryFactory;
 import entity.FoodItemFactory;
@@ -104,7 +103,7 @@ public class AppBuilder {
     // thought question: is the hard dependency below a problem?
     // private final InMemoryUserDataAccessObject userDataAccessObject = new
     // InMemoryUserDataAccessObject();
-    private final JdbcUserDataAccessObject userDataAccessObject;
+    private final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory);
     private final InMemoryInventoryDataAccessObject inventoryDataAccessObject = new InMemoryInventoryDataAccessObject();
 
     private SignupView signupView;
@@ -129,12 +128,6 @@ public class AppBuilder {
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
-        try {
-            userDataAccessObject = new JdbcUserDataAccessObject(userFactory);
-        }
-        catch (SQLException exception) {
-            throw new RuntimeException("Failed to initialize database connection", exception);
-        }
     }
 
     /**

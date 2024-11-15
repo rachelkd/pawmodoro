@@ -5,10 +5,10 @@ package config;
  */
 public final class SupabaseConfig {
     private static final String SUPABASE_URL = "https://xuqqtivutcipoavzpfme.supabase.co";
-    private static final String SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ"
-            + "lZiI6Inh1cXF0aXZ1dGNp"
-            + "b2F2enBmbWUiLCJyb2xlIjoiYW5vbiIsImlhVCI6MTczMTYzMzMxNSwiZXhwIjoyMDQ3MjA5MzE1fQ.iThDca"
-            + "XziMhmhWVaqwdLiMywgL8uC5-LeSaaGqKOtiY";
+    private static final String SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
+            + "eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1cXF0aXZ1dGNpcG9hdnpw"
+            + "Zm1lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE2MzMzMTUsImV4c"
+            + "CI6MjA0NzIwOTMxNX0.iThDcaXziMhmhWVaqwdLiMywgL8uC5-LeSaaGqKOtiY";
 
     private SupabaseConfig() {
 
