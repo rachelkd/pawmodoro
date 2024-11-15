@@ -10,7 +10,7 @@ public interface SetupSessionOutputBoundary {
      * Called when the setup is successful and the system should
      * prepare to switch to the study timer view.
      */
-    void prepareSuccessView();
+    void prepareSuccessView(SetupSessionOutputData outputData);
 
     /**
      * Called when the setup fails and the system needs to handle the error.
