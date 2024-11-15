@@ -27,5 +27,4 @@ public interface Inventory {
      * @return the owner id string
      */
     String getOwnerId();
-
 }
