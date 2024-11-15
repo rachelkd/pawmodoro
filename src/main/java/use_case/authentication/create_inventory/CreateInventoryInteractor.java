@@ -1,10 +1,10 @@
 package use_case.authentication.create_inventory;
 
+import java.util.Map;
+
 import entity.AbstractFood;
 import entity.Inventory;
 import entity.InventoryFactory;
-
-import java.util.Map;
 
 /**
  * The Create Inventory Interctor.
@@ -29,14 +29,16 @@ public class CreateInventoryInteractor implements CreateInventoryInputBoundary {
 
         // if inventory in memory
         if (createInventoryDataAccessObject.existsByOwnerId(createInventoryInputData.getOwnerId())) {
-            Map<String, AbstractFood> items = createInventoryDataAccessObject.getInventoryItems(createInventoryInputData.getOwnerId());
+            final Map<String, AbstractFood> items = createInventoryDataAccessObject.getInventoryItems(
+                    createInventoryInputData.getOwnerId());
             inventory.setItems(items);
         }
 
         createInventoryDataAccessObject.save(inventory);
 
         final boolean isSuccess = createInventoryDataAccessObject.existsByOwnerId(inventory.getOwnerId())
-                && inventory.getItems().equals(createInventoryDataAccessObject.getInventoryItems(inventory.getOwnerId()));
+                && inventory.getItems().equals(createInventoryDataAccessObject.getInventoryItems(inventory
+                .getOwnerId()));
 
         final CreateInventoryOutputData createinventoryOutputData =
                 new CreateInventoryOutputData(inventory.getOwnerId(), isSuccess, inventory.getItems());

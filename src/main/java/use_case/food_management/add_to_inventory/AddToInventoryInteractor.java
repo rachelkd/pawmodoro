@@ -26,6 +26,7 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
     public void execute(AddToInventoryInputData addToInventoryInputData) {
         // assume existing inventory
         final boolean isSuccess;
+        final AbstractFood foodItem;
 
         // item in inventory already
         if (addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
@@ -34,6 +35,8 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
             final Integer prevQuantity = addToInventoryDataAccessObject
                     .getInventory(addToInventoryInputData.getOwnerId())
                     .getItems().get(addToInventoryInputData.getFoodId()).getQuantity();
+            foodItem = addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
+                    .getItems().get(addToInventoryInputData.getFoodId());
 
             addToInventoryDataAccessObject.updateQuantity(addToInventoryInputData.getOwnerId(),
                     addToInventoryInputData.getFoodId(), prevQuantity + 1);
@@ -48,7 +51,7 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
 
         } // item not in inventory
         else {
-            final AbstractFood foodItem = foodFactory.create(addToInventoryInputData.getFoodId(), "temp");
+            foodItem = foodFactory.create(addToInventoryInputData.getFoodId(), "temp");
             foodItem.setQuantity(1);
 
             final Map<String, AbstractFood> newInventoryItems = addToInventoryDataAccessObject
@@ -66,7 +69,7 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
         }
 
         final AddToInventoryOutputData addToInventoryOutputData =
-                new AddToInventoryOutputData(isSuccess);
+                new AddToInventoryOutputData(isSuccess, addToInventoryInputData.getOwnerId(), foodItem);
         addToInventoryPresenter.prepareSuccessView(addToInventoryOutputData);
 
     }

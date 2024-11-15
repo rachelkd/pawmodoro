@@ -1,7 +1,6 @@
 package interface_adapter.create_inventory;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.change_password.LoggedInViewModel;
 import use_case.authentication.create_inventory.CreateInventoryOutputBoundary;
 import use_case.authentication.create_inventory.CreateInventoryOutputData;
 

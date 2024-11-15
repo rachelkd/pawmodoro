@@ -6,19 +6,25 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import data_access.ApiCatImageDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
+import data_access.InMemoryTimerDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.FoodInventoryFactory;
 import entity.FoodItemFactory;
 import entity.InventoryFactory;
+import entity.TimerFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_to_inventory.AddToInventoryController;
+import interface_adapter.add_to_inventory.AddToInventoryPresenter;
 import interface_adapter.adoption.AdoptionController;
 import interface_adapter.adoption.AdoptionPresenter;
 import interface_adapter.adoption.AdoptionViewModel;
-import interface_adapter.add_to_inventory.AddToInventoryController;
-import interface_adapter.add_to_inventory.AddToInventoryPresenter;
+import interface_adapter.cat_image.CatImageController;
+import interface_adapter.cat_image.CatImagePresenter;
+import interface_adapter.cat_image.CatImageViewModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
@@ -37,12 +43,18 @@ import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import view.*;
+import interface_adapter.timer.TimerController;
+import interface_adapter.timer.TimerPresenter;
+import interface_adapter.timer.TimerViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
 import use_case.authentication.create_inventory.CreateInventoryInputBoundary;
 import use_case.authentication.create_inventory.CreateInventoryInteractor;
 import use_case.authentication.create_inventory.CreateInventoryOutputBoundary;
+import use_case.cat_image.CatImageDataAccessInterface;
+import use_case.cat_image.CatImageInputBoundary;
+import use_case.cat_image.CatImageInteractor;
+import use_case.cat_image.CatImageOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
@@ -61,20 +73,8 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import interface_adapter.timer.TimerViewModel;
-import interface_adapter.timer.TimerPresenter;
-import interface_adapter.timer.TimerController;
 import use_case.timer.display_timer.*;
-import data_access.InMemoryTimerDataAccessObject;
-import entity.TimerFactory;
-import interface_adapter.cat_image.CatImageViewModel;
-import use_case.cat_image.CatImageDataAccessInterface;
-import use_case.cat_image.CatImageOutputBoundary;
-import use_case.cat_image.CatImageInputBoundary;
-import use_case.cat_image.CatImageInteractor;
-import interface_adapter.cat_image.CatImageController;
-import interface_adapter.cat_image.CatImagePresenter;
-import data_access.ApiCatImageDataAccessObject;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -199,6 +199,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Add the inventory view to the application.
+     * @return this builder
+     */
     public AppBuilder addInventoryView() {
         inventoryViewModel = new InventoryViewModel();
         inventoryView = new InventoryView(inventoryViewModel);

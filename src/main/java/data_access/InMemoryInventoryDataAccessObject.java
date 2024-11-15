@@ -54,6 +54,11 @@ public class InMemoryInventoryDataAccessObject implements AddToInventoryDataAcce
         }
     }
 
+    /**
+     * Return whether the user's inventory is empty.
+     * @param ownerId the owner id
+     * @return a boolean indicating if inventory is empty.
+     */
     public boolean isEmpty(String ownerId) {
         return inventoryStorage.get(ownerId).getItems().isEmpty();
     }

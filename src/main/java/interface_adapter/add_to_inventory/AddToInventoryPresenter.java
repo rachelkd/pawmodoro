@@ -1,6 +1,6 @@
 package interface_adapter.add_to_inventory;
 
-import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.create_inventory.InventoryState;
 import interface_adapter.create_inventory.InventoryViewModel;
 import use_case.food_management.add_to_inventory.AddToInventoryOutputBoundary;
 import use_case.food_management.add_to_inventory.AddToInventoryOutputData;
@@ -18,6 +18,9 @@ public class AddToInventoryPresenter implements AddToInventoryOutputBoundary {
     @Override
     public void prepareSuccessView(AddToInventoryOutputData outputData) {
         // do nothing for now
+        final InventoryState inventoryState = inventoryViewModel.getState();
+        inventoryState.setOwnerId(outputData.getOwnerId());
+        inventoryState.setNewFoodItem(outputData.getFoodItem());
         inventoryViewModel.firePropertyChanged("inventory_add");
     }
 }

@@ -1,32 +1,38 @@
 package app;
 
+import java.awt.*;
+import java.util.Map;
+
+import javax.swing.*;
+
 import data_access.InMemoryInventoryDataAccessObject;
 import entity.*;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.CreateInventoryPresenter;
 import interface_adapter.create_inventory.InventoryViewModel;
 import use_case.authentication.create_inventory.*;
 import view.InventoryView;
-import view.LoggedInView;
 import view.ViewManager;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.Map;
 
 // for showing on monday
 
+/**
+ * Show the inventory view with an example.
+ */
 public class InventoryExample {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
+
     private InventoryView inventoryView;
     private InventoryViewModel inventoryViewModel = new InventoryViewModel();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-
+    /**
+     * Builds and runs inventory view in app.
+     * @param args unused arguments
+     */
     public static void main(String[] args) {
         final InventoryExample inventoryExample = new InventoryExample();
         JFrame pawmodoro = inventoryExample.buildExistingInventory();
