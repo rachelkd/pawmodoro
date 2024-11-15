@@ -123,7 +123,7 @@ class InventoryInteractorTest {
     }
 
     @Test
-    void createInventoryTest() {
+    void createNonExistentInventoryTest() {
         final CreateInventoryInputData inputData = new CreateInventoryInputData("chiually");
         final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
 
@@ -135,6 +135,38 @@ class InventoryInteractorTest {
             @Override
             public void prepareSuccessView(CreateInventoryOutputData inventory) {
                 assertTrue(inventory.isSuccess());
+            }
+        };
+
+        final CreateInventoryInputBoundary interactor = new CreateInventoryInteractor(inventoryRepository,
+                successPresenter, inventoryFactory);
+        interactor.execute(inputData);
+    }
+
+    @Test
+    void createExistingInventoryTest() {
+        final CreateInventoryInputData inputData = new CreateInventoryInputData("chiually");
+        final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
+
+        final InventoryFactory inventoryFactory = new FoodInventoryFactory();
+        final FoodItemFactory foodItemFactory = new FoodItemFactory();
+
+        Inventory inventory = inventoryFactory.create("chiually");
+        final AbstractFood foodItem = foodItemFactory.create("milk", "temp");
+        foodItem.setQuantity(2);
+        Map<String, AbstractFood> inventoryItems = inventory.getItems();
+        inventoryItems.put("milk", foodItem);
+        inventory.setItems(inventoryItems);
+        inventoryRepository.save(inventory);
+
+        final CreateInventoryOutputBoundary successPresenter = new CreateInventoryOutputBoundary() {
+
+            @Override
+            public void prepareSuccessView(CreateInventoryOutputData inventory) {
+
+                assertTrue(inventory.isSuccess());
+                assert(inventory.getInventoryItems().containsKey("milk"));
+                assertEquals(2, inventory.getInventoryItems().get("milk").getQuantity());
             }
         };
 
