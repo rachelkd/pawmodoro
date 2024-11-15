@@ -121,7 +121,7 @@ public class AppBuilder {
     private LoginView loginView;
     private AdoptionView adoptionView;
     private AdoptionViewModel adoptionViewModel;
-
+    // TODO: Refactor instatiation of Timer use cases to be in the methods below
     private final TimerViewModel timerViewModel = new TimerViewModel();
     private final InMemoryTimerDataAccessObject timerDataAccessObject = new InMemoryTimerDataAccessObject();
     private final TimerFactory timerFactory = new TimerFactory();
