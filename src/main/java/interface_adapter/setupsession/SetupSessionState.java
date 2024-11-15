@@ -8,11 +8,11 @@ public class SetupSessionState {
     private String breakTime = "";
 
     public int getStudyTime() {
-        return Integer.valueOf(studyTime);
+        return Integer.parseInt(studyTime.split(" ")[0]);
     }
 
     public int getBreakTime() {
-        return Integer.valueOf(breakTime);
+        return Integer.parseInt(breakTime.split(" ")[0]);
     }
 
     public void setStudyTime(String studyTime) {

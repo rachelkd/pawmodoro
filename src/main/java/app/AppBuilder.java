@@ -28,10 +28,15 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
+import interface_adapter.setupsession.SetupSessionController;
+import interface_adapter.setupsession.SetupSessionPresenter;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import use_case.setupsession.SetupSessionInputBoundary;
+import use_case.setupsession.SetupSessionInteractor;
+import use_case.setupsession.SetupSessionOutputBoundary;
 import view.AdoptionView;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
@@ -211,6 +216,20 @@ public class AppBuilder {
 
         final SignupController controller = new SignupController(userSignupInteractor);
         signupView.setSignupController(controller);
+        return this;
+    }
+
+    /**
+     * Adds the setup session Use Case to the application.
+     *
+     * @return this builder
+     */
+    public AppBuilder addSetupSessionUseCase() {
+        final SetupSessionOutputBoundary setupSessionOutputBoundary = new
+                SetupSessionPresenter(setupSessionViewModel, viewManagerModel, timerViewModel);
+        final SetupSessionInputBoundary setupInteractor = new SetupSessionInteractor(setupSessionOutputBoundary);
+        final SetupSessionController setupController = new SetupSessionController(setupInteractor);
+        setupSessionView.setSetupSessionController(setupController);
         return this;
     }
 
