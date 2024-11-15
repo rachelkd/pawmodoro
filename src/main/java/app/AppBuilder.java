@@ -19,6 +19,8 @@ import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.add_to_inventory.AddToInventoryPresenter;
+import interface_adapter.adoption.AdoptionController;
+import interface_adapter.adoption.AdoptionPresenter;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.cat_image.CatImageController;
 import interface_adapter.cat_image.CatImagePresenter;
@@ -28,6 +30,7 @@ import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.CreateInventoryPresenter;
+import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -46,6 +49,10 @@ import interface_adapter.use_item_in_inventory.UseItemPresenter;
 import use_case.authentication.create_inventory.CreateInventoryInputBoundary;
 import use_case.authentication.create_inventory.CreateInventoryInteractor;
 import use_case.authentication.create_inventory.CreateInventoryOutputBoundary;
+import use_case.cat_image.CatImageDataAccessInterface;
+import use_case.cat_image.CatImageInputBoundary;
+import use_case.cat_image.CatImageInteractor;
+import use_case.cat_image.CatImageOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
@@ -105,6 +112,9 @@ public class AppBuilder {
     // InMemoryUserDataAccessObject();
     private final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory);
     private final InMemoryInventoryDataAccessObject inventoryDataAccessObject = new InMemoryInventoryDataAccessObject();
+
+    private InventoryViewModel inventoryViewModel;
+    private InventoryView inventoryView;
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -203,6 +213,17 @@ public class AppBuilder {
     }
 
     /**
+     * Add the inventory view to the application.
+     * @return this builder
+     */
+    public AppBuilder addInventoryView() {
+        inventoryViewModel = new InventoryViewModel();
+        inventoryView = new InventoryView(inventoryViewModel);
+        cardPanel.add(inventoryView, inventoryViewModel.getViewName());
+        return this;
+    }
+
+    /**
      * Adds the Signup Use Case to the application.
      * 
      * @return this builder
@@ -259,14 +280,14 @@ public class AppBuilder {
      */
     public AppBuilder addCreateInventoryUseCase() {
         final CreateInventoryOutputBoundary createInventoryOutputBoundary = new CreateInventoryPresenter(
-                loggedInViewModel);
+                viewManagerModel, inventoryViewModel);
 
         final CreateInventoryInputBoundary createInventoryInteractor = new CreateInventoryInteractor(
                 inventoryDataAccessObject, createInventoryOutputBoundary, inventoryFactory);
 
         final CreateInventoryController createInventoryController = new CreateInventoryController(
                 createInventoryInteractor);
-        loggedInView.setCreateInventoryController(createInventoryController);
+        inventoryView.setCreateInventoryController(createInventoryController);
         return this;
     }
 
@@ -277,7 +298,7 @@ public class AppBuilder {
      */
     public AppBuilder addAddToInventoryUseCase() {
         final AddToInventoryOutputBoundary addToInventoryOutputBoundary = new AddToInventoryPresenter(
-                loggedInViewModel);
+                inventoryViewModel);
 
         final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor(
                 inventoryDataAccessObject,
@@ -285,7 +306,7 @@ public class AppBuilder {
 
         final AddToInventoryController addToInventoryController = new AddToInventoryController(
                 addToInventoryInteractor);
-        loggedInView.setAddToInventoryController(addToInventoryController);
+        inventoryView.setAddToInventoryController(addToInventoryController);
         return this;
     }
 
@@ -301,7 +322,7 @@ public class AppBuilder {
                 useItemOutputBoundary);
 
         final UseItemController useItemController = new UseItemController(useItemInteractor);
-        loggedInView.setUseItemController(useItemController);
+        inventoryView.setUseItemController(useItemController);
         return this;
     }
 
