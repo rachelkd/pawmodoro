@@ -10,15 +10,16 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import constants.Constants;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.logout.LogoutController;
-import interface_adapter.use_item_in_inventory.UseItemController;
-import interface_adapter.timer.TimerViewModel;
 import interface_adapter.timer.TimerController;
+import interface_adapter.timer.TimerViewModel;
+import interface_adapter.use_item_in_inventory.UseItemController;
 
 /**
  * The View for when the user is logged into the program.
@@ -49,7 +50,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         final JLabel pawmodoro = new JLabel("Pawmodoro");
         pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
-        pawmodoro.setFont(new Font("Serif", Font.BOLD, 25));
+        pawmodoro.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TITLE));
+        pawmodoro.setForeground(Color.PINK);
 
         final JLabel title = new JLabel("Logged In Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -121,9 +123,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         // Create timer view component
         this.timerView = new TimerView(timerViewModel);
 
-        this.add(Box.createRigidArea(new Dimension(40, 40)));
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         this.add(pawmodoro);
-        this.add(Box.createRigidArea(new Dimension(40, 40)));
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         this.add(title);
 
         this.add(timerView);

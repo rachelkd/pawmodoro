@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import constants.Constants;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
@@ -36,7 +37,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         final JLabel pawmodoro = new JLabel("Pawmodoro");
         pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
-        pawmodoro.setFont(new Font("Serif", Font.BOLD, 25));
+        pawmodoro.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TITLE));
         pawmodoro.setForeground(Color.PINK);
 
         final JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
@@ -84,9 +85,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         cancel.addActionListener(this);
 
-        this.add(Box.createRigidArea(new Dimension(40, 40)));
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         this.add(pawmodoro);
-        this.add(Box.createRigidArea(new Dimension(40, 40)));
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         addUsernameListener();
         addPasswordListener();
         addRepeatPasswordListener();
@@ -98,7 +99,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(passwordInfo);
         this.add(repeatPasswordInfo);
         this.add(buttons);
-        this.add(Box.createRigidArea(new Dimension(40, 40)));
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
     }
 
     private void addUsernameListener() {
