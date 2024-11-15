@@ -26,7 +26,7 @@ public class Main {
                 .addLogoutUseCase()
                 .addChangePasswordUseCase()
                 .addCreateInventoryUseCase()
-                .addCatImageView(true)
+                .addCatImageView(true)  // TODO: Refactor to take no params; make addCatImageWithButtonView and addCatImageView
                 .addSetupSessionUseCase()
                 .build();
 
