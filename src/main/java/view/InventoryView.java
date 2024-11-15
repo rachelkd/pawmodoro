@@ -50,11 +50,9 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
         this.add(title, BorderLayout.NORTH);
 
         this.inventoryPanel = new JPanel();
-
-        // inventoryViewModel.firePropertyChanged("inventory_created");
+        // Track the selected label in view
+        this.selectedLabel = new JLabel[]{null};
     }
-
-    // when add to inventory use case, update view
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -63,101 +61,21 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // move to be in initialization
+        // move to be in initialization or another function?
         if (evt.getPropertyName().equals("inventory_created")) {
 
             final InventoryState state = (InventoryState) evt.getNewValue();
             userInventory = state.getInventoryItems();
 
-            if (!userInventory.isEmpty()) {
-                // JPanel inventoryPanel = new JPanel();
-                inventoryPanel.setLayout(new BoxLayout(inventoryPanel, BoxLayout.Y_AXIS));
-
-                // Define a border to indicate label selection
-                final Border selectedBorder = BorderFactory.createLineBorder(Color.BLUE, 2);
-                // Track the selected label
-                final JLabel[] selectedLabel = {null};
-
-                for (AbstractFood food : userInventory.values()) {
-                    // panel to put food and quantity labels side by side
-                    JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
-                    final JLabel foodLabel = new JLabel(food.getName());
-                    final JLabel quantityLabel = new JLabel(": " + food.getQuantity());
-                    foodLabel.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            // Deselect previous label if any
-                            if (selectedLabel[0] != null) {
-                                selectedLabel[0].setBorder(BorderFactory.createEmptyBorder());
-                            }
-                            // Set new selected label and add border
-                            selectedLabel[0] = foodLabel;
-                            foodLabel.setBorder(selectedBorder);
-                        }
-                    });
-                    labelPanel.add(foodLabel);
-                    labelPanel.add(Box.createHorizontalGlue());
-                    labelPanel.add(quantityLabel);
-
-                    inventoryPanel.add(labelPanel);
-                }
-                this.add(inventoryPanel, BorderLayout.CENTER);
-
-                final JButton selectItemButton = new JButton("Use Selected Item");
-                this.add(selectItemButton, BorderLayout.SOUTH);
-                selectItemButton.addActionListener(
-                        event -> {
-                            if (selectedLabel[0] != null) {
-                                final String selectedText = selectedLabel[0].getText();
-                                JOptionPane.showMessageDialog(null, "Selected Item: " + selectedText);
-                            }
-                            else {
-                                JOptionPane.showMessageDialog(null, "Please select an item first.");
-                            }
-                        });
-            }
-            else {
-                // user does not have an existing inventory or their inventory is empty
-                final JPanel inventoryPanel = new JPanel(new GridBagLayout());
-                final JLabel items = new JLabel(inventoryViewModel.EMPTY_INVENTORY_LABEL);
-                items.setAlignmentX(Component.CENTER_ALIGNMENT);
-                inventoryPanel.add(items);
-                this.add(inventoryPanel, BorderLayout.CENTER);
-            }
+            buildInventory();
+            this.add(inventoryPanel, BorderLayout.CENTER);
 
         } // add to inventory when complete study session so this use case doesn't need to be here
         else if (evt.getPropertyName().equals("inventory_add")) {
             final InventoryState state = (InventoryState) evt.getNewValue();
             final AbstractFood food = state.getNewFoodItem();
 
-            // add item to inventory view
-            final JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
-            final Border selectedBorder = BorderFactory.createLineBorder(Color.BLUE, 2);
-            // Track the selected label
-            final JLabel[] selectedLabel = {null};
-
-            final JLabel foodLabel = new JLabel(food.getName());
-            final JLabel quantityLabel = new JLabel(": " + food.getQuantity());
-            foodLabel.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    // Deselect previous label if any
-                    if (selectedLabel[0] != null) {
-                        selectedLabel[0].setBorder(BorderFactory.createEmptyBorder());
-                    }
-                    // Set new selected label and add border
-                    selectedLabel[0] = foodLabel;
-                    foodLabel.setBorder(selectedBorder);
-                }
-            });
-            labelPanel.add(foodLabel);
-            labelPanel.add(Box.createHorizontalGlue());
-            labelPanel.add(quantityLabel);
-
-            inventoryPanel.add(labelPanel);
-            this.add(inventoryPanel, BorderLayout.CENTER);
+            addFoodLabel(food);
         }
 
         else if (evt.getPropertyName().equals("inventory_item_used")) {
@@ -176,5 +94,66 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
 
     public void setUseItemController(UseItemController useItemController) {
         this.useItemController = useItemController;
+    }
+
+    void buildInventory() {
+        if (!userInventory.isEmpty()) {
+            // JPanel inventoryPanel = new JPanel();
+            inventoryPanel.setLayout(new BoxLayout(inventoryPanel, BoxLayout.Y_AXIS));
+
+            // Define a border to indicate label selection
+            final Border selectedBorder = BorderFactory.createLineBorder(Color.BLUE, 2);
+
+            for (AbstractFood food : userInventory.values()) {
+                addFoodLabel(food);
+            }
+
+            final JButton selectItemButton = new JButton("Use Selected Item");
+            this.add(selectItemButton, BorderLayout.SOUTH);
+            selectItemButton.addActionListener(
+                    event -> {
+                        if (selectedLabel[0] != null) {
+                            final String selectedText = selectedLabel[0].getText();
+                            JOptionPane.showMessageDialog(null, "Selected Item: " + selectedText);
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, "Please select an item first.");
+                        }
+                    });
+        }
+        else {
+            // user does not have an existing inventory or their inventory is empty
+            final JPanel inventoryPanel = new JPanel(new GridBagLayout());
+            final JLabel items = new JLabel(inventoryViewModel.EMPTY_INVENTORY_LABEL);
+            items.setAlignmentX(Component.CENTER_ALIGNMENT);
+            inventoryPanel.add(items);
+        }
+    }
+
+    void addFoodLabel(AbstractFood food) {
+        // panel to put food and quantity labels side by side
+        final JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        final Border selectedBorder = BorderFactory.createLineBorder(Color.BLUE, 2);
+
+        final JLabel foodLabel = new JLabel(food.getName());
+        final JLabel quantityLabel = new JLabel(": " + food.getQuantity());
+        foodLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Deselect previous label if any
+                if (selectedLabel[0] != null) {
+                    selectedLabel[0].setBorder(BorderFactory.createEmptyBorder());
+                }
+                // Set new selected label and add border
+                selectedLabel[0] = foodLabel;
+                foodLabel.setBorder(selectedBorder);
+            }
+        });
+        labelPanel.add(foodLabel);
+        labelPanel.add(Box.createHorizontalGlue());
+        labelPanel.add(quantityLabel);
+
+        inventoryPanel.add(labelPanel);
     }
 }

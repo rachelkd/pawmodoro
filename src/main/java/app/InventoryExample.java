@@ -8,10 +8,16 @@ import javax.swing.*;
 import data_access.InMemoryInventoryDataAccessObject;
 import entity.*;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_to_inventory.AddToInventoryController;
+import interface_adapter.add_to_inventory.AddToInventoryPresenter;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.CreateInventoryPresenter;
 import interface_adapter.create_inventory.InventoryViewModel;
 import use_case.authentication.create_inventory.*;
+import use_case.food_management.add_to_inventory.AddToInventoryDataAccessInterface;
+import use_case.food_management.add_to_inventory.AddToInventoryInputBoundary;
+import use_case.food_management.add_to_inventory.AddToInventoryInteractor;
+import use_case.food_management.add_to_inventory.AddToInventoryOutputBoundary;
 import view.InventoryView;
 import view.ViewManager;
 
@@ -76,19 +82,24 @@ public class InventoryExample {
 
         final CreateInventoryInventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
         final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter( viewManagerModel, inventoryViewModel);
+        final AddToInventoryOutputBoundary addItemPresenter = new AddToInventoryPresenter(inventoryViewModel);
 
         // add inventory
         createInventory(dataAccessObject);
 
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
+        final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
-        final CreateInventoryInputBoundary interactor = new CreateInventoryInteractor(dataAccessObject, presenter,
+        final CreateInventoryInputBoundary createInventoryInteractor = new CreateInventoryInteractor(dataAccessObject, presenter,
                 inventoryFactory);
+        final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor((AddToInventoryDataAccessInterface) dataAccessObject, addItemPresenter, foodItemFactory);
 
-        final CreateInventoryController controller = new CreateInventoryController(interactor);
-        inventoryView.setCreateInventoryController(controller);
+        final CreateInventoryController createInventoryController = new CreateInventoryController(createInventoryInteractor);
+        final AddToInventoryController addToInventoryController = new AddToInventoryController(addToInventoryInteractor);
+        inventoryView.setCreateInventoryController(createInventoryController);
 
-        controller.execute("chiually");
+        createInventoryController.execute("chiually");
+        addToInventoryController.execute("chiually", "cheese");
 
         final JFrame application = new JFrame();
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
