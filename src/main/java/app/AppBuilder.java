@@ -7,9 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.ApiCatImageDataAccessObject;
+import data_access.DBUserDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
-import data_access.InMemoryTimerDataAccessObject;
-import data_access.InMemoryUserDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
 import entity.CommonUserFactory;
 import entity.FoodInventoryFactory;
@@ -17,6 +16,7 @@ import entity.FoodItemFactory;
 import entity.InventoryFactory;
 import entity.TimerFactory;
 import entity.UserFactory;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.add_to_inventory.AddToInventoryPresenter;
 import interface_adapter.adoption.AdoptionController;
@@ -58,6 +58,10 @@ import use_case.cat_image.CatImageOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.display_cat_image.CatImageDataAccessInterface;
+import use_case.display_cat_image.CatImageInputBoundary;
+import use_case.display_cat_image.CatImageInteractor;
+import use_case.display_cat_image.CatImageOutputBoundary;
 import use_case.food_management.add_to_inventory.AddToInventoryInputBoundary;
 import use_case.food_management.add_to_inventory.AddToInventoryInteractor;
 import use_case.food_management.add_to_inventory.AddToInventoryOutputBoundary;
@@ -73,17 +77,17 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import use_case.timer.display_timer.*;
-import use_case.display_cat_image.CatImageDataAccessInterface;
-import use_case.display_cat_image.CatImageOutputBoundary;
-import use_case.display_cat_image.CatImageInputBoundary;
-import use_case.display_cat_image.CatImageInteractor;
-import interface_adapter.cat_image.CatImageController;
-import interface_adapter.cat_image.CatImagePresenter;
-import interface_adapter.ViewManagerModel;
-import data_access.ApiCatImageDataAccessObject;
+import use_case.timer.display_timer.DisplayTimerInputBoundary;
+import use_case.timer.display_timer.DisplayTimerInteractor;
+import use_case.timer.display_timer.DisplayTimerOutputBoundary;
+import view.AdoptionView;
 import view.CatImageView;
-import view.*;
+import view.LoggedInView;
+import view.LoginView;
+import view.MaxCatsErrorView;
+import view.SetupSessionView;
+import view.SignupView;
+import view.ViewManager;
 
 import use_case.setupsession.SetupSessionInputBoundary;
 import use_case.setupsession.SetupSessionInteractor;
@@ -111,7 +115,9 @@ public class AppBuilder {
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     // thought question: is the hard dependency below a problem?
-    private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+    // private final InMemoryUserDataAccessObject userDataAccessObject = new
+    // InMemoryUserDataAccessObject();
+    private final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory);
     private final InMemoryInventoryDataAccessObject inventoryDataAccessObject = new InMemoryInventoryDataAccessObject();
 
     private InventoryViewModel inventoryViewModel;
