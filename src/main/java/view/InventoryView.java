@@ -74,13 +74,16 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
         else if (evt.getPropertyName().equals("inventory_add")) {
             final InventoryState state = (InventoryState) evt.getNewValue();
             final AbstractFood food = state.getNewFoodItem();
+            // update the user inventory
+            userInventory = state.getInventoryItems();
 
             addFoodLabel(food);
         }
 
         else if (evt.getPropertyName().equals("inventory_item_used")) {
             final InventoryState state = (InventoryState) evt.getNewValue();
-            // JOptionPane.showMessageDialog(null, "item used for " + state.getUsername());
+            userInventory = state.getInventoryItems();
+            refreshInventory();
         }
     }
 
@@ -101,9 +104,6 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
             // JPanel inventoryPanel = new JPanel();
             inventoryPanel.setLayout(new BoxLayout(inventoryPanel, BoxLayout.Y_AXIS));
 
-            // Define a border to indicate label selection
-            final Border selectedBorder = BorderFactory.createLineBorder(Color.BLUE, 2);
-
             for (AbstractFood food : userInventory.values()) {
                 addFoodLabel(food);
             }
@@ -123,7 +123,7 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
         }
         else {
             // user does not have an existing inventory or their inventory is empty
-            final JPanel inventoryPanel = new JPanel(new GridBagLayout());
+            inventoryPanel.setLayout(new GridBagLayout());
             final JLabel items = new JLabel(inventoryViewModel.EMPTY_INVENTORY_LABEL);
             items.setAlignmentX(Component.CENTER_ALIGNMENT);
             inventoryPanel.add(items);
@@ -134,6 +134,7 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
         // panel to put food and quantity labels side by side
         final JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
+        // Define a border to indicate label selection
         final Border selectedBorder = BorderFactory.createLineBorder(Color.BLUE, 2);
 
         final JLabel foodLabel = new JLabel(food.getName());
@@ -155,5 +156,10 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
         labelPanel.add(quantityLabel);
 
         inventoryPanel.add(labelPanel);
+    }
+
+    void refreshInventory() {
+        inventoryPanel.removeAll();
+        buildInventory();
     }
 }

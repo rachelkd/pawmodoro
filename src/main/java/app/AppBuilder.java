@@ -330,7 +330,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addUseItemUseCase() {
-        final UseItemOutputBoundary useItemOutputBoundary = new UseItemPresenter(loggedInViewModel);
+        final UseItemOutputBoundary useItemOutputBoundary = new UseItemPresenter(inventoryViewModel);
 
         final UseItemInputBoundary useItemInteractor = new UseItemInteractor(inventoryDataAccessObject,
                 useItemOutputBoundary);
