@@ -1,7 +1,3 @@
-/**
- * TODO: Implement Supabase DAO.
- */
-
 package data_access;
 
 import java.sql.Connection;
@@ -10,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import config.SupabaseConfig;
+import config.SupabaseDevConfig;
 import entity.User;
 import entity.UserFactory;
 import entity.exceptions.UserNotFoundException;
@@ -20,10 +16,11 @@ import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 /**
- * The DAO for user data using Supabase database.
+ * The DAO for user data using Supabase database using a direct connection
+ * through JDBC.
  * Implements interfaces for signup, login, change password, and logout.
  */
-public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
+public class JdbcUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface {
@@ -40,7 +37,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
             PORT,
             DB_NAME,
             DB_PROJECT,
-            SupabaseConfig.getDbPassword());
+            SupabaseDevConfig.getDbPassword());
 
     // SQL query constants
     private static final String SELECT_USER = "SELECT username, password FROM users WHERE username = ?";
@@ -52,10 +49,10 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
     private final Connection connection;
     private String currentUsername;
 
-    public DBUserDataAccessObject(UserFactory userFactory) throws SQLException {
+    public JdbcUserDataAccessObject(UserFactory userFactory) throws SQLException {
         this.userFactory = userFactory;
-        this.connection = DriverManager.getConnection(CONNECTION_URL, SupabaseConfig.getDbUser(),
-                SupabaseConfig.getDbPassword());
+        this.connection = DriverManager.getConnection(CONNECTION_URL, SupabaseDevConfig.getDbUser(),
+                SupabaseDevConfig.getDbPassword());
     }
 
     @Override
