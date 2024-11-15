@@ -8,6 +8,13 @@
 -   [Manahill Sajid (@manahillsajid)](https://github.com/manahillsajid)
 -   [Jinny Yoo (@yhj050224)](https://github.com/yhj050224)
 
+## Instructions
+
+1. Build the project with the provided `pom.xml` file.
+2. Set up the environment variables:
+    - `SUPABASE_DB_USER`
+    - `SUPABASE_DB_PASSWORD`
+
 ## User Stories and Use Cases
 
 ### Authentication (Team)
@@ -69,22 +76,6 @@
     -   Show current happiness level
     -   Show current hunger level
 -   Update statistics display in real-time
-
-**Interactions:**
-
--   `CatInteractionInteractor` → `InteractionController` → `InteractionPresenter`
--   `FactDisplayInteractor` → `FactController` → `FactPresenter`
--   `CatStatisticsInteractor` → `StatisticsController` → `StatisticsPresenter`
-
-**Data Flow:**
-
-1. User clicks cat
-2. System randomly decides between:
-    - Displaying a cat fact
-    - Showing cat statistics
-3. Statistics view includes:
-    - Visual representation of happiness (0-100%)
-    - Visual representation of hunger (0-100%)
 
 ### Music Integration (Assigned to: Jeha)
 
