@@ -1,5 +1,6 @@
 package use_case.food_management.use_item_in_inventory;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import entity.AbstractFood;
@@ -20,6 +21,7 @@ public class UseItemInteractor implements UseItemInputBoundary {
     @Override
     public void execute(UseItemInputData useItemInputData) {
         boolean isSuccess = false;
+        Map<String, AbstractFood> inventoryItems = new HashMap<>();
 
         // if you can use item
         if (useItemDataAccessObject.canUseItem(useItemInputData.getOwnerId(), useItemInputData.getFoodId())) {
@@ -27,7 +29,7 @@ public class UseItemInteractor implements UseItemInputBoundary {
                     .get(useItemInputData.getFoodId()).getQuantity();
             // if quantity greater than 1
             if (quantity > 1) {
-                final Map<String, AbstractFood> inventoryItems = useItemDataAccessObject.getInventory(useItemInputData
+                inventoryItems = useItemDataAccessObject.getInventory(useItemInputData
                         .getOwnerId()).getItems();
                 inventoryItems.get(useItemInputData.getFoodId()).setQuantity(quantity - 1);
                 useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).setItems(inventoryItems);
@@ -35,7 +37,7 @@ public class UseItemInteractor implements UseItemInputBoundary {
                         .getItems().get(useItemInputData.getFoodId()).getQuantity();
             }
             else {
-                final Map<String, AbstractFood> inventoryItems = useItemDataAccessObject.getInventory(useItemInputData
+                inventoryItems = useItemDataAccessObject.getInventory(useItemInputData
                         .getOwnerId()).getItems();
                 inventoryItems.remove(useItemInputData.getFoodId());
                 useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).setItems(inventoryItems);
@@ -45,7 +47,7 @@ public class UseItemInteractor implements UseItemInputBoundary {
             }
         }
 
-        final UseItemOutputData useItemOutputData = new UseItemOutputData(isSuccess);
+        final UseItemOutputData useItemOutputData = new UseItemOutputData(isSuccess, inventoryItems);
         useItemPresenter.prepareSuccessView(useItemOutputData);
     }
 }
