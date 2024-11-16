@@ -5,10 +5,10 @@ package entity;
  */
 public class CatImage {
     private final String imageUrl;
-    private final String id;
+    private final String imageId;
 
-    public CatImage(String id, String imageUrl) {
-        this.id = id;
+    public CatImage(String imageId, String imageUrl) {
+        this.imageId = imageId;
         this.imageUrl = imageUrl;
     }
 
@@ -16,7 +16,7 @@ public class CatImage {
         return imageUrl;
     }
 
-    public String getId() {
-        return id;
+    public String getImageId() {
+        return imageId;
     }
-} 
+}
