@@ -9,6 +9,8 @@ public interface SetupSessionOutputBoundary {
     /**
      * Called when the setup is successful and the system should
      * prepare to switch to the study timer view.
+     *
+     * @param outputData the Output data for the Use Case.
      */
     void prepareSuccessView(SetupSessionOutputData outputData);
 
@@ -21,4 +23,4 @@ public interface SetupSessionOutputBoundary {
      * Called when the system needs to switch to the study view.
      */
     void switchToStudyView();
-} 
+}

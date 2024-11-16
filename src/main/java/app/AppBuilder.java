@@ -6,29 +6,24 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import data_access.ApiCatImageDataAccessObject;
+import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBUserDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
-import entity.CommonUserFactory;
-import entity.FoodInventoryFactory;
-import entity.FoodItemFactory;
-import entity.InventoryFactory;
-import entity.TimerFactory;
-import entity.UserFactory;
+import entity.*;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.add_to_inventory.AddToInventoryPresenter;
 import interface_adapter.adoption.AdoptionViewModel;
-import interface_adapter.cat_image.CatImageController;
-import interface_adapter.cat_image.CatImagePresenter;
-import interface_adapter.cat_image.CatImageViewModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.CreateInventoryPresenter;
 import interface_adapter.create_inventory.InventoryViewModel;
+import interface_adapter.display_cat_image.DisplayCatImageController;
+import interface_adapter.display_cat_image.DisplayDisplayCatImagePresenter;
+import interface_adapter.display_cat_image.DisplayCatImageViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -46,6 +41,7 @@ import interface_adapter.timer.TimerPresenter;
 import interface_adapter.timer.TimerViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
+
 import use_case.create_inventory.CreateInventoryInputBoundary;
 import use_case.create_inventory.CreateInventoryInteractor;
 import use_case.create_inventory.CreateInventoryOutputBoundary;
@@ -59,6 +55,7 @@ import use_case.change_password.ChangePasswordOutputBoundary;
 import use_case.display_cat_image.CatImageInputBoundary;
 import use_case.display_cat_image.CatImageInteractor;
 import use_case.display_cat_image.CatImageOutputBoundary;
+
 import use_case.food_management.add_to_inventory.AddToInventoryInputBoundary;
 import use_case.food_management.add_to_inventory.AddToInventoryInteractor;
 import use_case.food_management.add_to_inventory.AddToInventoryOutputBoundary;
@@ -78,6 +75,8 @@ import use_case.timer.display_timer.DisplayTimerInputBoundary;
 import use_case.timer.display_timer.DisplayTimerInteractor;
 import use_case.timer.display_timer.DisplayTimerOutputBoundary;
 import view.*;
+import view.DisplayCatImageView;
+
 
 import use_case.setupsession.SetupSessionInputBoundary;
 import use_case.setupsession.SetupSessionInteractor;
@@ -98,9 +97,12 @@ public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
+
+    private final CatImageFactory catImageFactory = new CatImageFactory();
     private final FoodItemFactory foodItemFactory = new FoodItemFactory();
     private final InventoryFactory inventoryFactory = new FoodInventoryFactory();
     private final UserFactory userFactory = new CommonUserFactory();
+
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
@@ -109,6 +111,7 @@ public class AppBuilder {
     // InMemoryUserDataAccessObject();
     private final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory);
     private final InMemoryInventoryDataAccessObject inventoryDataAccessObject = new InMemoryInventoryDataAccessObject();
+    private final DisplayCatImageDataAccessInterface displayCatImageDataAccessObject = new ApiDisplayCatImageDataAccessObject(catImageFactory);
 
     private InventoryViewModel inventoryViewModel;
     private InventoryView inventoryView;
@@ -128,10 +131,15 @@ public class AppBuilder {
     private LoginView loginView;
     private AdoptionView adoptionView;
     private AdoptionViewModel adoptionViewModel;
-
+    // TODO: Refactor instatiation of Timer use cases to be in the methods below
     private final TimerViewModel timerViewModel = new TimerViewModel();
     private final InMemoryTimerDataAccessObject timerDataAccessObject = new InMemoryTimerDataAccessObject();
     private final TimerFactory timerFactory = new TimerFactory();
+
+    private DisplayCatImageViewModel displayCatImageViewModel;
+    private DisplayCatImageView displayCatImageView;
+
+
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -375,20 +383,52 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the cat image view to the application.
+     * Adds the display cat image view to the application with refresh
+     * functionality.
      *
-     * @param allowRefresh whether to allow refreshing images
      * @return this builder
      */
-    public AppBuilder addCatImageView(boolean allowRefresh) {
-        final CatImageViewModel viewModel = new CatImageViewModel(allowRefresh);
-        final CatImageDataAccessInterface dataAccess = new ApiCatImageDataAccessObject();
-        final CatImageOutputBoundary presenter = new CatImagePresenter(viewModel);
-        final CatImageInputBoundary interactor = new CatImageInteractor(dataAccess, presenter);
-        final CatImageController controller = new CatImageController(interactor);
-        final CatImageView catImageView = new CatImageView(viewModel, controller);
+    public AppBuilder addDisplayCatImageWithRefreshView() {
+        displayCatImageViewModel = new DisplayCatImageViewModel();
+        displayCatImageViewModel.setRefreshAllowed(true);
+        displayCatImageView = new DisplayCatImageView(displayCatImageViewModel);
 
-        loggedInView.addCatImageView(catImageView);
+        loggedInView.addCatImageView(displayCatImageView);
+        return this;
+    }
+
+    /**
+     * Adds the display cat image view to the application without refresh
+     * functionality.
+     *
+     * @return this builder
+     */
+    public AppBuilder addDisplayCatImageView() {
+        displayCatImageViewModel = new DisplayCatImageViewModel();
+        displayCatImageViewModel.setRefreshAllowed(false);
+        displayCatImageView = new DisplayCatImageView(displayCatImageViewModel);
+
+        loggedInView.addCatImageView(displayCatImageView);
+        return this;
+    }
+
+    /**
+     * Adds the display cat image use case to the application.
+     * Refresh functionality depends on view model.
+     *
+     * @return this builder
+     */
+    public AppBuilder addDisplayCatImageUseCase() {
+        final DisplayCatImageOutputBoundary displayCatImageOutputBoundary = new DisplayDisplayCatImagePresenter(
+                displayCatImageViewModel);
+        final DisplayCatImageInputBoundary displayCatImageInteractor = new DisplayCatImageInteractor(
+                displayCatImageDataAccessObject, displayCatImageOutputBoundary);
+
+        final DisplayCatImageController displayCatImageController = new DisplayCatImageController(
+                displayCatImageInteractor);
+
+        displayCatImageView.setDisplayCatImageController(displayCatImageController);
+
         return this;
     }
 

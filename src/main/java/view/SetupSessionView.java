@@ -3,26 +3,28 @@ package view;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import interface_adapter.setupsession.SetupSessionController;
 import interface_adapter.setupsession.SetupSessionState;
 import interface_adapter.setupsession.SetupSessionViewModel;
 
 /**
- * The view for when the user is setting up their study session
+ * The view for when the user is setting up their study session.
  */
 public class SetupSessionView extends JPanel implements ActionListener {
     private final String viewName = "setup study session";
     private final SetupSessionViewModel setupSessionViewModel;
-    String[] studyChoices = {"10 mins", "15 mins", "20 mins", "25 mins", "30 mins", "35 mins", "40 mins", "45 mins",
-            "50 mins", "55 mins", "60 mins"};
-    String[] breakChoices = {"5 mins", "10 mins"};
-    final JComboBox<String> studytime = new JComboBox<String>(studyChoices);
-    final JComboBox<String> breaktime = new JComboBox<String>(breakChoices);
+    private String[] studyChoices = {"10 mins", "15 mins", "20 mins", "25 mins", "30 mins", "35 mins", "40 mins",
+        "45 mins", "50 mins", "55 mins", "60 mins"};
+    private String[] breakChoices = {"5 mins", "10 mins"};
+    private final JComboBox<String> studytime = new JComboBox<String>(studyChoices);
+    private final JComboBox<String> breaktime = new JComboBox<String>(breakChoices);
     private final JButton returnButton;
 
     private SetupSessionController setupSessionController;
@@ -40,7 +42,6 @@ public class SetupSessionView extends JPanel implements ActionListener {
         final JPanel breakPanel = new JPanel();
         breakPanel.add(new JLabel(SetupSessionViewModel.BREAK_LABEL));
         breakPanel.add(breaktime);
-
 
         final JPanel buttons = new JPanel();
         returnButton = new JButton(SetupSessionViewModel.RETURN_BUTTON_LABEL);
@@ -62,7 +63,7 @@ public class SetupSessionView extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource().equals(returnButton)) {
+        if (e.getSource().equals(returnButton)) {
             final SetupSessionState currentState = setupSessionViewModel.getState();
 
             setupSessionController.execute(
@@ -71,7 +72,6 @@ public class SetupSessionView extends JPanel implements ActionListener {
             );
         }
     }
-
 
     public String getViewName() {
         return viewName;
@@ -82,16 +82,16 @@ public class SetupSessionView extends JPanel implements ActionListener {
     }
 
     private void addStudyTimeListener() {
-        studytime.addActionListener(e -> {
-            SetupSessionState currentState = setupSessionViewModel.getState();
+        studytime.addActionListener(evt -> {
+            final SetupSessionState currentState = setupSessionViewModel.getState();
             currentState.setStudyTime((String) studytime.getSelectedItem());
             setupSessionViewModel.setState(currentState);
         });
     }
 
     private void addBreakTimeListener() {
-        breaktime.addActionListener(e -> {
-            SetupSessionState currentState = setupSessionViewModel.getState();
+        breaktime.addActionListener(evt -> {
+            final SetupSessionState currentState = setupSessionViewModel.getState();
             currentState.setBreakTime((String) studytime.getSelectedItem());
             setupSessionViewModel.setState(currentState);
         });

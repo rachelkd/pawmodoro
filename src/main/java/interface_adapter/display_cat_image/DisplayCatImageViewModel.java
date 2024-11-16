@@ -1,20 +1,15 @@
-package interface_adapter.cat_image;
+package interface_adapter.display_cat_image;
 
 import interface_adapter.ViewModel;
 
 /**
  * View model for displaying cat images.
  */
-public class CatImageViewModel extends ViewModel<CatImageState> {
+public class DisplayCatImageViewModel extends ViewModel<CatImageState> {
 
-    /**
-     * Constructs a new CatImageViewModel.
-     * 
-     * @param allowRefresh whether the user can request new images
-     */
-    public CatImageViewModel(boolean allowRefresh) {
+    public DisplayCatImageViewModel() {
         super("cat image");
-        setState(new CatImageState(allowRefresh));
+        setState(new CatImageState());
     }
 
     public String getImageUrl() {
@@ -55,5 +50,16 @@ public class CatImageViewModel extends ViewModel<CatImageState> {
      */
     public boolean isRefreshAllowed() {
         return getState().isRefreshAllowed();
+    }
+
+    /**
+     * Sets whether refreshing images is allowed.
+     *
+     * @param newAllowRefresh true if refresh is allowed, false otherwise
+     */
+    public void setRefreshAllowed(boolean newAllowRefresh) {
+        final CatImageState state = getState();
+        state.setRefreshAllowed(newAllowRefresh);
+        setState(state);
     }
 }

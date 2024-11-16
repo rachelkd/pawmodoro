@@ -4,7 +4,7 @@ import use_case.timer.display_timer.DisplayTimerInputBoundary;
 import use_case.timer.display_timer.DisplayTimerInputData;
 
 /**
- * Controller for timer-related user actions
+ * Controller for timer-related user actions.
  */
 public class TimerController {
     private final DisplayTimerInputBoundary displayTimerUseCaseInteractor;
@@ -14,7 +14,7 @@ public class TimerController {
     }
 
     /**
-     * Executes the display timer use case for a specific user
+     * Executes the display timer use case for a specific user.
      * 
      * @param username the username of the user whose timer to display
      */

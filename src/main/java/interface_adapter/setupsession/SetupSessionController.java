@@ -15,7 +15,7 @@ public class SetupSessionController {
     }
 
     /**
-     * Executes the setup session use case
+     * Executes the setup session use case.
      *
      * @param studyTime study time interval length
      * @param breakTime break time interval length
