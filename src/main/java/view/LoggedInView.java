@@ -29,9 +29,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JLabel passwordErrorField = new JLabel();
     private ChangePasswordController changePasswordController;
     private LogoutController logoutController;
-    private AddToInventoryController addToInventoryController;
-    private CreateInventoryController createInventoryController;
-    private UseItemController useItemController;
     private final TimerViewModel timerViewModel;
     private final TimerView timerView;
     private TimerController timerController;
@@ -142,20 +139,13 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
+            // returns value of property when change occurs
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             username.setText(state.getUsername());
         }
         else if (evt.getPropertyName().equals("password")) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             JOptionPane.showMessageDialog(null, "password updated for " + state.getUsername());
-        }
-        else if (evt.getPropertyName().equals("inventory_add")) {
-            final LoggedInState state = (LoggedInState) evt.getNewValue();
-            JOptionPane.showMessageDialog(null, "item added to inventory for " + state.getUsername());
-        }
-        else if (evt.getPropertyName().equals("inventory_item_used")) {
-            final LoggedInState state = (LoggedInState) evt.getNewValue();
-            JOptionPane.showMessageDialog(null, "item used for " + state.getUsername());
         }
         // Timer-related property change is handled by TimerView
     }
@@ -166,18 +156,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setChangePasswordController(ChangePasswordController changePasswordController) {
         this.changePasswordController = changePasswordController;
-    }
-
-    public void setCreateInventoryController(CreateInventoryController createInventoryController) {
-        this.createInventoryController = createInventoryController;
-    }
-
-    public void setAddToInventoryController(AddToInventoryController addToInventoryController) {
-        this.addToInventoryController = addToInventoryController;
-    }
-
-    public void setUseItemController(UseItemController useItemController) {
-        this.useItemController = useItemController;
     }
 
     public void setLogoutController(LogoutController logoutController) {

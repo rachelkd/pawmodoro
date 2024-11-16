@@ -17,6 +17,7 @@ public class Main {
                 .addLoginView()
                 .addSignupView()
                 .addLoggedInView()
+                .addInventoryView()
                 .addAdoptionView()
                 .addSetupSessionView()
                 .addSignupUseCase()
@@ -28,6 +29,7 @@ public class Main {
                 .addCreateInventoryUseCase()
                 .addDisplayCatImageWithRefreshView()
                 .addDisplayCatImageUseCase()
+                .addSetupSessionUseCase()
                 .build();
 
         application.pack();
