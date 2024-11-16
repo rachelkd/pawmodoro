@@ -1,4 +1,4 @@
-package interface_adapter.cat_image;
+package interface_adapter.display_cat_image;
 
 /**
  * State object for the cat image view.
@@ -6,16 +6,7 @@ package interface_adapter.cat_image;
 public class CatImageState {
     private String imageUrl = "";
     private String errorMessage = "";
-    private final boolean allowRefresh;
-
-    /**
-     * Creates a new CatImageState.
-     * 
-     * @param allowRefresh whether the user can request new images
-     */
-    public CatImageState(boolean allowRefresh) {
-        this.allowRefresh = allowRefresh;
-    }
+    private boolean allowRefresh = true;
 
     public String getImageUrl() {
         return imageUrl;
@@ -34,6 +25,10 @@ public class CatImageState {
     }
 
     public boolean isRefreshAllowed() {
-        return allowRefresh;
+        return this.allowRefresh;
+    }
+
+    public void setRefreshAllowed(boolean newAllowRefresh) {
+        this.allowRefresh = newAllowRefresh;
     }
 }

@@ -14,26 +14,24 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import constants.Constants;
-import interface_adapter.cat_image.CatImageController;
-import interface_adapter.cat_image.CatImageViewModel;
+import interface_adapter.display_cat_image.DisplayCatImageController;
+import interface_adapter.display_cat_image.DisplayCatImageViewModel;
 
 /**
  * View component for displaying cat images.
  */
-public class CatImageView extends JPanel implements PropertyChangeListener {
-    private final CatImageViewModel viewModel;
-    private final CatImageController controller;
+public class DisplayCatImageView extends JPanel implements PropertyChangeListener {
+    private final DisplayCatImageViewModel viewModel;
+    private DisplayCatImageController displayCatImageController;
     private final JLabel imageLabel;
 
     /**
-     * Creates a new CatImageView.
+     * Creates a new DisplayCatImageView.
      * 
      * @param viewModel the view model
-     * @param controller the controller
      */
-    public CatImageView(CatImageViewModel viewModel, CatImageController controller) {
+    public DisplayCatImageView(DisplayCatImageViewModel viewModel) {
         this.viewModel = viewModel;
-        this.controller = controller;
         this.viewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
@@ -57,12 +55,9 @@ public class CatImageView extends JPanel implements PropertyChangeListener {
             refreshButton.setPreferredSize(new Dimension(100, 30));
             buttonPanel.add(refreshButton);
 
-            refreshButton.addActionListener(event -> controller.fetchNewImage());
+            refreshButton.addActionListener(event -> displayCatImageController.fetchNewImage());
             add(buttonPanel, BorderLayout.SOUTH);
         }
-
-        // Fetch initial image
-        controller.fetchNewImage();
     }
 
     @Override
@@ -90,6 +85,7 @@ public class CatImageView extends JPanel implements PropertyChangeListener {
                         scaledHeight,
                         Image.SCALE_SMOOTH);
                 imageLabel.setIcon(new ImageIcon(scaledImage));
+                imageLabel.setText(viewModel.getErrorMessage());
 
                 // Update panel size to match scaled image
                 setPreferredSize(new Dimension(scaledWidth, scaledHeight));
@@ -103,5 +99,23 @@ public class CatImageView extends JPanel implements PropertyChangeListener {
         }
         revalidate();
         repaint();
+    }
+
+    /**
+     * Sets the controller for the display cat image view.
+     * Fetches a new cat image when the controller is set.
+     * 
+     * @param displayCatImageController the controller
+     */
+    public void setDisplayCatImageController(DisplayCatImageController displayCatImageController) {
+        this.displayCatImageController = displayCatImageController;
+        this.fetchNewImage();
+    }
+
+    /**
+     * Fetches a new cat image.
+     */
+    public void fetchNewImage() {
+        displayCatImageController.fetchNewImage();
     }
 }

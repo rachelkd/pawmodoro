@@ -3,8 +3,6 @@ package view;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -121,6 +119,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 });
 
         // Create timer view component
+        // TODO: Is this clean?
         this.timerView = new TimerView(timerViewModel);
 
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
@@ -177,9 +176,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     /**
      * Adds a cat image view to this panel.
      *
-     * @param catImageView the cat image view to add
+     * @param displayCatImageView the cat image view to add
      */
-    public void addCatImageView(CatImageView catImageView) {
-        add(catImageView);
+    public void addCatImageView(DisplayCatImageView displayCatImageView) {
+        add(displayCatImageView);
     }
 }
