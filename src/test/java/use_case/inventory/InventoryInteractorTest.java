@@ -3,7 +3,7 @@ package use_case.inventory;
 import data_access.InMemoryInventoryDataAccessObject;
 import entity.*;
 import org.junit.jupiter.api.Test;
-import use_case.authentication.create_inventory.*;
+import use_case.create_inventory.*;
 import use_case.food_management.add_to_inventory.*;
 import use_case.food_management.use_item_in_inventory.*;
 

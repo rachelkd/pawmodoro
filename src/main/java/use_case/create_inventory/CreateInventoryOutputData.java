@@ -1,4 +1,4 @@
-package use_case.authentication.create_inventory;
+package use_case.create_inventory;
 
 import java.util.Map;
 
