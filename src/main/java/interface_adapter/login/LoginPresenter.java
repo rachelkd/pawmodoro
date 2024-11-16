@@ -46,6 +46,7 @@ public class LoginPresenter implements LoginOutputBoundary {
 
     @Override
     public void switchToSignUpView() {
+        // TODO: need to change the "sign up" using getName method but doesnt work.
         viewManagerModel.setState("sign up");
         viewManagerModel.firePropertyChanged();
     }
