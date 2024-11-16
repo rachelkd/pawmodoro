@@ -1,11 +1,11 @@
 package entity;
 
 /**
- * Factory for creating Timer objects with standardized initialization
+ * Factory for creating Timer objects with standardized initialization.
  */
 public class TimerFactory {
     /**
-     * Creates a new Timer with default settings (25 minutes work interval, stopped)
+     * Creates a new Timer with default settings (25 minutes work interval, stopped).
      * 
      * @return a new Timer instance with default settings
      */
@@ -14,7 +14,7 @@ public class TimerFactory {
     }
 
     /**
-     * Creates a new Timer with specified settings
+     * Creates a new Timer with specified settings.
      * 
      * @param status current timer status
      * @param currentInterval type of interval
