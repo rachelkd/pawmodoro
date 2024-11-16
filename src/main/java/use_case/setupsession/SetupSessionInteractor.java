@@ -9,9 +9,11 @@ public class SetupSessionInteractor implements SetupSessionInputBoundary {
     public SetupSessionInteractor(SetupSessionOutputBoundary setupPresenter) {
         this.setupPresenter = setupPresenter;
     }
+
     @Override
     public void execute(SetupSessionInputData setupSessionInputData) {
-        final SetupSessionOutputData setupSessionOutputData = new SetupSessionOutputData(setupSessionInputData.getStudyTime(), setupSessionInputData.getBreakTime());
+        final SetupSessionOutputData setupSessionOutputData = new SetupSessionOutputData(setupSessionInputData
+            .getStudyTime(), setupSessionInputData.getBreakTime());
         setupPresenter.prepareSuccessView(setupSessionOutputData);
     }
 

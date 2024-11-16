@@ -1,8 +1,8 @@
 package interface_adapter.setupsession;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.timer.TimerViewModel;
 import interface_adapter.timer.TimerState;
+import interface_adapter.timer.TimerViewModel;
 import use_case.setupsession.SetupSessionOutputBoundary;
 import use_case.setupsession.SetupSessionOutputData;
 
