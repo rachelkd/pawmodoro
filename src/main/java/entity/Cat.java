@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Random;
+
 /**
  * Represents a virtual pet cat in the Pawmodoro application.
  * Each cat has a unique name within its owner's CatHouse.
@@ -10,12 +12,15 @@ public class Cat {
     private static final int INITIAL_LEVEL = 100;
     private static final int MAX_LEVEL = 100;
     private static final int MIN_LEVEL = 0;
+    private static final int NUMBER_OF_CAT_IMAGES = 5;
+    private static final String CAT_IMAGE_FORMAT = "cat-%d.png";
 
     private final String name;
     private final String ownerId;
     private int hungerLevel;
     private int happinessLevel;
     private Position position;
+    private final String imageFileName;
 
     /**
      * Creates a new Cat with the specified name and owner.
@@ -27,14 +32,16 @@ public class Cat {
      * @throws IllegalArgumentException if name is null or empty
      */
     public Cat(String name, String ownerId) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Cat name cannot be null or empty");
-        }
         this.name = name;
         this.ownerId = ownerId;
         this.hungerLevel = INITIAL_LEVEL;
         this.happinessLevel = INITIAL_LEVEL;
         this.position = new Position(0, 0);
+
+        // Randomly select a cat image
+        final Random random = new Random();
+        final int imageNumber = random.nextInt(NUMBER_OF_CAT_IMAGES) + 1;
+        this.imageFileName = String.format(CAT_IMAGE_FORMAT, imageNumber);
     }
 
     /**
@@ -78,7 +85,6 @@ public class Cat {
         this.updateHunger(food.getPoints());
     }
 
-    // Getters
     public String getName() {
         return name;
     }
@@ -97,5 +103,9 @@ public class Cat {
 
     public Position getPosition() {
         return position;
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
     }
 }
