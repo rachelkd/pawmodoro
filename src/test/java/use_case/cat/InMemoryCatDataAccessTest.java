@@ -15,7 +15,7 @@ import data_access.InMemoryCatDataAccessObject;
 import entity.Cat;
 import entity.CatFactory;
 
-class CatDataAccessTest {
+class InMemoryCatDataAccessTest {
     private static CatFactory factory;
     private CatDataAccessInterface catRepository;
 
