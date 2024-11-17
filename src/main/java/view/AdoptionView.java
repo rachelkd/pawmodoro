@@ -53,7 +53,8 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
                         final AdoptionState currentState = adoptionViewModel.getState();
 
                         adoptionController.execute(
-                                currentState.getCatName()
+                                currentState.getCatName(),
+                                currentState.getOwner()
                         );
                     }
                 }

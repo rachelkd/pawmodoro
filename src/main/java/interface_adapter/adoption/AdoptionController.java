@@ -22,8 +22,13 @@ public class AdoptionController {
      */
     public void execute(String catName, User owner) {
         final AdoptionInputData adoptionInputData = new AdoptionInputData(catName, owner);
+
+        adoptionUseCaseInteractor.execute(adoptionInputData);
     }
 
+    /**
+     * Executes the switch to Setup Session View use case/
+     */
     public void switchToSetupView() {
         adoptionUseCaseInteractor.switchToSetupView();
     }
