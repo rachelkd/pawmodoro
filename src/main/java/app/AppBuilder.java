@@ -10,11 +10,12 @@ import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBUserDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
-import entity.*;  // TODO: Import the correct entity package
+import entity.*; // TODO: Import the correct entity package
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.add_to_inventory.AddToInventoryPresenter;
 import interface_adapter.adoption.AdoptionViewModel;
+import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
@@ -45,9 +46,6 @@ import use_case.adoption.AdoptionDataAccessInterface;
 import use_case.adoption.AdoptionInputBoundary;
 import use_case.adoption.AdoptionInteractor;
 import use_case.adoption.AdoptionOutputBoundary;
-import use_case.authentication.create_inventory.CreateInventoryInputBoundary;
-import use_case.authentication.create_inventory.CreateInventoryInteractor;
-import use_case.authentication.create_inventory.CreateInventoryOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
@@ -111,7 +109,8 @@ public class AppBuilder {
 
     private final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory);
     private final InMemoryInventoryDataAccessObject inventoryDataAccessObject = new InMemoryInventoryDataAccessObject();
-    private final DisplayCatImageDataAccessInterface displayCatImageDataAccessObject = new ApiDisplayCatImageDataAccessObject(catImageFactory);
+    private final DisplayCatImageDataAccessInterface displayCatImageDataAccessObject =
+            new ApiDisplayCatImageDataAccessObject(catImageFactory);
 
     private InventoryViewModel inventoryViewModel;
     private InventoryView inventoryView;
@@ -215,13 +214,15 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel, timerViewModel);
+        final CatViewModel catViewModel = new CatViewModel();
+        loggedInView = new LoggedInView(loggedInViewModel, timerViewModel, catViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
 
     /**
      * Add the inventory view to the application.
+     * 
      * @return this builder
      */
     public AppBuilder addInventoryView() {
@@ -268,8 +269,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addSetupSessionUseCase() {
-        final SetupSessionOutputBoundary setupSessionOutputBoundary = new
-                SetupSessionPresenter(setupSessionViewModel, viewManagerModel, timerViewModel);
+        final SetupSessionOutputBoundary setupSessionOutputBoundary =
+                new SetupSessionPresenter(setupSessionViewModel, viewManagerModel, timerViewModel);
         final SetupSessionInputBoundary setupInteractor = new SetupSessionInteractor(setupSessionOutputBoundary);
         final SetupSessionController setupController = new SetupSessionController(setupInteractor);
         setupSessionView.setSetupSessionController(setupController);
