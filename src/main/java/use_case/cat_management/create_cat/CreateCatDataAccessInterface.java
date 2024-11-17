@@ -1,15 +1,15 @@
-package use_case.cat_management;
-
-import java.util.Collection;
+package use_case.cat_management.create_cat;
 
 import entity.Cat;
+
+import java.util.Collection;
 
 /**
  * Repository interface for managing cat persistence.
  * This interface defines the contract for storing and retrieving cats
  * associated with users.
  */
-public interface CatDataAccessInterface {
+public interface CreateCatDataAccessInterface {
 
     /**
      * Saves a cat to the repository.

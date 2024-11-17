@@ -5,7 +5,7 @@ import java.util.Map;
 import entity.AbstractFood;
 
 /**
- * Create Inventory Use Case.
+ * Output Data for Create Inventory Use Case.
  */
 public class CreateInventoryOutputData {
     private final String ownerId;
