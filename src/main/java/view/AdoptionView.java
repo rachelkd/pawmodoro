@@ -1,21 +1,16 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import constants.Constants;
 import interface_adapter.adoption.AdoptionController;
 import interface_adapter.adoption.AdoptionState;
 import interface_adapter.adoption.AdoptionViewModel;
@@ -26,11 +21,11 @@ import interface_adapter.adoption.AdoptionViewModel;
 public class AdoptionView extends JPanel implements ActionListener, PropertyChangeListener {
     private final AdoptionViewModel adoptionViewModel;
     private final String viewName = "adoption";
-    private final JLabel name = new JLabel("Enter your new cat's name: ");
+    private final JLabel name = new JLabel(AdoptionViewModel.NAME_LABEL);
     private final JTextField nameField = new JTextField(15);
-    private final String confirm = "Adopt now!";
-    private final JButton confirmButton = new JButton(confirm);
-    private final JButton cancelButton = new JButton("Cancel");
+    private final JButton confirmButton = new JButton(AdoptionViewModel.CONFIRM_BUTTON_LABEL);
+    private final JButton cancelButton = new JButton(AdoptionViewModel.CANCEL_BUTTON_LABEL);
+    private AdoptionController adoptionController;
 
     /**
      * Creates a new AdoptionView.
@@ -39,6 +34,11 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
      */
     public AdoptionView(AdoptionViewModel adoptionViewModel) {
         this.adoptionViewModel = adoptionViewModel;
+        adoptionViewModel.addPropertyChangeListener(this);
+
+        final JLabel title = new JLabel(AdoptionViewModel.TITLE_LABEL);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         final JPanel information = new JPanel();
         information.add(name);
         information.add(nameField);
@@ -46,20 +46,66 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
         finish.add(confirmButton);
         finish.add(cancelButton);
 
+        confirmButton.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (e.getSource().equals(confirmButton)) {
+                        final AdoptionState currentState = adoptionViewModel.getState();
+
+                        adoptionController.execute(
+                                currentState.getCatName()
+                        );
+                    }
+                }
+            }
+        );
+
+        cancelButton.addActionListener (
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    adoptionController.switchToSetupView();
+                }
+            }
+        );
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        this.add(title);
         this.add(information);
         this.add(finish);
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
+    }
+
+    private void addCatNameListener() {
+        nameField.getDocument().addDocumentListener(new DocumentListener() {
+            private void documentListenerHelper() {
+                final AdoptionState currentState = adoptionViewModel.getState();
+                currentState.setCatName(new String(nameField.getText()));
+                adoptionViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {documentListenerHelper();}
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {documentListenerHelper();}
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {documentListenerHelper();}
+        });
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO: Implement action handling
+
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // TODO: Implement property change handling
+        final AdoptionState state = (AdoptionState) evt.getNewValue();
+        if(state.getAdoptionError() != null) {
+            JOptionPane.showMessageDialog(this, state.getAdoptionError());
+        }
     }
 
     /**
@@ -69,5 +115,9 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
      */
     public String getViewName() {
         return viewName;
+    }
+
+    public void setAdoptionController(AdoptionController adoptionController) {
+        this.adoptionController = adoptionController;
     }
 }
