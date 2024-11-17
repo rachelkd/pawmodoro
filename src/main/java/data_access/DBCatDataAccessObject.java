@@ -226,4 +226,10 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
         }
         return count;
     }
+
+    @Override
+    public boolean removeCat(String name, String ownerUsername) {
+        // TODO: Implement this method for cat running away use case
+        return false;
+    }
 }

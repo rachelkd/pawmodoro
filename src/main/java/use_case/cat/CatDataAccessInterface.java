@@ -59,4 +59,13 @@ public interface CatDataAccessInterface {
      * @return the number of cats owned by the user
      */
     int getNumberOfCatsByOwner(String ownerUsername);
+
+    /**
+     * Removes a cat from a user's ownership (e.g., when cat runs away).
+     *
+     * @param name the name of the cat to remove
+     * @param ownerUsername the username of the owner
+     * @return true if removal was successful, false if cat wasn't found
+     */
+    boolean removeCat(String name, String ownerUsername);
 }
