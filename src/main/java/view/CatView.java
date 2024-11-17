@@ -6,6 +6,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -56,28 +57,24 @@ public class CatView extends JPanel implements PropertyChangeListener {
     private void updateCatImage() {
         final CatState state = catViewModel.getState();
         if (state != null && state.getImageFileName() != null) {
-            try {
-                final String imagePath = "/images/" + state.getImageFileName();
-                final ImageIcon imageIcon = new ImageIcon(getClass().getResource(imagePath));
+            final String imagePath = "/images/" + state.getImageFileName();
+            final ImageIcon imageIcon = new ImageIcon(getClass().getResource(imagePath));
 
-                final Image image = imageIcon.getImage();
-                final Image scaledImage = image.getScaledInstance(
-                        Constants.CAT_IMAGE_MAX_WIDTH,
-                        Constants.CAT_IMAGE_MAX_HEIGHT,
-                        Image.SCALE_SMOOTH);
+            final Image image = imageIcon.getImage();
+            final Image scaledImage = image.getScaledInstance(
+                    Constants.CAT_SPRITE_DISPLAY_SIZE,
+                    Constants.CAT_SPRITE_DISPLAY_SIZE,
+                    Image.SCALE_SMOOTH);
 
-                imageLabel.setIcon(new ImageIcon(scaledImage));
-            }
-            catch (Exception exception) {
-                imageLabel.setIcon(null);
-                imageLabel.setText("Image not found");
-            }
+            imageLabel.setIcon(new ImageIcon(scaledImage));
         }
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final CatState state = (CatState) evt.getNewValue();
         // TODO: Rachel: Not sure what to do here yet
+        if ("state".equals(evt.getPropertyName())) {
+            updateCatImage();
+        }
     }
 }
