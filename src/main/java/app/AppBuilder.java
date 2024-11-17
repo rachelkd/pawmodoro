@@ -10,7 +10,7 @@ import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBUserDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
-import entity.*;
+import entity.*;  // TODO: Import the correct entity package
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.add_to_inventory.AddToInventoryPresenter;
@@ -22,7 +22,7 @@ import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.CreateInventoryPresenter;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_image.DisplayCatImageController;
-import interface_adapter.display_cat_image.DisplayDisplayCatImagePresenter;
+import interface_adapter.display_cat_image.DisplayCatImagePresenter;
 import interface_adapter.display_cat_image.DisplayCatImageViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
@@ -48,13 +48,13 @@ import use_case.adoption.AdoptionOutputBoundary;
 import use_case.authentication.create_inventory.CreateInventoryInputBoundary;
 import use_case.authentication.create_inventory.CreateInventoryInteractor;
 import use_case.authentication.create_inventory.CreateInventoryOutputBoundary;
+import use_case.change_password.ChangePasswordInputBoundary;
+import use_case.change_password.ChangePasswordInteractor;
+import use_case.change_password.ChangePasswordOutputBoundary;
 import use_case.create_inventory.CreateInventoryInputBoundary;
 import use_case.create_inventory.CreateInventoryInteractor;
 import use_case.create_inventory.CreateInventoryOutputBoundary;
 import use_case.display_cat_image.DisplayCatImageDataAccessInterface;
-import use_case.change_password.ChangePasswordInputBoundary;
-import use_case.change_password.ChangePasswordInteractor;
-import use_case.change_password.ChangePasswordOutputBoundary;
 import use_case.display_cat_image.DisplayCatImageInputBoundary;
 import use_case.display_cat_image.DisplayCatImageInteractor;
 import use_case.display_cat_image.DisplayCatImageOutputBoundary;
@@ -76,14 +76,15 @@ import use_case.signup.SignupOutputBoundary;
 import use_case.timer.display_timer.DisplayTimerInputBoundary;
 import use_case.timer.display_timer.DisplayTimerInteractor;
 import use_case.timer.display_timer.DisplayTimerOutputBoundary;
-import view.*;
+import view.*;  // TODO: Import the correct view package
 import view.DisplayCatImageView;
 
-
+// TODO: Fix order of imports when all packages are created
 import use_case.setupsession.SetupSessionInputBoundary;
 import use_case.setupsession.SetupSessionInteractor;
 import use_case.setupsession.SetupSessionOutputBoundary;
 import view.AdoptionView;
+// TODO: Might need to add more builders to reduce coupling (getting Checkstyle warnings)
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -108,9 +109,6 @@ public class AppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    // thought question: is the hard dependency below a problem?
-    // private final InMemoryUserDataAccessObject userDataAccessObject = new
-    // InMemoryUserDataAccessObject();
     private final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory);
     private final InMemoryInventoryDataAccessObject inventoryDataAccessObject = new InMemoryInventoryDataAccessObject();
     private final DisplayCatImageDataAccessInterface displayCatImageDataAccessObject = new ApiDisplayCatImageDataAccessObject(catImageFactory);
@@ -135,15 +133,16 @@ public class AppBuilder {
     private LoggedInView loggedInView;
     private LoginView loginView;
 
-    // TODO: Refactor instatiation of Timer use cases to be in the methods below
+    private AdoptionView adoptionView;
+    private AdoptionViewModel adoptionViewModel;
+
+    // TODO: Refactor instatiation of Timer use cases to be in the methods below @Jinny
     private final TimerViewModel timerViewModel = new TimerViewModel();
     private final InMemoryTimerDataAccessObject timerDataAccessObject = new InMemoryTimerDataAccessObject();
     private final TimerFactory timerFactory = new TimerFactory();
 
     private DisplayCatImageViewModel displayCatImageViewModel;
     private DisplayCatImageView displayCatImageView;
-
-
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -438,7 +437,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addDisplayCatImageUseCase() {
-        final DisplayCatImageOutputBoundary displayCatImageOutputBoundary = new DisplayDisplayCatImagePresenter(
+        final DisplayCatImageOutputBoundary displayCatImageOutputBoundary = new DisplayCatImagePresenter(
                 displayCatImageViewModel);
         final DisplayCatImageInputBoundary displayCatImageInteractor = new DisplayCatImageInteractor(
                 displayCatImageDataAccessObject, displayCatImageOutputBoundary);
