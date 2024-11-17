@@ -14,8 +14,6 @@ import entity.*;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.add_to_inventory.AddToInventoryPresenter;
-import interface_adapter.adoption.AdoptionController;
-import interface_adapter.adoption.AdoptionPresenter;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
@@ -50,15 +48,13 @@ import use_case.adoption.AdoptionOutputBoundary;
 import use_case.authentication.create_inventory.CreateInventoryInputBoundary;
 import use_case.authentication.create_inventory.CreateInventoryInteractor;
 import use_case.authentication.create_inventory.CreateInventoryOutputBoundary;
-//import use_case.cat_image.CatImageDataAccessInterface;
-//import use_case.cat_image.CatImageInputBoundary;
-//import use_case.cat_image.CatImageInteractor;
-//import use_case.cat_image.CatImageOutputBoundary;
+import use_case.create_inventory.CreateInventoryInputBoundary;
+import use_case.create_inventory.CreateInventoryInteractor;
+import use_case.create_inventory.CreateInventoryOutputBoundary;
+import use_case.display_cat_image.DisplayCatImageDataAccessInterface;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
-import use_case.display_cat_image.DisplayCatImageDataAccessInterface;
-
 import use_case.display_cat_image.DisplayCatImageInputBoundary;
 import use_case.display_cat_image.DisplayCatImageInteractor;
 import use_case.display_cat_image.DisplayCatImageOutputBoundary;
@@ -82,6 +78,7 @@ import use_case.timer.display_timer.DisplayTimerInteractor;
 import use_case.timer.display_timer.DisplayTimerOutputBoundary;
 import view.*;
 import view.DisplayCatImageView;
+
 
 import use_case.setupsession.SetupSessionInputBoundary;
 import use_case.setupsession.SetupSessionInteractor;
@@ -357,7 +354,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addUseItemUseCase() {
-        final UseItemOutputBoundary useItemOutputBoundary = new UseItemPresenter(loggedInViewModel);
+        final UseItemOutputBoundary useItemOutputBoundary = new UseItemPresenter(inventoryViewModel);
 
         final UseItemInputBoundary useItemInteractor = new UseItemInteractor(inventoryDataAccessObject,
                 useItemOutputBoundary);
