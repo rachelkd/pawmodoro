@@ -53,7 +53,7 @@ public class Cat {
      *
      * @param amount the amount to change the hunger level by (positive or negative)
      */
-    public void updateHunger(int amount) {
+    public void updateHungerLevel(int amount) {
         this.hungerLevel = Math.max(MIN_LEVEL, Math.min(MAX_LEVEL, this.hungerLevel + amount));
     }
 
@@ -63,7 +63,7 @@ public class Cat {
      *
      * @param amount the amount to change the happiness level by (positive or negative)
      */
-    public void updateHappiness(int amount) {
+    public void updateHappinessLevel(int amount) {
         this.happinessLevel = Math.max(MIN_LEVEL, Math.min(MAX_LEVEL, this.happinessLevel + amount));
     }
 
@@ -82,7 +82,7 @@ public class Cat {
      * @param food the food item to feed to the cat
      */
     public void feed(AbstractFood food) {
-        this.updateHunger(food.getPoints());
+        this.updateHungerLevel(food.getPoints());
     }
 
     public String getName() {
