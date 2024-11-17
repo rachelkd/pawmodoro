@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import config.SupabaseConfig;
 import entity.Cat;
 import entity.CatFactory;
+import entity.exceptions.NoCatsFoundException;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -231,5 +232,23 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
     public boolean removeCat(String name, String ownerUsername) {
         // TODO: Implement this method for cat running away use case
         return false;
+    }
+
+    @Override
+    public int getHungerLevel(String name, String ownerUsername) {
+        Cat cat = getCatByNameAndOwner(name, ownerUsername);
+        if (cat == null) {
+            throw new NoCatsFoundException("Cat " + name + " not found for user: " + ownerUsername);
+        }
+        return cat.getHungerLevel();
+    }
+
+    @Override
+    public int getHappinessLevel(String name, String ownerUsername) {
+        Cat cat = getCatByNameAndOwner(name, ownerUsername);
+        if (cat == null) {
+            throw new NoCatsFoundException("Cat " + name + " not found for user: " + ownerUsername);
+        }
+        return cat.getHappinessLevel();
     }
 }

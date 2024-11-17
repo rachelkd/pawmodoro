@@ -68,4 +68,24 @@ public interface CatDataAccessInterface {
      * @return true if removal was successful, false if cat wasn't found
      */
     boolean removeCat(String name, String ownerUsername);
+
+    /**
+     * Get the hunger level of a cat.
+     *
+     * @param name the name of the cat
+     * @param ownerUsername the username of the cat's owner
+     * @return the hunger level of the cat
+     * @throws entity.exceptions.NoCatsFoundException if the cat is not found
+     */
+    int getHungerLevel(String name, String ownerUsername);
+
+    /**
+     * Get the happiness level of a cat.
+     *
+     * @param name the name of the cat
+     * @param ownerUsername the username of the cat's owner
+     * @return the happiness level of the cat
+     * @throws entity.exceptions.NoCatsFoundException if the cat is not found
+     */
+    int getHappinessLevel(String name, String ownerUsername);
 }

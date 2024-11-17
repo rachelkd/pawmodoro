@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import entity.Cat;
+import entity.exceptions.NoCatsFoundException;
 import use_case.cat.CatDataAccessInterface;
 
 /**
@@ -68,5 +69,23 @@ public class InMemoryCatDataAccessObject implements CatDataAccessInterface {
     public boolean removeCat(String name, String ownerUsername) {
         // TODO: Implement this method for cat running away use case
         return false;
+    }
+
+    @Override
+    public int getHungerLevel(String name, String ownerUsername) {
+        final Cat cat = getCatByNameAndOwner(name, ownerUsername);
+        if (cat == null) {
+            throw new NoCatsFoundException("Cat " + name + " not found for user: " + ownerUsername);
+        }
+        return cat.getHungerLevel();
+    }
+
+    @Override
+    public int getHappinessLevel(String name, String ownerUsername) {
+        final Cat cat = getCatByNameAndOwner(name, ownerUsername);
+        if (cat == null) {
+            throw new NoCatsFoundException("Cat " + name + " not found for user: " + ownerUsername);
+        }
+        return cat.getHappinessLevel();
     }
 }

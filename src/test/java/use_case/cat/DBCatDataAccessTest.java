@@ -3,6 +3,7 @@ package use_case.cat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import config.SupabaseConfig;
 import data_access.DBCatDataAccessObject;
 import entity.Cat;
 import entity.CatFactory;
+import entity.exceptions.NoCatsFoundException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
@@ -93,11 +95,18 @@ class DBCatDataAccessTest {
     @Test
     void successUpdateCatTest() {
         final Cat cat = factory.create("Whiskers", "testuser");
-
         catRepository.saveCat(cat);
 
-        assertTrue(catRepository.updateCat(cat));
-        assertEquals(100, catRepository.getCatByNameAndOwner("Whiskers", "testuser").getHungerLevel());
+        // Create updated cat with same name and owner but different stats
+        final Cat updatedCat = factory.create("Whiskers", "testuser");
+        updatedCat.updateHungerLevel(-50);
+        updatedCat.updateHappinessLevel(-25);
+
+        assertTrue(catRepository.updateCat(updatedCat));
+
+        final Cat retrievedCat = catRepository.getCatByNameAndOwner("Whiskers", "testuser");
+        assertEquals(50, retrievedCat.getHungerLevel());
+        assertEquals(75, retrievedCat.getHappinessLevel());
     }
 
     @Test
@@ -119,5 +128,37 @@ class DBCatDataAccessTest {
     @Test
     void failureRemoveNonexistentCatTest() {
         assertFalse(catRepository.removeCat("Whiskers", "testuser"));
+    }
+
+    @Test
+    void successGetHungerLevelTest() {
+        final Cat cat = factory.create("Whiskers", "testuser");
+        catRepository.saveCat(cat);
+
+        final int hungerLevel = catRepository.getHungerLevel("Whiskers", "testuser");
+        assertEquals(100, hungerLevel); // Assuming initial hunger level is 100
+    }
+
+    @Test
+    void failureGetHungerLevelNonexistentCatTest() {
+        assertThrows(NoCatsFoundException.class, () -> {
+            catRepository.getHungerLevel("NonexistentCat", "testuser");
+        });
+    }
+
+    @Test
+    void successGetHappinessLevelTest() {
+        final Cat cat = factory.create("Whiskers", "testuser");
+        catRepository.saveCat(cat);
+
+        final int happinessLevel = catRepository.getHappinessLevel("Whiskers", "testuser");
+        assertEquals(100, happinessLevel);
+    }
+
+    @Test
+    void failureGetHappinessLevelNonexistentCatTest() {
+        assertThrows(NoCatsFoundException.class, () -> {
+            catRepository.getHappinessLevel("NonexistentCat", "testuser");
+        });
     }
 }
