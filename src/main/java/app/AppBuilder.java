@@ -42,6 +42,10 @@ import interface_adapter.timer.TimerPresenter;
 import interface_adapter.timer.TimerViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
+import use_case.adoption.AdoptionDataAccessInterface;
+import use_case.adoption.AdoptionInputBoundary;
+import use_case.adoption.AdoptionInteractor;
+import use_case.adoption.AdoptionOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
@@ -117,6 +121,9 @@ public class AppBuilder {
     private SetupSessionView setupSessionView;
     private SetupSessionViewModel setupSessionViewModel;
 
+    private AdoptionView adoptionView;
+    private AdoptionViewModel adoptionViewModel;
+
     private MaxCatsErrorView maxCatsErrorView;
     private MaxCatsErrorViewModel maxCatsErrorViewModel;
 
@@ -124,9 +131,8 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
-    private AdoptionView adoptionView;
-    private AdoptionViewModel adoptionViewModel;
-    // TODO: Refactor instatiation of Timer use cases to be in the methods below @Jinny
+
+    // TODO: Refactor instatiation of Timer use cases to be in the methods below
     private final TimerViewModel timerViewModel = new TimerViewModel();
     private final InMemoryTimerDataAccessObject timerDataAccessObject = new InMemoryTimerDataAccessObject();
     private final TimerFactory timerFactory = new TimerFactory();
@@ -238,6 +244,21 @@ public class AppBuilder {
         signupView.setSignupController(controller);
         return this;
     }
+
+    /**
+     * Adds the Adoption Use Case to the application
+     *
+     * @return this builder
+     */
+//    public AppBuilder addAdoptionUseCase() {
+//        final AdoptionOutputBoundary adoptionOutputBoundary = new AdoptionPresenter(setupSessionViewModel,
+//                adoptionViewModel, viewManagerModel);
+//        final AdoptionInputBoundary adoptionInteractor = new AdoptionInteractor(adoptionDataAccessObject,
+//                adoptionOutputBoundary);
+//        final AdoptionController controller = new AdoptionController(adoptionInteractor);
+//        adoptionView.setAdoptionController(controller);
+//        return this;
+//    }
 
     /**
      * Adds the setup session Use Case to the application.
