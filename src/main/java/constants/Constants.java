@@ -24,6 +24,12 @@ public final class Constants {
     // Cat Constants
     public static final int MAX_AMOUNT_OF_CATS = 4;
 
+    // Points for study session lengths
+    public static final int POINTS_FOR_LESS_EQUAL_20 = 10;
+    public static final int POINTS_FOR_BETWEEN_21_AND_40 = 20;
+    public static final int POINTS_FOR_BETWEEN_41_AND_59 = 35;
+    public static final int POINTS_FOR_60 = 40;
+
     // Cat Image constants
     public static final int CAT_IMAGE_MAX_WIDTH = 300;
     public static final int CAT_IMAGE_MAX_HEIGHT = 150;
