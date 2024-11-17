@@ -31,7 +31,7 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
     private static final String EMPTY_JSON_ARRAY = "[]";
 
     private static final String CATS_ENDPOINT = "/rest/v1/cats";
-    private static final String NAME_QUERY = "?name=eq.";
+    private static final String NAME_QUERY = "?cat_name=eq.";
     private static final String OWNER_QUERY = "&owner_username=eq.";
 
     private static final String NAME_COLUMN = "cat_name";
