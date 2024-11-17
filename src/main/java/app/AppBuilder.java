@@ -74,7 +74,7 @@ import use_case.signup.SignupOutputBoundary;
 import use_case.timer.display_timer.DisplayTimerInputBoundary;
 import use_case.timer.display_timer.DisplayTimerInteractor;
 import use_case.timer.display_timer.DisplayTimerOutputBoundary;
-import view.*; // TODO: Import the correct view package
+import view.*;  // TODO: Import the correct view package
 import view.DisplayCatImageView;
 
 // TODO: Fix order of imports when all packages are created
@@ -132,7 +132,10 @@ public class AppBuilder {
     private LoggedInView loggedInView;
     private LoginView loginView;
 
-    // TODO: Refactor instatiation of Timer use cases to be in the methods below
+    private AdoptionView adoptionView;
+    private AdoptionViewModel adoptionViewModel;
+
+    // TODO: Refactor instatiation of Timer use cases to be in the methods below @Jinny
     private final TimerViewModel timerViewModel = new TimerViewModel();
     private final InMemoryTimerDataAccessObject timerDataAccessObject = new InMemoryTimerDataAccessObject();
     private final TimerFactory timerFactory = new TimerFactory();
