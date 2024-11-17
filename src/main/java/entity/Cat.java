@@ -16,7 +16,7 @@ public class Cat {
     private static final String CAT_IMAGE_FORMAT = "cat-%d.png";
 
     private final String name;
-    private final String ownerId;
+    private final String ownerUsername;
     private int hungerLevel;
     private int happinessLevel;
     private Position position;
@@ -28,12 +28,15 @@ public class Cat {
      * must be validated before creating a new Cat instance.
      *
      * @param name The unique name of the cat
-     * @param ownerId The ID of the cat's owner
+     * @param ownerUsername The username of the cat's owner
      * @throws IllegalArgumentException if name is null or empty
      */
-    public Cat(String name, String ownerId) {
+    public Cat(String name, String ownerUsername) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Cat name cannot be null or empty");
+        }
         this.name = name;
-        this.ownerId = ownerId;
+        this.ownerUsername = ownerUsername;
         this.hungerLevel = INITIAL_LEVEL;
         this.happinessLevel = INITIAL_LEVEL;
         this.position = new Position(0, 0);
@@ -58,8 +61,7 @@ public class Cat {
      * Updates the cat's happiness level by the specified amount.
      * The level is constrained between 0 and 100.
      *
-     * @param amount the amount to change the happiness level by (positive or
-     *            negative)
+     * @param amount the amount to change the happiness level by (positive or negative)
      */
     public void updateHappiness(int amount) {
         this.happinessLevel = Math.max(MIN_LEVEL, Math.min(MAX_LEVEL, this.happinessLevel + amount));
@@ -68,16 +70,14 @@ public class Cat {
     /**
      * Updates the cat's position for animation purposes.
      *
-     * @param newPosition
-     *            The new position for the cat
+     * @param newPosition The new position for the cat
      */
     public void move(Position newPosition) {
         this.position = newPosition;
     }
 
     /**
-     * Feeds the cat with the specified food item, affecting both hunger and
-     * happiness levels.
+     * Feeds the cat with the specified food item, affecting both hunger and happiness levels.
      *
      * @param food the food item to feed to the cat
      */
@@ -89,8 +89,8 @@ public class Cat {
         return name;
     }
 
-    public String getOwnerId() {
-        return ownerId;
+    public String getOwnerUsername() {
+        return ownerUsername;
     }
 
     public int getHungerLevel() {

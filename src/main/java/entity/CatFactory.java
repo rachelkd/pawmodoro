@@ -6,13 +6,13 @@ package entity;
 public class CatFactory {
 
     /**
-     * Creates a new Cat with the given name and owner ID.
+     * Creates a new Cat with the given name and owner username.
      *
      * @param name The name for the cat
-     * @param ownerId The ID of the cat's owner
+     * @param ownerUsername The username of the cat's owner
      * @return A new Cat instance
      */
-    public Cat create(String name, String ownerId) {
-        return new Cat(name, ownerId);
+    public Cat create(String name, String ownerUsername) {
+        return new Cat(name, ownerUsername);
     }
 }
