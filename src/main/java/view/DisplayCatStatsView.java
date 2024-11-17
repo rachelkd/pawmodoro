@@ -14,6 +14,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -42,7 +43,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
      * @param displayCatStatsViewModel The view model
      */
     public DisplayCatStatsView(JFrame parent, DisplayCatStatsViewModel displayCatStatsViewModel) {
-        super(parent, displayCatStatsViewModel.TITLE_LABEL, true);
+        super(parent, DisplayCatStatsViewModel.TITLE_LABEL, true);
         this.displayCatStatsViewModel = displayCatStatsViewModel;
         this.displayCatStatsViewModel.addPropertyChangeListener(this);
 
