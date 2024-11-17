@@ -21,6 +21,9 @@ public final class Constants {
     public static final int TIMER_VERTICAL_SPACING = 20;
     public static final String TIME_FORMAT_PATTERN = "mm:ss";
 
+    // Cat Constants
+    public static final int MAX_AMOUNT_OF_CATS = 4;
+
     // Cat Image constants
     public static final int CAT_IMAGE_MAX_WIDTH = 300;
     public static final int CAT_IMAGE_MAX_HEIGHT = 150;

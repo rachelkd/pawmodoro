@@ -27,7 +27,7 @@ public interface ChangeCatHappinessDataAccessInterface {
      * @return a collection of cats owned by the user
      * @throws IllegalArgumentException if ownerId is null or empty
      */
-    Collection<Cat> findByOwnerId(String ownerId);
+    Collection<Cat> getCatsByOwnerId(String ownerId);
 
     /**
      * Checks if a cat with the given name already exists for the specified owner.

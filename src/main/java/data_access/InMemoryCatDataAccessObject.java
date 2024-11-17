@@ -38,7 +38,7 @@ public class InMemoryCatDataAccessObject implements CreateCatDataAccessInterface
     }
 
     @Override
-    public Collection<Cat> findByOwnerId(String ownerId) {
+    public Collection<Cat> getCatsByOwnerId(String ownerId) {
         return catsRepository.get(ownerId);
     }
 

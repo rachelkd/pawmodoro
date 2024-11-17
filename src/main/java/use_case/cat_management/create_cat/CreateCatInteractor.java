@@ -1,5 +1,6 @@
 package use_case.cat_management.create_cat;
 
+import constants.Constants;
 import entity.Cat;
 import entity.CatFactory;
 
@@ -24,6 +25,11 @@ public class CreateCatInteractor implements CreateCatInputBoundary{
         if (createCatDataAccessObject.existsByNameAndOwnerId(createCatInputData.getCatName(),
                 createCatInputData.getOwnerId())) {
             createCatPresenter.prepareFailView("You already have cat with this name >:(");
+        }
+        // if user has the maximum number of cats
+        if (createCatDataAccessObject.getCatsByOwnerId(createCatInputData.getOwnerId()).size() >=
+                Constants.MAX_AMOUNT_OF_CATS) {
+            createCatPresenter.prepareFailView("Reached maximum amount of cats :(");
         }
 
         final Cat cat = catFactory.create(createCatInputData.getOwnerId(), createCatInputData.getCatName());
