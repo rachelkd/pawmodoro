@@ -6,10 +6,10 @@ import use_case.display_cat_image.DisplayCatImageOutputData;
 /**
  * Presenter for the cat image feature.
  */
-public class DisplayDisplayCatImagePresenter implements DisplayCatImageOutputBoundary {
+public class DisplayCatImagePresenter implements DisplayCatImageOutputBoundary {
     private final DisplayCatImageViewModel viewModel;
 
-    public DisplayDisplayCatImagePresenter(DisplayCatImageViewModel viewModel) {
+    public DisplayCatImagePresenter(DisplayCatImageViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
