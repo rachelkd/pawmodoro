@@ -3,16 +3,18 @@ package use_case.cat_management.change_cat_hunger;
 import constants.Constants;
 import entity.AbstractFood;
 import entity.Cat;
+import use_case.cat.CatDataAccessInterface;
 
 /**
  * The Change Cat Hunger Use Case Interactor.
  */
 public class ChangeCatHungerInteractor implements ChangeCatHungerInputBoundary {
-    private final ChangeCatHungerDataAccessInterface changeCatHungerDataAccessObject;
+    private final CatDataAccessInterface catDataAccessObject;
     private final ChangeCatHungerOutputBoundary changeCatHungerPresenter;
 
-    public ChangeCatHungerInteractor(ChangeCatHungerDataAccessInterface changeCatHungerDataAccessObject, ChangeCatHungerOutputBoundary changeCatHungerPresenter) {
-        this.changeCatHungerDataAccessObject = changeCatHungerDataAccessObject;
+    public ChangeCatHungerInteractor(CatDataAccessInterface catDataAccessObject,
+                                     ChangeCatHungerOutputBoundary changeCatHungerPresenter) {
+        this.catDataAccessObject = catDataAccessObject;
         this.changeCatHungerPresenter = changeCatHungerPresenter;
     }
 
@@ -34,11 +36,11 @@ public class ChangeCatHungerInteractor implements ChangeCatHungerInputBoundary {
         }
 
         // update the database
-        changeCatHungerDataAccessObject.updateCat(cat);
+        catDataAccessObject.updateCat(cat);
 
         final ChangeCatHungerOutputData changeCatHungerOutputData = new ChangeCatHungerOutputData(
                 cat.getOwnerUsername(), cat,
-                changeCatHungerDataAccessObject.getHungerLevel(cat.getName(), cat.getOwnerUsername()));
+                catDataAccessObject.getHungerLevel(cat.getName(), cat.getOwnerUsername()));
         changeCatHungerPresenter.prepareSuccessView(changeCatHungerOutputData);
 
     }

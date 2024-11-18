@@ -3,6 +3,9 @@ package use_case.cat_management.change_cat_hunger;
 import entity.AbstractFood;
 import entity.Cat;
 
+/**
+ * Input Data for Change Cat Hunger Use Case.
+ */
 public class ChangeCatHungerInputData {
     private final String ownerUsername;
     private final String catName;
@@ -40,5 +43,7 @@ public class ChangeCatHungerInputData {
         return food;
     }
 
-    public int getStudySessionLength() { return studySessionLength; }
+    public int getStudySessionLength() {
+        return studySessionLength;
+    }
 }

@@ -15,14 +15,13 @@ public class Cat {
     private static final int NUMBER_OF_CAT_IMAGES = 5;
     private static final String CAT_IMAGE_FORMAT = "cat-%d.png";
 
-    //private final CatImage image;
     private final String name;
     private final String ownerUsername;
     private int hungerLevel;
     private int happinessLevel;
     private Position position;
     private final String imageFileName;
-    private boolean catObjectCreated = false;
+    private boolean catObjectCreated;
 
     /**
      * Creates a new Cat with the specified name and owner.
@@ -114,6 +113,7 @@ public class Cat {
     public boolean isCatObjectCreated() {
         return catObjectCreated;
     }
+
     public void setCatObjectCreated(boolean catObjectCreated) {
         this.catObjectCreated = catObjectCreated;
     }

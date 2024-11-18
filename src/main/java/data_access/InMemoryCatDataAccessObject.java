@@ -1,9 +1,6 @@
 package data_access;
 
 import entity.Cat;
-import use_case.cat_management.change_cat_happiness.ChangeCatHappinessDataAccessInterface;
-import use_case.cat_management.change_cat_hunger.ChangeCatHungerDataAccessInterface;
-import use_case.cat_management.create_cat.CreateCatDataAccessInterface;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -16,8 +13,7 @@ import use_case.cat.CatDataAccessInterface;
 /**
  * In-memory implementation of CatDataAccessInterface for testing and development.
  */
-public class InMemoryCatDataAccessObject implements CatDataAccessInterface, ChangeCatHappinessDataAccessInterface,
-        ChangeCatHungerDataAccessInterface, CreateCatDataAccessInterface {
+public class InMemoryCatDataAccessObject implements CatDataAccessInterface {
     private final Map<String, Map<String, Cat>> catsByOwner = new HashMap<>();
 
     @Override

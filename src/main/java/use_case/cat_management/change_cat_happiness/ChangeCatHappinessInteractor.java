@@ -2,13 +2,18 @@ package use_case.cat_management.change_cat_happiness;
 
 import constants.Constants;
 import entity.Cat;
+import use_case.cat.CatDataAccessInterface;
 
-public class ChangeCatHappinessInteractor implements ChangeCatHappinessInputBoundary{
-    private final ChangeCatHappinessDataAccessInterface changeCatHappinessDataAccessObject;
+/**
+ * The Change Cat Happiness Use Case Interactor.
+ */
+public class ChangeCatHappinessInteractor implements ChangeCatHappinessInputBoundary {
+    private final CatDataAccessInterface catDataAccessObject;
     private final ChangeCatHappinessOutputBoundary changeCatHappinessPresenter;
 
-    public ChangeCatHappinessInteractor(ChangeCatHappinessDataAccessInterface changeCatHappinessDataAccessObject, ChangeCatHappinessOutputBoundary changeCatHappinessPresenter) {
-        this.changeCatHappinessDataAccessObject = changeCatHappinessDataAccessObject;
+    public ChangeCatHappinessInteractor(CatDataAccessInterface catDataAccessObject,
+                                        ChangeCatHappinessOutputBoundary changeCatHappinessPresenter) {
+        this.catDataAccessObject = catDataAccessObject;
         this.changeCatHappinessPresenter = changeCatHappinessPresenter;
     }
 
@@ -27,11 +32,11 @@ public class ChangeCatHappinessInteractor implements ChangeCatHappinessInputBoun
             newHappiness += calculateHappinessPoints(changeCatHappinessInputData.getStudySessionLength());
         }
         cat.updateHappinessLevel(newHappiness);
-        changeCatHappinessDataAccessObject.updateCat(cat);
+        catDataAccessObject.updateCat(cat);
 
         final ChangeCatHappinessOutputData changeCatHappinessOutputData = new ChangeCatHappinessOutputData(
                 cat.getOwnerUsername(), cat.getName(), 
-                changeCatHappinessDataAccessObject.getHappinessLevel(cat.getName(), cat.getOwnerUsername()));
+                catDataAccessObject.getHappinessLevel(cat.getName(), cat.getOwnerUsername()));
         changeCatHappinessPresenter.prepareSuccessView(changeCatHappinessOutputData);
 
     }

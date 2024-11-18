@@ -2,6 +2,9 @@ package use_case.cat_management.change_cat_hunger;
 
 import entity.Cat;
 
+/**
+ * Output Data for Change Cat Hunger Use Case.
+ */
 public class ChangeCatHungerOutputData {
     private final String ownerId;
     private final Cat cat;

@@ -1,7 +1,5 @@
 package use_case.cat_management.change_cat_hunger;
 
-import use_case.cat_management.change_cat_happiness.ChangeCatHappinessInputData;
-
 /**
  * Input Boundary of Change Cat Hunger Use Case.
  */

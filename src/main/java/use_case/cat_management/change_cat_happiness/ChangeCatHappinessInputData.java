@@ -22,20 +22,26 @@ public class ChangeCatHappinessInputData {
     }
 
     public String getOwnerUsername() {
+
         return ownerUsername;
     }
 
     public String getCatName() {
+
         return catName;
     }
 
-    public Cat getCat() { return cat; }
+    public Cat getCat() {
+        return cat;
+    }
 
     public boolean isCompletedStudySession() {
+
         return completedStudySession;
     }
 
     public int getStudySessionLength() {
+
         return studySessionLength;
     }
 }
