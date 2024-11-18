@@ -1,6 +1,11 @@
 package app.components;
 
-import data_access.*;
+import data_access.AdoptionDataAccessObject;
+import data_access.ApiDisplayCatImageDataAccessObject;
+import data_access.DBCatDataAccessObject;
+import data_access.DBUserDataAccessObject;
+import data_access.InMemoryInventoryDataAccessObject;
+import data_access.InMemoryTimerDataAccessObject;
 
 /**
  * Holds all data access components for the application.
@@ -11,6 +16,7 @@ public class DataAccessComponents {
     private final InMemoryTimerDataAccessObject timerDataAccess;
     private final AdoptionDataAccessObject adoptionDataAccess;
     private final ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
+    private final DBCatDataAccessObject catDataAccess;
 
     /**
      * Creates a new DataAccessComponents instance.
@@ -20,17 +26,20 @@ public class DataAccessComponents {
      * @param timerDataAccess the timer data access object
      * @param adoptionDataAccess the adoption data access object
      * @param displayCatImageDataAccess the display cat image data access object
+     * @param catDataAccess the cat data access object
      */
     public DataAccessComponents(DBUserDataAccessObject userDataAccess,
             InMemoryInventoryDataAccessObject inventoryDataAccess,
             InMemoryTimerDataAccessObject timerDataAccess,
             AdoptionDataAccessObject adoptionDataAccess,
-            ApiDisplayCatImageDataAccessObject displayCatImageDataAccess) {
+            ApiDisplayCatImageDataAccessObject displayCatImageDataAccess,
+            DBCatDataAccessObject catDataAccess) {
         this.userDataAccess = userDataAccess;
         this.inventoryDataAccess = inventoryDataAccess;
         this.timerDataAccess = timerDataAccess;
         this.adoptionDataAccess = adoptionDataAccess;
         this.displayCatImageDataAccess = displayCatImageDataAccess;
+        this.catDataAccess = catDataAccess;
     }
 
     public DBUserDataAccessObject getUserDataAccess() {
@@ -51,5 +60,9 @@ public class DataAccessComponents {
 
     public ApiDisplayCatImageDataAccessObject getDisplayCatImageDataAccess() {
         return displayCatImageDataAccess;
+    }
+
+    public DBCatDataAccessObject getCatDataAccessObject() {
+        return catDataAccess;
     }
 }

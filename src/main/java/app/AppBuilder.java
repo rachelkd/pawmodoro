@@ -51,6 +51,7 @@ public class AppBuilder {
                 .buildTimerDataAccess()
                 .buildAdoptionDataAccess()
                 .buildDisplayCatImageDataAccess()
+                .buildCatDataAccess()
                 .build();
 
         // Build views

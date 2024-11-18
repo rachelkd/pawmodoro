@@ -3,9 +3,11 @@ package app.builder;
 import app.components.DataAccessComponents;
 import data_access.AdoptionDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
+import data_access.DBCatDataAccessObject;
 import data_access.DBUserDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
+import entity.CatFactory;
 import entity.CatImageFactory;
 import entity.CommonUserFactory;
 
@@ -18,6 +20,7 @@ public class DataAccessBuilder {
     private InMemoryTimerDataAccessObject timerDataAccess;
     private AdoptionDataAccessObject adoptionDataAccess;
     private ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
+    private DBCatDataAccessObject catDataAccess;
 
     /**
      * Builds the user data access component.
@@ -70,6 +73,16 @@ public class DataAccessBuilder {
     }
 
     /**
+     * Builds the cat data access component.
+     *
+     * @return this builder
+     */
+    public DataAccessBuilder buildCatDataAccess() {
+        this.catDataAccess = new DBCatDataAccessObject(new CatFactory());
+        return this;
+    }
+
+    /**
      * Builds and returns the data access components.
      *
      * @return the data access components
@@ -80,6 +93,7 @@ public class DataAccessBuilder {
                 inventoryDataAccess,
                 timerDataAccess,
                 adoptionDataAccess,
-                displayCatImageDataAccess);
+                displayCatImageDataAccess,
+                catDataAccess);
     }
 }
