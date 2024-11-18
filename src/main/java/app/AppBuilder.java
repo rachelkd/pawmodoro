@@ -137,7 +137,6 @@ public class AppBuilder {
 
     private AdoptionView adoptionView;
     private AdoptionViewModel adoptionViewModel;
-    private final AdoptionDataAccessObject adoptionDataAccessObject = new AdoptionDataAccessObject();
 
 
     private MaxCatsErrorView maxCatsErrorView;
@@ -416,19 +415,6 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the Runaway Use Case to the application.
-     *
-     * @return this builder
-     */
-    public AppBuilder addRunawayCatUseCase() {
-        // TODO: Is this a duplicate method of addRunawayUseCase()?
-        // final RunawayCatOutputBoundary runawayCatOutputBoundary = new RunawayPresenter(runawayCatViewModel,
-        // viewManagerModel);
-        final RunawayCatController runawayCatController = new RunawayCatController(runawayCatViewModel);
-        runawayCatView.setRunawayCatController(runawayCatController);
-        return this;
-    }
 
     /**
      * Adds the max cats error use case to the application.
@@ -452,8 +438,7 @@ public class AppBuilder {
     public AppBuilder addAdoptionUseCase() {
         final AdoptionOutputBoundary adoptionOutputBoundary = new AdoptionPresenter(setupSessionViewModel,
                 adoptionViewModel, viewManagerModel);
-        final AdoptionInputBoundary adoptionInteractor = new AdoptionInteractor(adoptionDataAccessObject,
-                adoptionOutputBoundary);
+        final AdoptionInputBoundary adoptionInteractor = new AdoptionInteractor(adoptionOutputBoundary);
         final AdoptionController adoptionController = new AdoptionController(adoptionInteractor);
         adoptionView.setAdoptionController(adoptionController);
         return this;
