@@ -6,23 +6,23 @@ import entity.Cat;
  * Input Data for Change Cat Happiness Usecase.
  */
 public class ChangeCatHappinessInputData {
-    private final String ownerId;
     private final String catName;
+    private final String ownerUsername;
     private final Cat cat;
     private final boolean completedStudySession;
     private final int studySessionLength;
 
-    public ChangeCatHappinessInputData(String ownerId, String catName, Cat cat,
+    public ChangeCatHappinessInputData(String catName, String ownerUsername, Cat cat,
                                        boolean completedStudySession, int studySessionLength) {
-        this.ownerId = ownerId;
         this.catName = catName;
+        this.ownerUsername = ownerUsername;
         this.cat = cat;
         this.completedStudySession = completedStudySession;
         this.studySessionLength = studySessionLength;
     }
 
-    public String getOwnerId() {
-        return ownerId;
+    public String getOwnerUsername() {
+        return ownerUsername;
     }
 
     public String getCatName() {

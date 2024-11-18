@@ -42,4 +42,16 @@ public interface ChangeCatHappinessDataAccessInterface {
 
 
     Cat getCatByNameAndOwner(String catName, String ownerUsername);
+
+    boolean updateCat(Cat cat);
+
+    /**
+     * Get the happiness level of a cat.
+     *
+     * @param name the name of the cat
+     * @param ownerUsername the username of the cat's owner
+     * @return the happiness level of the cat
+     * @throws entity.exceptions.NoCatsFoundException if the cat is not found
+     */
+    int getHappinessLevel(String name, String ownerUsername);
 }

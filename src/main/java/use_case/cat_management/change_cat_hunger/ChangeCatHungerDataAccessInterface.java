@@ -40,5 +40,15 @@ public interface ChangeCatHungerDataAccessInterface {
      */
     boolean existsByNameAndOwner(String name, String ownerUsername);
 
-    public boolean updateCat(Cat cat);
+    /**
+     * Get the hunger level of a cat.
+     *
+     * @param name the name of the cat
+     * @param ownerUsername the username of the cat's owner
+     * @return the hunger level of the cat
+     * @throws entity.exceptions.NoCatsFoundException if the cat is not found
+     */
+    int getHungerLevel(String name, String ownerUsername);
+
+    boolean updateCat(Cat cat);
 }

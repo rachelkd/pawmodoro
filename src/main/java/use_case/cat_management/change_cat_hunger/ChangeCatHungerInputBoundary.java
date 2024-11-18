@@ -9,7 +9,7 @@ public interface ChangeCatHungerInputBoundary {
 
     /**
      * Executes Change Cat Happiness Use Case.
-     * @param changeCatHappinessInputData the input data
+     * @param changeCatHungerInputData the input data
      */
-    void execute(ChangeCatHappinessInputData changeCatHappinessInputData);
+    void execute(ChangeCatHungerInputData changeCatHungerInputData);
 }
