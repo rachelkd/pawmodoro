@@ -8,10 +8,25 @@ import javax.swing.*;
 import data_access.InMemoryInventoryDataAccessObject;
 import entity.*;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_to_inventory.AddToInventoryController;
+import interface_adapter.add_to_inventory.AddToInventoryPresenter;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.CreateInventoryPresenter;
 import interface_adapter.create_inventory.InventoryViewModel;
-import use_case.authentication.create_inventory.*;
+import interface_adapter.use_item_in_inventory.UseItemController;
+import interface_adapter.use_item_in_inventory.UseItemPresenter;
+import use_case.create_inventory.CreateInventoryInputBoundary;
+import use_case.create_inventory.CreateInventoryInteractor;
+import use_case.create_inventory.CreateInventoryInventoryDataAccessInterface;
+import use_case.create_inventory.CreateInventoryOutputBoundary;
+import use_case.food_management.add_to_inventory.AddToInventoryDataAccessInterface;
+import use_case.food_management.add_to_inventory.AddToInventoryInputBoundary;
+import use_case.food_management.add_to_inventory.AddToInventoryInteractor;
+import use_case.food_management.add_to_inventory.AddToInventoryOutputBoundary;
+import use_case.food_management.use_item_in_inventory.UseItemDataAccessInterface;
+import use_case.food_management.use_item_in_inventory.UseItemInputBoundary;
+import use_case.food_management.use_item_in_inventory.UseItemInteractor;
+import use_case.food_management.use_item_in_inventory.UseItemOutputBoundary;
 import view.InventoryView;
 import view.ViewManager;
 
@@ -36,6 +51,7 @@ public class InventoryExample {
     public static void main(String[] args) {
         final InventoryExample inventoryExample = new InventoryExample();
         JFrame pawmodoro = inventoryExample.buildExistingInventory();
+        // JFrame pawmodoro = inventoryExample.build();
 
         pawmodoro.pack();
         pawmodoro.setVisible(true);
@@ -76,19 +92,28 @@ public class InventoryExample {
 
         final CreateInventoryInventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
         final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter( viewManagerModel, inventoryViewModel);
+        final AddToInventoryOutputBoundary addItemPresenter = new AddToInventoryPresenter(inventoryViewModel);
+        final UseItemOutputBoundary useItemPresenter = new UseItemPresenter(inventoryViewModel);
 
         // add inventory
         createInventory(dataAccessObject);
 
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
+        final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
-        final CreateInventoryInputBoundary interactor = new CreateInventoryInteractor(dataAccessObject, presenter,
+        final CreateInventoryInputBoundary createInventoryInteractor = new CreateInventoryInteractor(dataAccessObject, presenter,
                 inventoryFactory);
+        final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor((AddToInventoryDataAccessInterface) dataAccessObject, addItemPresenter, foodItemFactory);
+        final UseItemInputBoundary useItemInteractor = new UseItemInteractor((UseItemDataAccessInterface) dataAccessObject, useItemPresenter);
 
-        final CreateInventoryController controller = new CreateInventoryController(interactor);
-        inventoryView.setCreateInventoryController(controller);
+        final CreateInventoryController createInventoryController = new CreateInventoryController(createInventoryInteractor);
+        final AddToInventoryController addToInventoryController = new AddToInventoryController(addToInventoryInteractor);
+        final UseItemController useItemController = new UseItemController(useItemInteractor);
+        inventoryView.setCreateInventoryController(createInventoryController);
 
-        controller.execute("chiually");
+        createInventoryController.execute("chiually");
+        addToInventoryController.execute("chiually", "cheese");
+        useItemController.execute("chiually", "cheese");
 
         final JFrame application = new JFrame();
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
