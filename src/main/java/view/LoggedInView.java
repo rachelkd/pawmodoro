@@ -9,15 +9,17 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import constants.Constants;
-import interface_adapter.add_to_inventory.AddToInventoryController;
+// import interface_adapter.add_to_inventory.AddToInventoryController;
+import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.create_inventory.CreateInventoryController;
+// import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.timer.TimerController;
 import interface_adapter.timer.TimerViewModel;
-import interface_adapter.use_item_in_inventory.UseItemController;
+// import interface_adapter.use_item_in_inventory.UseItemController;
+// import interface_adapter.cat.CatViewModel;
 
 /**
  * The View for when the user is logged into the program.
@@ -40,7 +42,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel, TimerViewModel timerViewModel) {
+    private final CatView catView;
+
+    public LoggedInView(LoggedInViewModel loggedInViewModel, TimerViewModel timerViewModel, CatViewModel catViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.timerViewModel = timerViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
@@ -51,14 +55,21 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         pawmodoro.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TITLE));
         pawmodoro.setForeground(Color.PINK);
 
-        final JLabel title = new JLabel("Logged In Screen");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // final JLabel title = new JLabel("Logged In Screen");
+        // title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel("Password"), passwordInputField);
 
-        final JLabel usernameInfo = new JLabel("Currently logged in: ");
+        // Create a panel for the username greeting
+        final JPanel usernamePanel = new JPanel();
+        usernamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        final JLabel usernameGreeting = new JLabel("Hello, ");
         username = new JLabel();
+        final JLabel usernameExclamation = new JLabel("!");
+        usernamePanel.add(usernameGreeting);
+        usernamePanel.add(username);
+        usernamePanel.add(usernameExclamation);
 
         final JPanel buttons = new JPanel();
         logOut = new JButton("Log Out");
@@ -122,15 +133,15 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         // TODO: Is this clean?
         this.timerView = new TimerView(timerViewModel);
 
+        // Create and add CatView
+        this.catView = new CatView(catViewModel);
+
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         this.add(pawmodoro);
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
-        this.add(title);
-
         this.add(timerView);
-        this.add(usernameInfo);
-        this.add(username);
-
+        this.add(catView);
+        this.add(usernamePanel);
         this.add(passwordInfo);
         this.add(passwordErrorField);
         this.add(buttons);

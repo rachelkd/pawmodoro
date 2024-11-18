@@ -33,6 +33,7 @@ public class Main {
                 .addSetupSessionUseCase()
                 .addRunawayUseCase()
                 .addAdoptionUseCase()
+                .addMaxCatsUseCase()
                 .build();
 
         application.pack();

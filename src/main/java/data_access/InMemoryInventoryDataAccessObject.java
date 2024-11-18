@@ -5,7 +5,7 @@ import java.util.Map;
 
 import entity.AbstractFood;
 import entity.Inventory;
-import use_case.authentication.create_inventory.CreateInventoryInventoryDataAccessInterface;
+import use_case.create_inventory.CreateInventoryInventoryDataAccessInterface;
 import use_case.food_management.add_to_inventory.AddToInventoryDataAccessInterface;
 import use_case.food_management.use_item_in_inventory.UseItemDataAccessInterface;
 

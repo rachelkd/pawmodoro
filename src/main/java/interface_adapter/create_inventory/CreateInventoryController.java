@@ -1,7 +1,7 @@
 package interface_adapter.create_inventory;
 
-import use_case.authentication.create_inventory.CreateInventoryInputBoundary;
-import use_case.authentication.create_inventory.CreateInventoryInputData;
+import use_case.create_inventory.CreateInventoryInputBoundary;
+import use_case.create_inventory.CreateInventoryInputData;
 
 /**
  * Controller for the Create Inventory use Case.
