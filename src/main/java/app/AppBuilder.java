@@ -6,16 +6,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-
-import data_access.*; // TODO: Figure out all the proper imports because this keeps causing Checkstyle errors.
-import data_access.ApiDisplayCatImageDataAccessObject;
-import data_access.DBUserDataAccessObject;
-import data_access.InMemoryInventoryDataAccessObject;
-import data_access.InMemoryTimerDataAccessObject;
-import entity.*; // TODO: Import the correct entity package
+// TODO: Figure out all the proper imports because this keeps causing Checkstyle errors.
+import data_access.*;
+// TODO: Import the correct entity package
+import entity.*;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.add_to_inventory.AddToInventoryPresenter;
+import interface_adapter.adoption.AdoptionController;
+import interface_adapter.adoption.AdoptionPresenter;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.ChangePasswordController;
@@ -49,7 +48,6 @@ import interface_adapter.timer.TimerPresenter;
 import interface_adapter.timer.TimerViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
-import use_case.adoption.AdoptionDataAccessInterface;
 import use_case.adoption.AdoptionInputBoundary;
 import use_case.adoption.AdoptionInteractor;
 import use_case.adoption.AdoptionOutputBoundary;
@@ -75,27 +73,24 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
-import use_case.maxcatserror.MaxCatsErrorOutputBoundary;
 import use_case.maxcatserror.MaxCatsErrorInputBoundary;
 import use_case.maxcatserror.MaxCatsErrorInteractor;
 import use_case.maxcatserror.MaxCatsErrorOutputBoundary;
 import use_case.runawaycat.RunawayCatOutputBoundary;
+import use_case.setupsession.SetupSessionInputBoundary;
+import use_case.setupsession.SetupSessionInteractor;
+import use_case.setupsession.SetupSessionOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import use_case.timer.display_timer.DisplayTimerInputBoundary;
 import use_case.timer.display_timer.DisplayTimerInteractor;
 import use_case.timer.display_timer.DisplayTimerOutputBoundary;
-import view.*;  // TODO: Import the correct view package
-import view.DisplayCatImageView;
-
+import view.*;
+// TODO: Import the correct view package
 // TODO: Fix order of imports when all packages are created
-import use_case.setupsession.SetupSessionInputBoundary;
-import use_case.setupsession.SetupSessionInteractor;
-import use_case.setupsession.SetupSessionOutputBoundary;
-import view.AdoptionView;
-// TODO: Might need to add more builders to reduce coupling (getting Checkstyle warnings)
 
+// TODO: Might need to add more builders to reduce coupling (getting Checkstyle warnings)
 /**
  * The AppBuilder class is responsible for putting together the pieces of
  * our CA architecture; piece by piece.
@@ -135,7 +130,6 @@ public class AppBuilder {
 
     private RunawayCatView runawayCatView;
     private RunawayCatViewModel runawayCatViewModel;
-    private RunawayCatController runawayCatController;
 
     private AdoptionView adoptionView;
     private AdoptionViewModel adoptionViewModel;
@@ -234,16 +228,17 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Runaway Cat View to the application
+     * Adds the Runaway Cat View to the application.
      *
      * @return this builder
      */
     public AppBuilder addRunawayCatView() {
         runawayCatViewModel = new RunawayCatViewModel();
-        runawayCatView = new RunawayCatView(runawayCatViewModel, runawayCatController);
+        runawayCatView = new RunawayCatView(runawayCatViewModel);
         cardPanel.add(runawayCatView, runawayCatView.getViewName());
         return this;
     }
+
     /**
      * Add the inventory view to the application.
      * 
@@ -292,8 +287,10 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRunawayUseCase() {
-        final RunawayCatOutputBoundary runawayCatOutputBoundary = new RunawayPresenter(runawayCatViewModel,
-                viewManagerModel);
+        // TODO: Add the runaway use case to the application. @Manahill
+        // Need InputBoundary and OutputBoundary and Interactor?
+        // final RunawayCatOutputBoundary runawayCatOutputBoundary = new RunawayPresenter(runawayCatViewModel,
+        // viewManagerModel);
         final RunawayCatController runawayCatController = new RunawayCatController(runawayCatViewModel);
         runawayCatView.setRunawayCatController(runawayCatController);
         return this;
@@ -404,17 +401,22 @@ public class AppBuilder {
 
     /**
      * Adds the Runaway Use Case to the application.
+     *
+     * @return this builder
      */
     public AppBuilder addRunawayCatUseCase() {
-        final RunawayCatOutputBoundary runawayCatOutputBoundary = new RunawayPresenter(runawayCatViewModel,
-                viewManagerModel);
+        // TODO: Is this a duplicate method of addRunawayUseCase()?
+        // final RunawayCatOutputBoundary runawayCatOutputBoundary = new RunawayPresenter(runawayCatViewModel,
+        // viewManagerModel);
         final RunawayCatController runawayCatController = new RunawayCatController(runawayCatViewModel);
         runawayCatView.setRunawayCatController(runawayCatController);
-      
+        return this;
+    }
+
     /**
-     * Adds the max cats error use case to the application
+     * Adds the max cats error use case to the application.
      *
-     * @ return this builder
+     * @return this builder
      */
     public AppBuilder addMaxCatsUseCase() {
         final MaxCatsErrorOutputBoundary maxCatsErrorOutputBoundary = new MaxCatsErrorPresenter(viewManagerModel,
@@ -424,6 +426,7 @@ public class AppBuilder {
         maxCatsErrorView.setMaxCatsController(maxCatsController);
         return this;
     }
+
     /**
      * Adds the adoption use case to the application.
      *
