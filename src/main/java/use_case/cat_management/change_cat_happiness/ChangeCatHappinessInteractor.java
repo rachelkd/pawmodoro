@@ -28,7 +28,7 @@ public class ChangeCatHappinessInteractor implements ChangeCatHappinessInputBoun
         }
 
         final ChangeCatHappinessOutputData changeCatHappinessOutputData = new ChangeCatHappinessOutputData(
-                cat.getOwnerId(), cat.getName(), newHappiness);
+                cat.getOwnerUsername(), cat.getName(), newHappiness);
         changeCatHappinessPresenter.prepareSuccessView(changeCatHappinessOutputData);
 
     }

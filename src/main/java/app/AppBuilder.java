@@ -42,7 +42,7 @@ import interface_adapter.timer.TimerPresenter;
 import interface_adapter.timer.TimerViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
-import use_case.adoption.AdoptionDataAccessInterface;
+
 import use_case.adoption.AdoptionInputBoundary;
 import use_case.adoption.AdoptionInteractor;
 import use_case.adoption.AdoptionOutputBoundary;
@@ -132,8 +132,6 @@ public class AppBuilder {
     private LoggedInView loggedInView;
     private LoginView loginView;
 
-    private AdoptionView adoptionView;
-    private AdoptionViewModel adoptionViewModel;
 
     // TODO: Refactor instatiation of Timer use cases to be in the methods below @Jinny
     private final TimerViewModel timerViewModel = new TimerViewModel();

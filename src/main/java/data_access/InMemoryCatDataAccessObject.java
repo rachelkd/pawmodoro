@@ -16,7 +16,8 @@ import use_case.cat.CatDataAccessInterface;
 /**
  * In-memory implementation of CatDataAccessInterface for testing and development.
  */
-public class InMemoryCatDataAccessObject implements CatDataAccessInterface {
+public class InMemoryCatDataAccessObject implements CatDataAccessInterface, ChangeCatHappinessDataAccessInterface,
+        ChangeCatHungerDataAccessInterface, CreateCatDataAccessInterface {
     private final Map<String, Map<String, Cat>> catsByOwner = new HashMap<>();
 
     @Override
@@ -38,10 +39,6 @@ public class InMemoryCatDataAccessObject implements CatDataAccessInterface {
                 .get(name);
     }
 
-    public void updateHappinessLevel(String ownerId, String catName, int newHappinessLevel) {
-
-    }
-
     @Override
     public Collection<Cat> getCatsByOwner(String ownerUsername) {
         return catsByOwner
@@ -58,10 +55,6 @@ public class InMemoryCatDataAccessObject implements CatDataAccessInterface {
             isSuccessful = true;
         }
         return isSuccessful;
-    }
-
-    public void updateHungerLevels(String ownerId, String catName, int newHungerLevel) {
-
     }
 
     @Override

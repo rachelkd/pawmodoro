@@ -18,36 +18,28 @@ public interface ChangeCatHappinessDataAccessInterface {
      * @param cat the cat to save
      * @throws IllegalArgumentException if cat is null
      */
-    void save(Cat cat);
+    boolean saveCat(Cat cat);
 
     /**
      * Retrieves all cats owned by a specific user.
      *
-     * @param ownerId the ID of the owner whose cats to retrieve
+     * @param ownerUsername the ID of the owner whose cats to retrieve
      * @return a collection of cats owned by the user
      * @throws IllegalArgumentException if ownerId is null or empty
      */
-    Collection<Cat> getCatsByOwnerId(String ownerId);
+    Collection<Cat> getCatsByOwner(String ownerUsername);
 
     /**
      * Checks if a cat with the given name already exists for the specified owner.
      *
      * @param name the name to check
-     * @param ownerId the ID of the owner
+     * @param ownerUsername the ID of the owner
      * @return true if a cat with the given name exists for the owner, false
      *         otherwise
      * @throws IllegalArgumentException if name or ownerId is null or empty
      */
-    boolean existsByNameAndOwnerId(String name, String ownerId);
+    boolean existsByNameAndOwner(String name, String ownerUsername);
 
-    /**
-     * Update happiness level of cat in database
-     *
-     * @param ownerId the owner id
-     * @param catName the cat's name
-     * @param newHappinessLevel the integer representing happiness from 0 to 100
-     */
-    void updateHappinessLevel(String ownerId, String catName, int newHappinessLevel);
 
-    Cat getCatByNameAndOwnerId(String catName, String ownerId);
+    Cat getCatByNameAndOwner(String catName, String ownerUsername);
 }
