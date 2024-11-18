@@ -76,6 +76,8 @@ import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
 import use_case.maxcatserror.MaxCatsErrorOutputBoundary;
+import use_case.runawaycat.RunawayCatInputBoundary;
+import use_case.runawaycat.RunawayCatInteractor;
 import use_case.runawaycat.RunawayCatOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
@@ -132,7 +134,6 @@ public class AppBuilder {
 
     private RunawayCatView runawayCatView;
     private RunawayCatViewModel runawayCatViewModel;
-    private RunawayCatController runawayCatController;
 
     private AdoptionView adoptionView;
     private AdoptionViewModel adoptionViewModel;
@@ -239,7 +240,7 @@ public class AppBuilder {
      */
     public AppBuilder addRunawayCatView() {
         runawayCatViewModel = new RunawayCatViewModel();
-        runawayCatView = new RunawayCatView(runawayCatViewModel, runawayCatController);
+        runawayCatView = new RunawayCatView(runawayCatViewModel);
         cardPanel.add(runawayCatView, runawayCatView.getViewName());
         return this;
     }
@@ -307,7 +308,8 @@ public class AppBuilder {
     public AppBuilder addRunawayUseCase() {
         final RunawayCatOutputBoundary runawayCatOutputBoundary = new RunawayPresenter(runawayCatViewModel,
                 viewManagerModel);
-        final RunawayCatController runawayCatController = new RunawayCatController(runawayCatViewModel);
+        final RunawayCatInputBoundary runawayInteractor = new RunawayCatInteractor(runawayCatOutputBoundary);
+        final RunawayCatController runawayCatController = new RunawayCatController(runawayCatViewModel, runawayInteractor);
         runawayCatView.setRunawayCatController(runawayCatController);
         return this;
     }
@@ -415,16 +417,6 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the Runaway Use Case to the application.
-     */
-    public AppBuilder addRunawayCatUseCase() {
-        final RunawayCatOutputBoundary runawayCatOutputBoundary = new RunawayPresenter(runawayCatViewModel,
-                viewManagerModel);
-        final RunawayCatController runawayCatController = new RunawayCatController(runawayCatViewModel);
-        runawayCatView.setRunawayCatController(runawayCatController);
-        return this;
-    }
     /**
      * Adds the adoption use case to the application.
      *
