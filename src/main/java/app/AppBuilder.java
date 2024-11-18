@@ -28,6 +28,8 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.maxcatserror.MaxCatsErrorController;
+import interface_adapter.maxcatserror.MaxCatsErrorPresenter;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.setupsession.SetupSessionController;
 import interface_adapter.setupsession.SetupSessionPresenter;
@@ -71,6 +73,9 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.maxcatserror.MaxCatsErrorInputBoundary;
+import use_case.maxcatserror.MaxCatsErrorInteractor;
+import use_case.maxcatserror.MaxCatsErrorOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -135,6 +140,8 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+
+
 
     // TODO: Refactor instatiation of Timer use cases to be in the methods below
     private final TimerViewModel timerViewModel = new TimerViewModel();
@@ -381,6 +388,19 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the max cats error use case to the application
+     *
+     * @ return this builder
+     */
+    public AppBuilder addMaxCatsUseCase() {
+        final MaxCatsErrorOutputBoundary maxCatsErrorOutputBoundary = new MaxCatsErrorPresenter(viewManagerModel,
+                maxCatsErrorViewModel);
+        final MaxCatsErrorInputBoundary maxCatsInteractor = new MaxCatsErrorInteractor(maxCatsErrorOutputBoundary);
+        final MaxCatsErrorController maxCatsController = new MaxCatsErrorController(maxCatsInteractor);
+        maxCatsErrorView.setMaxCatsController(maxCatsController);
+        return this;
+    }
     /**
      * Adds the adoption use case to the application.
      *
