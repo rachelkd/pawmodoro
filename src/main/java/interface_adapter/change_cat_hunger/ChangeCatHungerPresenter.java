@@ -1,4 +1,20 @@
 package interface_adapter.change_cat_hunger;
 
-public class ChangeCatHungerPresenter {
+import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputBoundary;
+import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputData;
+import view.BreakSession;
+import view.DisplayCatStatsView;
+import view.StudySessionView;
+
+public class ChangeCatHungerPresenter implements ChangeCatHungerOutputBoundary {
+    private DisplayCatStatsView displayCatStatsView;
+
+    public ChangeCatHungerPresenter(DisplayCatStatsView displayCatStatsView) {
+        this.displayCatStatsView = displayCatStatsView;
+    }
+
+    @Override
+    public void prepareSuccessView(ChangeCatHungerOutputData changeCatHungerOutputData) {
+
+    }
 }
