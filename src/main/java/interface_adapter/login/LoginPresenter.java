@@ -3,7 +3,8 @@ package interface_adapter.login;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.signup.SignupViewModel;
+import interface_adapter.study_session.StudySessionState;
+import interface_adapter.study_session.StudySessionViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
@@ -13,14 +14,14 @@ import use_case.login.LoginOutputData;
 public class LoginPresenter implements LoginOutputBoundary {
 
     private final LoginViewModel loginViewModel;
-    private final LoggedInViewModel loggedInViewModel;
+    private final StudySessionViewModel studySessionViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
-            LoggedInViewModel loggedInViewModel,
+            StudySessionViewModel studySessionViewModel,
             LoginViewModel loginViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.loggedInViewModel = loggedInViewModel;
+        this.studySessionViewModel = studySessionViewModel;
         this.loginViewModel = loginViewModel;
     }
 
@@ -28,12 +29,12 @@ public class LoginPresenter implements LoginOutputBoundary {
     public void prepareSuccessView(LoginOutputData response) {
         // On success, switch to the logged in view.
 
-        final LoggedInState loggedInState = loggedInViewModel.getState();
-        loggedInState.setUsername(response.getUsername());
-        this.loggedInViewModel.setState(loggedInState);
-        this.loggedInViewModel.firePropertyChanged();
+        final StudySessionState studySessionState = studySessionViewModel.getState();
+        studySessionState.setUsername(response.getUsername());
+        this.studySessionViewModel.setState(studySessionState);
+        this.studySessionViewModel.firePropertyChanged();
 
-        this.viewManagerModel.setState(loggedInViewModel.getViewName());
+        this.viewManagerModel.setState("study session");
         this.viewManagerModel.firePropertyChanged();
     }
 

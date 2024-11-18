@@ -38,6 +38,7 @@ import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerController;
 import interface_adapter.timer.TimerPresenter;
 import interface_adapter.timer.TimerViewModel;
@@ -123,6 +124,9 @@ public class AppBuilder {
     private SetupSessionView setupSessionView;
     private SetupSessionViewModel setupSessionViewModel;
 
+    private StudySessionView studySessionView;
+    private StudySessionViewModel studySessionViewModel;
+
     private MaxCatsErrorView maxCatsErrorView;
     private MaxCatsErrorViewModel maxCatsErrorViewModel;
 
@@ -172,13 +176,24 @@ public class AppBuilder {
 
     /**
      * Adds the Setup Study Session View to the application.
-     * 
+     *
      * @return this builder
      */
     public AppBuilder addSetupSessionView() {
         setupSessionViewModel = new SetupSessionViewModel();
         setupSessionView = new SetupSessionView(setupSessionViewModel);
         cardPanel.add(setupSessionView, setupSessionView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Study Session View to the application.
+     *
+     * @return this builder
+     */
+    public AppBuilder addStudySessionView() {
+        studySessionView = new StudySessionView(studySessionViewModel, timerViewModel);
+        cardPanel.add(studySessionView, studySessionView.getViewName());
         return this;
     }
 
@@ -266,7 +281,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
+                studySessionViewModel, loginViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
