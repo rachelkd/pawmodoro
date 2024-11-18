@@ -141,4 +141,13 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
             updateFields(state);
         }
     }
+
+    /**
+     * Gets the view name.
+     *
+     * @return the view name
+     */
+    public String getViewName() {
+        return displayCatStatsViewModel.getViewName();
+    }
 }
