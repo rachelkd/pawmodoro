@@ -38,11 +38,11 @@ public class CatView extends JPanel implements PropertyChangeListener {
         imageLabel = new JLabel();
         imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Add mouse listener for click interactions
+        // When cat is clicked, open a dialog with a random cat fact and this cat's statistics for this owner/user
         imageLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
-                // TODO: Implement in CatFactUseCase
+                // TODO: Implement CatFactUseCase
                 // 1. Controller should call use case to:
                 // - Get random cat fact
                 // - Create dialog with fact and "See {cat's name}'s statistics" button
