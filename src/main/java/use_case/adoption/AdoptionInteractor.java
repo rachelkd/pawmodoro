@@ -22,7 +22,6 @@ public class AdoptionInteractor implements AdoptionInputBoundary {
             adoptionPresenter.prepareFailView("You already have a cat with this name!");
         }
         else {
-            adoptionDataAccessObject.setCatName(catName);
             final AdoptionOutputData adoptionOutputData = new AdoptionOutputData(catName, false);
             adoptionPresenter.prepareSuccessView(adoptionOutputData);
         }

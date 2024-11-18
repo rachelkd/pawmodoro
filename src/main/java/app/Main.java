@@ -30,6 +30,7 @@ public class Main {
                 .addDisplayCatImageWithRefreshView()
                 .addDisplayCatImageUseCase()
                 .addSetupSessionUseCase()
+                .addAdoptionUseCase()
                 .build();
 
         application.pack();
