@@ -29,7 +29,7 @@ public class CatHouse {
      *             cat belongs to a different owner
      */
     public void validateNewCat(Cat cat) {
-        if (!cat.getOwnerId().equals(ownerId)) {
+        if (!cat.getOwnerUsername().equals(ownerId)) {
             throw new IllegalArgumentException("Cat belongs to a different owner");
         }
         if (isNameTaken(cat.getName())) {

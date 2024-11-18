@@ -6,12 +6,13 @@ import java.awt.Image;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import constants.Constants;
 import interface_adapter.display_cat_image.DisplayCatImageController;
@@ -37,7 +38,7 @@ public class DisplayCatImageView extends JPanel implements PropertyChangeListene
         setLayout(new BorderLayout());
 
         imageLabel = new JLabel();
-        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         // Set preferred size to ensure proper layout
         setPreferredSize(new Dimension(Constants.CAT_IMAGE_SIZE, Constants.CAT_IMAGE_SIZE));
@@ -52,7 +53,9 @@ public class DisplayCatImageView extends JPanel implements PropertyChangeListene
 
             // Create a panel to hold the button and center it
             final JPanel buttonPanel = new JPanel();
-            refreshButton.setPreferredSize(new Dimension(100, 30));
+            refreshButton.setPreferredSize(
+                    new Dimension(Constants.DISPLAY_CAT_REFRESH_BUTTON_WIDTH,
+                            Constants.DISPLAY_CAT_REFRESH_BUTTON_HEIGHT));
             buttonPanel.add(refreshButton);
 
             refreshButton.addActionListener(event -> displayCatImageController.fetchNewImage());
@@ -64,8 +67,8 @@ public class DisplayCatImageView extends JPanel implements PropertyChangeListene
     public void propertyChange(PropertyChangeEvent evt) {
         if (viewModel.getErrorMessage().isEmpty()) {
             try {
-                final URL imageUrl = new URL(viewModel.getImageUrl());
-                final ImageIcon originalIcon = new ImageIcon(imageUrl);
+                final URI imageUri = URI.create(viewModel.getImageUrl());
+                final ImageIcon originalIcon = new ImageIcon(imageUri.toURL());
                 final Image originalImage = originalIcon.getImage();
 
                 final int originalWidth = originalImage.getWidth(null);
@@ -90,8 +93,8 @@ public class DisplayCatImageView extends JPanel implements PropertyChangeListene
                 // Update panel size to match scaled image
                 setPreferredSize(new Dimension(scaledWidth, scaledHeight));
             }
-            catch (final MalformedURLException exception) {
-                imageLabel.setText("Failed to load image: Invalid URL");
+            catch (IllegalArgumentException | MalformedURLException exception) {
+                imageLabel.setText("Failed to load image: Invalid URL" + exception.getMessage());
             }
         }
         else {

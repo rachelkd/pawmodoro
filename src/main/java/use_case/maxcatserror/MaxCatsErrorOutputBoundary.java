@@ -15,5 +15,5 @@ public interface MaxCatsErrorOutputBoundary {
     /**
      * Called when the system needs to switch back to the setup view.
      */
-    void switchToSetupView();
+    void switchToBreakView();
 }

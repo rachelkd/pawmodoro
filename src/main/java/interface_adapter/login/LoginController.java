@@ -29,6 +29,7 @@ public class LoginController {
 
     /**
      * Executes the "switch to SignUpView" Use Case.
+     * Switches to the Sign Up View.
      */
     public void switchToSignUpView() {
         loginUseCaseInteractor.switchToSignUpView();

@@ -20,6 +20,7 @@ public class Main {
                 .addStudySessionView()
                 .addInventoryView()
                 .addAdoptionView()
+                .addRunawayCatView()
                 .addSetupSessionView()
                 .addSignupUseCase()
                 .addLoginUseCase()
@@ -31,6 +32,9 @@ public class Main {
                 .addDisplayCatImageWithRefreshView()
                 .addDisplayCatImageUseCase()
                 .addSetupSessionUseCase()
+                .addRunawayUseCase()
+                .addAdoptionUseCase()
+                .addMaxCatsUseCase()
                 .build();
 
         application.pack();
