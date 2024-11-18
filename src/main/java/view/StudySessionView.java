@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 
 import constants.Constants;
+import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerController;
 import interface_adapter.timer.TimerViewModel;
@@ -23,7 +24,8 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private final TimerView timerView;
     private final StudySessionViewModel studySessionViewModel;
     private TimerController timerController;
-    private final JButton settings;
+    private final JButton timerSettings;
+    private final JButton logOutSettings;
 
     public StudySessionView(StudySessionViewModel studySessionViewModel, TimerViewModel timerViewModel) {
         this.timerViewModel = timerViewModel;
@@ -31,23 +33,35 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         this.studySessionViewModel = studySessionViewModel;
         studySessionViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel("STUDY SESSION");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.setLayout(new BorderLayout());
+
+        final JPanel buttonsPanel = new JPanel(new BorderLayout());
+
+        final JPanel leftButtons = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        timerSettings = new JButton("Timer Settings");
+        leftButtons.add(timerSettings);
+
+        final JPanel rightButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        logOutSettings = new JButton("Log Out");
+        rightButtons.add(logOutSettings);
+
+        buttonsPanel.add(leftButtons, BorderLayout.WEST);
+        buttonsPanel.add(rightButtons, BorderLayout.EAST);
+
+        final JLabel title = new JLabel("STUDY SESSION", SwingConstants.CENTER);
         title.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TITLE));
 
-        final JPanel buttons = new JPanel();
-        settings = new JButton("User Settings");
-        buttons.add(settings);
+        final JPanel titlePanel = new JPanel(new BorderLayout());
+        titlePanel.add(title, BorderLayout.CENTER);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        settings.addActionListener(this);
+        timerSettings.addActionListener(this);
+        logOutSettings.addActionListener(this);
 
         this.timerView = new TimerView(timerViewModel);
-        this.add(buttons);
-        this.add(title);
-        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
-        this.add(timerView);
+
+        this.add(buttonsPanel, BorderLayout.NORTH);
+        this.add(titlePanel, BorderLayout.CENTER);
+        this.add(timerView, BorderLayout.SOUTH);
     }
 
     public String getViewName() {
@@ -65,6 +79,6 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("settings changed");
+        System.out.println("changed to study session view");
     }
 }
