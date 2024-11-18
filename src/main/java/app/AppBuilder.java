@@ -10,11 +10,12 @@ import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBUserDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
-import entity.*;
+import entity.*; // TODO: Import the correct entity package
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.add_to_inventory.AddToInventoryPresenter;
 import interface_adapter.adoption.AdoptionViewModel;
+import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
@@ -22,7 +23,7 @@ import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.CreateInventoryPresenter;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_image.DisplayCatImageController;
-import interface_adapter.display_cat_image.DisplayDisplayCatImagePresenter;
+import interface_adapter.display_cat_image.DisplayCatImagePresenter;
 import interface_adapter.display_cat_image.DisplayCatImageViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
@@ -41,21 +42,20 @@ import interface_adapter.timer.TimerPresenter;
 import interface_adapter.timer.TimerViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
-
+import use_case.adoption.AdoptionDataAccessInterface;
+import use_case.adoption.AdoptionInputBoundary;
+import use_case.adoption.AdoptionInteractor;
+import use_case.adoption.AdoptionOutputBoundary;
+import use_case.change_password.ChangePasswordInputBoundary;
+import use_case.change_password.ChangePasswordInteractor;
+import use_case.change_password.ChangePasswordOutputBoundary;
 import use_case.create_inventory.CreateInventoryInputBoundary;
 import use_case.create_inventory.CreateInventoryInteractor;
 import use_case.create_inventory.CreateInventoryOutputBoundary;
 import use_case.display_cat_image.DisplayCatImageDataAccessInterface;
-// import use_case.cat_image.CatImageInputBoundary;
-// import use_case.cat_image.CatImageInteractor;
-// import use_case.cat_image.CatImageOutputBoundary;
-import use_case.change_password.ChangePasswordInputBoundary;
-import use_case.change_password.ChangePasswordInteractor;
-import use_case.change_password.ChangePasswordOutputBoundary;
 import use_case.display_cat_image.DisplayCatImageInputBoundary;
 import use_case.display_cat_image.DisplayCatImageInteractor;
 import use_case.display_cat_image.DisplayCatImageOutputBoundary;
-
 import use_case.food_management.add_to_inventory.AddToInventoryInputBoundary;
 import use_case.food_management.add_to_inventory.AddToInventoryInteractor;
 import use_case.food_management.add_to_inventory.AddToInventoryOutputBoundary;
@@ -74,14 +74,15 @@ import use_case.signup.SignupOutputBoundary;
 import use_case.timer.display_timer.DisplayTimerInputBoundary;
 import use_case.timer.display_timer.DisplayTimerInteractor;
 import use_case.timer.display_timer.DisplayTimerOutputBoundary;
-import view.*;
+import view.*;  // TODO: Import the correct view package
 import view.DisplayCatImageView;
 
-
+// TODO: Fix order of imports when all packages are created
 import use_case.setupsession.SetupSessionInputBoundary;
 import use_case.setupsession.SetupSessionInteractor;
 import use_case.setupsession.SetupSessionOutputBoundary;
 import view.AdoptionView;
+// TODO: Might need to add more builders to reduce coupling (getting Checkstyle warnings)
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -106,12 +107,10 @@ public class AppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    // thought question: is the hard dependency below a problem?
-    // private final InMemoryUserDataAccessObject userDataAccessObject = new
-    // InMemoryUserDataAccessObject();
     private final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory);
     private final InMemoryInventoryDataAccessObject inventoryDataAccessObject = new InMemoryInventoryDataAccessObject();
-    private final DisplayCatImageDataAccessInterface displayCatImageDataAccessObject = new ApiDisplayCatImageDataAccessObject(catImageFactory);
+    private final DisplayCatImageDataAccessInterface displayCatImageDataAccessObject =
+            new ApiDisplayCatImageDataAccessObject(catImageFactory);
 
     private InventoryViewModel inventoryViewModel;
     private InventoryView inventoryView;
@@ -122,6 +121,9 @@ public class AppBuilder {
     private SetupSessionView setupSessionView;
     private SetupSessionViewModel setupSessionViewModel;
 
+    private AdoptionView adoptionView;
+    private AdoptionViewModel adoptionViewModel;
+
     private MaxCatsErrorView maxCatsErrorView;
     private MaxCatsErrorViewModel maxCatsErrorViewModel;
 
@@ -129,17 +131,17 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+
     private AdoptionView adoptionView;
     private AdoptionViewModel adoptionViewModel;
-    // TODO: Refactor instatiation of Timer use cases to be in the methods below
+
+    // TODO: Refactor instatiation of Timer use cases to be in the methods below @Jinny
     private final TimerViewModel timerViewModel = new TimerViewModel();
     private final InMemoryTimerDataAccessObject timerDataAccessObject = new InMemoryTimerDataAccessObject();
     private final TimerFactory timerFactory = new TimerFactory();
 
     private DisplayCatImageViewModel displayCatImageViewModel;
     private DisplayCatImageView displayCatImageView;
-
-
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -212,13 +214,15 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel, timerViewModel);
+        final CatViewModel catViewModel = new CatViewModel();
+        loggedInView = new LoggedInView(loggedInViewModel, timerViewModel, catViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
 
     /**
      * Add the inventory view to the application.
+     * 
      * @return this builder
      */
     public AppBuilder addInventoryView() {
@@ -245,13 +249,28 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Adoption Use Case to the application
+     *
+     * @return this builder
+     */
+//    public AppBuilder addAdoptionUseCase() {
+//        final AdoptionOutputBoundary adoptionOutputBoundary = new AdoptionPresenter(setupSessionViewModel,
+//                adoptionViewModel, viewManagerModel);
+//        final AdoptionInputBoundary adoptionInteractor = new AdoptionInteractor(adoptionDataAccessObject,
+//                adoptionOutputBoundary);
+//        final AdoptionController controller = new AdoptionController(adoptionInteractor);
+//        adoptionView.setAdoptionController(controller);
+//        return this;
+//    }
+
+    /**
      * Adds the setup session Use Case to the application.
      *
      * @return this builder
      */
     public AppBuilder addSetupSessionUseCase() {
-        final SetupSessionOutputBoundary setupSessionOutputBoundary = new
-                SetupSessionPresenter(setupSessionViewModel, viewManagerModel, timerViewModel);
+        final SetupSessionOutputBoundary setupSessionOutputBoundary =
+                new SetupSessionPresenter(setupSessionViewModel, viewManagerModel, timerViewModel);
         final SetupSessionInputBoundary setupInteractor = new SetupSessionInteractor(setupSessionOutputBoundary);
         final SetupSessionController setupController = new SetupSessionController(setupInteractor);
         setupSessionView.setSetupSessionController(setupController);
@@ -419,7 +438,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addDisplayCatImageUseCase() {
-        final DisplayCatImageOutputBoundary displayCatImageOutputBoundary = new DisplayDisplayCatImagePresenter(
+        final DisplayCatImageOutputBoundary displayCatImageOutputBoundary = new DisplayCatImagePresenter(
                 displayCatImageViewModel);
         final DisplayCatImageInputBoundary displayCatImageInteractor = new DisplayCatImageInteractor(
                 displayCatImageDataAccessObject, displayCatImageOutputBoundary);

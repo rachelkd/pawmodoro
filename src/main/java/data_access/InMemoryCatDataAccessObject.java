@@ -7,43 +7,98 @@ import use_case.cat_management.create_cat.CreateCatDataAccessInterface;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import entity.Cat;
+import entity.exceptions.NoCatsFoundException;
+import use_case.cat.CatDataAccessInterface;
+
 /**
- * In memory implementation of cat-related usecase interfaces. For testing.
+ * In-memory implementation of CatDataAccessInterface for testing and development.
  */
-public class InMemoryCatDataAccessObject implements CreateCatDataAccessInterface,
-        ChangeCatHungerDataAccessInterface, ChangeCatHappinessDataAccessInterface {
-    private final Map<String, Collection<Cat>> catsRepository = new HashMap<>();
+public class InMemoryCatDataAccessObject implements CatDataAccessInterface {
+    private final Map<String, Map<String, Cat>> catsByOwner = new HashMap<>();
 
     @Override
+    public boolean saveCat(Cat cat) {
+        boolean isSuccessful = false;
+        if (!existsByNameAndOwner(cat.getName(), cat.getOwnerUsername())) {
+            catsByOwner
+                    .computeIfAbsent(cat.getOwnerUsername(), username -> new HashMap<>())
+                    .put(cat.getName(), cat);
+            isSuccessful = true;
+        }
+        return isSuccessful;
+    }
+
+    @Override
+    public Cat getCatByNameAndOwner(String name, String ownerUsername) {
+        return catsByOwner
+                .getOrDefault(ownerUsername, new HashMap<>())
+                .get(name);
+    }
+
     public void updateHappinessLevel(String ownerId, String catName, int newHappinessLevel) {
 
     }
 
     @Override
-    public Cat getCatByNameAndOwnerId(String catName, String ownerId) {
-        return null;
+    public Collection<Cat> getCatsByOwner(String ownerUsername) {
+        return catsByOwner
+                .getOrDefault(ownerUsername, new HashMap<>())
+                .values();
     }
 
     @Override
+    public boolean updateCat(Cat cat) {
+        boolean isSuccessful = false;
+        final Map<String, Cat> ownerCats = catsByOwner.get(cat.getOwnerUsername());
+        if (ownerCats != null && ownerCats.containsKey(cat.getName())) {
+            ownerCats.put(cat.getName(), cat);
+            isSuccessful = true;
+        }
+        return isSuccessful;
+    }
+
     public void updateHungerLevels(String ownerId, String catName, int newHungerLevel) {
 
     }
 
     @Override
-    public void save(Cat cat) {
-
+    public boolean existsByNameAndOwner(String name, String ownerUsername) {
+        return catsByOwner
+                .getOrDefault(ownerUsername, new HashMap<>())
+                .containsKey(name);
     }
 
     @Override
-    public Collection<Cat> getCatsByOwnerId(String ownerId) {
-        return catsRepository.get(ownerId);
+    public int getNumberOfCatsByOwner(String ownerUsername) {
+        return catsByOwner
+                .getOrDefault(ownerUsername, new HashMap<>())
+                .size();
     }
 
     @Override
-    public boolean existsByNameAndOwnerId(String name, String ownerId) {
+    public boolean removeCat(String name, String ownerUsername) {
+        // TODO: Implement this method for cat running away use case
         return false;
+    }
+
+    @Override
+    public int getHungerLevel(String name, String ownerUsername) {
+        final Cat cat = getCatByNameAndOwner(name, ownerUsername);
+        if (cat == null) {
+            throw new NoCatsFoundException("Cat " + name + " not found for user: " + ownerUsername);
+        }
+        return cat.getHungerLevel();
+    }
+
+    @Override
+    public int getHappinessLevel(String name, String ownerUsername) {
+        final Cat cat = getCatByNameAndOwner(name, ownerUsername);
+        if (cat == null) {
+            throw new NoCatsFoundException("Cat " + name + " not found for user: " + ownerUsername);
+        }
+        return cat.getHappinessLevel();
     }
 }
