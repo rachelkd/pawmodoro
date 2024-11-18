@@ -10,9 +10,9 @@ public class AdoptionInteractor implements AdoptionInputBoundary {
     private final AdoptionDataAccessInterface adoptionDataAccessObject;
     private final AdoptionOutputBoundary adoptionPresenter;
 
-    public AdoptionInteractor(AdoptionDataAccessInterface adoptionDataAccessObject,
+    public AdoptionInteractor(//AdoptionDataAccessInterface adoptionDataAccessObject,
                               AdoptionOutputBoundary adoptionPresenter) {
-        this.adoptionDataAccessObject = adoptionDataAccessObject;
+//        this.adoptionDataAccessObject = adoptionDataAccessObject;
         this.adoptionPresenter = adoptionPresenter;
     }
     @Override

@@ -12,7 +12,7 @@ public class FoodItemFactory {
      * @return returns a new food item
      */
     public AbstractFood create(String foodId, String name) {
-        // temporary, need to decide ids
+        //TODO temporary, need to decide how food will work
         return new WetFood(foodId, name, 0);
     }
 }

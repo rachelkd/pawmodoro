@@ -16,6 +16,8 @@ import entity.*; // TODO: Import the correct entity package
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.add_to_inventory.AddToInventoryPresenter;
+import interface_adapter.adoption.AdoptionController;
+import interface_adapter.adoption.AdoptionPresenter;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.ChangePasswordController;
@@ -410,7 +412,9 @@ public class AppBuilder {
                 viewManagerModel);
         final RunawayCatController runawayCatController = new RunawayCatController(runawayCatViewModel);
         runawayCatView.setRunawayCatController(runawayCatController);
-      
+        return this;
+    }
+
     /**
      * Adds the max cats error use case to the application
      *

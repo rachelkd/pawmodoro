@@ -22,7 +22,7 @@ class InventoryInteractorTest {
 
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
-        // create inventory for user
+        // create inventory for testing
         final Inventory inventory = inventoryFactory.create("chiually");
         inventoryRepository.save(inventory);
 
