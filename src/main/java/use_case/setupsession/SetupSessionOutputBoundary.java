@@ -15,11 +15,6 @@ public interface SetupSessionOutputBoundary {
     void prepareSuccessView(SetupSessionOutputData outputData);
 
     /**
-     * Called when the setup fails and the system needs to handle the error.
-     */
-    void prepareFailView();
-
-    /**
      * Called when the system needs to switch to the study view.
      */
     void switchToStudyView();
