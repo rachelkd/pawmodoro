@@ -31,6 +31,7 @@ public class Main {
                 .addDisplayCatImageUseCase()
                 .addSetupSessionUseCase()
                 .addAdoptionUseCase()
+                .addMaxCatsUseCase()
                 .build();
 
         application.pack();
