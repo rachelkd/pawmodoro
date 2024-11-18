@@ -192,6 +192,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addStudySessionView() {
+        studySessionViewModel = new StudySessionViewModel();
         studySessionView = new StudySessionView(studySessionViewModel, timerViewModel);
         cardPanel.add(studySessionView, studySessionView.getViewName());
         return this;
