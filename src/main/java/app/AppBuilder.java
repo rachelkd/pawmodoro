@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+
+import data_access.*; // TODO: Figure out all the proper imports because this keeps causing Checkstyle errors.
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBUserDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
@@ -123,6 +125,7 @@ public class AppBuilder {
 
     private AdoptionView adoptionView;
     private AdoptionViewModel adoptionViewModel;
+    private final AdoptionDataAccessObject adoptionDataAccessObject = new AdoptionDataAccessObject();
 
     private MaxCatsErrorView maxCatsErrorView;
     private MaxCatsErrorViewModel maxCatsErrorViewModel;
@@ -377,6 +380,21 @@ public class AppBuilder {
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         loggedInView.setLogoutController(logoutController);
+        return this;
+    }
+
+    /**
+     * Adds the adoption use case to the application.
+     *
+     * @return this builder
+     */
+    public AppBuilder addAdoptionUseCase() {
+        final AdoptionOutputBoundary adoptionOutputBoundary = new AdoptionPresenter(setupSessionViewModel,
+                adoptionViewModel, viewManagerModel);
+        final AdoptionInputBoundary adoptionInteractor = new AdoptionInteractor(adoptionDataAccessObject,
+                adoptionOutputBoundary);
+        final AdoptionController adoptionController = new AdoptionController(adoptionInteractor);
+        adoptionView.setAdoptionController(adoptionController);
         return this;
     }
 
