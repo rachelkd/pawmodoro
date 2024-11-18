@@ -35,6 +35,9 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.maxcatserror.MaxCatsErrorController;
 import interface_adapter.maxcatserror.MaxCatsErrorPresenter;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
+import interface_adapter.runawaycat.RunawayCatController;
+import interface_adapter.runawaycat.RunawayCatViewModel;
+import interface_adapter.runawaycat.RunawayPresenter;
 import interface_adapter.setupsession.SetupSessionController;
 import interface_adapter.setupsession.SetupSessionPresenter;
 import interface_adapter.setupsession.SetupSessionViewModel;
@@ -72,9 +75,11 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.maxcatserror.MaxCatsErrorOutputBoundary;
 import use_case.maxcatserror.MaxCatsErrorInputBoundary;
 import use_case.maxcatserror.MaxCatsErrorInteractor;
 import use_case.maxcatserror.MaxCatsErrorOutputBoundary;
+import use_case.runawaycat.RunawayCatOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -127,6 +132,10 @@ public class AppBuilder {
 
     private SetupSessionView setupSessionView;
     private SetupSessionViewModel setupSessionViewModel;
+
+    private RunawayCatView runawayCatView;
+    private RunawayCatViewModel runawayCatViewModel;
+    private RunawayCatController runawayCatController;
 
     private AdoptionView adoptionView;
     private AdoptionViewModel adoptionViewModel;
@@ -225,6 +234,17 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Runaway Cat View to the application
+     *
+     * @return this builder
+     */
+    public AppBuilder addRunawayCatView() {
+        runawayCatViewModel = new RunawayCatViewModel();
+        runawayCatView = new RunawayCatView(runawayCatViewModel, runawayCatController);
+        cardPanel.add(runawayCatView, runawayCatView.getViewName());
+        return this;
+    }
+    /**
      * Add the inventory view to the application.
      * 
      * @return this builder
@@ -263,6 +283,19 @@ public class AppBuilder {
         final SetupSessionInputBoundary setupInteractor = new SetupSessionInteractor(setupSessionOutputBoundary);
         final SetupSessionController setupController = new SetupSessionController(setupInteractor);
         setupSessionView.setSetupSessionController(setupController);
+        return this;
+    }
+
+    /**
+     * Adds the runaway use case to the application.
+     *
+     * @return this builder
+     */
+    public AppBuilder addRunawayUseCase() {
+        final RunawayCatOutputBoundary runawayCatOutputBoundary = new RunawayPresenter(runawayCatViewModel,
+                viewManagerModel);
+        final RunawayCatController runawayCatController = new RunawayCatController(runawayCatViewModel);
+        runawayCatView.setRunawayCatController(runawayCatController);
         return this;
     }
 
@@ -369,6 +402,15 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Runaway Use Case to the application.
+     */
+    public AppBuilder addRunawayCatUseCase() {
+        final RunawayCatOutputBoundary runawayCatOutputBoundary = new RunawayPresenter(runawayCatViewModel,
+                viewManagerModel);
+        final RunawayCatController runawayCatController = new RunawayCatController(runawayCatViewModel);
+        runawayCatView.setRunawayCatController(runawayCatController);
+      
     /**
      * Adds the max cats error use case to the application
      *

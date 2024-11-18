@@ -20,19 +20,18 @@ import interface_adapter.runawaycat.RunawayCatViewModel;
  * along with a confirmation button.
  */
 public class RunawayCatView extends JPanel implements ActionListener, PropertyChangeListener {
+    private final String viewName = "runaway cat";
     private final String badNews = "Oh no, %s has ran away!";
-    private final String reminder = "Remember to monitor your cats' health and happiness!";
-    private final JButton confirm = new JButton("Okay..");
+    private final JButton confirm = new JButton(RunawayCatViewModel.CONFIRM_LABEL);
     private final JLabel news = new JLabel();
-    private final JLabel reminders = new JLabel(reminder);
+    private final JLabel reminders = new JLabel(RunawayCatViewModel.REMINDER_LABEL);
 
     private final RunawayCatViewModel runawayCatViewModel;
-    private final RunawayCatController runawayCatController;
+    private RunawayCatController runawayCatController;
 
     public RunawayCatView(RunawayCatViewModel runawayCatViewModel,
             RunawayCatController runawayCatController) {
         this.runawayCatViewModel = runawayCatViewModel;
-        this.runawayCatController = runawayCatController;
 
         final JPanel messages = new JPanel();
         messages.add(news);
@@ -59,7 +58,7 @@ public class RunawayCatView extends JPanel implements ActionListener, PropertyCh
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == confirm) {
-            runawayCatController.handleConfirm();
+            runawayCatController.switchToBreakView();
         }
     }
 
@@ -67,4 +66,13 @@ public class RunawayCatView extends JPanel implements ActionListener, PropertyCh
     public void propertyChange(PropertyChangeEvent evt) {
         updateMessage();
     }
+
+    public String getViewName() {
+        return viewName;
+    }
+
+    public void setRunawayCatController(RunawayCatController runawayCatController) {
+        this.runawayCatController = runawayCatController;
+    }
+
 }
