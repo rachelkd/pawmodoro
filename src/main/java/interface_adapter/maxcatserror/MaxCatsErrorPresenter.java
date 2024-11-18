@@ -10,32 +10,22 @@ import use_case.maxcatserror.MaxCatsErrorOutputBoundary;
  */
 public class MaxCatsErrorPresenter implements MaxCatsErrorOutputBoundary {
     private final MaxCatsErrorViewModel maxCatsViewModel;
-    // The name of the view model for setting up study session
-    private final SetupSessionViewModel setupSessionViewModel;
     private final ViewManagerModel viewManagerModel;
+    //need to go back to break view
 
     public MaxCatsErrorPresenter(ViewManagerModel viewManagerModel,
-            SetupSessionViewModel setupViewModel,
             MaxCatsErrorViewModel maxCatsErrorViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.maxCatsViewModel = maxCatsErrorViewModel;
-        this.setupSessionViewModel = setupViewModel;
     }
 
     @Override
     public void prepareSuccessView() {
-        // Switch back to setting up study session view.
-        final SetupSessionState setupState = setupSessionViewModel.getState();
-        this.setupSessionViewModel.setState(setupState);
-        setupSessionViewModel.firePropertyChanged();
-
-        viewManagerModel.setState(setupSessionViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+        //On success, switch to break session view.
     }
 
     @Override
-    public void switchToSetupView() {
-        viewManagerModel.setState(setupSessionViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+    public void switchToBreakView() {
+        //see above
     }
 }
