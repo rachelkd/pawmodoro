@@ -1,5 +1,8 @@
 package interface_adapter.runawaycat;
 
+/**
+ * The state for the Runaway Cat View Model
+ */
 public class RunawayCatState {
     private String catName = "";
     

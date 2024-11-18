@@ -7,9 +7,10 @@ public class RunawayCatController {
         this.runawayCatViewModel = runawayCatViewModel;
     }
 
-    public void handleConfirm() {
-        // TODO: Implement confirmation logic
-        // This should probably update some state in the app to acknowledge
-        // that the user has seen the runaway cat message
+    /** Switches to the break session view
+     *
+     */
+    public void switchToBreakView() {
+        //To be implemented
     }
-} 
+}
