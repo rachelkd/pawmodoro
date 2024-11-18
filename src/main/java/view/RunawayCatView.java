@@ -29,8 +29,7 @@ public class RunawayCatView extends JPanel implements ActionListener, PropertyCh
     private final RunawayCatViewModel runawayCatViewModel;
     private RunawayCatController runawayCatController;
 
-    public RunawayCatView(RunawayCatViewModel runawayCatViewModel,
-            RunawayCatController runawayCatController) {
+    public RunawayCatView(RunawayCatViewModel runawayCatViewModel) {
         this.runawayCatViewModel = runawayCatViewModel;
 
         final JPanel messages = new JPanel();
