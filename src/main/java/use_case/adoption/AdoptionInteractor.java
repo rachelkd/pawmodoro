@@ -7,7 +7,7 @@ import entity.Cat;
  */
 public class AdoptionInteractor implements AdoptionInputBoundary {
 
-//    private final AdoptionDataAccessInterface adoptionDataAccessObject;
+    private final AdoptionDataAccessInterface adoptionDataAccessObject;
     private final AdoptionOutputBoundary adoptionPresenter;
 
     public AdoptionInteractor(//AdoptionDataAccessInterface adoptionDataAccessObject,
@@ -17,15 +17,15 @@ public class AdoptionInteractor implements AdoptionInputBoundary {
     }
     @Override
     public void execute(AdoptionInputData adoptionInputData) {
-//        final String catName = adoptionInputData.getCatName();
-//        if (adoptionDataAccessObject.nameAlreadyExists(catName)) {
-//            adoptionPresenter.prepareFailView("You already have a cat with this name!");
-//        }
-//        else {
-//            adoptionDataAccessObject.setCatName(catName);
-//            final AdoptionOutputData adoptionOutputData = new AdoptionOutputData(catName, false);
-//            adoptionPresenter.prepareSuccessView(adoptionOutputData);
-//        }
+        final String catName = adoptionInputData.getCatName();
+        if (adoptionDataAccessObject.nameAlreadyExists(catName)) {
+            adoptionPresenter.prepareFailView("You already have a cat with this name!");
+        }
+        else {
+            adoptionDataAccessObject.setCatName(catName);
+            final AdoptionOutputData adoptionOutputData = new AdoptionOutputData(catName, false);
+            adoptionPresenter.prepareSuccessView(adoptionOutputData);
+        }
     }
 
     @Override
