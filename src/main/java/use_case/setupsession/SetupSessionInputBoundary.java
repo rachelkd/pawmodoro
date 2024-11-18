@@ -2,6 +2,7 @@ package use_case.setupsession;
 
 /**
  * Input Boundary for actions which are related to setting up the study session.
+ *
  */
 public interface SetupSessionInputBoundary {
 

@@ -7,6 +7,7 @@ public class SetupSessionState {
     private String studyTime = "25 mins";
     private String breakTime = "5 mins";
 
+
     public int getStudyTime() {
         return Integer.parseInt(studyTime.split(" ")[0]);
     }

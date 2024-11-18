@@ -29,6 +29,7 @@ public class SetupSessionView extends JPanel implements ActionListener {
 
     private SetupSessionController setupSessionController;
 
+
     public SetupSessionView(SetupSessionViewModel setupSessionViewModel) {
         this.setupSessionViewModel = setupSessionViewModel;
 

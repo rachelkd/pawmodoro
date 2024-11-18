@@ -289,6 +289,7 @@ public class AppBuilder {
      *
      * @return this builder
      */
+
     public AppBuilder addSetupSessionUseCase() {
         final SetupSessionOutputBoundary setupSessionOutputBoundary =
                 new SetupSessionPresenter(viewManagerModel, studySessionViewModel);

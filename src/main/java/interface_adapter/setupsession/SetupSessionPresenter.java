@@ -17,7 +17,6 @@ public class SetupSessionPresenter implements SetupSessionOutputBoundary {
     private final ViewManagerModel viewManagerModel;
 
     public SetupSessionPresenter(ViewManagerModel viewManagerModel, StudySessionViewModel studySessionViewModel) {
-        //this.setupSessionViewModel = setupSessionViewModel;
         this.viewManagerModel = viewManagerModel;
         this.studySessionViewModel = studySessionViewModel;
     }

@@ -3,6 +3,7 @@ package use_case.setupsession;
 /**
  * Output data for the setup session use case.
  */
+
 public class SetupSessionOutputData {
     private final int studyTime;
     private final int breakTime;

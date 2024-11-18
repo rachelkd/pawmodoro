@@ -5,6 +5,7 @@ package use_case.setupsession;
  * This interface defines the methods that the presenter must implement
  * to handle the output from the SetupSession use case.
  */
+
 public interface SetupSessionOutputBoundary {
     /**
      * Called when the setup is successful and the system should
