@@ -14,26 +14,7 @@ public class Main {
     public static void main(String[] args) {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
-                .addLoginView()
-                .addSignupView()
-                .addLoggedInView()
-                .addInventoryView()
-                .addAdoptionView()
-                .addRunawayCatView()
-                .addSetupSessionView()
-                .addSignupUseCase()
-                .addLoginUseCase()
-                .addDisplayTimerUseCase()
-                .addMaxCatsErrorView()
-                .addLogoutUseCase()
-                .addChangePasswordUseCase()
-                .addCreateInventoryUseCase()
-                .addDisplayCatImageWithRefreshView()
-                .addDisplayCatImageUseCase()
-                .addSetupSessionUseCase()
-                .addRunawayUseCase()
-                .addAdoptionUseCase()
-                .addMaxCatsUseCase()
+                .initialize()
                 .build();
 
         application.pack();
