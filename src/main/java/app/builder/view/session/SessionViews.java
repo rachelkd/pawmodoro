@@ -1,7 +1,7 @@
 package app.builder.view.session;
 
-import view.SetupSessionView;
 import view.InventoryView;
+import view.SetupSessionView;
 
 /**
  * Container for session-related views.

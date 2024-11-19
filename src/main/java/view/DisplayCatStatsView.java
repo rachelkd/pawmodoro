@@ -20,8 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.cat.CatState;
+import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 
 /**
  * Dialog for displaying cat statistics.
@@ -60,7 +60,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         this.setLocationRelativeTo(parent);
 
         // Only update fields if state is available
-        CatState initialState = displayCatStatsViewModel.getState();
+        final CatState initialState = displayCatStatsViewModel.getState();
         if (initialState != null) {
             updateFields(initialState);
         }
@@ -115,41 +115,30 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
     }
 
     private void updateFields(CatState state) {
-        if (state == null) {
-            return;
-        }
-
         if (state.getError() != null) {
             JOptionPane.showMessageDialog(this, state.getError());
             this.dispose();
-            return;
         }
+        else {
+            // Update name and stats
+            catNameLabel.setText(state.getCatName());
+            hungerLabel.setText(String.format("%s%d", DisplayCatStatsViewModel.HUNGER_LABEL, state.getHungerLevel()));
+            happinessLabel.setText(String.format("%s%d", DisplayCatStatsViewModel.HAPPINESS_LABEL,
+                    state.getHappinessLevel()));
 
-        // Update name and stats even if image is not available
-        catNameLabel.setText(state.getCatName() != null ? state.getCatName() : "Unknown Cat");
-        hungerLabel.setText(String.format("%s%d", DisplayCatStatsViewModel.HUNGER_LABEL, state.getHungerLevel()));
-        happinessLabel.setText(String.format("%s%d", DisplayCatStatsViewModel.HAPPINESS_LABEL,
-                state.getHappinessLevel()));
-
-        // Try to load image if available
-        if (state.getImageFileName() != null) {
-            try {
+            // Try to load image if available
+            if (state.getImageFileName() != null) {
                 final ImageIcon imageIcon =
                         new ImageIcon(getClass().getResource("/images/" + state.getImageFileName()));
                 if (imageIcon.getImageLoadStatus() == MediaTracker.COMPLETE) {
                     final Image image =
                             imageIcon.getImage().getScaledInstance(IMAGE_SIZE, IMAGE_SIZE, Image.SCALE_SMOOTH);
                     catImageLabel.setIcon(new ImageIcon(image));
-                    catImageLabel.setText(null); // Clear the "No Image Available" text
+                    catImageLabel.setText(null);
                 }
-            }
-            catch (Exception e) {
-                // Keep the default "No Image Available" text
-                catImageLabel.setIcon(null);
+                this.pack();
             }
         }
-
-        this.pack();
     }
 
     @Override
@@ -181,7 +170,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
      * @param viewModel the view model
      */
     public static void show(JFrame parent, DisplayCatStatsViewModel viewModel) {
-        DisplayCatStatsView dialog = new DisplayCatStatsView(parent, viewModel);
+        final DisplayCatStatsView dialog = new DisplayCatStatsView(parent, viewModel);
         dialog.setVisible(true);
     }
 }

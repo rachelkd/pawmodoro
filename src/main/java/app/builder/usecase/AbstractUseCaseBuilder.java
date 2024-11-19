@@ -1,7 +1,7 @@
 package app.builder.usecase;
 
-import app.components.DataAccessComponents;
 import app.builder.view.Views;
+import app.components.DataAccessComponents;
 
 /**
  * Base class for all use case builders.

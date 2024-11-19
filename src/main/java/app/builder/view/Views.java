@@ -1,9 +1,9 @@
 package app.builder.view;
 
-import interface_adapter.ViewManagerModel;
 import app.builder.view.auth.AuthViewsAndModels;
 import app.builder.view.cat.CatViewsAndModels;
 import app.builder.view.session.SessionViewsAndModels;
+import interface_adapter.ViewManagerModel;
 
 /**
  * Container for all views and view models in the application.

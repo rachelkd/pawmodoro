@@ -242,7 +242,7 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
 
     @Override
     public int getHungerLevel(String name, String ownerUsername) {
-        Cat cat = getCatByNameAndOwner(name, ownerUsername);
+        final Cat cat = getCatByNameAndOwner(name, ownerUsername);
         if (cat == null) {
             throw new NoCatsFoundException("Cat " + name + " not found for user: " + ownerUsername);
         }
@@ -251,7 +251,7 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
 
     @Override
     public int getHappinessLevel(String name, String ownerUsername) {
-        Cat cat = getCatByNameAndOwner(name, ownerUsername);
+        final Cat cat = getCatByNameAndOwner(name, ownerUsername);
         if (cat == null) {
             throw new NoCatsFoundException("Cat " + name + " not found for user: " + ownerUsername);
         }

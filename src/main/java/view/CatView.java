@@ -13,12 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import app.service.DialogService;
 import constants.Constants;
-import interface_adapter.display_cat_stats.DisplayCatStatsController;
 import interface_adapter.cat.CatState;
 import interface_adapter.cat.CatViewModel;
+import interface_adapter.display_cat_stats.DisplayCatStatsController;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
-import app.service.DialogService;
 
 /**
  * A view component that displays a cat's image and handles click interactions.

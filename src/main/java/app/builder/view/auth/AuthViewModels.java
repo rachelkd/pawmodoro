@@ -1,8 +1,8 @@
 package app.builder.view.auth;
 
+import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
-import interface_adapter.change_password.LoggedInViewModel;
 
 /**
  * Container for auth-related view models.

@@ -1,7 +1,7 @@
 package app.builder.view.session;
 
-import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
+import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.timer.TimerViewModel;
 
 /**
@@ -24,11 +24,11 @@ public class SessionViewModels {
         return setupSessionViewModel;
     }
 
-    public InventoryViewModel getInventoryViewModel() {
-        return inventoryViewModel;
-    }
-
     public TimerViewModel getTimerViewModel() {
         return timerViewModel;
+    }
+
+    public InventoryViewModel getInventoryViewModel() {
+        return inventoryViewModel;
     }
 }
