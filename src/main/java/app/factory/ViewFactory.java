@@ -1,18 +1,20 @@
 package app.factory;
 
+import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_image.DisplayCatImageViewModel;
+import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.timer.TimerViewModel;
-import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import view.AdoptionView;
+import view.CatView;
 import view.DisplayCatImageView;
 import view.InventoryView;
 import view.LoggedInView;
@@ -21,93 +23,120 @@ import view.MaxCatsErrorView;
 import view.RunawayCatView;
 import view.SetupSessionView;
 import view.SignupView;
-import view.DisplayCatStatsView;
 
 /**
- * Factory for creating views.
+ * Default implementation of ViewFactory.
+ * Responsible for creating various view components in the application.
  */
-public interface ViewFactory {
-    /**
-     * Creates a login view.
-     * 
-     * @param loginViewModel the view model
-     * @return the view
-     */
-    LoginView createLoginView(LoginViewModel loginViewModel);
+public class ViewFactory {
 
     /**
-     * Creates a signup view.
+     * Creates a Login View.
      * 
-     * @param signupViewModel the view model
-     * @return the view
+     * @param loginViewModel the login view model
+     * @return LoginView
      */
-    SignupView createSignupView(SignupViewModel signupViewModel);
+    public LoginView createLoginView(LoginViewModel loginViewModel) {
+        return new LoginView(loginViewModel);
+    }
 
     /**
-     * Creates a logged in view.
+     * Creates a Signup View.
+     * 
+     * @param signupViewModel the signup view model
+     * @return SignupView
+     */
+    public SignupView createSignupView(SignupViewModel signupViewModel) {
+        return new SignupView(signupViewModel);
+    }
+
+    /**
+     * Creates a Logged In View with associated components.
      * 
      * @param loggedInViewModel the logged in view model
      * @param timerViewModel the timer view model
      * @param catViewModel the cat view model
-     * @return the view
+     * @param displayCatStatsViewModel the display cat stats view model
+     * @return LoggedInView
      */
-    LoggedInView createLoggedInView(LoggedInViewModel loggedInViewModel,
+    public LoggedInView createLoggedInView(LoggedInViewModel loggedInViewModel,
             TimerViewModel timerViewModel,
-            CatViewModel catViewModel);
+            CatViewModel catViewModel,
+            DisplayCatStatsViewModel displayCatStatsViewModel) {
+        return new LoggedInView(loggedInViewModel, timerViewModel, catViewModel, displayCatStatsViewModel);
+    }
 
     /**
-     * Creates an adoption view.
+     * Creates an Adoption View.
      * 
-     * @param adoptionViewModel the view model
-     * @return the view
+     * @param adoptionViewModel the adoption view model
+     * @return AdoptionView
      */
-    AdoptionView createAdoptionView(AdoptionViewModel adoptionViewModel);
+    public AdoptionView createAdoptionView(AdoptionViewModel adoptionViewModel) {
+        return new AdoptionView(adoptionViewModel);
+    }
 
     /**
-     * Creates a runaway cat view.
+     * Creates a Runaway Cat View.
      * 
-     * @param runawayCatViewModel the view model
-     * @return the view
+     * @param runawayCatViewModel the runaway cat view model
+     * @return RunawayCatView
      */
-    RunawayCatView createRunawayCatView(RunawayCatViewModel runawayCatViewModel);
+    public RunawayCatView createRunawayCatView(RunawayCatViewModel runawayCatViewModel) {
+        return new RunawayCatView(runawayCatViewModel);
+    }
 
     /**
-     * Creates a max cats error view.
+     * Creates a Max Cats Error View.
      * 
-     * @param maxCatsErrorViewModel the view model
-     * @return the view
+     * @param maxCatsErrorViewModel the max cats error view model
+     * @return MaxCatsErrorView
      */
-    MaxCatsErrorView createMaxCatsErrorView(MaxCatsErrorViewModel maxCatsErrorViewModel);
+    public MaxCatsErrorView createMaxCatsErrorView(MaxCatsErrorViewModel maxCatsErrorViewModel) {
+        return new MaxCatsErrorView(maxCatsErrorViewModel);
+    }
 
     /**
-     * Creates a display cat image view.
+     * Creates a Display Cat Image View.
      * 
-     * @param displayCatImageViewModel the view model
-     * @return the view
+     * @param displayCatImageViewModel the display cat image view model
+     * @return DisplayCatImageView
      */
-    DisplayCatImageView createDisplayCatImageView(DisplayCatImageViewModel displayCatImageViewModel);
+    public DisplayCatImageView createDisplayCatImageView(DisplayCatImageViewModel displayCatImageViewModel) {
+        return new DisplayCatImageView(displayCatImageViewModel);
+    }
 
     /**
-     * Creates a setup session view.
+     * Creates a Setup Session View.
      * 
-     * @param setupSessionViewModel the view model
-     * @return the view
+     * @param setupSessionViewModel the setup session view model
+     * @return SetupSessionView
      */
-    SetupSessionView createSetupSessionView(SetupSessionViewModel setupSessionViewModel);
+    public SetupSessionView createSetupSessionView(SetupSessionViewModel setupSessionViewModel) {
+        return new SetupSessionView(setupSessionViewModel);
+    }
 
     /**
-     * Creates an inventory view.
+     * Creates an Inventory View.
      * 
-     * @param inventoryViewModel the view model
-     * @return the view
+     * @param inventoryViewModel the inventory view model
+     * @return InventoryView
      */
-    InventoryView createInventoryView(InventoryViewModel inventoryViewModel);
+    public InventoryView createInventoryView(InventoryViewModel inventoryViewModel) {
+        return new InventoryView(inventoryViewModel);
+    }
 
     /**
-     * Creates a new display cat stats view.
-     *
-     * @param viewModel the view model
-     * @return the display cat stats view
+     * Creates a Cat View with associated components.
+     * 
+     * @param catViewModel the cat view model
+     * @param displayCatStatsViewModel the display cat stats view model
+     * @param dialogService the dialog service for user interactions
+     * @return CatView
      */
-    DisplayCatStatsView createDisplayCatStatsView(DisplayCatStatsViewModel viewModel);
+    public CatView createCatView(CatViewModel catViewModel,
+            DisplayCatStatsViewModel displayCatStatsViewModel,
+            DialogService dialogService) {
+        return new CatView(catViewModel, displayCatStatsViewModel, dialogService);
+    }
 }
