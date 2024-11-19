@@ -60,7 +60,8 @@ public class ViewBuilder {
                 .buildRunawayCatView()
                 .buildMaxCatsErrorView()
                 .buildDisplayCatImageView()
-//                .buildDisplayCatStatsView() TODO: Implement this view
+                .buildDisplayCatStatsView()
+                .buildCatView()
                 .build();
 
         final SessionViewsAndModels sessionViewsAndModels = sessionViewBuilder

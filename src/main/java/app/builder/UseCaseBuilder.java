@@ -1,8 +1,11 @@
 package app.builder;
 
-import app.components.DataAccessComponents;
+import app.builder.usecase.AuthUseCaseBuilder;
+import app.builder.usecase.CatUseCaseBuilder;
+import app.builder.usecase.InventoryUseCaseBuilder;
+import app.builder.usecase.TimerUseCaseBuilder;
 import app.builder.view.Views;
-import app.builder.usecase.*;
+import app.components.DataAccessComponents;
 
 /**
  * Main builder that coordinates all use case builders.
@@ -23,7 +26,7 @@ public class UseCaseBuilder {
     /**
      * Builds all use cases.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public UseCaseBuilder build() {
         authBuilder.buildLoginUseCase();

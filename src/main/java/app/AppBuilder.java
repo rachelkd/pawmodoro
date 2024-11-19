@@ -11,7 +11,6 @@ import app.builder.UseCaseBuilder;
 import app.builder.ViewBuilder;
 import app.builder.view.Views;
 import app.components.DataAccessComponents;
-import app.factory.CommonViewFactory;
 import app.factory.ViewFactory;
 import interface_adapter.ViewManagerModel;
 import view.ViewManager;
@@ -33,8 +32,7 @@ public class AppBuilder {
         this.cardLayout = new CardLayout();
         this.cardPanel.setLayout(cardLayout);
         this.viewManagerModel = new ViewManagerModel();
-        // this.viewFactory = new CommonViewFactory(viewManagerModel);
-        this.viewFactory = new CommonViewFactory();
+        this.viewFactory = new ViewFactory();
         this.viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
     }
 
@@ -59,8 +57,7 @@ public class AppBuilder {
                 .build();
 
         // Build use cases
-        new UseCaseBuilder(views, dataAccess)
-                .build();
+        new UseCaseBuilder(views, dataAccess).build();
 
         return this;
     }

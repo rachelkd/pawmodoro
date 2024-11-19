@@ -9,12 +9,14 @@ import app.builder.view.cat.CatViews;
 import app.builder.view.cat.CatViewsAndModels;
 import app.factory.ViewFactory;
 import app.factory.viewmodel.CatViewModelFactory;
+import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
 import view.AdoptionView;
+import view.CatView;
 import view.DisplayCatImageView;
+import view.DisplayCatStatsView;
 import view.MaxCatsErrorView;
 import view.RunawayCatView;
-import view.DisplayCatStatsView;
 
 /**
  * Builder for cat-related views.
@@ -26,6 +28,7 @@ public class CatViewBuilder {
     private final ViewFactory viewFactory;
     private final CatViewModelFactory catViewModelFactory;
     private final CatViewModels catViewModels;
+    private final DialogService dialogService;
 
     // Views
     private AdoptionView adoptionView;
@@ -33,9 +36,10 @@ public class CatViewBuilder {
     private MaxCatsErrorView maxCatsErrorView;
     private DisplayCatImageView displayCatImageView;
     private DisplayCatStatsView displayCatStatsView;
+    private CatView catView;
 
     /**
-     * Creates a new cat view builder. TODO: Delete this constructor?
+     * Creates a new cat view builder.
      *
      * @param cardPanel the card panel
      * @param cardLayout the card layout
@@ -51,6 +55,7 @@ public class CatViewBuilder {
         this.viewManagerModel = viewManagerModel;
         this.viewFactory = viewFactory;
         this.catViewModelFactory = new CatViewModelFactory();
+        this.dialogService = new DialogService();
         this.catViewModels = new CatViewModels(
                 catViewModelFactory.createAdoptionViewModel(),
                 catViewModelFactory.createRunawayCatViewModel(),
@@ -105,13 +110,26 @@ public class CatViewBuilder {
     }
 
     /**
+     * Builds the cat view.
+     *
+     * @return this builder
+     */
+    public CatViewBuilder buildCatView() {
+        catView = viewFactory.createCatView(
+                catViewModels.getCatViewModel(),
+                catViewModels.getDisplayCatStatsViewModel(),
+                dialogService);
+        cardPanel.add(catView, catView.getViewName());
+        return this;
+    }
+
+    /**
      * Builds the display cat stats view.
      *
      * @return this builder
      */
     public CatViewBuilder buildDisplayCatStatsView() {
-        displayCatStatsView = viewFactory.createDisplayCatStatsView(catViewModels.getDisplayCatStatsViewModel());
-        cardPanel.add(displayCatStatsView, displayCatStatsView.getViewName());
+        // No need to create view - it will be created when needed
         return this;
     }
 
@@ -126,7 +144,8 @@ public class CatViewBuilder {
                 runawayCatView,
                 maxCatsErrorView,
                 displayCatImageView,
-                displayCatStatsView);
+                null, // DisplayCatStatsView is created on demand
+                catView);
 
         return new CatViewsAndModels(views, catViewModels);
     }
