@@ -184,6 +184,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         passwordInputField.setText("");
     }
 
+    /**
+     * Sets the display cat stats controller.
+     * @param controller the display cat stats controller
+     */
     public void setDisplayCatStatsController(DisplayCatStatsController controller) {
         this.displayCatStatsController = controller;
         this.catView.setDisplayCatStatsController(controller);

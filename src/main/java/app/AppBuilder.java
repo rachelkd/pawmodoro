@@ -78,8 +78,6 @@ public class AppBuilder {
 
         // Set initial view to signup
         viewManagerModel.setState(views.getAuth().getViews().getSignupView().getViewName());
-        // Set view to display cat statistics
-        viewManagerModel.setState(views.getAuth().getViews().getSignupView().getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;
