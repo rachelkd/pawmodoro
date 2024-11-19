@@ -109,7 +109,10 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
                 final JSONObject catJson = jsonArray.getJSONObject(0);
                 result = catFactory.create(
                         catJson.getString(NAME_COLUMN),
-                        catJson.getString(OWNER_USERNAME_COLUMN));
+                        catJson.getString(OWNER_USERNAME_COLUMN),
+                        catJson.getInt(HAPPINESS_LEVEL_COLUMN),
+                        catJson.getInt(HUNGER_LEVEL_COLUMN),
+                        catJson.getString(IMAGE_FILE_NAME_COLUMN));
             }
         }
         catch (final IOException exception) {
@@ -138,7 +141,10 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
                     final JSONObject catJson = jsonArray.getJSONObject(i);
                     final Cat cat = catFactory.create(
                             catJson.getString(NAME_COLUMN),
-                            catJson.getString(OWNER_USERNAME_COLUMN));
+                            catJson.getString(OWNER_USERNAME_COLUMN),
+                            catJson.getInt(HAPPINESS_LEVEL_COLUMN),
+                            catJson.getInt(HUNGER_LEVEL_COLUMN),
+                            catJson.getString(IMAGE_FILE_NAME_COLUMN));
                     cats.add(cat);
                 }
             }
