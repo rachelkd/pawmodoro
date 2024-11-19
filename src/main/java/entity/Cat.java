@@ -24,8 +24,7 @@ public class Cat {
 
     /**
      * Creates a new Cat with the specified name and owner.
-     * Note: The uniqueness of the cat's name within the owner's CatHouse
-     * must be validated before creating a new Cat instance.
+     * Initializes with default values and random image.
      *
      * @param name The unique name of the cat
      * @param ownerUsername The username of the cat's owner
@@ -45,6 +44,28 @@ public class Cat {
         final Random random = new Random();
         final int imageNumber = random.nextInt(NUMBER_OF_CAT_IMAGES) + 1;
         this.imageFileName = String.format(CAT_IMAGE_FORMAT, imageNumber);
+    }
+
+    /**
+     * Creates a new Cat with all attributes specified.
+     *
+     * @param name The unique name of the cat
+     * @param ownerUsername The username of the cat's owner
+     * @param happinessLevel The initial happiness level
+     * @param hungerLevel The initial hunger level
+     * @param imageFileName The image file name for this cat
+     * @throws IllegalArgumentException if name is null or empty
+     */
+    public Cat(String name, String ownerUsername, int happinessLevel, int hungerLevel, String imageFileName) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Cat name cannot be null or empty");
+        }
+        this.name = name;
+        this.ownerUsername = ownerUsername;
+        this.happinessLevel = Math.max(MIN_LEVEL, Math.min(MAX_LEVEL, happinessLevel));
+        this.hungerLevel = Math.max(MIN_LEVEL, Math.min(MAX_LEVEL, hungerLevel));
+        this.position = new Position(0, 0);
+        this.imageFileName = imageFileName;
     }
 
     /**
