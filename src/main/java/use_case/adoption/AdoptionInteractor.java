@@ -7,12 +7,9 @@ import entity.Cat;
  */
 public class AdoptionInteractor implements AdoptionInputBoundary {
 
-    //private final AdoptionDataAccessInterface adoptionDataAccessObject;
     private final AdoptionOutputBoundary adoptionPresenter;
 
-    public AdoptionInteractor(//AdoptionDataAccessInterface adoptionDataAccessObject,
-                              AdoptionOutputBoundary adoptionPresenter) {
-//        this.adoptionDataAccessObject = adoptionDataAccessObject;
+    public AdoptionInteractor(AdoptionOutputBoundary adoptionPresenter) {
         this.adoptionPresenter = adoptionPresenter;
     }
     @Override
