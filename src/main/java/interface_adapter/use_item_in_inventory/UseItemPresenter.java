@@ -1,6 +1,8 @@
 package interface_adapter.use_item_in_inventory;
 
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.create_inventory.InventoryState;
+import interface_adapter.create_inventory.InventoryViewModel;
 import use_case.food_management.use_item_in_inventory.UseItemOutputBoundary;
 import use_case.food_management.use_item_in_inventory.UseItemOutputData;
 
@@ -8,15 +10,16 @@ import use_case.food_management.use_item_in_inventory.UseItemOutputData;
  * Use Item Use Case Presenter.
  */
 public class UseItemPresenter implements UseItemOutputBoundary {
-    private LoggedInViewModel loggedInViewModel;
+    private InventoryViewModel inventoryViewModel;
 
-    public UseItemPresenter(LoggedInViewModel loggedInViewModel) {
-        this.loggedInViewModel = loggedInViewModel;
+    public UseItemPresenter(InventoryViewModel inventoryViewModel) {
+        this.inventoryViewModel = inventoryViewModel;
     }
 
     @Override
     public void prepareSuccessView(UseItemOutputData useInventoryOutputData) {
-        // do nothing for now
-        loggedInViewModel.firePropertyChanged("inventory_item_used");
+        final InventoryState inventoryState = inventoryViewModel.getState();
+        inventoryState.setInventoryItems(useInventoryOutputData.getNewFoodItems());
+        inventoryViewModel.firePropertyChanged("inventory_item_used");
     }
 }

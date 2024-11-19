@@ -1,11 +1,11 @@
-package use_case.authentication.create_inventory;
+package use_case.create_inventory;
 
 import java.util.Map;
 
 import entity.AbstractFood;
 
 /**
- * Create Inventory Use Case.
+ * Output Data for Create Inventory Use Case.
  */
 public class CreateInventoryOutputData {
     private final String ownerId;

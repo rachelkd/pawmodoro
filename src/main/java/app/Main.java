@@ -9,7 +9,7 @@ public class Main {
     /**
      * Builds and runs the CA architecture of the application.
      * 
-     * @param args unused arguments
+     * @param args unused arguments.
      */
     public static void main(String[] args) {
         final AppBuilder appBuilder = new AppBuilder();
@@ -17,6 +17,7 @@ public class Main {
                 .addLoginView()
                 .addSignupView()
                 .addLoggedInView()
+                .addStudySessionView()
                 .addInventoryView()
                 .addAdoptionView()
                 .addRunawayCatView()
@@ -33,6 +34,7 @@ public class Main {
                 .addSetupSessionUseCase()
                 .addRunawayUseCase()
                 .addAdoptionUseCase()
+                .addMaxCatsUseCase()
                 .build();
 
         application.pack();
