@@ -137,6 +137,8 @@ public class AppBuilder {
 
     private AdoptionView adoptionView;
     private AdoptionViewModel adoptionViewModel;
+    //private final AdoptionDataAccessObject adoptionDataAccessObject = new AdoptionDataAccessObject();
+
 
 
     private MaxCatsErrorView maxCatsErrorView;
@@ -288,9 +290,10 @@ public class AppBuilder {
      *
      * @return this builder
      */
+
     public AppBuilder addSetupSessionUseCase() {
         final SetupSessionOutputBoundary setupSessionOutputBoundary =
-                new SetupSessionPresenter(setupSessionViewModel, viewManagerModel, timerViewModel);
+                new SetupSessionPresenter(viewManagerModel, studySessionViewModel);
         final SetupSessionInputBoundary setupInteractor = new SetupSessionInteractor(setupSessionOutputBoundary);
         final SetupSessionController setupController = new SetupSessionController(setupInteractor);
         setupSessionView.setSetupSessionController(setupController);

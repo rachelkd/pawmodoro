@@ -30,5 +30,6 @@ public class SetupSessionController {
      */
     public void switchToStudyView() {
         userSetupInteractor.switchToStudyView();
+
     }
 }
