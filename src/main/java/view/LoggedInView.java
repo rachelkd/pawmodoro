@@ -130,17 +130,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                     }
                 });
 
-        // Create timer view component
-        this.timerView = new TimerView(timerViewModel);
-
-        // Create CatView
-        this.catView = new CatView(catViewModel, displayCatStatsViewModel, new DialogService());
-
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         this.add(pawmodoro);
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
-        this.add(timerView);
-        this.add(catView);
         this.add(usernamePanel);
         this.add(passwordInfo);
         this.add(passwordErrorField);
@@ -186,6 +178,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     /**
      * Sets the display cat stats controller.
+     * 
      * @param controller the display cat stats controller
      */
     public void setDisplayCatStatsController(DisplayCatStatsController controller) {
