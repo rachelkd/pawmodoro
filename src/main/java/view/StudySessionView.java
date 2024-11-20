@@ -88,7 +88,6 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        System.out.println(evt.getActionCommand());
         if (evt.getSource().equals(timerSettings)) {
             // TODO: Switch to TimerSettingsView
         }
