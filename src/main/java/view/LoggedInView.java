@@ -56,9 +56,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         pawmodoro.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TITLE));
         pawmodoro.setForeground(Color.PINK);
 
-        // final JLabel title = new JLabel("Logged In Screen");
-        // title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         final LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel("Password"), passwordInputField);
 
