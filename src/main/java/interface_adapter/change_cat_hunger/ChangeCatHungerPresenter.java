@@ -13,6 +13,6 @@ public class ChangeCatHungerPresenter implements ChangeCatHungerOutputBoundary {
 
     @Override
     public void prepareSuccessView(ChangeCatHungerOutputData changeCatHungerOutputData) {
-
+        // TODO: @chiually implement
     }
 }

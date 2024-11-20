@@ -11,10 +11,9 @@ public class CreateCatPresenter implements CreateCatOutputBoundary {
     private LoggedInView loggedInView;
     private ViewManagerModel viewManagerModel;
 
-
     @Override
     public void prepareSuccessView(CreateCatOutputData createCatOutputData) {
-
+        // TODO: @chiually implement
     }
 
     @Override

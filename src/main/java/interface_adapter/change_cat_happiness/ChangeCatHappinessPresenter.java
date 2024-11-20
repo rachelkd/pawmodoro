@@ -15,6 +15,6 @@ public class ChangeCatHappinessPresenter implements ChangeCatHappinessOutputBoun
 
     @Override
     public void prepareSuccessView(ChangeCatHappinessOutputData changeCatHappinessOutputData) {
-
+        // TODO: Implement the method @chiually
     }
 }

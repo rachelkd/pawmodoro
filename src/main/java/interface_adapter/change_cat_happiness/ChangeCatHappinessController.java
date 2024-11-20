@@ -12,12 +12,10 @@ public class ChangeCatHappinessController {
     }
 
     public void execute(String catName, String ownerUsername, Cat cat,
-                        boolean completedStudySession, int studySessionLength) {
+            boolean completedStudySession, int studySessionLength) {
 
         final ChangeCatHappinessInputData changeCatHappinessUseInputData =
                 new ChangeCatHappinessInputData(catName, ownerUsername, cat, completedStudySession, studySessionLength);
         changeCatHappinessUseCaseInteractor.execute(changeCatHappinessUseInputData);
     }
-
-
 }
