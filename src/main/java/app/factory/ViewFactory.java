@@ -64,11 +64,8 @@ public class ViewFactory {
      * @param displayCatStatsViewModel the display cat stats view model
      * @return LoggedInView
      */
-    public LoggedInView createLoggedInView(LoggedInViewModel loggedInViewModel,
-            TimerViewModel timerViewModel,
-            CatViewModel catViewModel,
-            DisplayCatStatsViewModel displayCatStatsViewModel) {
-        return new LoggedInView(loggedInViewModel, timerViewModel, catViewModel, displayCatStatsViewModel);
+    public LoggedInView createLoggedInView(LoggedInViewModel loggedInViewModel) {
+        return new LoggedInView(loggedInViewModel);
     }
 
     /**

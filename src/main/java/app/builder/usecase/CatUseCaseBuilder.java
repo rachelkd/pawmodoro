@@ -95,7 +95,6 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
         final DisplayCatStatsController controller = new DisplayCatStatsController(interactor);
 
         getViews().getCat().getViews().getCatView().setDisplayCatStatsController(controller);
-        getViews().getAuth().getViews().getLoggedInView().setDisplayCatStatsController(controller);
 
         return this;
     }
