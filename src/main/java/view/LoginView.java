@@ -24,17 +24,16 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final LoginViewModel loginViewModel;
 
     private final JTextField usernameInputField = new JTextField(15);
-    private final JLabel usernameErrorField = new JLabel();
+    private final JLabel userErrorField = new JLabel();
 
     private final JPasswordField passwordInputField = new JPasswordField(15);
-    private final JLabel passwordErrorField = new JLabel();
 
     private final JButton logIn;
     private final JButton backToSignUp;
     private LoginController loginController;
 
+    // TODO: Fix NCSS complexity
     public LoginView(LoginViewModel loginViewModel) {
-
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
@@ -76,8 +75,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     public void actionPerformed(ActionEvent e) {
                         loginController.switchToSignUpView();
                     }
-                }
-        );
+                });
 
         usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -134,7 +132,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         this.add(title);
         this.add(usernameInfo);
-        this.add(usernameErrorField);
+        this.add(userErrorField);
         this.add(passwordInfo);
         this.add(buttons);
     }
@@ -152,7 +150,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     public void propertyChange(PropertyChangeEvent evt) {
         final LoginState state = (LoginState) evt.getNewValue();
         setFields(state);
-        usernameErrorField.setText(state.getLoginError());
+        userErrorField.setText(state.getLoginError());
     }
 
     private void setFields(LoginState state) {

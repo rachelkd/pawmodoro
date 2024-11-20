@@ -19,6 +19,7 @@ import interface_adapter.timer.TimerViewModel;
 import view.AdoptionView;
 import view.CatView;
 import view.DisplayCatImageView;
+import view.DisplayCatStatsView;
 import view.InventoryView;
 import view.LoggedInView;
 import view.LoginView;
@@ -154,5 +155,16 @@ public class ViewFactory {
             DisplayCatStatsViewModel displayCatStatsViewModel,
             DialogService dialogService) {
         return new CatView(catViewModel, displayCatStatsViewModel, dialogService);
+    }
+
+    /**
+     * Creates a Display Cat Stats View.
+     * 
+     * @param displayCatStatsViewModel the display cat stats view model
+     * @return DisplayCatStatsView
+     */
+    public DisplayCatStatsView createDisplayCatStatsView(DisplayCatStatsViewModel displayCatStatsViewModel) {
+        // return new DisplayCatStatsView(displayCatStatsViewModel);
+        return null;
     }
 }

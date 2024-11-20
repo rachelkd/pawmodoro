@@ -37,12 +37,6 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
     private final JLabel hungerLabel;
     private final JLabel happinessLabel;
 
-    /**
-     * Creates a new DisplayCatStatsView dialog.
-     *
-     * @param parent The parent frame
-     * @param displayCatStatsViewModel The view model
-     */
     public DisplayCatStatsView(JFrame parent, DisplayCatStatsViewModel displayCatStatsViewModel) {
         super(parent, DisplayCatStatsViewModel.TITLE_LABEL, true);
         this.displayCatStatsViewModel = displayCatStatsViewModel;

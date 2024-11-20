@@ -28,6 +28,7 @@ import use_case.runawaycat.RunawayCatInputBoundary;
 import use_case.runawaycat.RunawayCatInteractor;
 import use_case.runawaycat.RunawayCatOutputBoundary;
 
+// TODO: @rachelkd Make new *UseCaseBuilder class to fix fan out complexity
 /**
  * Builder for cat-related use cases.
  */

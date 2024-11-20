@@ -129,7 +129,9 @@ public class CatViewBuilder {
      * @return this builder
      */
     public CatViewBuilder buildDisplayCatStatsView() {
-        // No need to create view - it will be created when needed
+        // TODO: @rachelkd idk what to do
+        // displayCatStatsView = viewFactory.createDisplayCatStatsView(catViewModels.getDisplayCatStatsViewModel());
+        // cardPanel.add(displayCatStatsView, displayCatStatsView.getViewName());
         return this;
     }
 
@@ -144,7 +146,7 @@ public class CatViewBuilder {
                 runawayCatView,
                 maxCatsErrorView,
                 displayCatImageView,
-                null, // DisplayCatStatsView is created on demand
+                displayCatStatsView,
                 catView);
 
         return new CatViewsAndModels(views, catViewModels);
