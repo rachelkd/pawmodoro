@@ -77,6 +77,8 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.maxcatserror.MaxCatsErrorInputBoundary;
 import use_case.maxcatserror.MaxCatsErrorInteractor;
 import use_case.maxcatserror.MaxCatsErrorOutputBoundary;
+import use_case.runawaycat.RunawayCatInputBoundary;
+import use_case.runawaycat.RunawayCatInteractor;
 import use_case.runawaycat.RunawayCatOutputBoundary;
 import use_case.setupsession.SetupSessionInputBoundary;
 import use_case.setupsession.SetupSessionInteractor;
@@ -306,11 +308,10 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRunawayUseCase() {
-        // TODO: Add the runaway use case to the application. @Manahill
-        // Need InputBoundary and OutputBoundary and Interactor?
-        // final RunawayCatOutputBoundary runawayCatOutputBoundary = new RunawayPresenter(runawayCatViewModel,
-        // viewManagerModel);
-        final RunawayCatController runawayCatController = new RunawayCatController(runawayCatViewModel);
+        final RunawayCatOutputBoundary runawayCatOutputBoundary = new RunawayPresenter(runawayCatViewModel,
+                viewManagerModel);
+        final RunawayCatInputBoundary runawayInteractor = new RunawayCatInteractor(runawayCatOutputBoundary);
+        final RunawayCatController runawayCatController = new RunawayCatController(runawayCatViewModel, runawayInteractor);
         runawayCatView.setRunawayCatController(runawayCatController);
         return this;
     }
@@ -420,7 +421,7 @@ public class AppBuilder {
 
 
     /**
-     * Adds the max cats error use case to the application.
+    * Adds the max cats error use case to the application.
      *
      * @return this builder
      */
@@ -433,7 +434,6 @@ public class AppBuilder {
         return this;
     }
 
-    /**
      * Adds the adoption use case to the application.
      *
      * @return this builder

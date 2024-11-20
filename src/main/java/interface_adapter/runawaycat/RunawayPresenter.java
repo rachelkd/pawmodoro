@@ -13,7 +13,7 @@ public class RunawayPresenter implements RunawayCatOutputBoundary {
     }
 
     @Override
-    public void prepareSucessView() {
+    public void prepareSuccessView() {
         //Go back to previous view
     }
 
