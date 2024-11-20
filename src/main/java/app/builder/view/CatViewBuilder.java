@@ -94,7 +94,8 @@ public class CatViewBuilder {
      * @return this builder
      */
     public CatViewBuilder buildMaxCatsErrorView() {
-
+        maxCatsErrorView = viewFactory.createMaxCatsErrorView(catViewModels.getMaxCatsErrorViewModel());
+        cardPanel.add(maxCatsErrorView, maxCatsErrorView.getViewName());
         return this;
     }
 
