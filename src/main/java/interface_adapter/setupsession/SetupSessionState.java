@@ -4,8 +4,9 @@ package interface_adapter.setupsession;
  * The state for setting up study session use case.
  */
 public class SetupSessionState {
-    private String studyTime = "";
-    private String breakTime = "";
+    private String studyTime = "25 mins";
+    private String breakTime = "5 mins";
+
 
     public int getStudyTime() {
         return Integer.parseInt(studyTime.split(" ")[0]);
