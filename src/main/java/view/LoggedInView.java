@@ -8,17 +8,11 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import app.service.DialogService;
 import constants.Constants;
-import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.display_cat_stats.DisplayCatStatsController;
-import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.logout.LogoutController;
-import interface_adapter.timer.TimerController;
-import interface_adapter.timer.TimerViewModel;
 
 /**
  * The View for when the user is logged into the program.
@@ -30,9 +24,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JLabel passwordErrorField = new JLabel();
     private ChangePasswordController changePasswordController;
     private LogoutController logoutController;
-    private final TimerViewModel timerViewModel;
-    private final TimerView timerView;
-    private TimerController timerController;
 
     private final JLabel username;
 
@@ -41,15 +32,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JTextField passwordInputField = new JTextField(15);
     private final JButton changePassword;
 
-    private final CatView catView;
-    private DisplayCatStatsController displayCatStatsController;
-
-    public LoggedInView(LoggedInViewModel loggedInViewModel, TimerViewModel timerViewModel, CatViewModel catViewModel,
-            DisplayCatStatsViewModel displayCatStatsViewModel) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
-        this.timerViewModel = timerViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
-        this.timerViewModel.addPropertyChangeListener(this);
 
         final JLabel pawmodoro = new JLabel("Pawmodoro");
         pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -162,33 +147,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.logoutController = logoutController;
     }
 
-    public void setTimerController(TimerController timerController) {
-        this.timerController = timerController;
-    }
-
     /**
      * Clears the password field (for logging out).
      */
     public void clearPasswordField() {
         passwordInputField.setText("");
-    }
-
-    /**
-     * Sets the display cat stats controller.
-     * 
-     * @param controller the display cat stats controller
-     */
-    public void setDisplayCatStatsController(DisplayCatStatsController controller) {
-        this.displayCatStatsController = controller;
-        this.catView.setDisplayCatStatsController(controller);
-    }
-
-    /**
-     * Adds a cat image view to this panel.
-     *
-     * @param displayCatImageView the cat image view to add
-     */
-    public void addCatImageView(DisplayCatImageView displayCatImageView) {
-        add(displayCatImageView);
     }
 }
