@@ -2,6 +2,7 @@ package use_case.setupsession;
 
 /**
  * The Setup session interactor.
+ *
  */
 public class SetupSessionInteractor implements SetupSessionInputBoundary {
     private final SetupSessionOutputBoundary setupPresenter;

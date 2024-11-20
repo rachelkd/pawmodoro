@@ -8,7 +8,7 @@ public interface RunawayCatOutputBoundary {
     /**
      * After the user presses button to confirm they saw the message.
      */
-    void prepareSucessView();
+    void prepareSuccessView();
 
     /**
      * To return to the break session use case

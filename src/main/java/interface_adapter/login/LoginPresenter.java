@@ -34,8 +34,7 @@ public class LoginPresenter implements LoginOutputBoundary {
         this.studySessionViewModel.setState(studySessionState);
         this.studySessionViewModel.firePropertyChanged();
 
-        this.viewManagerModel.setState("study session");
-        this.viewManagerModel.firePropertyChanged();
+        switchToStudySessionView();
     }
 
     @Override
@@ -47,7 +46,13 @@ public class LoginPresenter implements LoginOutputBoundary {
 
     @Override
     public void switchToSignUpView() {
-        viewManagerModel.setState("sign up");
-        viewManagerModel.firePropertyChanged();
+        this.viewManagerModel.setState("sign up");
+        this.viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void switchToStudySessionView() {
+        this.viewManagerModel.setState("study session");
+        this.viewManagerModel.firePropertyChanged();
     }
 }

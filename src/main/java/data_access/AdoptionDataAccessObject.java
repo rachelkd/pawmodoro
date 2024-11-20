@@ -9,6 +9,9 @@ import java.util.Map;
 public class AdoptionDataAccessObject implements AdoptionDataAccessInterface {
     private final Map<Cat, String> catToUser = new HashMap<>();
 
+    public AdoptionDataAccessObject() {
+    }
+
     public AdoptionDataAccessObject(Map<Cat, String> catToUser) {
         this.catToUser.putAll(catToUser);
     }
@@ -16,7 +19,6 @@ public class AdoptionDataAccessObject implements AdoptionDataAccessInterface {
     public boolean nameAlreadyExists(String catName) {
         return false;
     }
-
 
     @Override
     public String getCatName(Cat cat) {

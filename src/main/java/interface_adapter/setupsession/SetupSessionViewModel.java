@@ -15,5 +15,6 @@ public class SetupSessionViewModel extends ViewModel<SetupSessionState> {
     public SetupSessionViewModel() {
         super("set up study session");
         setState(new SetupSessionState());
+
     }
 }

@@ -1,6 +1,5 @@
 package view;
 
-
 import interface_adapter.maxcatserror.MaxCatsErrorController;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 
@@ -12,8 +11,9 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 
-/* The window that is displayed when the user has already adopted 4 cats ( and cannot adopt more)
- */
+/**
+ * The window that is displayed when the user has already adopted 4 cats (and cannot adopt more).
+ **/
 public class MaxCatsErrorView extends JPanel implements ActionListener {
     private final String viewName = "max cats error view";
     private final MaxCatsErrorViewModel maxCatsErrorViewModel;
@@ -38,8 +38,7 @@ public class MaxCatsErrorView extends JPanel implements ActionListener {
                     public void actionPerformed(ActionEvent e) {
                         maxCatsErrorController.switchToBreakView();
                     }
-                }
-        );
+                });
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
@@ -49,7 +48,7 @@ public class MaxCatsErrorView extends JPanel implements ActionListener {
     }
 
     /**
-     * React to a button click that results in e
+     * React to a button click that results in e.
      *
      * @param e ActionEvent to react to
      */

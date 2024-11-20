@@ -8,18 +8,17 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import app.service.DialogService;
 import constants.Constants;
-// import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
-// import interface_adapter.create_inventory.CreateInventoryController;
+import interface_adapter.display_cat_stats.DisplayCatStatsController;
+import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.timer.TimerController;
 import interface_adapter.timer.TimerViewModel;
-// import interface_adapter.use_item_in_inventory.UseItemController;
-// import interface_adapter.cat.CatViewModel;
 
 /**
  * The View for when the user is logged into the program.
@@ -43,8 +42,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final JButton changePassword;
 
     private final CatView catView;
+    private DisplayCatStatsController displayCatStatsController;
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel, TimerViewModel timerViewModel, CatViewModel catViewModel) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, TimerViewModel timerViewModel, CatViewModel catViewModel,
+            DisplayCatStatsViewModel displayCatStatsViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.timerViewModel = timerViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
@@ -130,11 +131,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 });
 
         // Create timer view component
-        // TODO: Is this clean?
         this.timerView = new TimerView(timerViewModel);
 
-        // Create and add CatView
-        this.catView = new CatView(catViewModel);
+        // Create CatView
+        this.catView = new CatView(catViewModel, displayCatStatsViewModel, new DialogService());
 
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         this.add(pawmodoro);
@@ -182,6 +182,15 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
      */
     public void clearPasswordField() {
         passwordInputField.setText("");
+    }
+
+    /**
+     * Sets the display cat stats controller.
+     * @param controller the display cat stats controller
+     */
+    public void setDisplayCatStatsController(DisplayCatStatsController controller) {
+        this.displayCatStatsController = controller;
+        this.catView.setDisplayCatStatsController(controller);
     }
 
     /**
