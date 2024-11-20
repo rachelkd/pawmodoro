@@ -39,7 +39,7 @@ public class AppBuilder {
     /**
      * Initializes all components of the application.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public AppBuilder initialize() {
         // Build data access layer
