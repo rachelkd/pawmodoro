@@ -68,7 +68,7 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Builds the signup use case.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public AuthUseCaseBuilder buildSignupUseCase() {
         final SignupOutputBoundary outputBoundary = new SignupPresenter(
@@ -132,9 +132,9 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Builds all authentication use cases.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
-    public AuthUseCaseBuilder buildAuthUseCases() {
+    public AuthUseCaseBuilder build() {
         return this
                 .buildLoginUseCase()
                 .buildSignupUseCase()

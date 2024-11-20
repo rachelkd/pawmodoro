@@ -24,14 +24,14 @@ import use_case.display_cat_stats.DisplayCatStatsOutputBoundary;
 import use_case.maxcatserror.MaxCatsErrorInputBoundary;
 import use_case.maxcatserror.MaxCatsErrorInteractor;
 import use_case.maxcatserror.MaxCatsErrorOutputBoundary;
+import use_case.runawaycat.RunawayCatInputBoundary;
+import use_case.runawaycat.RunawayCatInteractor;
 import use_case.runawaycat.RunawayCatOutputBoundary;
-import view.CatView;
 
 /**
  * Builder for cat-related use cases.
  */
 public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
-
     /**
      * Creates a new cat use case builder.
      *
@@ -121,10 +121,15 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
      * @return this builder
      */
     public CatUseCaseBuilder buildRunawayCatUseCase() {
-        final RunawayCatController controller = new RunawayCatController(
-                getViews().getCat().getViewModels().getRunawayCatViewModel());
+        final RunawayCatOutputBoundary outputBoundary = new RunawayPresenter(
+                getViews().getCat().getViewModels().getRunawayCatViewModel(),
+                getViews().getViewManagerModel());
+
+        final RunawayCatInputBoundary interactor = new RunawayCatInteractor(outputBoundary);
+        final RunawayCatController controller =
+                new RunawayCatController(getViews().getCat().getViewModels().getRunawayCatViewModel(), interactor);
         getViews().getCat().getViews().getRunawayCatView().setRunawayCatController(controller);
-        // TODO: Add interactor @Manahill
+
         return this;
     }
 
@@ -133,7 +138,7 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
      *
      * @return this builder
      */
-    public CatUseCaseBuilder buildCatUseCases() {
+    public CatUseCaseBuilder build() {
         return this
                 .buildAdoptionUseCase()
                 .buildDisplayCatImageUseCase()

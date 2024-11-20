@@ -33,16 +33,10 @@ public class UseCaseBuilder {
         // final SessionUseCaseBuilder sessionBuilder = new SessionUseCaseBuilder(views, dataAccess);
         final TimerUseCaseBuilder timerBuilder = new TimerUseCaseBuilder(views, dataAccess);
 
-        authBuilder.buildLoginUseCase()
-                .buildSignupUseCase()
-                .buildLogoutUseCase()
-                .buildChangePasswordUseCase();
-
-        inventoryBuilder.buildInventoryUseCases();
-
-        catBuilder.buildCatUseCases();
-
-        timerBuilder.buildTimerUseCases();
+        authBuilder.build();
+        inventoryBuilder.build();
+        catBuilder.build();
+        timerBuilder.build();
 
         return this;
     }

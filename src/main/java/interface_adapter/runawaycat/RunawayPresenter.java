@@ -3,6 +3,10 @@ package interface_adapter.runawaycat;
 import interface_adapter.ViewManagerModel;
 import use_case.runawaycat.RunawayCatOutputBoundary;
 
+// TODO: @manahillsajid please refactor class name to RunawayCatPresenter
+/**
+ * The presenter for the runaway cat use case.
+ */
 public class RunawayPresenter implements RunawayCatOutputBoundary {
     private final RunawayCatViewModel runawayCatViewModel;
     private final ViewManagerModel viewManagerModel;
@@ -13,8 +17,8 @@ public class RunawayPresenter implements RunawayCatOutputBoundary {
     }
 
     @Override
-    public void prepareSucessView() {
-        //Go back to previous view
+    public void prepareSuccessView() {
+        // Go back to previous view
     }
 
     @Override
