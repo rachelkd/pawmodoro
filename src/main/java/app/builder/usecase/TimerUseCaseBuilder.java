@@ -2,16 +2,16 @@ package app.builder.usecase;
 
 import app.builder.view.Views;
 import app.components.DataAccessComponents;
-import interface_adapter.timer.TimerController;
-import interface_adapter.timer.TimerPresenter;
 import interface_adapter.setupsession.SetupSessionController;
 import interface_adapter.setupsession.SetupSessionPresenter;
-import use_case.timer.display_timer.DisplayTimerInputBoundary;
-import use_case.timer.display_timer.DisplayTimerInteractor;
-import use_case.timer.display_timer.DisplayTimerOutputBoundary;
+import interface_adapter.timer.TimerController;
+import interface_adapter.timer.TimerPresenter;
 import use_case.setupsession.SetupSessionInputBoundary;
 import use_case.setupsession.SetupSessionInteractor;
 import use_case.setupsession.SetupSessionOutputBoundary;
+import use_case.timer.display_timer.DisplayTimerInputBoundary;
+import use_case.timer.display_timer.DisplayTimerInteractor;
+import use_case.timer.display_timer.DisplayTimerOutputBoundary;
 
 /**
  * Builder for timer-related use cases.
