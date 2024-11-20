@@ -1,7 +1,5 @@
 package app.factory;
 
-import java.util.Set;
-
 import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.cat.CatViewModel;
@@ -28,6 +26,7 @@ import view.RunawayCatView;
 import view.SetupSessionView;
 import view.SignupView;
 import view.StudySessionView;
+import view.TimerView;
 
 /**
  * Default implementation of ViewFactory.
@@ -59,9 +58,6 @@ public class ViewFactory {
      * Creates a Logged In View with associated components.
      * 
      * @param loggedInViewModel the logged in view model
-     * @param timerViewModel the timer view model
-     * @param catViewModel the cat view model
-     * @param displayCatStatsViewModel the display cat stats view model
      * @return LoggedInView
      */
     public LoggedInView createLoggedInView(LoggedInViewModel loggedInViewModel) {
@@ -163,5 +159,15 @@ public class ViewFactory {
     public DisplayCatStatsView createDisplayCatStatsView(DisplayCatStatsViewModel displayCatStatsViewModel) {
         // return new DisplayCatStatsView(displayCatStatsViewModel);
         return null;
+    }
+
+    /**
+     * Creates a Timer View.
+     * 
+     * @param timerViewModel the timer view model
+     * @return TimerView
+     */
+    public TimerView createTimerView(TimerViewModel timerViewModel) {
+        return new TimerView(timerViewModel);
     }
 }
