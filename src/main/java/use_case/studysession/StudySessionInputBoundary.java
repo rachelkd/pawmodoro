@@ -6,12 +6,12 @@ package use_case.studysession;
 public interface StudySessionInputBoundary {
 
     /**
-     * Executes the switch to SetupSession view.
+     * Executes the switch to setup session view.
      */
     void switchToSetupSessionView();
 
     /**
-     * Executes the switch to logout view.
+     * Logs out the user. Executes the switch to login view.
      */
-    void switchToLogOutView();
+    void logout();
 }

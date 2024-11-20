@@ -29,6 +29,7 @@ import use_case.signup.SignupOutputBoundary;
  */
 public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
     private final CommonUserFactory userFactory;
+    private LogoutController logoutController;
 
     public AuthUseCaseBuilder(Views views, DataAccessComponents dataAccess) {
         super(views, dataAccess);
@@ -36,9 +37,18 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
     }
 
     /**
+     * Gets the logout controller.
+     * 
+     * @return the logout controller
+     */
+    public LogoutController getLogoutController() {
+        return logoutController;
+    }
+
+    /**
      * Builds the login use case.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public AuthUseCaseBuilder buildLoginUseCase() {
         final LoginOutputBoundary outputBoundary = new LoginPresenter(
@@ -79,7 +89,7 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Builds the logout use case.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public AuthUseCaseBuilder buildLogoutUseCase() {
         final LogoutOutputBoundary outputBoundary = new LogoutPresenter(
@@ -91,15 +101,19 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
                 getDataAccess().getUserDataAccess(),
                 outputBoundary);
 
-        final LogoutController controller = new LogoutController(interactor);
-        getViews().getAuth().getViews().getLoggedInView().setLogoutController(controller);
+        logoutController = new LogoutController(interactor);
+
+        // Set the logout controller for both views that need it
+        getViews().getAuth().getViews().getLoggedInView().setLogoutController(logoutController);
+        getViews().getSession().getViews().getStudySessionView().setLogoutController(logoutController);
+
         return this;
     }
 
     /**
      * Builds the change password use case.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public AuthUseCaseBuilder buildChangePasswordUseCase() {
         final ChangePasswordOutputBoundary outputBoundary = new ChangePasswordPresenter(
