@@ -35,7 +35,7 @@ public class InventoryUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Builds the create inventory use case.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public InventoryUseCaseBuilder buildCreateInventoryUseCase() {
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
@@ -55,7 +55,7 @@ public class InventoryUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Builds the add to inventory use case.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public InventoryUseCaseBuilder buildAddToInventoryUseCase() {
         final AddToInventoryOutputBoundary outputBoundary = new AddToInventoryPresenter(
@@ -74,7 +74,7 @@ public class InventoryUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Builds the use item use case.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public InventoryUseCaseBuilder buildUseItemUseCase() {
         final UseItemOutputBoundary outputBoundary = new UseItemPresenter(
@@ -92,9 +92,9 @@ public class InventoryUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Builds all inventory-related use cases.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
-    public InventoryUseCaseBuilder buildInventoryUseCases() {
+    public InventoryUseCaseBuilder build() {
         return this
                 .buildCreateInventoryUseCase()
                 .buildAddToInventoryUseCase()

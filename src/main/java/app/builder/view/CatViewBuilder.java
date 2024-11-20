@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
+import app.AppBuilder;
 import app.builder.view.cat.CatViewModels;
 import app.builder.view.cat.CatViews;
 import app.builder.view.cat.CatViewsAndModels;
@@ -93,8 +94,7 @@ public class CatViewBuilder {
      * @return this builder
      */
     public CatViewBuilder buildMaxCatsErrorView() {
-        maxCatsErrorView = viewFactory.createMaxCatsErrorView(catViewModels.getMaxCatsErrorViewModel());
-        cardPanel.add(maxCatsErrorView, maxCatsErrorView.getViewName());
+
         return this;
     }
 

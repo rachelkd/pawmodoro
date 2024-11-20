@@ -29,13 +29,10 @@ public class UseCaseBuilder {
      * @return this builder
      */
     public UseCaseBuilder build() {
-        authBuilder.buildLoginUseCase();
-        authBuilder.buildSignupUseCase();
-        authBuilder.buildLogoutUseCase();
-        authBuilder.buildChangePasswordUseCase();
+        authBuilder.build();
 
-        inventoryBuilder.buildInventoryUseCases();
-        catBuilder.buildCatUseCases();
+        inventoryBuilder.build();
+        catBuilder.build();
         timerBuilder.buildTimerUseCases();
 
         return this;

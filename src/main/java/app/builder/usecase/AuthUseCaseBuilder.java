@@ -120,7 +120,7 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
      *
      * @return this builder for method chaining
      */
-    public AuthUseCaseBuilder buildAuthUseCases() {
+    public AuthUseCaseBuilder build() {
         return this
                 .buildLoginUseCase()
                 .buildSignupUseCase()
