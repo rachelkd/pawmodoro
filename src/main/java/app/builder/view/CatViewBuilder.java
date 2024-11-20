@@ -45,17 +45,19 @@ public class CatViewBuilder {
      * @param cardLayout the card layout
      * @param viewManagerModel the view manager model
      * @param viewFactory the view factory
+     * @param dialogService the dialog service
      */
     public CatViewBuilder(JPanel cardPanel,
             CardLayout cardLayout,
             ViewManagerModel viewManagerModel,
-            ViewFactory viewFactory) {
+            ViewFactory viewFactory,
+            DialogService dialogService) {
         this.cardPanel = cardPanel;
         this.cardLayout = cardLayout;
         this.viewManagerModel = viewManagerModel;
         this.viewFactory = viewFactory;
         this.catViewModelFactory = new CatViewModelFactory();
-        this.dialogService = new DialogService();
+        this.dialogService = dialogService;
         this.catViewModels = new CatViewModels(
                 catViewModelFactory.createAdoptionViewModel(),
                 catViewModelFactory.createRunawayCatViewModel(),
@@ -141,6 +143,13 @@ public class CatViewBuilder {
      * @return the cat views and models
      */
     public CatViewsAndModels build() {
+        this.buildAdoptionView()
+                .buildRunawayCatView()
+                .buildMaxCatsErrorView()
+                .buildDisplayCatImageView()
+                .buildCatView()
+                .buildDisplayCatStatsView();
+
         final CatViews views = new CatViews(
                 adoptionView,
                 runawayCatView,

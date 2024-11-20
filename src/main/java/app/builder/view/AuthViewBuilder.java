@@ -93,6 +93,10 @@ public class AuthViewBuilder {
      * @return the authentication views and view models
      */
     public AuthViewsAndModels build() {
+        this.buildLoginView()
+                .buildSignupView()
+                .buildLoggedInView();
+
         final AuthViews views = new AuthViews(
                 loginView,
                 signupView,
