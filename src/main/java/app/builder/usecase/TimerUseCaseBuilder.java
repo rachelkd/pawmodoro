@@ -40,6 +40,7 @@ public class TimerUseCaseBuilder extends AbstractUseCaseBuilder {
         return this;
     }
 
+    // TODO: Move this into SessionsUseCaseBuilder?
     /**
      * Builds the setup session use case.
      *
@@ -47,9 +48,8 @@ public class TimerUseCaseBuilder extends AbstractUseCaseBuilder {
      */
     public TimerUseCaseBuilder buildSetupSessionUseCase() {
         final SetupSessionOutputBoundary outputBoundary = new SetupSessionPresenter(
-                getViews().getSession().getViewModels().getSetupSessionViewModel(),
                 getViews().getViewManagerModel(),
-                getViews().getSession().getViewModels().getTimerViewModel());
+                getViews().getSession().getViewModels().getStudySessionViewModel());
 
         final SetupSessionInputBoundary interactor = new SetupSessionInteractor(outputBoundary);
         final SetupSessionController controller = new SetupSessionController(interactor);
