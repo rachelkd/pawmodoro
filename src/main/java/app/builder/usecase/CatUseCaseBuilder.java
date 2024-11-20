@@ -121,13 +121,10 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
      * @return this builder
      */
     public CatUseCaseBuilder buildRunawayCatUseCase() {
-        // final RunawayCatOutputBoundary outputBoundary = new RunawayPresenter(
-        // getViews().getCat().getViewModels().getRunawayCatViewModel(),
-        // getViews().getViewManagerModel());
-
         final RunawayCatController controller = new RunawayCatController(
                 getViews().getCat().getViewModels().getRunawayCatViewModel());
         getViews().getCat().getViews().getRunawayCatView().setRunawayCatController(controller);
+        // TODO: Add interactor @Manahill
         return this;
     }
 
