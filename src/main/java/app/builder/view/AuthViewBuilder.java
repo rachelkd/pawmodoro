@@ -82,10 +82,7 @@ public class AuthViewBuilder {
      */
     public AuthViewBuilder buildLoggedInView() {
         loggedInView = viewFactory.createLoggedInView(
-                authViewModels.getLoggedInViewModel(),
-                sessionViewModels.getTimerViewModel(),
-                catViewModels.getCatViewModel(),
-                catViewModels.getDisplayCatStatsViewModel());
+                authViewModels.getLoggedInViewModel());
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
