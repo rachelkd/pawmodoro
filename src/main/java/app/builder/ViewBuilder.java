@@ -12,6 +12,7 @@ import app.builder.view.auth.AuthViewsAndModels;
 import app.builder.view.cat.CatViewsAndModels;
 import app.builder.view.session.SessionViewsAndModels;
 import app.factory.ViewFactory;
+import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
 
 /**
@@ -26,6 +27,8 @@ public class ViewBuilder {
     private final CatViewBuilder catViewBuilder;
     private final SessionViewBuilder sessionViewBuilder;
 
+    final DialogService dialogService;
+
     /**
      * Creates a new view builder.
      *
@@ -34,16 +37,16 @@ public class ViewBuilder {
      * @param viewManagerModel the view manager model
      * @param viewFactory the view factory
      */
-    public ViewBuilder(JPanel cardPanel,
-            CardLayout cardLayout,
-            ViewManagerModel viewManagerModel,
+    public ViewBuilder(JPanel cardPanel, CardLayout cardLayout, ViewManagerModel viewManagerModel,
             ViewFactory viewFactory) {
         this.cardPanel = cardPanel;
         this.cardLayout = cardLayout;
         this.viewManagerModel = viewManagerModel;
         this.viewFactory = viewFactory;
-        // TODO: Remove cardLayout and viewManagerModel from constructor?
-        this.catViewBuilder = new CatViewBuilder(cardPanel, cardLayout, viewManagerModel, viewFactory);
+
+        this.dialogService = new DialogService(cardPanel);
+
+        this.catViewBuilder = new CatViewBuilder(cardPanel, cardLayout, viewManagerModel, viewFactory, dialogService);
         this.sessionViewBuilder = new SessionViewBuilder(cardPanel, cardLayout, viewManagerModel, viewFactory);
     }
 
@@ -68,6 +71,7 @@ public class ViewBuilder {
                 .buildSetupSessionView()
                 .buildInventoryView()
                 .buildStudySessionView()
+                .buildTimerView()
                 .build();
 
         final AuthViewsAndModels authViewsAndModels = new AuthViewBuilder(

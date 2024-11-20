@@ -13,6 +13,7 @@ import interface_adapter.ViewManagerModel;
 import view.InventoryView;
 import view.SetupSessionView;
 import view.StudySessionView;
+import view.TimerView;
 
 /**
  * Builder for session-related views.
@@ -29,6 +30,7 @@ public class SessionViewBuilder {
     private SetupSessionView setupSessionView;
     private InventoryView inventoryView;
     private StudySessionView studySessionView;
+    private TimerView timerView;
 
     /**
      * Creates a new session view builder.
@@ -83,8 +85,19 @@ public class SessionViewBuilder {
      * @return this builder
      */
     public SessionViewBuilder buildInventoryView() {
-        inventoryView = viewFactory.createInventoryView(viewModels.getInventoryViewModel());
+        this.inventoryView = viewFactory.createInventoryView(viewModels.getInventoryViewModel());
         cardPanel.add(inventoryView, inventoryView.getViewName());
+        return this;
+    }
+
+    /**
+     * Builds the timer view.
+     *
+     * @return this builder
+     */
+    public SessionViewBuilder buildTimerView() {
+        this.timerView = viewFactory.createTimerView(viewModels.getTimerViewModel());
+        cardPanel.add(timerView, timerView.getViewName());
         return this;
     }
 
@@ -97,7 +110,8 @@ public class SessionViewBuilder {
         final SessionViews views = new SessionViews(
                 setupSessionView,
                 inventoryView,
-                studySessionView);
+                studySessionView,
+                timerView);
 
         return new SessionViewsAndModels(views, viewModels);
     }

@@ -66,4 +66,8 @@ public class TimerView extends JPanel implements PropertyChangeListener {
     public void setTimerController(TimerController timerController) {
         this.timerController = timerController;
     }
+
+    public String getViewName() {
+        return timerViewModel.getViewName();
+    }
 }
