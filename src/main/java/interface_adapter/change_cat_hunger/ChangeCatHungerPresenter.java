@@ -4,6 +4,9 @@ import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputBoundary;
 import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputData;
 import view.DisplayCatStatsView;
 
+/**
+ * Change Cat Hunger Use Case Presenter.
+ */
 public class ChangeCatHungerPresenter implements ChangeCatHungerOutputBoundary {
     private DisplayCatStatsView displayCatStatsView;
 

@@ -2,10 +2,11 @@ package interface_adapter.change_cat_happiness;
 
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputBoundary;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputData;
-import view.BreakSession;
 import view.DisplayCatStatsView;
-import view.StudySessionView;
 
+/**
+ * Change Cat Happiness Use Case Presenter.
+ */
 public class ChangeCatHappinessPresenter implements ChangeCatHappinessOutputBoundary {
     private DisplayCatStatsView displayCatStatsView;
 

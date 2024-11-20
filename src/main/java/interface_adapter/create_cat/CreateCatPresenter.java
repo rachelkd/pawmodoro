@@ -6,6 +6,9 @@ import use_case.cat_management.create_cat.CreateCatOutputData;
 import view.LoggedInView;
 import view.MaxCatsErrorView;
 
+/**
+ * Create Cat Use Case Presenter.
+ */
 public class CreateCatPresenter implements CreateCatOutputBoundary {
     private MaxCatsErrorView maxCatsErrorView;
     private LoggedInView loggedInView;
