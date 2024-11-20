@@ -65,14 +65,7 @@ public class AppBuilder {
      */
     public AppBuilder initialize() {
         // Build data access layer
-        this.dataAccess = new DataAccessBuilder()
-                .buildUserDataAccess()
-                .buildInventoryDataAccess()
-                .buildTimerDataAccess()
-                .buildAdoptionDataAccess()
-                .buildDisplayCatImageDataAccess()
-                .buildCatDataAccess()
-                .build();
+        this.dataAccess = new DataAccessBuilder().build();
 
         // Build views
         this.views = new ViewBuilder(cardPanel, cardLayout, viewManagerModel, viewFactory, dialogService).build();
