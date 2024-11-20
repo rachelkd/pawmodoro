@@ -22,4 +22,9 @@ public interface LoginOutputBoundary {
      * Switches to the login View.
      */
     void switchToSignUpView();
+
+    /**
+     * Switches to the study session View.
+     */
+    void switchToStudySessionView();
 }

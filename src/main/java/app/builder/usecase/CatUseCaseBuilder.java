@@ -53,9 +53,7 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
                 getViews().getCat().getViewModels().getAdoptionViewModel(),
                 getViews().getViewManagerModel());
 
-        final AdoptionInputBoundary interactor = new AdoptionInteractor(
-                getDataAccess().getAdoptionDataAccess(),
-                outputBoundary);
+        final AdoptionInputBoundary interactor = new AdoptionInteractor(outputBoundary);
 
         final AdoptionController controller = new AdoptionController(interactor);
         getViews().getCat().getViews().getAdoptionView().setAdoptionController(controller);

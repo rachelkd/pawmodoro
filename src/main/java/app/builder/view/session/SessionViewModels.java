@@ -2,6 +2,7 @@ package app.builder.view.session;
 
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
+import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
 
 /**
@@ -11,13 +12,15 @@ public class SessionViewModels {
     private final SetupSessionViewModel setupSessionViewModel;
     private final InventoryViewModel inventoryViewModel;
     private final TimerViewModel timerViewModel;
+    private final StudySessionViewModel studySessionViewModel;
 
     public SessionViewModels(SetupSessionViewModel setupSessionViewModel,
             InventoryViewModel inventoryViewModel,
-            TimerViewModel timerViewModel) {
+            TimerViewModel timerViewModel, StudySessionViewModel studySessionViewModel) {
         this.setupSessionViewModel = setupSessionViewModel;
         this.inventoryViewModel = inventoryViewModel;
         this.timerViewModel = timerViewModel;
+        this.studySessionViewModel = studySessionViewModel;
     }
 
     public SetupSessionViewModel getSetupSessionViewModel() {
@@ -30,5 +33,9 @@ public class SessionViewModels {
 
     public InventoryViewModel getInventoryViewModel() {
         return inventoryViewModel;
+    }
+
+    public StudySessionViewModel getStudySessionViewModel() {
+        return studySessionViewModel;
     }
 }

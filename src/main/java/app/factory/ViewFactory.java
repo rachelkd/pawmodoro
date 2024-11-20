@@ -1,5 +1,7 @@
 package app.factory;
 
+import java.util.Set;
+
 import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.cat.CatViewModel;
@@ -12,6 +14,7 @@ import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
 import view.AdoptionView;
 import view.CatView;
@@ -23,6 +26,7 @@ import view.MaxCatsErrorView;
 import view.RunawayCatView;
 import view.SetupSessionView;
 import view.SignupView;
+import view.StudySessionView;
 
 /**
  * Default implementation of ViewFactory.
@@ -114,6 +118,18 @@ public class ViewFactory {
      */
     public SetupSessionView createSetupSessionView(SetupSessionViewModel setupSessionViewModel) {
         return new SetupSessionView(setupSessionViewModel);
+    }
+
+    /**
+     * Creates a Study Session View.
+     * 
+     * @param studySessionViewModel the study session view model
+     * @param timerSessionViewModel the timer session view model
+     * @return StudySessionView
+     */
+    public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
+            TimerViewModel timerSessionViewModel) {
+        return new StudySessionView(studySessionViewModel, timerSessionViewModel);
     }
 
     /**

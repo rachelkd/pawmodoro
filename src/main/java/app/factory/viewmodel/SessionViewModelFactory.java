@@ -2,6 +2,7 @@ package app.factory.viewmodel;
 
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
+import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
 
 /**
@@ -33,5 +34,14 @@ public class SessionViewModelFactory {
      */
     public InventoryViewModel createInventoryViewModel() {
         return new InventoryViewModel();
+    }
+
+    /**
+     * Creates a new study session view model.
+     *
+     * @return the study session view model
+     */
+    public StudySessionViewModel createStudySessionViewModel() {
+        return new StudySessionViewModel();
     }
 }

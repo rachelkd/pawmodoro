@@ -67,6 +67,7 @@ public class ViewBuilder {
         final SessionViewsAndModels sessionViewsAndModels = sessionViewBuilder
                 .buildSetupSessionView()
                 .buildInventoryView()
+                .buildStudySessionView()
                 .build();
 
         final AuthViewsAndModels authViewsAndModels = new AuthViewBuilder(

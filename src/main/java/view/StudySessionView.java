@@ -82,5 +82,3 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         System.out.println("changed to study session view");
     }
 }
-
-

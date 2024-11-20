@@ -12,6 +12,7 @@ import app.factory.viewmodel.SessionViewModelFactory;
 import interface_adapter.ViewManagerModel;
 import view.InventoryView;
 import view.SetupSessionView;
+import view.StudySessionView;
 
 /**
  * Builder for session-related views.
@@ -27,6 +28,7 @@ public class SessionViewBuilder {
     // Views
     private SetupSessionView setupSessionView;
     private InventoryView inventoryView;
+    private StudySessionView studySessionView;
 
     /**
      * Creates a new session view builder.
@@ -48,7 +50,8 @@ public class SessionViewBuilder {
         this.viewModels = new SessionViewModels(
                 sessionViewModelFactory.createSetupSessionViewModel(),
                 sessionViewModelFactory.createInventoryViewModel(),
-                sessionViewModelFactory.createTimerViewModel());
+                sessionViewModelFactory.createTimerViewModel(),
+                sessionViewModelFactory.createStudySessionViewModel());
     }
 
     /**
@@ -57,8 +60,20 @@ public class SessionViewBuilder {
      * @return this builder for method chaining
      */
     public SessionViewBuilder buildSetupSessionView() {
-        setupSessionView = viewFactory.createSetupSessionView(viewModels.getSetupSessionViewModel());
+        this.setupSessionView = viewFactory.createSetupSessionView(viewModels.getSetupSessionViewModel());
         cardPanel.add(setupSessionView, setupSessionView.getViewName());
+        return this;
+    }
+
+    /**
+     * Builds the study session view.
+     *
+     * @return this builder for method chaining
+     */
+    public SessionViewBuilder buildStudySessionView() {
+        this.studySessionView = viewFactory.createStudySessionView(viewModels.getStudySessionViewModel(),
+                viewModels.getTimerViewModel());
+        cardPanel.add(studySessionView, studySessionView.getViewName());
         return this;
     }
 
@@ -81,7 +96,8 @@ public class SessionViewBuilder {
     public SessionViewsAndModels build() {
         final SessionViews views = new SessionViews(
                 setupSessionView,
-                inventoryView);
+                inventoryView,
+                studySessionView);
 
         return new SessionViewsAndModels(views, viewModels);
     }
