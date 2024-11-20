@@ -121,4 +121,8 @@ public class DisplayCatImageView extends JPanel implements PropertyChangeListene
     public void fetchNewImage() {
         displayCatImageController.fetchNewImage();
     }
+
+    public String getViewName() {
+        return viewModel.getViewName();
+    }
 }

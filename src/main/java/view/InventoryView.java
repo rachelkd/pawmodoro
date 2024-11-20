@@ -18,7 +18,8 @@ import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.InventoryState;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
-//TODO: Allyssa will turn into JDialog
+
+// TODO: Allyssa will turn into JDialog
 /**
  * The View when user is viewing contents of their inventory.
  */
@@ -33,6 +34,7 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
 
     /**
      * Creates the Inventory View.
+     * 
      * @param inventoryViewModel the view model
      */
     public InventoryView(InventoryViewModel inventoryViewModel) {
@@ -51,7 +53,7 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
 
         this.inventoryPanel = new JPanel();
         // Track the selected label in view
-        this.selectedLabel = new JLabel[]{null};
+        this.selectedLabel = new JLabel[] { null };
     }
 
     @Override
@@ -161,5 +163,9 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
     void refreshInventory() {
         inventoryPanel.removeAll();
         buildInventory();
+    }
+
+    public String getViewName() {
+        return inventoryViewModel.getViewName();
     }
 }

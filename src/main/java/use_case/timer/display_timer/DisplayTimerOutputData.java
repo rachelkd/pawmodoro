@@ -1,5 +1,8 @@
 package use_case.timer.display_timer;
 
+/**
+ * Output data for the display timer use case.
+ */
 public class DisplayTimerOutputData {
     private final String status;
     private final String currentInterval;

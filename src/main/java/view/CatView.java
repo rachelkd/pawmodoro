@@ -6,15 +6,19 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
+import app.service.DialogService;
 import constants.Constants;
 import interface_adapter.cat.CatState;
 import interface_adapter.cat.CatViewModel;
+import interface_adapter.display_cat_stats.DisplayCatStatsController;
+import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 
 /**
  * A view component that displays a cat's image and handles click interactions.
@@ -23,35 +27,53 @@ import interface_adapter.cat.CatViewModel;
  */
 public class CatView extends JPanel implements PropertyChangeListener {
     private final CatViewModel catViewModel;
+    private final DisplayCatStatsViewModel displayCatStatsViewModel;
+    private final DialogService dialogService;
     private final JLabel imageLabel;
+    private DisplayCatStatsController displayCatStatsController;
 
     /**
      * Creates a new CatView.
      *
      * @param catViewModel the view model for this cat view
+     * @param displayCatStatsViewModel the view model for displaying cat stats
+     * @param dialogService the service for showing dialogs
      */
-    public CatView(CatViewModel catViewModel) {
+
+    public CatView(CatViewModel catViewModel, DisplayCatStatsViewModel displayCatStatsViewModel,
+            DialogService dialogService) {
         this.catViewModel = catViewModel;
+        this.displayCatStatsViewModel = displayCatStatsViewModel;
+        this.dialogService = dialogService;
         this.catViewModel.addPropertyChangeListener(this);
 
         // Create and configure image label
         imageLabel = new JLabel();
         imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Add mouse listener for click interactions
+        // When cat is clicked, display cat stats dialog
         imageLabel.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent evt) {
-                // TODO: Implement in CatFactUseCase
-                // 1. Controller should call use case to:
-                // - Get random cat fact
-                // - Create dialog with fact and "See {cat's name}'s statistics" button
-                // 2. When statistics button is clicked, switch to CatStatisticsView
+            public void mouseClicked(MouseEvent e) {
+                if (displayCatStatsController != null) {
+                    final CatState state = catViewModel.getState();
+                    displayCatStatsController.execute(state.getOwnerUsername(), state.getCatName());
+
+                    final JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(CatView.this);
+                    dialogService.showCatStatsDialog(parentFrame, displayCatStatsViewModel);
+                }
             }
         });
 
+        // Add the image label to the panel
         this.add(imageLabel);
-        this.updateCatImage();
+
+        // Update the image initially
+        updateCatImage();
+    }
+
+    public void setDisplayCatStatsController(DisplayCatStatsController controller) {
+        this.displayCatStatsController = controller;
     }
 
     private void updateCatImage() {
@@ -76,5 +98,14 @@ public class CatView extends JPanel implements PropertyChangeListener {
         if ("state".equals(evt.getPropertyName())) {
             updateCatImage();
         }
+    }
+
+    /**
+     * Gets the view name.
+     *
+     * @return the view name
+     */
+    public String getViewName() {
+        return catViewModel.getViewName();
     }
 }

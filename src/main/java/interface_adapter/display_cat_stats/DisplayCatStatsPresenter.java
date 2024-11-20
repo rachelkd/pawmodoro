@@ -1,5 +1,6 @@
 package interface_adapter.display_cat_stats;
 
+import interface_adapter.cat.CatState;
 import use_case.display_cat_stats.DisplayCatStatsOutputBoundary;
 import use_case.display_cat_stats.DisplayCatStatsOutputData;
 
@@ -15,22 +16,22 @@ public class DisplayCatStatsPresenter implements DisplayCatStatsOutputBoundary {
 
     @Override
     public void prepareSuccessView(DisplayCatStatsOutputData displayCatStatsOutputData) {
-        final DisplayCatStatsState displayCatStatsState = new DisplayCatStatsState();
-        displayCatStatsState.setCatName(displayCatStatsOutputData.getCatName());
-        displayCatStatsState.setHungerLevel(displayCatStatsOutputData.getHungerLevel());
-        displayCatStatsState.setHappinessLevel(displayCatStatsOutputData.getHappinessLevel());
-        displayCatStatsState.setImageFileName(displayCatStatsOutputData.getImageFileName());
+        final CatState catState = new CatState();
+        catState.setCatName(displayCatStatsOutputData.getCatName());
+        catState.setHungerLevel(displayCatStatsOutputData.getHungerLevel());
+        catState.setHappinessLevel(displayCatStatsOutputData.getHappinessLevel());
+        catState.setImageFileName(displayCatStatsOutputData.getImageFileName());
 
-        this.displayCatStatsViewModel.setState(displayCatStatsState);
+        this.displayCatStatsViewModel.setState(catState);
         this.displayCatStatsViewModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String error) {
-        final DisplayCatStatsState displayCatStatsState = new DisplayCatStatsState();
-        displayCatStatsState.setError(error);
+        final CatState catState = new CatState();
+        catState.setError(error);
 
-        this.displayCatStatsViewModel.setState(displayCatStatsState);
+        this.displayCatStatsViewModel.setState(catState);
         this.displayCatStatsViewModel.firePropertyChanged();
     }
 }
