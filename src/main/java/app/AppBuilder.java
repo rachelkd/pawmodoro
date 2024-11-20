@@ -139,9 +139,7 @@ public class AppBuilder {
 
     private AdoptionView adoptionView;
     private AdoptionViewModel adoptionViewModel;
-    //private final AdoptionDataAccessObject adoptionDataAccessObject = new AdoptionDataAccessObject();
-
-
+    // private final AdoptionDataAccessObject adoptionDataAccessObject = new AdoptionDataAccessObject();
 
     private MaxCatsErrorView maxCatsErrorView;
     private MaxCatsErrorViewModel maxCatsErrorViewModel;
@@ -311,7 +309,8 @@ public class AppBuilder {
         final RunawayCatOutputBoundary runawayCatOutputBoundary = new RunawayPresenter(runawayCatViewModel,
                 viewManagerModel);
         final RunawayCatInputBoundary runawayInteractor = new RunawayCatInteractor(runawayCatOutputBoundary);
-        final RunawayCatController runawayCatController = new RunawayCatController(runawayCatViewModel, runawayInteractor);
+        final RunawayCatController runawayCatController =
+                new RunawayCatController(runawayCatViewModel, runawayInteractor);
         runawayCatView.setRunawayCatController(runawayCatController);
         return this;
     }
@@ -419,9 +418,8 @@ public class AppBuilder {
         return this;
     }
 
-
     /**
-    * Adds the max cats error use case to the application.
+     * Adds the max cats error use case to the application.
      *
      * @return this builder
      */
@@ -434,6 +432,7 @@ public class AppBuilder {
         return this;
     }
 
+    /**
      * Adds the adoption use case to the application.
      *
      * @return this builder
