@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 
 import constants.Constants;
+import interface_adapter.logout.LogoutController;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerController;
@@ -23,7 +24,11 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private final TimerViewModel timerViewModel;
     private final TimerView timerView;
     private final StudySessionViewModel studySessionViewModel;
+
     private TimerController timerController;
+    private LogoutController logoutController;
+    private StudySessionController studySessionController;
+
     private final JButton timerSettings;
     private final JButton logOutSettings;
 
@@ -57,6 +62,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         timerSettings.addActionListener(this);
         logOutSettings.addActionListener(this);
 
+        // TODO: Is this clean? Should add TimerView somewhere else?
         this.timerView = new TimerView(timerViewModel);
 
         this.add(buttonsPanel, BorderLayout.NORTH);
@@ -72,13 +78,29 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         this.timerController = timerController;
     }
 
+    public void setLogoutController(LogoutController controller) {
+        this.logoutController = controller;
+    }
+
+    public void setStudySessionController(StudySessionController controller) {
+        this.studySessionController = controller;
+    }
+
     @Override
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("settings clicked");
+        if (evt.getSource().equals(timerSettings)) {
+            // TODO: Switch to TimerSettingsView
+        }
+        else if (evt.getSource().equals(logOutSettings)) {
+            // Execute the logout use case through the Controller
+            this.logoutController.execute("");
+        }
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("changed to study session view");
+        if (evt.getPropertyName().equals("state")) {
+            // TODO: Implement this: What happens when StudySessionViewModel changes state?
+        }
     }
 }

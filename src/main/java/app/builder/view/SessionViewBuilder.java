@@ -57,7 +57,7 @@ public class SessionViewBuilder {
     /**
      * Builds the setup session view.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public SessionViewBuilder buildSetupSessionView() {
         this.setupSessionView = viewFactory.createSetupSessionView(viewModels.getSetupSessionViewModel());
@@ -68,7 +68,7 @@ public class SessionViewBuilder {
     /**
      * Builds the study session view.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public SessionViewBuilder buildStudySessionView() {
         this.studySessionView = viewFactory.createStudySessionView(viewModels.getStudySessionViewModel(),
@@ -80,7 +80,7 @@ public class SessionViewBuilder {
     /**
      * Builds the inventory view.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public SessionViewBuilder buildInventoryView() {
         inventoryView = viewFactory.createInventoryView(viewModels.getInventoryViewModel());

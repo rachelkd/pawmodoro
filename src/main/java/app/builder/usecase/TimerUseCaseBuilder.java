@@ -25,7 +25,7 @@ public class TimerUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Builds the timer use case.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public TimerUseCaseBuilder buildTimerUseCase() {
         final DisplayTimerOutputBoundary outputBoundary = new TimerPresenter(
@@ -44,7 +44,7 @@ public class TimerUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Builds the setup session use case.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
     public TimerUseCaseBuilder buildSetupSessionUseCase() {
         final SetupSessionOutputBoundary outputBoundary = new SetupSessionPresenter(
@@ -60,9 +60,9 @@ public class TimerUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Builds all timer-related use cases.
      *
-     * @return this builder for method chaining
+     * @return this builder
      */
-    public TimerUseCaseBuilder buildTimerUseCases() {
+    public TimerUseCaseBuilder build() {
         return this
                 .buildTimerUseCase()
                 .buildSetupSessionUseCase();
