@@ -58,6 +58,21 @@ public final class Constants {
     public static final int CAT_SPRITE_SCALE = 2;
     public static final int CAT_SPRITE_DISPLAY_SIZE = CAT_SPRITE_BASE_SIZE * CAT_SPRITE_SCALE;
 
+    // Cat fact view constants
+    public static final String CAT_FACT_TITLE = "Did You Know?";
+    public static final String CAT_FACT_LOADING = "Loading cat fact...";
+    public static final String CAT_FACT_ERROR_PREFIX = "Error: ";
+    public static final int CAT_FACT_FONT_SIZE = 14;
+
+    // Common UI strings
+    public static final String LOADING = "Loading...";
+    public static final String NO_IMAGE_AVAILABLE = "No Image Available";
+    public static final String ERROR = "Error";
+    public static final String IMAGE_LOAD_ERROR = "Failed to load image";
+    public static final String SUCCESS = "Success";
+    public static final String CANCEL = "Cancel";
+    public static final String OK = "OK";
+
     private Constants() {
         // Prevent instantiation
     }
