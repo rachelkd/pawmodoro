@@ -30,8 +30,10 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private LogoutController logoutController;
     private StudySessionController studySessionController;
 
-    // TODO: We don't need this import if all the input is handled by TimerController in TimerView @yhj050224
+    // TODO: We don't need timerController if all the input is handled by TimerController in TimerView @yhj050224
     // Inject TimerView into StudySessionView similar to CatView instead of creating a new instance
+    // Similar to CatView
+    // Remove TimerViewModel from this class
     private TimerController timerController;
 
     private final JButton timerSettings;
