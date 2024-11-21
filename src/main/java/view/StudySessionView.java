@@ -59,7 +59,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
         // Add components to main panel
         this.add(createTopPanel(), BorderLayout.NORTH);
-        this.add(createTimerView(), BorderLayout.CENTER);
+        this.add(createTimerPanel(), BorderLayout.CENTER);
         this.add(createCatPanel(), BorderLayout.SOUTH);
 
         // Make sure this panel is visible
@@ -107,7 +107,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         return titlePanel;
     }
 
-    private TimerView createTimerView() {
+    private TimerView createTimerPanel() {
         timerView.setAlignmentX(Component.CENTER_ALIGNMENT);
         timerView.setVisible(true);
         return timerView;
