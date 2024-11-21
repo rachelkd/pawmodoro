@@ -94,7 +94,6 @@ public class CatView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // TODO: Rachel: Not sure what to do here yet
         if ("state".equals(evt.getPropertyName())) {
             updateCatImage();
         }

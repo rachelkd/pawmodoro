@@ -29,14 +29,14 @@ public class UseCaseBuilder {
         final AuthUseCaseBuilder authBuilder = new AuthUseCaseBuilder(views, dataAccess);
         final InventoryUseCaseBuilder inventoryBuilder = new InventoryUseCaseBuilder(views, dataAccess);
         final CatUseCaseBuilder catBuilder = new CatUseCaseBuilder(views, dataAccess);
-        // TODO: Add session use cases
-        // final SessionUseCaseBuilder sessionBuilder = new SessionUseCaseBuilder(views, dataAccess);
+        final SessionUseCaseBuilder sessionBuilder = new SessionUseCaseBuilder(views, dataAccess);
         final TimerUseCaseBuilder timerBuilder = new TimerUseCaseBuilder(views, dataAccess);
 
         authBuilder.build();
         inventoryBuilder.build();
         catBuilder.build();
         timerBuilder.build();
+        // TODO: Add session use cases
 
         return this;
     }
