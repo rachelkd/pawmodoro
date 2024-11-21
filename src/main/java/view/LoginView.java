@@ -50,6 +50,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         final LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel("Password"), passwordInputField);
 
+        userErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        userErrorField.setForeground(Color.RED);
+
         final JPanel buttons = new JPanel();
         logIn = new JButton("log in");
         buttons.add(logIn);
