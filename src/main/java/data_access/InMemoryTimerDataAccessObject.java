@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import constants.Constants;
 import entity.Timer;
 import entity.TimerFactory;
 import use_case.timer.TimerDataAccessInterface;
@@ -50,7 +51,7 @@ public class InMemoryTimerDataAccessObject implements TimerDataAccessInterface {
     @Override
     public String formatTimeDisplay(long duration) {
         final long minutes = TimeUnit.MILLISECONDS.toMinutes(duration);
-        final long seconds = TimeUnit.MILLISECONDS.toSeconds(duration) % 60;
+        final long seconds = TimeUnit.MILLISECONDS.toSeconds(duration) % Constants.MINUTES_TO_SECONDS;
         return String.format("%02d:%02d", minutes, seconds);
     }
 }
