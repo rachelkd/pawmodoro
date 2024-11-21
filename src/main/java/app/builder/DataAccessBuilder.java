@@ -2,25 +2,25 @@ package app.builder;
 
 import app.components.DataAccessComponents;
 import app.factory.DataAccessFactory;
-import data_access.AdoptionDataAccessObject;
-import data_access.ApiDisplayCatImageDataAccessObject;
-import data_access.DBCatDataAccessObject;
-import data_access.DBUserDataAccessObject;
-import data_access.InMemoryInventoryDataAccessObject;
-import data_access.InMemoryTimerDataAccessObject;
+import use_case.adoption.AdoptionDataAccessInterface;
+import use_case.cat.CatDataAccessInterface;
+import use_case.create_inventory.CreateInventoryInventoryDataAccessInterface;
+import use_case.display_cat_image.DisplayCatImageDataAccessInterface;
 import use_case.get_cat_fact.CatFactDataAccessInterface;
+import use_case.login.LoginUserDataAccessInterface;
+import use_case.timer.TimerDataAccessInterface;
 
 /**
  * Builder for data access components.
  */
 public class DataAccessBuilder {
     private final DataAccessFactory factory;
-    private DBUserDataAccessObject userDataAccess;
-    private InMemoryInventoryDataAccessObject inventoryDataAccess;
-    private InMemoryTimerDataAccessObject timerDataAccess;
-    private AdoptionDataAccessObject adoptionDataAccess;
-    private ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
-    private DBCatDataAccessObject catDataAccess;
+    private LoginUserDataAccessInterface userDataAccess;
+    private CreateInventoryInventoryDataAccessInterface inventoryDataAccess;
+    private TimerDataAccessInterface timerDataAccess;
+    private AdoptionDataAccessInterface adoptionDataAccess;
+    private DisplayCatImageDataAccessInterface displayCatImageDataAccess;
+    private CatDataAccessInterface catDataAccess;
     private CatFactDataAccessInterface catFactDataAccess;
 
     public DataAccessBuilder() {

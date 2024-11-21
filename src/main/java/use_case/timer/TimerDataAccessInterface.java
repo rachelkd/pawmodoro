@@ -1,9 +1,27 @@
 package use_case.timer;
 
+import entity.Timer;
+
 /**
- * Interface for accessing timer settings and configuration data.
+ * Unified interface for timer operations, including persistence and settings.
  */
-public interface TimerSettingsDataAccessInterface {
+public interface TimerDataAccessInterface {
+    /**
+     * Gets the timer for a specific user.
+     * 
+     * @param username the username of the user
+     * @return the Timer entity for the user
+     */
+    Timer getTimer(String username);
+
+    /**
+     * Saves the timer state for a specific user.
+     * 
+     * @param username the username of the user
+     * @param timer the timer to save
+     */
+    void save(String username, Timer timer);
+
     /**
      * Gets the default work interval duration in milliseconds.
      * 

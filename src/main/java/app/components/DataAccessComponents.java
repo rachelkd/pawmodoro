@@ -1,23 +1,23 @@
 package app.components;
 
-import data_access.AdoptionDataAccessObject;
-import data_access.ApiDisplayCatImageDataAccessObject;
-import data_access.DBCatDataAccessObject;
-import data_access.DBUserDataAccessObject;
-import data_access.InMemoryInventoryDataAccessObject;
-import data_access.InMemoryTimerDataAccessObject;
+import use_case.adoption.AdoptionDataAccessInterface;
+import use_case.cat.CatDataAccessInterface;
+import use_case.create_inventory.CreateInventoryInventoryDataAccessInterface;
+import use_case.display_cat_image.DisplayCatImageDataAccessInterface;
 import use_case.get_cat_fact.CatFactDataAccessInterface;
+import use_case.login.LoginUserDataAccessInterface;
+import use_case.timer.TimerDataAccessInterface;
 
 /**
- * Holds all data access components for the application.
+ * Components for data access.
  */
 public class DataAccessComponents {
-    private final DBUserDataAccessObject userDataAccess;
-    private final InMemoryInventoryDataAccessObject inventoryDataAccess;
-    private final InMemoryTimerDataAccessObject timerDataAccess;
-    private final AdoptionDataAccessObject adoptionDataAccess;
-    private final ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
-    private final DBCatDataAccessObject catDataAccess;
+    private final LoginUserDataAccessInterface userDataAccess;
+    private final CreateInventoryInventoryDataAccessInterface inventoryDataAccess;
+    private final TimerDataAccessInterface timerDataAccess;
+    private final AdoptionDataAccessInterface adoptionDataAccess;
+    private final DisplayCatImageDataAccessInterface displayCatImageDataAccess;
+    private final CatDataAccessInterface catDataAccess;
     private final CatFactDataAccessInterface catFactDataAccess;
 
     /**
@@ -31,12 +31,13 @@ public class DataAccessComponents {
      * @param catDataAccess the cat data access object
      * @param catFactDataAccess the cat fact data access object
      */
-    public DataAccessComponents(DBUserDataAccessObject userDataAccess,
-            InMemoryInventoryDataAccessObject inventoryDataAccess,
-            InMemoryTimerDataAccessObject timerDataAccess,
-            AdoptionDataAccessObject adoptionDataAccess,
-            ApiDisplayCatImageDataAccessObject displayCatImageDataAccess,
-            DBCatDataAccessObject catDataAccess,
+    public DataAccessComponents(
+            LoginUserDataAccessInterface userDataAccess,
+            CreateInventoryInventoryDataAccessInterface inventoryDataAccess,
+            TimerDataAccessInterface timerDataAccess,
+            AdoptionDataAccessInterface adoptionDataAccess,
+            DisplayCatImageDataAccessInterface displayCatImageDataAccess,
+            CatDataAccessInterface catDataAccess,
             CatFactDataAccessInterface catFactDataAccess) {
         this.userDataAccess = userDataAccess;
         this.inventoryDataAccess = inventoryDataAccess;
@@ -47,27 +48,27 @@ public class DataAccessComponents {
         this.catFactDataAccess = catFactDataAccess;
     }
 
-    public DBUserDataAccessObject getUserDataAccess() {
+    public LoginUserDataAccessInterface getUserDataAccess() {
         return userDataAccess;
     }
 
-    public InMemoryInventoryDataAccessObject getInventoryDataAccess() {
+    public CreateInventoryInventoryDataAccessInterface getInventoryDataAccess() {
         return inventoryDataAccess;
     }
 
-    public InMemoryTimerDataAccessObject getTimerDataAccess() {
+    public TimerDataAccessInterface getTimerDataAccess() {
         return timerDataAccess;
     }
 
-    public AdoptionDataAccessObject getAdoptionDataAccess() {
+    public AdoptionDataAccessInterface getAdoptionDataAccess() {
         return adoptionDataAccess;
     }
 
-    public ApiDisplayCatImageDataAccessObject getDisplayCatImageDataAccess() {
+    public DisplayCatImageDataAccessInterface getDisplayCatImageDataAccess() {
         return displayCatImageDataAccess;
     }
 
-    public DBCatDataAccessObject getCatDataAccess() {
+    public CatDataAccessInterface getCatDataAccess() {
         return catDataAccess;
     }
 
