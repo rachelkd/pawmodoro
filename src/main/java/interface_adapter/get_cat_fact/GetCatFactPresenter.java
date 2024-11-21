@@ -15,7 +15,7 @@ public class GetCatFactPresenter implements GetCatFactOutputBoundary {
 
     @Override
     public void prepareSuccessView(GetCatFactOutputData catFactData) {
-        GetCatFactState state = getCatFactViewModel.getState();
+        final GetCatFactState state = getCatFactViewModel.getState();
         state.setCatFact(catFactData.getCatFact());
         state.setError(null);
         getCatFactViewModel.setState(state);
@@ -24,7 +24,7 @@ public class GetCatFactPresenter implements GetCatFactOutputBoundary {
 
     @Override
     public void prepareFailView(GetCatFactOutputData catFactData) {
-        GetCatFactState state = getCatFactViewModel.getState();
+        final GetCatFactState state = getCatFactViewModel.getState();
         state.setCatFact("");
         state.setError(catFactData.getErrorMessage());
         getCatFactViewModel.setState(state);

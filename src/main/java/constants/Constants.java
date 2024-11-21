@@ -24,6 +24,12 @@ public final class Constants {
     // Cat Constants
     public static final int MAX_AMOUNT_OF_CATS = 4;
 
+    // Cat Facts API Constants
+    public static final String CAT_FACT_API_URL = "https://catfact.ninja/fact";
+    public static final String CAT_FACT_ERROR_NETWORK = "Could not fetch cat fact. Check your internet connection!";
+    public static final String CAT_FACT_ERROR_API = "Could not fetch cat fact. Try again later!";
+    public static final int CAT_FACT_MAX_LENGTH = 50;
+
     // Happiness points for study session lengths
     public static final int POINTS_FOR_LESS_EQUAL_20 = 10;
     public static final int POINTS_FOR_BETWEEN_21_AND_40 = 20;
