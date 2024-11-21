@@ -1,14 +1,15 @@
 package view;
 
-import java.awt.Component;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -27,8 +28,6 @@ import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
  */
 public class CatView extends JPanel implements PropertyChangeListener {
     private final CatViewModel catViewModel;
-    private final DisplayCatStatsViewModel displayCatStatsViewModel;
-    private final DialogService dialogService;
     private final JLabel imageLabel;
     private DisplayCatStatsController displayCatStatsController;
 
@@ -43,13 +42,25 @@ public class CatView extends JPanel implements PropertyChangeListener {
     public CatView(CatViewModel catViewModel, DisplayCatStatsViewModel displayCatStatsViewModel,
             DialogService dialogService) {
         this.catViewModel = catViewModel;
-        this.displayCatStatsViewModel = displayCatStatsViewModel;
-        this.dialogService = dialogService;
         this.catViewModel.addPropertyChangeListener(this);
+
+        // Set layout to BorderLayout for centering at bottom
+        this.setLayout(new BorderLayout());
 
         // Create and configure image label
         imageLabel = new JLabel();
-        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+        imageLabel.setVerticalAlignment(JLabel.BOTTOM);
+
+        // Set initial sizes for the image label only
+        final Dimension size = new Dimension(Constants.CAT_SPRITE_DISPLAY_SIZE, Constants.CAT_SPRITE_DISPLAY_SIZE);
+        imageLabel.setPreferredSize(size);
+
+        // Make sure components are visible
+        this.setOpaque(true);
+        this.setVisible(true);
+        imageLabel.setOpaque(true);
+        imageLabel.setVisible(true);
 
         // When cat is clicked, display cat stats dialog
         imageLabel.addMouseListener(new MouseAdapter() {
@@ -58,18 +69,23 @@ public class CatView extends JPanel implements PropertyChangeListener {
                 if (displayCatStatsController != null) {
                     final CatState state = catViewModel.getState();
                     displayCatStatsController.execute(state.getOwnerUsername(), state.getCatName());
-
-                    final JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(CatView.this);
-                    dialogService.showCatStatsDialog(parentFrame, displayCatStatsViewModel);
+                    dialogService.showCatStatsDialog(displayCatStatsViewModel);
                 }
             }
         });
 
-        // Add the image label to the panel
-        this.add(imageLabel);
+        // Add the image label to the bottom center of the panel
+        this.add(imageLabel, BorderLayout.PAGE_END);
 
         // Update the image initially
         updateCatImage();
+
+        // Make sure we're visible after everything is set up
+        SwingUtilities.invokeLater(() -> {
+            this.setVisible(true);
+            this.revalidate();
+            this.repaint();
+        });
     }
 
     public void setDisplayCatStatsController(DisplayCatStatsController controller) {
@@ -78,17 +94,27 @@ public class CatView extends JPanel implements PropertyChangeListener {
 
     private void updateCatImage() {
         final CatState state = catViewModel.getState();
+
         if (state != null && state.getImageFileName() != null) {
             final String imagePath = "/images/" + state.getImageFileName();
-            final ImageIcon imageIcon = new ImageIcon(getClass().getResource(imagePath));
+            final URL imageUrl = getClass().getResource(imagePath);
+            if (imageUrl != null) {
+                final ImageIcon imageIcon = new ImageIcon(imageUrl);
 
-            final Image image = imageIcon.getImage();
-            final Image scaledImage = image.getScaledInstance(
-                    Constants.CAT_SPRITE_DISPLAY_SIZE,
-                    Constants.CAT_SPRITE_DISPLAY_SIZE,
-                    Image.SCALE_SMOOTH);
+                // Scale the image
+                final Image scaledImage = imageIcon.getImage().getScaledInstance(
+                        Constants.CAT_SPRITE_DISPLAY_SIZE,
+                        Constants.CAT_SPRITE_DISPLAY_SIZE,
+                        Image.SCALE_SMOOTH);
 
-            imageLabel.setIcon(new ImageIcon(scaledImage));
+                // Create a new ImageIcon with the scaled image
+                final ImageIcon scaledIcon = new ImageIcon(scaledImage);
+                imageLabel.setIcon(scaledIcon);
+
+                // Force revalidate and repaint
+                this.revalidate();
+                this.repaint();
+            }
         }
     }
 
