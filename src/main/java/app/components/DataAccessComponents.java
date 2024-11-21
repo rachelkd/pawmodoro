@@ -1,24 +1,22 @@
 package app.components;
 
-import use_case.adoption.AdoptionDataAccessInterface;
-import use_case.cat.CatDataAccessInterface;
-import use_case.create_inventory.CreateInventoryInventoryDataAccessInterface;
-import use_case.display_cat_image.DisplayCatImageDataAccessInterface;
-import use_case.get_cat_fact.CatFactDataAccessInterface;
-import use_case.timer.TimerDataAccessInterface;
-import use_case.user.UserDataAccessInterface;
+import data_access.AdoptionDataAccessObject;
+import data_access.ApiDisplayCatImageDataAccessObject;
+import data_access.DBCatDataAccessObject;
+import data_access.DBUserDataAccessObject;
+import data_access.InMemoryInventoryDataAccessObject;
+import data_access.InMemoryTimerDataAccessObject;
 
 /**
- * Components for data access.
+ * Holds all data access components for the application.
  */
 public class DataAccessComponents {
-    private final UserDataAccessInterface userDataAccess;
-    private final CreateInventoryInventoryDataAccessInterface inventoryDataAccess;
-    private final TimerDataAccessInterface timerDataAccess;
-    private final AdoptionDataAccessInterface adoptionDataAccess;
-    private final DisplayCatImageDataAccessInterface displayCatImageDataAccess;
-    private final CatDataAccessInterface catDataAccess;
-    private final CatFactDataAccessInterface catFactDataAccess;
+    private final DBUserDataAccessObject userDataAccess;
+    private final InMemoryInventoryDataAccessObject inventoryDataAccess;
+    private final InMemoryTimerDataAccessObject timerDataAccess;
+    private final AdoptionDataAccessObject adoptionDataAccess;
+    private final ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
+    private final DBCatDataAccessObject catDataAccess;
 
     /**
      * Creates a new DataAccessComponents instance.
@@ -29,50 +27,42 @@ public class DataAccessComponents {
      * @param adoptionDataAccess the adoption data access object
      * @param displayCatImageDataAccess the display cat image data access object
      * @param catDataAccess the cat data access object
-     * @param catFactDataAccess the cat fact data access object
      */
-    public DataAccessComponents(
-            UserDataAccessInterface userDataAccess,
-            CreateInventoryInventoryDataAccessInterface inventoryDataAccess,
-            TimerDataAccessInterface timerDataAccess,
-            AdoptionDataAccessInterface adoptionDataAccess,
-            DisplayCatImageDataAccessInterface displayCatImageDataAccess,
-            CatDataAccessInterface catDataAccess,
-            CatFactDataAccessInterface catFactDataAccess) {
+    public DataAccessComponents(DBUserDataAccessObject userDataAccess,
+            InMemoryInventoryDataAccessObject inventoryDataAccess,
+            InMemoryTimerDataAccessObject timerDataAccess,
+            AdoptionDataAccessObject adoptionDataAccess,
+            ApiDisplayCatImageDataAccessObject displayCatImageDataAccess,
+            DBCatDataAccessObject catDataAccess) {
         this.userDataAccess = userDataAccess;
         this.inventoryDataAccess = inventoryDataAccess;
         this.timerDataAccess = timerDataAccess;
         this.adoptionDataAccess = adoptionDataAccess;
         this.displayCatImageDataAccess = displayCatImageDataAccess;
         this.catDataAccess = catDataAccess;
-        this.catFactDataAccess = catFactDataAccess;
     }
 
-    public UserDataAccessInterface getUserDataAccess() {
+    public DBUserDataAccessObject getUserDataAccess() {
         return userDataAccess;
     }
 
-    public CreateInventoryInventoryDataAccessInterface getInventoryDataAccess() {
+    public InMemoryInventoryDataAccessObject getInventoryDataAccess() {
         return inventoryDataAccess;
     }
 
-    public TimerDataAccessInterface getTimerDataAccess() {
+    public InMemoryTimerDataAccessObject getTimerDataAccess() {
         return timerDataAccess;
     }
 
-    public AdoptionDataAccessInterface getAdoptionDataAccess() {
+    public AdoptionDataAccessObject getAdoptionDataAccess() {
         return adoptionDataAccess;
     }
 
-    public DisplayCatImageDataAccessInterface getDisplayCatImageDataAccess() {
+    public ApiDisplayCatImageDataAccessObject getDisplayCatImageDataAccess() {
         return displayCatImageDataAccess;
     }
 
-    public CatDataAccessInterface getCatDataAccess() {
+    public DBCatDataAccessObject getCatDataAccessObject() {
         return catDataAccess;
-    }
-
-    public CatFactDataAccessInterface getCatFactDataAccess() {
-        return catFactDataAccess;
     }
 }

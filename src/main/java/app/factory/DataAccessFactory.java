@@ -1,7 +1,6 @@
 package app.factory;
 
 import data_access.AdoptionDataAccessObject;
-import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
 import data_access.DBUserDataAccessObject;
@@ -10,13 +9,6 @@ import data_access.InMemoryTimerDataAccessObject;
 import entity.CatFactory;
 import entity.CatImageFactory;
 import entity.CommonUserFactory;
-import use_case.adoption.AdoptionDataAccessInterface;
-import use_case.cat.CatDataAccessInterface;
-import use_case.create_inventory.CreateInventoryInventoryDataAccessInterface;
-import use_case.display_cat_image.DisplayCatImageDataAccessInterface;
-import use_case.get_cat_fact.CatFactDataAccessInterface;
-import use_case.timer.TimerDataAccessInterface;
-import use_case.user.UserDataAccessInterface;
 
 /**
  * Factory for creating data access objects.
@@ -25,63 +17,54 @@ public class DataAccessFactory {
     /**
      * Creates a new user data access object.
      *
-     * @return the user data access interface
+     * @return the user data access object
      */
-    public UserDataAccessInterface createUserDataAccess() {
+    public DBUserDataAccessObject createUserDataAccess() {
         return new DBUserDataAccessObject(new CommonUserFactory());
     }
 
     /**
      * Creates a new inventory data access object.
      *
-     * @return the inventory data access interface
+     * @return the inventory data access object
      */
-    public CreateInventoryInventoryDataAccessInterface createInventoryDataAccess() {
+    public InMemoryInventoryDataAccessObject createInventoryDataAccess() {
         return new InMemoryInventoryDataAccessObject();
     }
 
     /**
      * Creates a new timer data access object.
      *
-     * @return the timer data access interface
+     * @return the timer data access object
      */
-    public TimerDataAccessInterface createTimerDataAccess() {
+    public InMemoryTimerDataAccessObject createTimerDataAccess() {
         return new InMemoryTimerDataAccessObject();
     }
 
     /**
      * Creates a new adoption data access object.
      *
-     * @return the adoption data access interface
+     * @return the adoption data access object
      */
-    public AdoptionDataAccessInterface createAdoptionDataAccess() {
+    public AdoptionDataAccessObject createAdoptionDataAccess() {
         return new AdoptionDataAccessObject();
     }
 
     /**
      * Creates a new display cat image data access object.
      *
-     * @return the display cat image data access interface
+     * @return the display cat image data access object
      */
-    public DisplayCatImageDataAccessInterface createDisplayCatImageDataAccess() {
+    public ApiDisplayCatImageDataAccessObject createDisplayCatImageDataAccess() {
         return new ApiDisplayCatImageDataAccessObject(new CatImageFactory());
     }
 
     /**
      * Creates a new cat data access object.
      *
-     * @return the cat data access interface
+     * @return the cat data access object
      */
-    public CatDataAccessInterface createCatDataAccess() {
+    public DBCatDataAccessObject createCatDataAccess() {
         return new DBCatDataAccessObject(new CatFactory());
-    }
-
-    /**
-     * Creates a new cat fact data access object.
-     *
-     * @return the cat fact data access interface
-     */
-    public CatFactDataAccessInterface createCatFactDataAccess() {
-        return new ApiCatFactDataAccessObject();
     }
 }
