@@ -142,9 +142,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.add(pawmodoro);
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         this.add(title);
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING / 2)));
         this.add(usernameInfo);
         this.add(userErrorField);
         this.add(passwordInfo);
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING / 2)));
         this.add(buttons);
     }
 
