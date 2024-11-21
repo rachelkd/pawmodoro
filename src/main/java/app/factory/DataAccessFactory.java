@@ -4,11 +4,13 @@ import data_access.AdoptionDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
 import data_access.DBUserDataAccessObject;
+import data_access.InMemoryCatFactDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
 import entity.CatFactory;
 import entity.CatImageFactory;
 import entity.CommonUserFactory;
+import use_case.get_cat_fact.CatFactDataAccessInterface;
 
 /**
  * Factory for creating data access objects.
@@ -66,5 +68,18 @@ public class DataAccessFactory {
      */
     public DBCatDataAccessObject createCatDataAccess() {
         return new DBCatDataAccessObject(new CatFactory());
+    }
+
+    /**
+     * Creates a new cat fact data access object.
+     *
+     * @return the cat fact data access object
+     */
+    public CatFactDataAccessInterface createCatFactDataAccess() {
+        // For development and testing, using a predefined cat fact
+        return new InMemoryCatFactDataAccessObject(
+                "Cats have over 20 different vocalizations, including meowing, purring, and chirping.",
+                false,
+                "");
     }
 }

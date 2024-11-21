@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities;
 
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import view.DisplayCatStatsView;
+import view.GetCatFactView;
 
 /**
  * Factory for creating dialog views.
@@ -52,9 +53,13 @@ public class DialogFactory {
      * Creates a new DisplayCatStatsView dialog.
      * 
      * @param viewModel the view model for the dialog
-     * @return the created dialog
+     * @param getCatFactView the get cat fact view
+     * @return the cat stats dialog
      */
-    public DisplayCatStatsView createCatStatsDialog(DisplayCatStatsViewModel viewModel) {
-        return new DisplayCatStatsView(getParentFrame(), viewModel);
+    public DisplayCatStatsView createCatStatsDialog(DisplayCatStatsViewModel viewModel, GetCatFactView getCatFactView) {
+        if (mainFrame == null) {
+            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+        }
+        return new DisplayCatStatsView(getParentFrame(), viewModel, getCatFactView);
     }
 }
