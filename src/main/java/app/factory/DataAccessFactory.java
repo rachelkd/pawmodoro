@@ -1,6 +1,7 @@
 package app.factory;
 
 import data_access.AdoptionDataAccessObject;
+import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
 import data_access.DBUserDataAccessObject;
@@ -66,5 +67,14 @@ public class DataAccessFactory {
      */
     public DBCatDataAccessObject createCatDataAccess() {
         return new DBCatDataAccessObject(new CatFactory());
+    }
+
+    /**
+     * Creates a new cat fact data access object.
+     * 
+     * @return the cat fact data access object
+     */
+    public ApiCatFactDataAccessObject createCatFactDataAccess() {
+        return new ApiCatFactDataAccessObject();
     }
 }

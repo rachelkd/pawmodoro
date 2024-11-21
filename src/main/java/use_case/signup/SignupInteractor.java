@@ -2,17 +2,16 @@ package use_case.signup;
 
 import entity.User;
 import entity.UserFactory;
-import use_case.user.UserDataAccessInterface;
 
 /**
  * The Signup Interactor.
  */
 public class SignupInteractor implements SignupInputBoundary {
-    private final UserDataAccessInterface userDataAccessObject;
+    private final SignupUserDataAccessInterface userDataAccessObject;
     private final SignupOutputBoundary userPresenter;
     private final UserFactory userFactory;
 
-    public SignupInteractor(UserDataAccessInterface userDataAccessObject,
+    public SignupInteractor(SignupUserDataAccessInterface userDataAccessObject,
             SignupOutputBoundary signupOutputBoundary,
             UserFactory userFactory) {
         this.userDataAccessObject = userDataAccessObject;

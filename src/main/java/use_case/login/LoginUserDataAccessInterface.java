@@ -1,11 +1,12 @@
-package use_case.user;
+package use_case.login;
 
 import entity.User;
 
 /**
- * Unified interface for user data access operations.
+ * DAO for the Login Use Case.
  */
-public interface UserDataAccessInterface {
+public interface LoginUserDataAccessInterface {
+
     /**
      * Checks if the given username exists.
      * 
@@ -30,7 +31,7 @@ public interface UserDataAccessInterface {
     User get(String username);
 
     /**
-     * Returns the username of the current user of the application.
+     * Returns the username of the curren user of the application.
      * 
      * @return the username of the current user; null indicates that no one is
      *         logged into the application.
@@ -44,11 +45,4 @@ public interface UserDataAccessInterface {
      *            currently logged into the application.
      */
     void setCurrentUsername(String username);
-
-    /**
-     * Updates the system to record this user's password.
-     * 
-     * @param user the user whose password is to be updated
-     */
-    void changePassword(User user);
 }

@@ -7,12 +7,15 @@ import java.util.concurrent.TimeUnit;
 import constants.Constants;
 import entity.Timer;
 import entity.TimerFactory;
-import use_case.timer.TimerDataAccessInterface;
+import use_case.timer.TimerSettingsDataAccessInterface;
+import use_case.timer.TimerStatusDataAccessInterface;
+import use_case.timer.display_timer.DisplayTimerDataAccessInterface;
 
 /**
  * In-memory implementation of timer data access.
  */
-public class InMemoryTimerDataAccessObject implements TimerDataAccessInterface {
+public class InMemoryTimerDataAccessObject
+        implements DisplayTimerDataAccessInterface, TimerSettingsDataAccessInterface, TimerStatusDataAccessInterface {
 
     // Default durations
     private static final long DEFAULT_WORK_DURATION = TimeUnit.MINUTES.toMillis(25);
@@ -49,7 +52,7 @@ public class InMemoryTimerDataAccessObject implements TimerDataAccessInterface {
     }
 
     @Override
-    public String formatTimeDisplay(long duration) {
+    public String formatTime(long duration) {
         final long minutes = TimeUnit.MILLISECONDS.toMinutes(duration);
         final long seconds = TimeUnit.MILLISECONDS.toSeconds(duration) % Constants.MINUTES_TO_SECONDS;
         return String.format("%02d:%02d", minutes, seconds);
