@@ -23,8 +23,6 @@ import interface_adapter.cat.CatViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsController;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.get_cat_fact.GetCatFactController;
-import interface_adapter.get_cat_fact.GetCatFactView;
-import view.GetCatFactView;
 
 /**
  * A view component that displays a cat's image and handles click interactions.
@@ -90,7 +88,8 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
         this.add(imageLabel, BorderLayout.PAGE_END);
 
         // Update the image initially
-        updateCatImage();
+        final CatState state = catViewModel.getState();
+        updateCatImage(state);
 
         // Make sure we're visible after everything is set up
         SwingUtilities.invokeLater(() -> {
@@ -108,9 +107,7 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
         this.getCatFactController = controller;
     }
 
-    private void updateCatImage() {
-        final CatState state = catViewModel.getState();
-
+    private void updateCatImage(CatState state) {
         if (state != null && state.getImageFileName() != null) {
             final String imagePath = "/images/" + state.getImageFileName();
             final URL imageUrl = getClass().getResource(imagePath);
@@ -136,23 +133,14 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        final CatState state = catViewModel.getState();
-        if (state != null && state.isShowStats()) {
-            dialogService.showCatStatsDialog(displayCatStatsViewModel, getCatFactView);
-            state.setShowStats(false);
-            catViewModel.setState(state);
-        }
+        // Mouse click is handled by MouseAdapter
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
             final CatState state = (CatState) evt.getNewValue();
-            if (state != null && state.isShowStats()) {
-                dialogService.showCatStatsDialog(displayCatStatsViewModel, getCatFactView);
-                state.setShowStats(false);
-                catViewModel.setState(state);
-            }
+            updateCatImage(state);
         }
     }
 
