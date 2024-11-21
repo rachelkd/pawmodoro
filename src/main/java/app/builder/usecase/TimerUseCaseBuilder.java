@@ -36,7 +36,7 @@ public class TimerUseCaseBuilder extends AbstractUseCaseBuilder {
                 outputBoundary);
 
         final TimerController controller = new TimerController(interactor);
-        getViews().getAuth().getViews().getLoggedInView().setTimerController(controller);
+        getViews().getSession().getViews().getTimerView().setTimerController(controller);
         return this;
     }
 
