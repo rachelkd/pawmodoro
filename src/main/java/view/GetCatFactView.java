@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,30 +19,47 @@ import interface_adapter.get_cat_fact.GetCatFactViewModel;
  */
 public class GetCatFactView extends JPanel implements PropertyChangeListener {
     private final GetCatFactViewModel getCatFactViewModel;
-    private final JLabel factLabel;
+    private JLabel factLabel;
     private GetCatFactController getCatFactController;
 
     public GetCatFactView(GetCatFactViewModel getCatFactViewModel) {
         this.getCatFactViewModel = getCatFactViewModel;
         this.getCatFactViewModel.addPropertyChangeListener(this);
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        // Create title label
-        final JLabel titleLabel = new JLabel(Constants.CAT_FACT_TITLE);
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(titleLabel);
-
-        // Create fact label
-        factLabel = new JLabel(Constants.CAT_FACT_LOADING);
-        factLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(factLabel);
+        createAndAddComponents();
 
         // Update with initial state if available
         final GetCatFactState currentState = getCatFactViewModel.getState();
         if (currentState != null) {
             updateView(currentState);
         }
+    }
+
+    private void createAndAddComponents() {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Title label
+        final JLabel titleLabel = new JLabel(Constants.CAT_FACT_TITLE);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        add(titleLabel);
+
+        // Padding
+        add(Box.createVerticalStrut(Constants.DISPLAY_CAT_STATS_PADDING / 2));
+
+        // Create fact label panel
+        final JPanel factPanel = new JPanel();
+        factPanel.setLayout(new BoxLayout(factPanel, BoxLayout.X_AXIS));
+        factPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Create fact label
+        factLabel = new JLabel(Constants.CAT_FACT_LOADING);
+        factLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        factLabel.setHorizontalAlignment(JLabel.CENTER);
+        factPanel.add(factLabel);
+
+        add(factPanel);
     }
 
     private void updateView(GetCatFactState state) {
@@ -58,6 +76,11 @@ public class GetCatFactView extends JPanel implements PropertyChangeListener {
         if ("state".equals(evt.getPropertyName())) {
             final GetCatFactState state = (GetCatFactState) evt.getNewValue();
             updateView(state);
+            if (state.getCatFact() != null && !state.getCatFact().isEmpty()) {
+                factLabel.setText("<html><div style='width: "
+                        + (Constants.CAT_FACT_TEXT_WIDTH)
+                        + "px; text-align: center'>" + state.getCatFact() + "</div></html>");
+            }
         }
     }
 

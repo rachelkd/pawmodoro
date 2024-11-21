@@ -52,6 +52,8 @@ public final class Constants {
     public static final int DISPLAY_CAT_STATS_PADDING = 10;
     public static final int DISPLAY_CAT_STATS_FONT_SIZE = 16;
     public static final int DISPLAY_CAT_STATS_IMAGE_SIZE = 128;
+    public static final int DISPLAY_CAT_STATS_MAX_WIDTH = 360;
+    public static final int DISPLAY_CAT_STATS_HEIGHT = 360;
 
     // Cat sprite constants
     public static final int CAT_SPRITE_BASE_SIZE = 32;
@@ -59,6 +61,7 @@ public final class Constants {
     public static final int CAT_SPRITE_DISPLAY_SIZE = CAT_SPRITE_BASE_SIZE * CAT_SPRITE_SCALE;
 
     // Cat fact view constants
+    public static final int CAT_FACT_TEXT_WIDTH = 240;
     public static final String CAT_FACT_TITLE = "Did You Know?";
     public static final String CAT_FACT_LOADING = "Loading cat fact...";
     public static final String CAT_FACT_ERROR_PREFIX = "Error: ";
