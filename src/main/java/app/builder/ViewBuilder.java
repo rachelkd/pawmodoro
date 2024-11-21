@@ -56,7 +56,7 @@ public class ViewBuilder {
 
         final SessionViewBuilder sessionViewBuilder =
                 new SessionViewBuilder(cardPanel, cardLayout, viewManagerModel, viewFactory,
-                        dialogService, catViewsAndModels.getViewModels());
+                        dialogService, catViewsAndModels);
 
         // TODO: Refactor DisplayCatImageView to be in Session category?
 

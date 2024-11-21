@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 import app.builder.view.cat.CatViewModels;
+import app.builder.view.cat.CatViewsAndModels;
 import app.builder.view.session.SessionViewModels;
 import app.builder.view.session.SessionViews;
 import app.builder.view.session.SessionViewsAndModels;
@@ -28,7 +29,7 @@ public class SessionViewBuilder {
     private final SessionViewModelFactory sessionViewModelFactory;
     private final SessionViewModels viewModels;
     private final DialogService dialogService;
-    private final CatViewModels catViewModels;
+    private final CatViewsAndModels catViewsAndModels;
 
     // Views
     private SetupSessionView setupSessionView;
@@ -44,14 +45,14 @@ public class SessionViewBuilder {
      * @param viewManagerModel the view manager model
      * @param viewFactory the view factory
      * @param dialogService the dialog service
-     * @param catViewModels the cat view models
+     * @param catViewsAndModels the cat views and models
      */
     public SessionViewBuilder(JPanel cardPanel,
             CardLayout cardLayout,
             ViewManagerModel viewManagerModel,
             ViewFactory viewFactory,
             DialogService dialogService,
-            CatViewModels catViewModels) {
+            CatViewsAndModels catViewsAndModels) {
         this.cardPanel = cardPanel;
         this.cardLayout = cardLayout;
         this.viewManagerModel = viewManagerModel;
@@ -63,7 +64,7 @@ public class SessionViewBuilder {
                 sessionViewModelFactory.createTimerViewModel(),
                 sessionViewModelFactory.createStudySessionViewModel());
         this.dialogService = dialogService;
-        this.catViewModels = catViewModels;
+        this.catViewsAndModels = catViewsAndModels;
     }
 
     /**
@@ -86,9 +87,10 @@ public class SessionViewBuilder {
         this.studySessionView = viewFactory.createStudySessionView(
                 viewModels.getStudySessionViewModel(),
                 viewModels.getTimerViewModel(),
-                catViewModels.getCatViewModel(),
-                catViewModels.getDisplayCatStatsViewModel(),
-                dialogService);
+                catViewsAndModels.getViewModels().getCatViewModel(),
+                catViewsAndModels.getViewModels().getDisplayCatStatsViewModel(),
+                dialogService,
+                catViewsAndModels.getViews().getCatView());
         cardPanel.add(studySessionView, studySessionView.getViewName());
         return this;
     }

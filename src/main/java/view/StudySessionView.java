@@ -8,6 +8,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 
+import app.service.DialogService;
 import constants.Constants;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.study_session.StudySessionController;
@@ -21,53 +22,112 @@ import interface_adapter.timer.TimerViewModel;
 public class StudySessionView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "study session";
 
-    private final TimerViewModel timerViewModel;
     private final TimerView timerView;
-    private final StudySessionViewModel studySessionViewModel;
+    private final CatView catView;
 
-    private TimerController timerController;
+    private final TimerViewModel timerViewModel;
+
     private LogoutController logoutController;
     private StudySessionController studySessionController;
+
+    // TODO: We don't need this import if all the input is handled by TimerController in TimerView @yhj050224
+    private TimerController timerController;
 
     private final JButton timerSettings;
     private final JButton logOutSettings;
 
-    public StudySessionView(StudySessionViewModel studySessionViewModel, TimerViewModel timerViewModel) {
-        this.timerViewModel = timerViewModel;
-        timerViewModel.addPropertyChangeListener(this);
-        this.studySessionViewModel = studySessionViewModel;
+    private DialogService dialogService;
+
+    public StudySessionView(StudySessionViewModel studySessionViewModel, TimerViewModel timerViewModel,
+            DialogService dialogService, CatView catView) {
+
         studySessionViewModel.addPropertyChangeListener(this);
+
+        this.dialogService = dialogService;
+        this.timerViewModel = timerViewModel;
+
+        this.timerView = new TimerView(timerViewModel);
+        this.catView = catView;
 
         this.setLayout(new BorderLayout());
 
+        timerSettings = createButton("Timer Settings");
+        logOutSettings = createButton("Log Out");
+
+        timerSettings.addActionListener(this);
+        logOutSettings.addActionListener(this);
+
+        // Add components to main panel
+        this.add(createTopPanel(), BorderLayout.NORTH);
+        this.add(createTimerView(), BorderLayout.CENTER);
+        this.add(createCatPanel(), BorderLayout.SOUTH);
+
+        // Make sure this panel is visible
+        this.setVisible(true);
+        this.setOpaque(true);
+
+        // Force layout update
+        this.revalidate();
+        this.repaint();
+    }
+
+    private JButton createButton(String text) {
+        return new JButton(text);
+    }
+
+    private JPanel createTopPanel() {
+        final JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.add(createButtonsPanel());
+        topPanel.add(createTitlePanel());
+        return topPanel;
+    }
+
+    private JPanel createButtonsPanel() {
         final JPanel buttonsPanel = new JPanel(new BorderLayout());
 
         final JPanel leftButtons = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        timerSettings = new JButton("Timer Settings");
         leftButtons.add(timerSettings);
 
         final JPanel rightButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        logOutSettings = new JButton("Log Out");
         rightButtons.add(logOutSettings);
 
         buttonsPanel.add(leftButtons, BorderLayout.WEST);
         buttonsPanel.add(rightButtons, BorderLayout.EAST);
 
+        return buttonsPanel;
+    }
+
+    private JPanel createTitlePanel() {
         final JLabel title = new JLabel("STUDY SESSION", SwingConstants.CENTER);
         title.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TITLE));
 
         final JPanel titlePanel = new JPanel(new BorderLayout());
         titlePanel.add(title, BorderLayout.CENTER);
+        return titlePanel;
+    }
 
-        timerSettings.addActionListener(this);
-        logOutSettings.addActionListener(this);
+    private TimerView createTimerView() {
+        timerView.setAlignmentX(Component.CENTER_ALIGNMENT);
+        timerView.setVisible(true);
+        return timerView;
+    }
 
-        // TODO: Is this clean? Should add TimerView somewhere else?
-        this.timerView = new TimerView(timerViewModel);
+    private JPanel createCatPanel() {
+        final JPanel catPanel = new JPanel();
+        catPanel.setLayout(new BorderLayout());
+        catPanel.setVisible(true);
+        catPanel.setOpaque(true);
 
-        this.add(buttonsPanel, BorderLayout.NORTH);
-        this.add(titlePanel, BorderLayout.CENTER);
-        this.add(timerView, BorderLayout.SOUTH);
+        catView.setVisible(true);
+        catPanel.add(catView, BorderLayout.CENTER);
+        SwingUtilities.invokeLater(() -> {
+            catView.setVisible(true);
+            catView.revalidate();
+            catView.repaint();
+        });
+
+        return catPanel;
     }
 
     public String getViewName() {
@@ -90,6 +150,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(timerSettings)) {
             // TODO: Switch to TimerSettingsView
+            dialogService.showTimerSettingsDialog(timerViewModel);
         }
         else if (evt.getSource().equals(logOutSettings)) {
             // Execute the logout use case through the Controller
