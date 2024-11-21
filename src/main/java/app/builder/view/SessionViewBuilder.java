@@ -4,7 +4,6 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
-import app.builder.view.cat.CatViewModels;
 import app.builder.view.cat.CatViewsAndModels;
 import app.builder.view.session.SessionViewModels;
 import app.builder.view.session.SessionViews;
