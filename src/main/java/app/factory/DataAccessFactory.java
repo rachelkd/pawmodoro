@@ -15,8 +15,8 @@ import use_case.cat.CatDataAccessInterface;
 import use_case.create_inventory.CreateInventoryInventoryDataAccessInterface;
 import use_case.display_cat_image.DisplayCatImageDataAccessInterface;
 import use_case.get_cat_fact.CatFactDataAccessInterface;
-import use_case.login.LoginUserDataAccessInterface;
 import use_case.timer.TimerDataAccessInterface;
+import use_case.user.UserDataAccessInterface;
 
 /**
  * Factory for creating data access objects.
@@ -27,7 +27,7 @@ public class DataAccessFactory {
      *
      * @return the user data access interface
      */
-    public LoginUserDataAccessInterface createUserDataAccess() {
+    public UserDataAccessInterface createUserDataAccess() {
         return new DBUserDataAccessObject(new CommonUserFactory());
     }
 

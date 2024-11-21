@@ -7,15 +7,15 @@ import use_case.cat.CatDataAccessInterface;
 import use_case.create_inventory.CreateInventoryInventoryDataAccessInterface;
 import use_case.display_cat_image.DisplayCatImageDataAccessInterface;
 import use_case.get_cat_fact.CatFactDataAccessInterface;
-import use_case.login.LoginUserDataAccessInterface;
 import use_case.timer.TimerDataAccessInterface;
+import use_case.user.UserDataAccessInterface;
 
 /**
  * Builder for data access components.
  */
 public class DataAccessBuilder {
     private final DataAccessFactory factory;
-    private LoginUserDataAccessInterface userDataAccess;
+    private UserDataAccessInterface userDataAccess;
     private CreateInventoryInventoryDataAccessInterface inventoryDataAccess;
     private TimerDataAccessInterface timerDataAccess;
     private AdoptionDataAccessInterface adoptionDataAccess;

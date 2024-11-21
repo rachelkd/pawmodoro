@@ -14,19 +14,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import use_case.change_password.ChangePasswordUserDataAccessInterface;
-import use_case.login.LoginUserDataAccessInterface;
-import use_case.logout.LogoutUserDataAccessInterface;
-import use_case.signup.SignupUserDataAccessInterface;
+import use_case.user.UserDataAccessInterface;
 
 /**
  * The DAO for user data using Supabase database.
  * Implements interfaces for signup, login, change password, and logout.
  */
-public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
-        LoginUserDataAccessInterface,
-        ChangePasswordUserDataAccessInterface,
-        LogoutUserDataAccessInterface {
+public class DBUserDataAccessObject implements UserDataAccessInterface {
 
     private static final String API_KEY_HEADER = "apikey";
     private static final String AUTH_HEADER = "Authorization";

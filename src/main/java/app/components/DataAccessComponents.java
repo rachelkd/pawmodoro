@@ -5,14 +5,14 @@ import use_case.cat.CatDataAccessInterface;
 import use_case.create_inventory.CreateInventoryInventoryDataAccessInterface;
 import use_case.display_cat_image.DisplayCatImageDataAccessInterface;
 import use_case.get_cat_fact.CatFactDataAccessInterface;
-import use_case.login.LoginUserDataAccessInterface;
 import use_case.timer.TimerDataAccessInterface;
+import use_case.user.UserDataAccessInterface;
 
 /**
  * Components for data access.
  */
 public class DataAccessComponents {
-    private final LoginUserDataAccessInterface userDataAccess;
+    private final UserDataAccessInterface userDataAccess;
     private final CreateInventoryInventoryDataAccessInterface inventoryDataAccess;
     private final TimerDataAccessInterface timerDataAccess;
     private final AdoptionDataAccessInterface adoptionDataAccess;
@@ -32,7 +32,7 @@ public class DataAccessComponents {
      * @param catFactDataAccess the cat fact data access object
      */
     public DataAccessComponents(
-            LoginUserDataAccessInterface userDataAccess,
+            UserDataAccessInterface userDataAccess,
             CreateInventoryInventoryDataAccessInterface inventoryDataAccess,
             TimerDataAccessInterface timerDataAccess,
             AdoptionDataAccessInterface adoptionDataAccess,
@@ -48,7 +48,7 @@ public class DataAccessComponents {
         this.catFactDataAccess = catFactDataAccess;
     }
 
-    public LoginUserDataAccessInterface getUserDataAccess() {
+    public UserDataAccessInterface getUserDataAccess() {
         return userDataAccess;
     }
 
