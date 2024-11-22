@@ -236,8 +236,25 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
 
     @Override
     public boolean removeCat(String name, String ownerUsername) {
-        // TODO: Implement this method for cat running away use case @manahillsajid
-        return false;
+        boolean isSuccessful = false;
+        if (existsByNameAndOwner(name, ownerUsername)) {
+            final Request request = new Request.Builder()
+                    .url(apiUrl + CATS_ENDPOINT + NAME_QUERY + name + OWNER_QUERY + ownerUsername)
+                    .delete()
+                    .addHeader(API_KEY_HEADER, apiKey)
+                    .addHeader(AUTH_HEADER, BEARER_PREFIX + apiKey)
+                    .addHeader(PREFER_HEADER, PREFER_RETURN_MINIMAL)
+                    .build();
+
+            try {
+                final Response response = client.newCall(request).execute();
+                isSuccessful = response.isSuccessful();
+            }
+            catch (final IOException exception) {
+                // Keep isSuccessful as false
+            }
+        }
+        return isSuccessful;
     }
 
     @Override
