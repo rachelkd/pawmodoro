@@ -1,7 +1,9 @@
 package use_case.login;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
@@ -18,18 +20,15 @@ class LoginInteractorTest {
         final LoginInputData inputData = new LoginInputData("Paul", "password");
         final LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // For the success test, we need to add Paul to the data access repository
-        // before we log in.
         final UserFactory factory = new CommonUserFactory();
         final User user = factory.create("Paul", "password");
         userRepository.save(user);
 
-        // This creates a successPresenter that tests whether the test case is as we
-        // expect.
         final LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
             @Override
             public void prepareSuccessView(LoginOutputData user) {
                 assertEquals("Paul", user.getUsername());
+                assertFalse(user.isUseCaseFailed());
             }
 
             @Override
@@ -37,17 +36,11 @@ class LoginInteractorTest {
                 fail("Use case failure is unexpected.");
             }
 
-            /**
-             * Switches to the login View.
-             */
             @Override
             public void switchToSignUpView() {
                 fail("Use case switch to sign up view is unexpected.");
             }
 
-            /**
-             * Switches to the study session View.
-             */
             @Override
             public void switchToStudySessionView() {
                 fail("Use case switch to study session view is unexpected.");
@@ -63,18 +56,16 @@ class LoginInteractorTest {
         final LoginInputData inputData = new LoginInputData("Paul", "password");
         final LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // For the success test, we need to add Paul to the data access repository
-        // before we log in.
         final UserFactory factory = new CommonUserFactory();
         final User user = factory.create("Paul", "password");
         userRepository.save(user);
 
-        // This creates a successPresenter that tests whether the test case is as we
-        // expect.
         final LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
             @Override
             public void prepareSuccessView(LoginOutputData user) {
                 assertEquals("Paul", userRepository.getCurrentUsername());
+                assertEquals("Paul", user.getUsername());
+                assertFalse(user.isUseCaseFailed());
             }
 
             @Override
@@ -82,17 +73,11 @@ class LoginInteractorTest {
                 fail("Use case failure is unexpected.");
             }
 
-            /**
-             * Switches to the login View.
-             */
             @Override
             public void switchToSignUpView() {
                 fail("Use case switch to sign up view is unexpected.");
             }
 
-            /**
-             * Switches to the study session View.
-             */
             @Override
             public void switchToStudySessionView() {
                 fail("Use case switch to study session view is unexpected.");
@@ -110,37 +95,29 @@ class LoginInteractorTest {
         final LoginInputData inputData = new LoginInputData("Paul", "wrong");
         final LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // For this failure test, we need to add Paul to the data access repository
-        // before we log in, and
-        // the passwords should not match.
         final UserFactory factory = new CommonUserFactory();
         final User user = factory.create("Paul", "password");
         userRepository.save(user);
 
-        // This creates a presenter that tests whether the test case is as we expect.
         final LoginOutputBoundary failurePresenter = new LoginOutputBoundary() {
             @Override
             public void prepareSuccessView(LoginOutputData user) {
-                // this should never be reached since the test case should fail
                 fail("Use case success is unexpected.");
             }
 
             @Override
             public void prepareFailView(String error) {
                 assertEquals("Incorrect password for \"Paul\".", error);
+                final LoginOutputData outputData = new LoginOutputData("Paul", true);
+                assertTrue(outputData.isUseCaseFailed());
+                assertEquals("Paul", outputData.getUsername());
             }
 
-            /**
-             * Switches to the login View.
-             */
             @Override
             public void switchToSignUpView() {
                 fail("Use case switch to sign up view is unexpected.");
             }
 
-            /**
-             * Switches to the study session View.
-             */
             @Override
             public void switchToStudySessionView() {
                 fail("Use case switch to study session view is unexpected.");
@@ -156,32 +133,25 @@ class LoginInteractorTest {
         final LoginInputData inputData = new LoginInputData("Paul", "password");
         final LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // Add Paul to the repo so that when we check later they already exist
-
-        // This creates a presenter that tests whether the test case is as we expect.
         final LoginOutputBoundary failurePresenter = new LoginOutputBoundary() {
             @Override
             public void prepareSuccessView(LoginOutputData user) {
-                // this should never be reached since the test case should fail
                 fail("Use case success is unexpected.");
             }
 
             @Override
             public void prepareFailView(String error) {
                 assertEquals("Paul: Account does not exist.", error);
+                final LoginOutputData outputData = new LoginOutputData("Paul", true);
+                assertTrue(outputData.isUseCaseFailed());
+                assertEquals("Paul", outputData.getUsername());
             }
 
-            /**
-             * Switches to the login View.
-             */
             @Override
             public void switchToSignUpView() {
                 fail("Use case switch to sign up view is unexpected.");
             }
 
-            /**
-             * Switches to the study session View.
-             */
             @Override
             public void switchToStudySessionView() {
                 fail("Use case switch to study session view is unexpected.");
@@ -190,5 +160,35 @@ class LoginInteractorTest {
 
         final LoginInputBoundary interactor = new LoginInteractor(userRepository, failurePresenter);
         interactor.execute(inputData);
+    }
+
+    @Test
+    void switchToSignUpViewTest() {
+        final LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+        final LoginOutputBoundary presenter = new LoginOutputBoundary() {
+            @Override
+            public void prepareSuccessView(LoginOutputData user) {
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail("Use case failure is unexpected.");
+            }
+
+            @Override
+            public void switchToSignUpView() {
+                // Test passes if this method is called
+                assertTrue(true);
+            }
+
+            @Override
+            public void switchToStudySessionView() {
+                fail("Use case switch to study session view is unexpected.");
+            }
+        };
+
+        final LoginInputBoundary interactor = new LoginInteractor(userRepository, presenter);
+        interactor.switchToSignUpView();
     }
 }
