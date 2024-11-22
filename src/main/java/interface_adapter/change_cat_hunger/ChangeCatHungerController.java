@@ -1,7 +1,6 @@
 package interface_adapter.change_cat_hunger;
 
 import entity.AbstractFood;
-import entity.Cat;
 import use_case.cat_management.change_cat_hunger.ChangeCatHungerInputBoundary;
 import use_case.cat_management.change_cat_hunger.ChangeCatHungerInputData;
 
@@ -30,9 +29,9 @@ public class ChangeCatHungerController {
 
     /**
      * Executes the Change Cat Hunger Use Case for when the cat gets more hungry.
-     * @param catName
-     * @param ownerUsername
-     * @param studySessionLength
+     * @param catName cat name
+     * @param ownerUsername cat owner's username
+     * @param studySessionLength length of study session
      */
     void execute(String catName, String ownerUsername, int studySessionLength) {
         final ChangeCatHungerInputData changeCatHungerInputData =

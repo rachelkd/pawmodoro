@@ -1,6 +1,5 @@
 package interface_adapter.change_cat_happiness;
 
-import entity.Cat;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessInputBoundary;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessInputData;
 

@@ -1,7 +1,6 @@
 package use_case.cat_management.change_cat_hunger;
 
 import entity.AbstractFood;
-import entity.Cat;
 
 /**
  * Input Data for Change Cat Hunger Use Case.

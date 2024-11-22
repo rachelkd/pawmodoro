@@ -1,7 +1,5 @@
 package use_case.cat_management.change_cat_happiness;
 
-import entity.Cat;
-
 /**
  * Input Data for Change Cat Happiness Usecase.
  */
