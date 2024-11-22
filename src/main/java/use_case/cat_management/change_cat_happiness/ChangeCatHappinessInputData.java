@@ -8,15 +8,13 @@ import entity.Cat;
 public class ChangeCatHappinessInputData {
     private final String catName;
     private final String ownerUsername;
-    private final Cat cat;
     private final boolean completedStudySession;
     private final int studySessionLength;
 
-    public ChangeCatHappinessInputData(String catName, String ownerUsername, Cat cat,
+    public ChangeCatHappinessInputData(String catName, String ownerUsername,
                                        boolean completedStudySession, int studySessionLength) {
         this.catName = catName;
         this.ownerUsername = ownerUsername;
-        this.cat = cat;
         this.completedStudySession = completedStudySession;
         this.studySessionLength = studySessionLength;
     }
@@ -29,10 +27,6 @@ public class ChangeCatHappinessInputData {
     public String getCatName() {
 
         return catName;
-    }
-
-    public Cat getCat() {
-        return cat;
     }
 
     public boolean isCompletedStudySession() {

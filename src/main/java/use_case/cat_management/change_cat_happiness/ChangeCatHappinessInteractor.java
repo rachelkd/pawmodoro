@@ -19,8 +19,9 @@ public class ChangeCatHappinessInteractor implements ChangeCatHappinessInputBoun
 
     @Override
     public void execute(ChangeCatHappinessInputData changeCatHappinessInputData) {
-        // get the cat, cat object should already exist dues to create cat use case
-        final Cat cat = changeCatHappinessInputData.getCat();
+        // get the cat, cat should already exist
+        final Cat cat = catDataAccessObject.getCatByNameAndOwner(changeCatHappinessInputData.getCatName(),
+                changeCatHappinessInputData.getOwnerUsername());
         int newHappiness = 0;
 
         // decrease happiness when user does not complete study session

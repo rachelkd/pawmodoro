@@ -18,15 +18,14 @@ public class ChangeCatHappinessController {
      * Executes the Change Cat Happiness Use Case.
      * @param catName name of the cat
      * @param ownerUsername username of cat owner
-     * @param cat the cat object
      * @param completedStudySession boolean indicated if the study session was completed
      * @param studySessionLength the length of the study session
      */
-    public void execute(String catName, String ownerUsername, Cat cat,
+    public void execute(String catName, String ownerUsername,
             boolean completedStudySession, int studySessionLength) {
 
         final ChangeCatHappinessInputData changeCatHappinessUseInputData =
-                new ChangeCatHappinessInputData(catName, ownerUsername, cat, completedStudySession, studySessionLength);
+                new ChangeCatHappinessInputData(catName, ownerUsername, completedStudySession, studySessionLength);
         changeCatHappinessUseCaseInteractor.execute(changeCatHappinessUseInputData);
     }
 }

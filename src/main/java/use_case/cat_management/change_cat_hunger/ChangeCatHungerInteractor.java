@@ -21,7 +21,7 @@ public class ChangeCatHungerInteractor implements ChangeCatHungerInputBoundary {
     @Override
     public void execute(ChangeCatHungerInputData changeCatHungerInputData) {
         // get the cat, cat object should already exist dues to create cat use case
-        final Cat cat = changeCatHungerInputData.getCat();
+        final Cat cat = catDataAccessObject.getCatByNameAndOwner(changeCatHungerInputData.getCatName(), changeCatHungerInputData.getOwnerUsername());
         int hungerChange = 0;
 
         if (changeCatHungerInputData.getFood() != null) {

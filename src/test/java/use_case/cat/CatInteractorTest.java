@@ -103,7 +103,7 @@ class CatInteractorTest {
         cat.setCatObjectCreated(true);
 
         final ChangeCatHappinessInputData inputData = new ChangeCatHappinessInputData(cat.getName(),
-                cat.getOwnerUsername(), cat, true, 20);
+                cat.getOwnerUsername(), true, 20);
         final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
         cat.updateHappinessLevel(-30);
         catRepository.saveCat(cat);
@@ -128,7 +128,7 @@ class CatInteractorTest {
         cat.setCatObjectCreated(true);
 
         final ChangeCatHappinessInputData inputData = new ChangeCatHappinessInputData(cat.getName(),
-                cat.getOwnerUsername(), cat, false, 59);
+                cat.getOwnerUsername(), false, 59);
         final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
         cat.updateHappinessLevel(-10);
         catRepository.saveCat(cat);
@@ -155,7 +155,7 @@ class CatInteractorTest {
         final WetFood wetFood = (WetFood) foodItemFactory.create("tuna", "Tuna");
 
         final ChangeCatHungerInputData inputData = new ChangeCatHungerInputData(cat.getName(),
-                cat.getOwnerUsername(), cat, wetFood);
+                cat.getOwnerUsername(), wetFood);
         final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
         cat.updateHungerLevel(-30);
         catRepository.saveCat(cat);
@@ -179,7 +179,7 @@ class CatInteractorTest {
 
 
         final ChangeCatHungerInputData inputData = new ChangeCatHungerInputData(cat.getName(),
-                cat.getOwnerUsername(), cat, 20);
+                cat.getOwnerUsername(), 20);
         final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
         catRepository.saveCat(cat);
 

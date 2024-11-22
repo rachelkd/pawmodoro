@@ -19,12 +19,11 @@ public class ChangeCatHungerController {
      * Executes the Change Cat Hunger Use Case for when the cat is feed.
      * @param catName the name of the cat
      * @param ownerUsername the cat owner's username
-     * @param cat
      * @param food the food object
      */
-    void execute(String catName, String ownerUsername, Cat cat, AbstractFood food) {
+    void execute(String catName, String ownerUsername, AbstractFood food) {
         final ChangeCatHungerInputData changeCatHungerInputData =
-                new ChangeCatHungerInputData(catName, ownerUsername, cat, food);
+                new ChangeCatHungerInputData(catName, ownerUsername, food);
 
         changeCatHungerInteractor.execute(changeCatHungerInputData);
     }
@@ -33,12 +32,11 @@ public class ChangeCatHungerController {
      * Executes the Change Cat Hunger Use Case for when the cat gets more hungry.
      * @param catName
      * @param ownerUsername
-     * @param cat
      * @param studySessionLength
      */
-    void execute(String catName, String ownerUsername, Cat cat, int studySessionLength) {
+    void execute(String catName, String ownerUsername, int studySessionLength) {
         final ChangeCatHungerInputData changeCatHungerInputData =
-                new ChangeCatHungerInputData(catName, ownerUsername, cat, studySessionLength);
+                new ChangeCatHungerInputData(catName, ownerUsername, studySessionLength);
 
         changeCatHungerInteractor.execute(changeCatHungerInputData);
     }
