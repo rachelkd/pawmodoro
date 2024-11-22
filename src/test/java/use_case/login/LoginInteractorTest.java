@@ -1,6 +1,8 @@
 package use_case.login;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
@@ -42,6 +44,14 @@ class LoginInteractorTest {
             public void switchToSignUpView() {
                 fail("Use case switch to sign up view is unexpected.");
             }
+
+            /**
+             * Switches to the study session View.
+             */
+            @Override
+            public void switchToStudySessionView() {
+                fail("Use case switch to study session view is unexpected.");
+            }
         };
 
         final LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
@@ -78,6 +88,14 @@ class LoginInteractorTest {
             @Override
             public void switchToSignUpView() {
                 fail("Use case switch to sign up view is unexpected.");
+            }
+
+            /**
+             * Switches to the study session View.
+             */
+            @Override
+            public void switchToStudySessionView() {
+                fail("Use case switch to study session view is unexpected.");
             }
         };
 
@@ -119,6 +137,14 @@ class LoginInteractorTest {
             public void switchToSignUpView() {
                 fail("Use case switch to sign up view is unexpected.");
             }
+
+            /**
+             * Switches to the study session View.
+             */
+            @Override
+            public void switchToStudySessionView() {
+                fail("Use case switch to study session view is unexpected.");
+            }
         };
 
         final LoginInputBoundary interactor = new LoginInteractor(userRepository, failurePresenter);
@@ -151,6 +177,14 @@ class LoginInteractorTest {
             @Override
             public void switchToSignUpView() {
                 fail("Use case switch to sign up view is unexpected.");
+            }
+
+            /**
+             * Switches to the study session View.
+             */
+            @Override
+            public void switchToStudySessionView() {
+                fail("Use case switch to study session view is unexpected.");
             }
         };
 
