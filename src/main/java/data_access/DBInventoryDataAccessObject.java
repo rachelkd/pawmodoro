@@ -5,7 +5,8 @@ import entity.*;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import use_case.create_inventory.CreateInventoryInventoryDataAccessInterface;
+import use_case.food_management.InventoryDataAccessInterface;
+import use_case.food_management.create_inventory.CreateInventoryInventoryDataAccessInterface;
 import use_case.food_management.add_to_inventory.AddToInventoryDataAccessInterface;
 import use_case.food_management.use_item_in_inventory.UseItemDataAccessInterface;
 
@@ -17,7 +18,8 @@ import java.util.Map;
  * Database implementation of the Inventory Data Access Object.
  */
 public class DBInventoryDataAccessObject implements
-        AddToInventoryDataAccessInterface, UseItemDataAccessInterface, CreateInventoryInventoryDataAccessInterface {
+        AddToInventoryDataAccessInterface, UseItemDataAccessInterface, CreateInventoryInventoryDataAccessInterface,
+        InventoryDataAccessInterface {
     private static final String API_KEY_HEADER = "apikey";
     private static final String AUTH_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
@@ -195,7 +197,6 @@ public class DBInventoryDataAccessObject implements
         catch (final IOException exception) {
             // Keep result as null
         }
-
         return result;
     }
 
@@ -218,8 +219,9 @@ public class DBInventoryDataAccessObject implements
                 final JSONArray jsonArray = new JSONArray(responseBody);
                 final JSONObject inventoryJson = jsonArray.getJSONObject(0);
                 JSONArray foodItems = inventoryJson.getJSONArray(FOOD_INVENTORY_COLUMN);
+
                 for (int i = 0; i < foodItems.length(); i++) {
-                    JSONObject food = jsonArray.getJSONObject(i);
+                    JSONObject food = foodItems.getJSONObject(i);
                     if (food.getString("food_name").equals(foodId) && food.getInt("quantity") > 0) {
                         exists = true;
                     }

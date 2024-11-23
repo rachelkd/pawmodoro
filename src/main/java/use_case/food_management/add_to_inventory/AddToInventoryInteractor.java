@@ -39,8 +39,8 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
             Inventory inventory = addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId());
             foodItem = inventory.getItems().get(addToInventoryInputData.getFoodName());
             foodItem.setQuantity(prevQuantity + 1);
-
-            //addToInventoryDataAccessObject.updateInventory(inventory);
+            // since food object mutable
+            addToInventoryDataAccessObject.updateInventory(inventory);
 
             isSuccess = addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
                     .getItems().containsKey(addToInventoryInputData.getFoodName()) && addToInventoryDataAccessObject
@@ -60,7 +60,6 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
 
             Inventory inventory = addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId());
 
-            // mutable so will pass
             inventory.setItems(newInventoryItems);
 
             addToInventoryDataAccessObject.updateInventory(inventory);

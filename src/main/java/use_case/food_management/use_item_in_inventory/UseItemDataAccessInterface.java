@@ -3,7 +3,7 @@ package use_case.food_management.use_item_in_inventory;
 import entity.Inventory;
 
 /**
- * DAO for teh Add Item Use Case.
+ * DAO for the Add Item Use Case.
  */
 public interface UseItemDataAccessInterface {
     /**

@@ -1,8 +1,8 @@
 package interface_adapter.create_inventory;
 
 import interface_adapter.ViewManagerModel;
-import use_case.create_inventory.CreateInventoryOutputBoundary;
-import use_case.create_inventory.CreateInventoryOutputData;
+import use_case.food_management.create_inventory.CreateInventoryOutputBoundary;
+import use_case.food_management.create_inventory.CreateInventoryOutputData;
 
 /**
  * Create Inventory Use Case Presenter.
