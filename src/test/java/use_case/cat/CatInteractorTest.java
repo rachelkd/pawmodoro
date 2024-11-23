@@ -152,7 +152,7 @@ class CatInteractorTest {
         cat.setCatObjectCreated(true);
 
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
-        final WetFood wetFood = (WetFood) foodItemFactory.create("tuna", "Tuna");
+        final WetFood wetFood = (WetFood) foodItemFactory.create("tuna");
 
         final ChangeCatHungerInputData inputData = new ChangeCatHungerInputData(cat.getName(),
                 cat.getOwnerUsername(), wetFood);
@@ -163,7 +163,7 @@ class CatInteractorTest {
         final ChangeCatHungerOutputBoundary successPresenter = new ChangeCatHungerOutputBoundary() {
             @Override
             public void prepareSuccessView(ChangeCatHungerOutputData changeCatHungerOutputData) {
-                assertEquals(95, changeCatHungerOutputData.getNewHungerLevel());
+                assertEquals(90, changeCatHungerOutputData.getNewHungerLevel());
             }
         };
 

@@ -129,8 +129,8 @@ public class InventoryExample {
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
         Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFood foodItem = foodItemFactory.create("milk", "Milk");
-        final AbstractFood anotherFoodItem = foodItemFactory.create("tuna", "Tuna");
+        final AbstractFood foodItem = foodItemFactory.create("Milk");
+        final AbstractFood anotherFoodItem = foodItemFactory.create("Tuna");
         foodItem.setQuantity(2);
         anotherFoodItem.setQuantity(1);
         Map<String, AbstractFood> inventoryItems = inventory.getItems();

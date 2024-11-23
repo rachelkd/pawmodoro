@@ -7,15 +7,14 @@ import entity.Inventory;
  */
 public interface UseItemDataAccessInterface {
     /**
-     * Saves inventory to the repository.
-     * If the inventory already exists, it will be updated.
+     * Updates inventory in the repository. Return if updated.
      *
      * @param inventory
      *            the inventory to save
      * @throws IllegalArgumentException
      *             if inventory is null
      */
-    void save(Inventory inventory);
+    boolean updateInventory(Inventory inventory);
 
     /**
      * Retrieves the inventory of food items owned by a specific user.

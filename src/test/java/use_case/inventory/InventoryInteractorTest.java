@@ -51,7 +51,7 @@ class InventoryInteractorTest {
         final Inventory inventory = inventoryFactory.create("chiually");
         //add same food item
         Map<String, AbstractFood> inventoryItems = inventory.getItems();
-        inventoryItems.put("milk", foodItemFactory.create("milk", "temp"));
+        inventoryItems.put("milk", foodItemFactory.create("milk"));
         inventory.setItems(inventoryItems);
         inventoryRepository.save(inventory);
 
@@ -77,7 +77,7 @@ class InventoryInteractorTest {
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
         final Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFood foodItem = foodItemFactory.create("milk", "temp");
+        final AbstractFood foodItem = foodItemFactory.create("milk");
         foodItem.setQuantity(1);
         Map<String, AbstractFood> inventoryItems = inventory.getItems();
         inventoryItems.put("milk", foodItem);
@@ -104,7 +104,7 @@ class InventoryInteractorTest {
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
         final Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFood foodItem = foodItemFactory.create("milk", "temp");
+        final AbstractFood foodItem = foodItemFactory.create("milk");
         foodItem.setQuantity(2);
         Map<String, AbstractFood> inventoryItems = inventory.getItems();
         inventoryItems.put("milk", foodItem);
@@ -152,7 +152,7 @@ class InventoryInteractorTest {
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
         Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFood foodItem = foodItemFactory.create("milk", "temp");
+        final AbstractFood foodItem = foodItemFactory.create("milk");
         foodItem.setQuantity(2);
         Map<String, AbstractFood> inventoryItems = inventory.getItems();
         inventoryItems.put("milk", foodItem);

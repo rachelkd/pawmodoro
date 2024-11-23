@@ -10,15 +10,14 @@ import entity.Inventory;
 public interface AddToInventoryDataAccessInterface {
 
     /**
-     * Saves inventory to the repository.
-     * If the inventory already exists, it will be updated.
+     * Updates inventory in the repository. Returns true if updated.
      *
      * @param inventory
-     *            the inventory to save
+     *            the inventory to update
      * @throws IllegalArgumentException
      *             if inventory is null
      */
-    void save(Inventory inventory);
+    boolean updateInventory(Inventory inventory);
 
     /**
     * Retrieves the inventory of food items owned by a specific user.
@@ -30,19 +29,4 @@ public interface AddToInventoryDataAccessInterface {
     *             if ownerId is null or empty
     */
     Inventory getInventory(String ownerId);
-
-    /**
-     * Updates the quantity of a specific food item for a user.
-     *
-     * @param ownerId
-     *            the ID of the owner of the food item
-     * @param foodId
-     *            the ID of the food item to update
-     * @param quantity
-     *            the new quantity to set
-     * @throws IllegalArgumentException
-     *             if ownerId or foodId is null or empty,
-     *             or if quantity is negative
-     */
-    void updateQuantity(String ownerId, String foodId, int quantity);
 }

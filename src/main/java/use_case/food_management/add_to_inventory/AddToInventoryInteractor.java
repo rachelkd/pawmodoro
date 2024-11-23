@@ -4,6 +4,7 @@ import java.util.Map;
 
 import entity.AbstractFood;
 import entity.FoodItemFactory;
+import entity.Inventory;
 
 /**
  * The Add To Inventory Interactor.
@@ -30,42 +31,44 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
 
         // item in inventory already
         if (addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                .getItems().containsKey(addToInventoryInputData.getFoodId())) {
+                .getItems().containsKey(addToInventoryInputData.getFoodName())) {
 
-            final Integer prevQuantity = addToInventoryDataAccessObject
+            final int prevQuantity = addToInventoryDataAccessObject
                     .getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().get(addToInventoryInputData.getFoodId()).getQuantity();
-            foodItem = addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().get(addToInventoryInputData.getFoodId());
+                    .getItems().get(addToInventoryInputData.getFoodName()).getQuantity();
+            Inventory inventory = addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId());
+            foodItem = inventory.getItems().get(addToInventoryInputData.getFoodName());
+            foodItem.setQuantity(prevQuantity + 1);
 
-            addToInventoryDataAccessObject.updateQuantity(addToInventoryInputData.getOwnerId(),
-                    addToInventoryInputData.getFoodId(), prevQuantity + 1);
-
-            addToInventoryDataAccessObject.save(addToInventoryDataAccessObject
-                    .getInventory(addToInventoryInputData.getOwnerId()));
+            //addToInventoryDataAccessObject.updateInventory(inventory);
 
             isSuccess = addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().containsKey(addToInventoryInputData.getFoodId()) && addToInventoryDataAccessObject
+                    .getItems().containsKey(addToInventoryInputData.getFoodName()) && addToInventoryDataAccessObject
                     .getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().get(addToInventoryInputData.getFoodId()).getQuantity() == prevQuantity + 1;
+                    .getItems().get(addToInventoryInputData.getFoodName()).getQuantity() == prevQuantity + 1;
 
         } // item not in inventory
         else {
-            foodItem = foodFactory.create(addToInventoryInputData.getFoodId(), "temp");
+            foodItem = foodFactory.create(addToInventoryInputData.getFoodName());
             foodItem.setQuantity(1);
 
             final Map<String, AbstractFood> newInventoryItems = addToInventoryDataAccessObject
                     .getInventory(addToInventoryInputData.getOwnerId())
                     .getItems();
-            newInventoryItems.put(addToInventoryInputData.getFoodId(), foodItem);
 
-            addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                    .setItems(newInventoryItems);
+            newInventoryItems.put(addToInventoryInputData.getFoodName(), foodItem);
+
+            Inventory inventory = addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId());
+
+            // mutable so will pass
+            inventory.setItems(newInventoryItems);
+
+            addToInventoryDataAccessObject.updateInventory(inventory);
 
             isSuccess = addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().containsKey(addToInventoryInputData.getFoodId())
+                    .getItems().containsKey(addToInventoryInputData.getFoodName())
                     && addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().get(addToInventoryInputData.getFoodId()).getQuantity() == 1;
+                    .getItems().get(addToInventoryInputData.getFoodName()).getQuantity() == 1;
         }
 
         final AddToInventoryOutputData addToInventoryOutputData =

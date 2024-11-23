@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import entity.AbstractFood;
+import entity.FoodInventory;
 import entity.Inventory;
 import use_case.create_inventory.CreateInventoryInventoryDataAccessInterface;
 import use_case.food_management.add_to_inventory.AddToInventoryDataAccessInterface;
@@ -35,7 +36,12 @@ public class InMemoryInventoryDataAccessObject implements AddToInventoryDataAcce
 
     @Override
     public Inventory getInventory(String ownerId) {
-        return inventoryStorage.get(ownerId);
+        // mimic database since the object would be mutable while the database would not
+        Inventory inventory = inventoryStorage.get(ownerId);
+        Inventory copyInventory = new FoodInventory(inventory.getOwnerId());
+        copyInventory.setItems(inventory.getItems());
+
+        return copyInventory;
     }
 
     @Override
@@ -44,14 +50,9 @@ public class InMemoryInventoryDataAccessObject implements AddToInventoryDataAcce
     }
 
     @Override
-    public void updateQuantity(String ownerId, String foodId, int quantity) {
-
-        final Inventory inventory = inventoryStorage.get(ownerId);
-
-        if (inventory.getItems().containsKey(foodId)) {
-            final AbstractFood item = inventory.getItems().get(foodId);
-            item.setQuantity(quantity);
-        }
+    public boolean updateInventory(Inventory inventory) {
+        inventoryStorage.put(inventory.getOwnerId(), inventory);
+        return true;
     }
 
     /**
