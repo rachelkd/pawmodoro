@@ -1,25 +1,44 @@
 package interface_adapter.timer;
 
-import use_case.timer.display_timer.DisplayTimerInputBoundary;
-import use_case.timer.display_timer.DisplayTimerInputData;
+import use_case.timer.start_timer.StartTimerInputBoundary;
+import use_case.timer.start_timer.StartTimerInputData;
+import use_case.timer.stop_timer.StopTimerInputBoundary;
+import use_case.timer.stop_timer.StopTimerInputData;
 
 /**
  * Controller for timer-related user actions.
+ * Serves as the bridge between the view and the use cases.
  */
 public class TimerController {
-    private final DisplayTimerInputBoundary displayTimerUseCaseInteractor;
+    private final StartTimerInputBoundary startTimerUseCase;
+    private final StopTimerInputBoundary stopTimerUseCase;
 
-    public TimerController(DisplayTimerInputBoundary displayTimerUseCaseInteractor) {
-        this.displayTimerUseCaseInteractor = displayTimerUseCaseInteractor;
+    /**
+     * Constructs a TimerController.
+     *
+     * @param startTimerUseCase The input boundary for starting the timer.
+     * @param stopTimerUseCase  The input boundary for stopping the timer.
+     */
+    public TimerController(StartTimerInputBoundary startTimerUseCase, StopTimerInputBoundary stopTimerUseCase) {
+        this.startTimerUseCase = startTimerUseCase;
+        this.stopTimerUseCase = stopTimerUseCase;
     }
 
     /**
-     * Executes the display timer use case for a specific user.
-     * 
-     * @param username the username of the user whose timer to display
+     * Handles the request to start the timer.
+     *
+     * @param username The username of the user starting the timer.
      */
-    public void execute(String username) {
-        final DisplayTimerInputData displayTimerInputData = new DisplayTimerInputData(username);
-        displayTimerUseCaseInteractor.execute(displayTimerInputData);
+    public void startTimer(String username) {
+        startTimerUseCase.execute(new StartTimerInputData(username));
+    }
+
+    /**
+     * Handles the request to stop the timer.
+     *
+     * @param username The username of the user stopping the timer.
+     */
+    public void stopTimer(String username) {
+        stopTimerUseCase.execute(new StopTimerInputData(username));
     }
 }

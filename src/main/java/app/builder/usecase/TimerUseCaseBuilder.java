@@ -9,9 +9,6 @@ import interface_adapter.timer.TimerPresenter;
 import use_case.setupsession.SetupSessionInputBoundary;
 import use_case.setupsession.SetupSessionInteractor;
 import use_case.setupsession.SetupSessionOutputBoundary;
-import use_case.timer.display_timer.DisplayTimerInputBoundary;
-import use_case.timer.display_timer.DisplayTimerInteractor;
-import use_case.timer.display_timer.DisplayTimerOutputBoundary;
 
 /**
  * Builder for timer-related use cases.
@@ -20,24 +17,6 @@ public class TimerUseCaseBuilder extends AbstractUseCaseBuilder {
 
     public TimerUseCaseBuilder(Views views, DataAccessComponents dataAccess) {
         super(views, dataAccess);
-    }
-
-    /**
-     * Builds the timer use case.
-     *
-     * @return this builder
-     */
-    public TimerUseCaseBuilder buildTimerUseCase() {
-        final DisplayTimerOutputBoundary outputBoundary = new TimerPresenter(
-                getViews().getSession().getViewModels().getTimerViewModel());
-
-        final DisplayTimerInputBoundary interactor = new DisplayTimerInteractor(
-                getDataAccess().getTimerDataAccess(),
-                outputBoundary);
-
-        final TimerController controller = new TimerController(interactor);
-        getViews().getSession().getViews().getTimerView().setTimerController(controller);
-        return this;
     }
 
     // TODO: Move this into SessionsUseCaseBuilder?
@@ -64,7 +43,6 @@ public class TimerUseCaseBuilder extends AbstractUseCaseBuilder {
      */
     public TimerUseCaseBuilder build() {
         return this
-                .buildTimerUseCase()
                 .buildSetupSessionUseCase();
     }
 }

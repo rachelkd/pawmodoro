@@ -24,7 +24,6 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     private final TimerView timerView;
     private final CatView catView;
-
     private final TimerViewModel timerViewModel;
 
     private LogoutController logoutController;
@@ -35,6 +34,8 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     private final JButton timerSettings;
     private final JButton logOutSettings;
+    private final JButton stopTimer;
+    private final JButton startTimer;
 
     private DialogService dialogService;
 
@@ -45,17 +46,20 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
         this.dialogService = dialogService;
         this.timerViewModel = timerViewModel;
-
         this.timerView = new TimerView(timerViewModel);
-        this.catView = catView;
 
+        this.catView = catView;
         this.setLayout(new BorderLayout());
 
         timerSettings = createButton("Timer Settings");
         logOutSettings = createButton("Log Out");
+        stopTimer = createButton("Stop");
+        startTimer = createButton("Start");
 
         timerSettings.addActionListener(this);
         logOutSettings.addActionListener(this);
+        stopTimer.addActionListener(this);
+        startTimer.addActionListener(this);
 
         // Add components to main panel
         this.add(createTopPanel(), BorderLayout.NORTH);
@@ -108,8 +112,20 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     }
 
     private TimerView createTimerView() {
+        final JPanel timerPanel = new JPanel();
+        timerPanel.setLayout(new BoxLayout(timerPanel, BoxLayout.Y_AXIS));
+
+        // Add the timer view
         timerView.setAlignmentX(Component.CENTER_ALIGNMENT);
         timerView.setVisible(true);
+        timerPanel.add(timerView);
+
+        // Add the buttons panel below the timer
+        final JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonsPanel.add(startTimer);
+        buttonsPanel.add(stopTimer);
+        timerPanel.add(buttonsPanel);
+
         return timerView;
     }
 
@@ -134,6 +150,11 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         return viewName;
     }
 
+    /**
+     * Sets the TimerController for handling timer actions.
+     *
+     * @param timerController The controller to set.
+     */
     public void setTimerController(TimerController timerController) {
         this.timerController = timerController;
     }
@@ -149,19 +170,27 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     @Override
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(timerSettings)) {
-            // TODO: Switch to TimerSettingsView @yhj050224
             dialogService.showTimerSettingsDialog(timerViewModel);
         }
         else if (evt.getSource().equals(logOutSettings)) {
-            // Execute the logout use case through the Controller
             this.logoutController.execute("");
+        }
+        else if (evt.getSource().equals(startTimer)) {
+            if (timerController != null) {
+                timerController.startTimer("1");
+            }
+        }
+        else if (evt.getSource().equals(stopTimer)) {
+            if (timerController != null) {
+                timerController.stopTimer("1");
+            }
         }
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
-            // TODO: Implement this: What happens when StudySessionViewModel changes state?
+            // React to changes in the StudySessionViewModel if needed
         }
     }
 }

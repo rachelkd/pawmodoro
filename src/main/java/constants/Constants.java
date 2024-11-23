@@ -15,7 +15,9 @@ public final class Constants {
     public static final int DEFAULT_WORK_DURATION_MS = DEFAULT_WORK_MINUTES * MINUTES_TO_SECONDS * SECONDS_TO_MILLIS;
 
     public static final String STATUS_STOPPED = "STOPPED";
+    public static final String STATUS_RUNNING = "RUNNING";
     public static final String INTERVAL_WORK = "WORK";
+    public static final String INTERVAL_BREAK = "BREAK";
 
     public static final int TIMER_FONT_SIZE = 48;
     public static final int TIMER_VERTICAL_SPACING = 20;
