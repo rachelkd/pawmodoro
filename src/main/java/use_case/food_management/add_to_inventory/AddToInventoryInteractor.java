@@ -5,20 +5,21 @@ import java.util.Map;
 import entity.AbstractFood;
 import entity.FoodItemFactory;
 import entity.Inventory;
+import use_case.food_management.InventoryDataAccessInterface;
 
 /**
  * The Add To Inventory Interactor.
  */
 public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
-    private final AddToInventoryDataAccessInterface addToInventoryDataAccessObject;
+    private final InventoryDataAccessInterface inventoryDataAccessObject;
     private final AddToInventoryOutputBoundary addToInventoryPresenter;
     private final FoodItemFactory foodFactory;
 
-    public AddToInventoryInteractor(AddToInventoryDataAccessInterface addToInventoryDataAccessObject,
+    public AddToInventoryInteractor(InventoryDataAccessInterface inventoryDataAccessObject,
                                     AddToInventoryOutputBoundary addToInventoryOutputBoundary,
                                     FoodItemFactory foodFactory) {
         // repository of inventories
-        this.addToInventoryDataAccessObject = addToInventoryDataAccessObject;
+        this.inventoryDataAccessObject = inventoryDataAccessObject;
         this.addToInventoryPresenter = addToInventoryOutputBoundary;
         this.foodFactory = foodFactory;
     }
@@ -30,20 +31,20 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
         final AbstractFood foodItem;
 
         // item in inventory already
-        if (addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
+        if (inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
                 .getItems().containsKey(addToInventoryInputData.getFoodName())) {
 
-            final int prevQuantity = addToInventoryDataAccessObject
+            final int prevQuantity = inventoryDataAccessObject
                     .getInventory(addToInventoryInputData.getOwnerId())
                     .getItems().get(addToInventoryInputData.getFoodName()).getQuantity();
-            Inventory inventory = addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId());
+            Inventory inventory = inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId());
             foodItem = inventory.getItems().get(addToInventoryInputData.getFoodName());
             foodItem.setQuantity(prevQuantity + 1);
             // since food object mutable
-            addToInventoryDataAccessObject.updateInventory(inventory);
+            inventoryDataAccessObject.updateInventory(inventory);
 
-            isSuccess = addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().containsKey(addToInventoryInputData.getFoodName()) && addToInventoryDataAccessObject
+            isSuccess = inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
+                    .getItems().containsKey(addToInventoryInputData.getFoodName()) && inventoryDataAccessObject
                     .getInventory(addToInventoryInputData.getOwnerId())
                     .getItems().get(addToInventoryInputData.getFoodName()).getQuantity() == prevQuantity + 1;
 
@@ -52,21 +53,21 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
             foodItem = foodFactory.create(addToInventoryInputData.getFoodName());
             foodItem.setQuantity(1);
 
-            final Map<String, AbstractFood> newInventoryItems = addToInventoryDataAccessObject
+            final Map<String, AbstractFood> newInventoryItems = inventoryDataAccessObject
                     .getInventory(addToInventoryInputData.getOwnerId())
                     .getItems();
 
             newInventoryItems.put(addToInventoryInputData.getFoodName(), foodItem);
 
-            Inventory inventory = addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId());
+            Inventory inventory = inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId());
 
             inventory.setItems(newInventoryItems);
 
-            addToInventoryDataAccessObject.updateInventory(inventory);
+            inventoryDataAccessObject.updateInventory(inventory);
 
-            isSuccess = addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
+            isSuccess = inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
                     .getItems().containsKey(addToInventoryInputData.getFoodName())
-                    && addToInventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
+                    && inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
                     .getItems().get(addToInventoryInputData.getFoodName()).getQuantity() == 1;
         }
 

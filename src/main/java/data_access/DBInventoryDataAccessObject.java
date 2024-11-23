@@ -17,9 +17,7 @@ import java.util.Map;
 /**
  * Database implementation of the Inventory Data Access Object.
  */
-public class DBInventoryDataAccessObject implements
-        AddToInventoryDataAccessInterface, UseItemDataAccessInterface, CreateInventoryInventoryDataAccessInterface,
-        InventoryDataAccessInterface {
+public class DBInventoryDataAccessObject implements InventoryDataAccessInterface {
     private static final String API_KEY_HEADER = "apikey";
     private static final String AUTH_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";

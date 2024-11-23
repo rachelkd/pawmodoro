@@ -65,6 +65,16 @@ public class DBInventoryDataAccessTest {
     }
 
     @Test
+    void successExistsByOwnerIdTest() {
+
+        final Inventory inventory = inventoryFactory.create("testuser");
+        inventoryRepository.save(inventory);
+
+        assertTrue(inventoryRepository.existsByOwnerId("testuser"));
+        assertFalse(inventoryRepository.existsByOwnerId("testuser2"));
+    }
+
+    @Test
     void successGetInventoryItemsTest() {
         final Inventory inventory = inventoryFactory.create("testuser");
         Map<String, AbstractFood> items = new HashMap<>();
@@ -131,5 +141,12 @@ public class DBInventoryDataAccessTest {
         assertEquals(1, retrievedInventory.getItems().get("milk").getQuantity());
     }
 
+    @Test
+    void failureNonExistentInventoryTest() {
+        assertFalse(inventoryRepository.existsByOwnerId("nonexistentuser"));
+        assertNull(inventoryRepository.getInventoryItems("nonexistentuser"));
+        assertNull(inventoryRepository.getInventory("nonexistentuser"));
+        assertFalse(inventoryRepository.canUseItem("nonexistentuser", "milk"));
+    }
 
 }

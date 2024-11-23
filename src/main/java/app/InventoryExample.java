@@ -15,6 +15,7 @@ import interface_adapter.create_inventory.CreateInventoryPresenter;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
+import use_case.food_management.InventoryDataAccessInterface;
 import use_case.food_management.create_inventory.CreateInventoryInputBoundary;
 import use_case.food_management.create_inventory.CreateInventoryInteractor;
 import use_case.food_management.create_inventory.CreateInventoryInventoryDataAccessInterface;
@@ -61,7 +62,7 @@ public class InventoryExample {
         inventoryView = new InventoryView(inventoryViewModel);
         cardPanel.add(inventoryView, inventoryViewModel.getViewName());
 
-        final CreateInventoryInventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
+        final InventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
         final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter(viewManagerModel, inventoryViewModel);
 
 
@@ -90,7 +91,7 @@ public class InventoryExample {
         inventoryView = new InventoryView(inventoryViewModel);
         cardPanel.add(inventoryView, inventoryViewModel.getViewName());
 
-        final CreateInventoryInventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
+        final InventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
         final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter( viewManagerModel, inventoryViewModel);
         final AddToInventoryOutputBoundary addItemPresenter = new AddToInventoryPresenter(inventoryViewModel);
         final UseItemOutputBoundary useItemPresenter = new UseItemPresenter(inventoryViewModel);
@@ -103,8 +104,8 @@ public class InventoryExample {
 
         final CreateInventoryInputBoundary createInventoryInteractor = new CreateInventoryInteractor(dataAccessObject, presenter,
                 inventoryFactory);
-        final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor((AddToInventoryDataAccessInterface) dataAccessObject, addItemPresenter, foodItemFactory);
-        final UseItemInputBoundary useItemInteractor = new UseItemInteractor((UseItemDataAccessInterface) dataAccessObject, useItemPresenter);
+        final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor(dataAccessObject, addItemPresenter, foodItemFactory);
+        final UseItemInputBoundary useItemInteractor = new UseItemInteractor(dataAccessObject, useItemPresenter);
 
         final CreateInventoryController createInventoryController = new CreateInventoryController(createInventoryInteractor);
         final AddToInventoryController addToInventoryController = new AddToInventoryController(addToInventoryInteractor);
@@ -124,7 +125,7 @@ public class InventoryExample {
         return application;
     }
 
-    void createInventory(CreateInventoryInventoryDataAccessInterface inventoryRepository) {
+    void createInventory(InventoryDataAccessInterface inventoryRepository) {
 
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
         final FoodItemFactory foodItemFactory = new FoodItemFactory();

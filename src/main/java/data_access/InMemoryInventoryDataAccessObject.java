@@ -6,6 +6,7 @@ import java.util.Map;
 import entity.AbstractFood;
 import entity.FoodInventory;
 import entity.Inventory;
+import use_case.food_management.InventoryDataAccessInterface;
 import use_case.food_management.create_inventory.CreateInventoryInventoryDataAccessInterface;
 import use_case.food_management.add_to_inventory.AddToInventoryDataAccessInterface;
 import use_case.food_management.use_item_in_inventory.UseItemDataAccessInterface;
@@ -15,8 +16,7 @@ import use_case.food_management.use_item_in_inventory.UseItemDataAccessInterface
  * implementation does
  * NOT persist data between runs of the program.
  */
-public class InMemoryInventoryDataAccessObject implements AddToInventoryDataAccessInterface,
-        CreateInventoryInventoryDataAccessInterface, UseItemDataAccessInterface {
+public class InMemoryInventoryDataAccessObject implements InventoryDataAccessInterface {
     private final Map<String, Inventory> inventoryStorage = new HashMap<>();
 
     @Override
