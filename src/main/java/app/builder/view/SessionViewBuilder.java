@@ -90,7 +90,8 @@ public class SessionViewBuilder {
         final StudySessionOutputBoundary presenter = new StudySessionPresenter(
                 viewManagerModel,
                 sessionViewModelFactory.createLoginViewModel(),
-                viewModels.getSetupSessionViewModel());
+                viewModels.getSetupSessionViewModel(),
+                viewModels.breakSessionViewModel());
 
         final StudySessionInputBoundary interactor = new StudySessionInteractor(presenter);
         final StudySessionController studySessionController = new StudySessionController(interactor);
@@ -101,7 +102,7 @@ public class SessionViewBuilder {
                 catViewsAndModels.getViewModels().getDisplayCatStatsViewModel(),
                 dialogService,
                 catViewsAndModels.getViews().getCatView(),
-                studySessionController);
+                studySessionController, studySessionOutputBoundary);
         cardPanel.add(studySessionView, studySessionView.getViewName());
         return this;
     }

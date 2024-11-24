@@ -13,6 +13,7 @@ import constants.Constants;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionViewModel;
+import use_case.studysession.StudySessionOutputBoundary;
 
 /**
  * Views for Study sessions.
@@ -24,6 +25,7 @@ public class StudySessionView extends JPanel implements ActionListener {
 
     private LogoutController logoutController;
     private StudySessionController studySessionController;
+    private final StudySessionOutputBoundary studySessionOutputBoundary;
 
     private final JButton timerSettings;
     private final JButton logOutSettings;
@@ -37,9 +39,11 @@ public class StudySessionView extends JPanel implements ActionListener {
     private DialogService dialogService;
 
     public StudySessionView(StudySessionViewModel studySessionViewModel, DialogService dialogService, CatView catView,
-                            StudySessionController studySessionController) {
+                            StudySessionController studySessionController,
+                            StudySessionOutputBoundary studySessionOutputBoundary) {
 
         this.studySessionController = studySessionController;
+        this.studySessionOutputBoundary = studySessionOutputBoundary;
         this.dialogService = dialogService;
         this.catView = catView;
 
@@ -52,7 +56,6 @@ public class StudySessionView extends JPanel implements ActionListener {
 
         timerSettings = createButton("Timer Settings");
         logOutSettings = createButton("Log Out");
-        // Start and Stop Timer buttons
         startTimerButton = createButton("Start Timer");
         stopTimerButton = createButton("Stop Timer");
 
@@ -75,6 +78,15 @@ public class StudySessionView extends JPanel implements ActionListener {
                 }
                 else {
                     swingTimer.stop();
+                    System.out.println("Time is up! Switching to Break Session...");
+
+                    // Notify the presenter or controller to switch the view
+                    if (studySessionOutputBoundary != null) {
+                        studySessionOutputBoundary.switchToBreakSessionView();
+                    }
+                    else {
+                        System.err.println("StudySessionOutputBoundary is not initialized.");
+                    }
                 }
             }
         });
@@ -176,15 +188,7 @@ public class StudySessionView extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(timerSettings)) {
-            System.out.println("Timer Settings button clicked.");
-            // Ensure studySessionController is not null before using it
-            if (studySessionController != null) {
-                studySessionController.switchToSetupSessionView();
-                System.out.println("hello");
-            }
-            else {
-                System.err.println("StudySessionController is not initialized.");
-            }
+            studySessionController.switchToSetupSessionView();
         }
         else if (evt.getSource().equals(logOutSettings)) {
             // Execute the logout use case through the Controller

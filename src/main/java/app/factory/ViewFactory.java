@@ -15,6 +15,7 @@ import interface_adapter.signup.SignupViewModel;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
+import use_case.studysession.StudySessionOutputBoundary;
 import view.AdoptionView;
 import view.CatView;
 import view.DisplayCatImageView;
@@ -119,6 +120,7 @@ public class ViewFactory {
      * Creates a Study Session View.
      * 
      * @param studySessionViewModel the study session view model
+     * @param studySessionOutputBoundary the study session output boundary
      * @param catViewModel the cat view model
      * @param displayCatStatsViewModel the display cat stats view model
      * @param dialogService the dialog service for user interactions
@@ -130,8 +132,10 @@ public class ViewFactory {
                                                    CatViewModel catViewModel,
                                                    DisplayCatStatsViewModel displayCatStatsViewModel,
                                                    DialogService dialogService, CatView catView,
-                                                   StudySessionController studySessionController) {
-        return new StudySessionView(studySessionViewModel, dialogService, catView, studySessionController);
+                                                   StudySessionController studySessionController,
+                                                   StudySessionOutputBoundary studySessionOutputBoundary) {
+        return new StudySessionView(studySessionViewModel, dialogService, catView, studySessionController,
+                studySessionOutputBoundary);
     }
 
     /**
