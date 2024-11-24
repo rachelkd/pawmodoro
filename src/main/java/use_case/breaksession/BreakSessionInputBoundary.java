@@ -1,12 +1,12 @@
-package use_case.studysession;
+package use_case.breaksession;
 
 /**
  * Input Boundary for actions which are related to study session.
  */
-public interface StudySessionInputBoundary {
+public interface BreakSessionInputBoundary {
 
     /**
-     * Executes the switch to set up session view.
+     * Executes the switch to study session view.
      */
     void switchToSetupSessionView();
 

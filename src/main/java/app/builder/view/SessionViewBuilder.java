@@ -90,7 +90,7 @@ public class SessionViewBuilder {
         final StudySessionOutputBoundary presenter = new StudySessionPresenter(
                 viewManagerModel,
                 sessionViewModelFactory.createLoginViewModel(),
-                viewModels.getStudySessionViewModel());
+                viewModels.getSetupSessionViewModel());
 
         final StudySessionInputBoundary interactor = new StudySessionInteractor(presenter);
         final StudySessionController studySessionController = new StudySessionController(interactor);

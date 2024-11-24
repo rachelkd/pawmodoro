@@ -13,14 +13,14 @@ public class StudySessionController {
     }
 
     /**
-     * Executes the 'switch to setup session view' Use Case.
+     * Executes the 'switch to set up session view' Use Case.
      */
     public void switchToSetupSessionView() {
         studySessionInteractor.switchToSetupSessionView();
     }
 
     /**
-     * Executes the 'switch to logout' Use Case.
+     * Executes the 'switch to log out' Use Case.
      */
     public void logout() {
         studySessionInteractor.logout();

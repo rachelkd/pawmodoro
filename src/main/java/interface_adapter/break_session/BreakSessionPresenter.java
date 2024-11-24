@@ -1,30 +1,29 @@
-package interface_adapter.study_session;
+package interface_adapter.break_session;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.login.LoginState;
-import interface_adapter.setupsession.SetupSessionViewModel;
-import use_case.studysession.StudySessionOutputBoundary;
+import interface_adapter.study_session.StudySessionViewModel;
+import use_case.breaksession.BreakSessionOutputBoundary;
 
 /**
- * Presenter for the study session use case.
- * Handles the presentation logic for study session related operations.
+ * Presenter for the break session use case.
+ * Handles the presentation logic for break session related operations.
  */
-public class StudySessionPresenter implements StudySessionOutputBoundary {
+public class BreakSessionPresenter implements BreakSessionOutputBoundary {
     private final ViewManagerModel viewManagerModel;
     private final LoginViewModel loginViewModel;
-    private final SetupSessionViewModel setupSessionViewModel;
+    private final StudySessionViewModel studySessionViewModel;
 
-    public StudySessionPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel,
-                                 SetupSessionViewModel setupSessionViewModel) {
+    public BreakSessionPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, StudySessionViewModel studySessionViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
-        this.setupSessionViewModel = setupSessionViewModel;
+        this.studySessionViewModel = studySessionViewModel;
     }
 
     @Override
-    public void switchToSetupSessionView() {
-        viewManagerModel.setState(setupSessionViewModel.getViewName());
+    public void switchToStudySessionView() {
+        viewManagerModel.setState(studySessionViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
