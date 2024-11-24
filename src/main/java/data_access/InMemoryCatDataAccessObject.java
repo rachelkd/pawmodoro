@@ -1,7 +1,5 @@
 package data_access;
 
-import entity.Cat;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;

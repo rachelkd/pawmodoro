@@ -1,17 +1,21 @@
 package interface_adapter.change_cat_happiness;
 
+import interface_adapter.ViewManagerModel;
+import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputBoundary;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputData;
-import view.DisplayCatStatsView;
 
 /**
  * Change Cat Happiness Use Case Presenter.
  */
 public class ChangeCatHappinessPresenter implements ChangeCatHappinessOutputBoundary {
-    private DisplayCatStatsView displayCatStatsView;
+    private ViewManagerModel viewManagerModel;
+    private DisplayCatStatsViewModel displayCatStatsViewModel;
 
-    public ChangeCatHappinessPresenter(DisplayCatStatsView displayCatStatsView) {
-        this.displayCatStatsView = displayCatStatsView;
+    public ChangeCatHappinessPresenter(ViewManagerModel viewManagerModel,
+                                       DisplayCatStatsViewModel displayCatStatsViewModel) {
+        this.viewManagerModel = viewManagerModel;
+        this.displayCatStatsViewModel = displayCatStatsViewModel;
     }
 
     @Override

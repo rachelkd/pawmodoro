@@ -10,9 +10,17 @@ import view.MaxCatsErrorView;
  * Create Cat Use Case Presenter.
  */
 public class CreateCatPresenter implements CreateCatOutputBoundary {
+    private ViewManagerModel viewManagerModel;
     private MaxCatsErrorView maxCatsErrorView;
     private LoggedInView loggedInView;
-    private ViewManagerModel viewManagerModel;
+
+    public CreateCatPresenter(ViewManagerModel viewManagerModel,
+                              MaxCatsErrorView maxCatsErrorView,
+                              LoggedInView loggedInView) {
+        this.maxCatsErrorView = maxCatsErrorView;
+        this.loggedInView = loggedInView;
+        this.viewManagerModel = viewManagerModel;
+    }
 
     @Override
     public void prepareSuccessView(CreateCatOutputData createCatOutputData) {
