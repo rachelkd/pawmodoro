@@ -1,13 +1,11 @@
 package app.service;
 
-import app.factory.DialogFactory;
-import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
-import interface_adapter.timer.TimerViewModel;
-import view.TimerView;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import app.factory.DialogFactory;
+import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 
 /**
  * Service for showing dialogs.
@@ -50,7 +48,11 @@ public class DialogService {
         dialogFactory.createCatStatsDialog(viewModel).setVisible(true);
     }
 
-    public void showTimerSettingsDialog(TimerViewModel viewModel) {
+    /**
+     * Shows the timer settings dialog.
+     */
+    public void showTimerSettingsDialog() {
         // TODO: implement timer settings dialog @yhj050224
+        // Method should take in a TimerSettingsViewModel
     }
 }
