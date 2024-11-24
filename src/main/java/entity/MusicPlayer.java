@@ -1,11 +1,17 @@
 package entity;
 
+/**
+ * Represents a MusicPlayer with a current playlist, playing state, volume, and current track.
+ */
 public class MusicPlayer {
     private String currentPlaylist;
     private boolean isPlaying;
     private int volume;
     private String currentTrack;
 
+    /**
+     * Creates a new MusicPlayer with default values.
+     */
     public MusicPlayer() {
         this.currentPlaylist = "";
         this.isPlaying = false;
