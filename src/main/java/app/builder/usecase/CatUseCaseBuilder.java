@@ -43,6 +43,7 @@ import use_case.runawaycat.RunawayCatInputBoundary;
 import use_case.runawaycat.RunawayCatInteractor;
 import use_case.runawaycat.RunawayCatOutputBoundary;
 
+// TODO: @rachelkd Make new *UseCaseBuilder class to fix fan out complexity
 /**
  * Builder for cat-related use cases.
  */
@@ -109,7 +110,6 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
         final DisplayCatStatsController controller = new DisplayCatStatsController(interactor);
 
         getViews().getCat().getViews().getCatView().setDisplayCatStatsController(controller);
-        getViews().getAuth().getViews().getLoggedInView().setDisplayCatStatsController(controller);
 
         return this;
     }
