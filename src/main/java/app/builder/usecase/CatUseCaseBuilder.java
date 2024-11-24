@@ -4,6 +4,12 @@ import app.builder.view.Views;
 import app.components.DataAccessComponents;
 import interface_adapter.adoption.AdoptionController;
 import interface_adapter.adoption.AdoptionPresenter;
+import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
+import interface_adapter.change_cat_happiness.ChangeCatHappinessPresenter;
+import interface_adapter.change_cat_hunger.ChangeCatHungerController;
+import interface_adapter.change_cat_hunger.ChangeCatHungerPresenter;
+import interface_adapter.create_cat.CreateCatController;
+import interface_adapter.create_cat.CreateCatPresenter;
 import interface_adapter.display_cat_image.DisplayCatImageController;
 import interface_adapter.display_cat_image.DisplayCatImagePresenter;
 import interface_adapter.display_cat_stats.DisplayCatStatsController;
@@ -15,6 +21,15 @@ import interface_adapter.runawaycat.RunawayPresenter;
 import use_case.adoption.AdoptionInputBoundary;
 import use_case.adoption.AdoptionInteractor;
 import use_case.adoption.AdoptionOutputBoundary;
+import use_case.cat_management.change_cat_happiness.ChangeCatHappinessInputBoundary;
+import use_case.cat_management.change_cat_happiness.ChangeCatHappinessInteractor;
+import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputBoundary;
+import use_case.cat_management.change_cat_hunger.ChangeCatHungerInputBoundary;
+import use_case.cat_management.change_cat_hunger.ChangeCatHungerInteractor;
+import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputBoundary;
+import use_case.cat_management.create_cat.CreateCatInputBoundary;
+import use_case.cat_management.create_cat.CreateCatInteractor;
+import use_case.cat_management.create_cat.CreateCatOutputBoundary;
 import use_case.display_cat_image.DisplayCatImageInputBoundary;
 import use_case.display_cat_image.DisplayCatImageInteractor;
 import use_case.display_cat_image.DisplayCatImageOutputBoundary;
@@ -134,6 +149,62 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
     }
 
     /**
+     * Builds Create Cat use case.
+     * @return this builder
+     */
+    public CatUseCaseBuilder buildCreateCatUseCase() {
+        final CreateCatOutputBoundary outputBoundary = new CreateCatPresenter(getViews().getViewManagerModel(),
+                getViews().getCat().getViewModels().getMaxCatsErrorViewModel(),
+                getViews().getAuth().getViewModels().getLoginViewModel(),
+                getViews().getAuth().getViewModels().getSignupViewModel());
+
+        final CreateCatInputBoundary interactor = new CreateCatInteractor(getDataAccess().getCatDataAccessObject(),
+                outputBoundary);
+        final CreateCatController controller = new CreateCatController(interactor);
+        // views are lowkey guesses for where these uses cases will be needed, can be added to or removed as needed
+        getViews().getAuth().getViews().getSignupView().setCreateCatController(controller);
+        getViews().getAuth().getViews().getLoginView().setCreateCatController(controller);
+        // whatever view will have new cat button
+        getViews().getAuth().getViews().getLoggedInView().setCreateCatController(controller);
+        return this;
+    }
+
+    /**
+     * Builds Change Cat Hunger Use Case.
+     * @return this builder
+     */
+    public CatUseCaseBuilder buildChangeCatHungerUseCase() {
+        final ChangeCatHungerOutputBoundary outputBoundary =
+                new ChangeCatHungerPresenter(getViews().getViewManagerModel(),
+                        getViews().getCat().getViewModels().getDisplayCatStatsViewModel());
+
+        final ChangeCatHungerInputBoundary interactor =
+                new ChangeCatHungerInteractor(getDataAccess().getCatDataAccessObject(), outputBoundary);
+        final ChangeCatHungerController controller = new ChangeCatHungerController(interactor);
+
+        getViews().getSession().getViews().getInventoryView().setChangeCatHungerController(controller);
+        return this;
+
+    }
+
+    /**
+     * Builds Change Cat Happiness Use Case.
+     * @return this builder
+     */
+    public CatUseCaseBuilder buildChangeCatHappinessUseCase() {
+        final ChangeCatHappinessOutputBoundary outputBoundary =
+                new ChangeCatHappinessPresenter(getViews().getViewManagerModel(),
+                        getViews().getCat().getViewModels().getDisplayCatStatsViewModel());
+
+        final ChangeCatHappinessInputBoundary interactor = new ChangeCatHappinessInteractor(
+                getDataAccess().getCatDataAccessObject(), outputBoundary);
+        final ChangeCatHappinessController controller = new ChangeCatHappinessController(interactor);
+
+        getViews().getSession().getViews().getStudySessionView().setChangeCatHappinessController(controller);
+        return this;
+    }
+
+    /**
      * Builds all cat-related use cases.
      *
      * @return this builder
@@ -144,6 +215,9 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
                 .buildDisplayCatImageUseCase()
                 .buildDisplayCatStatsUseCase()
                 .buildMaxCatsErrorUseCase()
-                .buildRunawayCatUseCase();
+                .buildRunawayCatUseCase()
+                .buildCreateCatUseCase()
+                .buildChangeCatHungerUseCase()
+                .buildChangeCatHappinessUseCase();
     }
 }

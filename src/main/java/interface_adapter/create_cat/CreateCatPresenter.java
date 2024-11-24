@@ -1,24 +1,28 @@
 package interface_adapter.create_cat;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
+import interface_adapter.signup.SignupViewModel;
 import use_case.cat_management.create_cat.CreateCatOutputBoundary;
 import use_case.cat_management.create_cat.CreateCatOutputData;
-import view.LoggedInView;
-import view.MaxCatsErrorView;
 
 /**
  * Create Cat Use Case Presenter.
  */
 public class CreateCatPresenter implements CreateCatOutputBoundary {
     private ViewManagerModel viewManagerModel;
-    private MaxCatsErrorView maxCatsErrorView;
-    private LoggedInView loggedInView;
+    private MaxCatsErrorViewModel maxCatsErrorViewModel;
+    private LoginViewModel loginViewModel;
+    private SignupViewModel signupViewModel;
 
     public CreateCatPresenter(ViewManagerModel viewManagerModel,
-                              MaxCatsErrorView maxCatsErrorView,
-                              LoggedInView loggedInView) {
-        this.maxCatsErrorView = maxCatsErrorView;
-        this.loggedInView = loggedInView;
+                              MaxCatsErrorViewModel maxCatsErrorView,
+                              LoginViewModel loginViewModel,
+                              SignupViewModel signupViewModel) {
+        this.maxCatsErrorViewModel = maxCatsErrorView;
+        this.loginViewModel = loginViewModel;
+        this.signupViewModel = signupViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 

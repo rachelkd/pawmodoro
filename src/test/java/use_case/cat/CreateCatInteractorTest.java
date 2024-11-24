@@ -21,7 +21,6 @@ class CreateCatInteractorTest {
     void successCreateCatTest() {
         final CreateCatInputData inputData = new CreateCatInputData("Billy", "<3");
         final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
-        final CatFactory catFactory = new CatFactory();
 
         final CreateCatOutputBoundary successPresenter = new CreateCatOutputBoundary() {
             @Override
@@ -37,7 +36,7 @@ class CreateCatInteractorTest {
             }
         };
 
-        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, successPresenter, catFactory);
+        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, successPresenter);
         interactor.execute(inputData);
     }
 
@@ -63,7 +62,7 @@ class CreateCatInteractorTest {
             }
         };
 
-        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, failurePresenter, catFactory);
+        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, failurePresenter);
         interactor.execute(inputData);
     }
 
@@ -94,7 +93,7 @@ class CreateCatInteractorTest {
             }
         };
 
-        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, failurePresenter, catFactory);
+        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, failurePresenter);
         interactor.execute(inputData);
     }
 }

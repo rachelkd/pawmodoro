@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 
 import constants.Constants;
+import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionViewModel;
@@ -28,6 +29,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private TimerController timerController;
     private LogoutController logoutController;
     private StudySessionController studySessionController;
+    private ChangeCatHappinessController changeCatHappinessController;
 
     private final JButton timerSettings;
     private final JButton logOutSettings;
@@ -84,6 +86,10 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     public void setStudySessionController(StudySessionController controller) {
         this.studySessionController = controller;
+    }
+
+    public void setChangeCatHappinessController(ChangeCatHappinessController controller) {
+        this.changeCatHappinessController = controller;
     }
 
     @Override

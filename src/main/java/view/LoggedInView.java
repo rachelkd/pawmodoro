@@ -14,6 +14,7 @@ import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.create_cat.CreateCatController;
 import interface_adapter.display_cat_stats.DisplayCatStatsController;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.logout.LogoutController;
@@ -33,6 +34,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final TimerViewModel timerViewModel;
     private final TimerView timerView;
     private TimerController timerController;
+    private CreateCatController createCatController;
 
     private final JLabel username;
 
@@ -200,5 +202,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
      */
     public void addCatImageView(DisplayCatImageView displayCatImageView) {
         add(displayCatImageView);
+    }
+
+    public void setCreateCatController(CreateCatController createCatController) {
+        this.createCatController = createCatController;
     }
 }
