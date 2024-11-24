@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.swing.*;
 
+import app.service.DialogService;
 import data_access.InMemoryInventoryDataAccessObject;
 import entity.*;
 import interface_adapter.ViewManagerModel;
@@ -59,37 +60,30 @@ public class InventoryExample {
     }
 
     public JFrame build() {
-        inventoryView = new InventoryView(inventoryViewModel);
-        cardPanel.add(inventoryView, inventoryViewModel.getViewName());
 
         final InventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
         final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter(viewManagerModel, inventoryViewModel);
-
-
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
 
         final CreateInventoryInputBoundary interactor = new CreateInventoryInteractor(dataAccessObject, presenter,
                 inventoryFactory);
         final CreateInventoryController controller = new CreateInventoryController(interactor);
-        inventoryView.setCreateInventoryController(controller);
 
-        // inventory does not exist yet
-        controller.execute("chiually");
-
-
-        final JFrame application = new JFrame("");
+        final JFrame application = new JFrame("Show up pls");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
-        application.add(inventoryView);
+
+        // inventory does not exist yet
+        DialogService dialogService = new DialogService();
+        dialogService.showInventoryDialog(application, inventoryViewModel);
+
+        controller.execute("chiually");
 
         return application;
     }
 
     public JFrame buildExistingInventory() {
-        // makes the property fire properly
-        inventoryView = new InventoryView(inventoryViewModel);
-        cardPanel.add(inventoryView, inventoryViewModel.getViewName());
 
         final InventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
         final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter( viewManagerModel, inventoryViewModel);
@@ -110,17 +104,18 @@ public class InventoryExample {
         final CreateInventoryController createInventoryController = new CreateInventoryController(createInventoryInteractor);
         final AddToInventoryController addToInventoryController = new AddToInventoryController(addToInventoryInteractor);
         final UseItemController useItemController = new UseItemController(useItemInteractor);
-        inventoryView.setCreateInventoryController(createInventoryController);
-
-        createInventoryController.execute("chiually");
-        addToInventoryController.execute("chiually", "cheese");
-        useItemController.execute("chiually", "cheese");
 
         final JFrame application = new JFrame();
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
-        application.add(inventoryView);
+
+        DialogService dialogService = new DialogService();
+        dialogService.showInventoryDialog(application, inventoryViewModel);
+
+        createInventoryController.execute("chiually");
+        addToInventoryController.execute("chiually", "cheese");
+        useItemController.execute("chiually", "cheese");
 
         return application;
     }
