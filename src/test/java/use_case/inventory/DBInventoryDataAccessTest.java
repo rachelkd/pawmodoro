@@ -1,5 +1,13 @@
 package use_case.inventory;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import config.SupabaseConfig;
 import data_access.DBInventoryDataAccessObject;
 import entity.AbstractFood;
@@ -8,18 +16,15 @@ import entity.FoodItemFactory;
 import entity.Inventory;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import use_case.food_management.InventoryDataAccessInterface;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-public class DBInventoryDataAccessTest {
+class DBInventoryDataAccessTest {
     private static FoodInventoryFactory inventoryFactory;
     private static FoodItemFactory foodItemFactory;
     private static final OkHttpClient CLIENT = new OkHttpClient().newBuilder().build();
@@ -77,13 +82,13 @@ public class DBInventoryDataAccessTest {
     @Test
     void successGetInventoryItemsTest() {
         final Inventory inventory = inventoryFactory.create("testuser");
-        Map<String, AbstractFood> items = new HashMap<>();
+        final Map<String, AbstractFood> items = new HashMap<>();
         items.put("milk", foodItemFactory.create("milk"));
         items.put("cheese", foodItemFactory.create("cheese"));
         inventory.setItems(items);
         inventoryRepository.save(inventory);
 
-        Map<String, AbstractFood> databaseItems = inventoryRepository.getInventoryItems("testuser");
+        final Map<String, AbstractFood> databaseItems = inventoryRepository.getInventoryItems("testuser");
         assertNotNull(databaseItems);
         assertEquals(2, databaseItems.size());
         assertEquals(1, databaseItems.get("milk").getQuantity());
@@ -93,8 +98,8 @@ public class DBInventoryDataAccessTest {
     @Test
     void successUpdateInventoryTest() {
         final Inventory inventory = inventoryFactory.create("testuser");
-        Map<String, AbstractFood> items = new HashMap<>();
-        AbstractFood milk = foodItemFactory.create("milk");
+        final Map<String, AbstractFood> items = new HashMap<>();
+        final AbstractFood milk = foodItemFactory.create("milk");
         items.put("milk", milk);
         inventory.setItems(items);
 
@@ -104,10 +109,10 @@ public class DBInventoryDataAccessTest {
         inventory.setItems(items);
         milk.setQuantity(2);
 
-        boolean updated = inventoryRepository.updateInventory(inventory);
+        final boolean updated = inventoryRepository.updateInventory(inventory);
 
         assertTrue(updated);
-        Map<String, AbstractFood> databaseItems = inventoryRepository.getInventoryItems("testuser");
+        final Map<String, AbstractFood> databaseItems = inventoryRepository.getInventoryItems("testuser");
         assertNotNull(databaseItems);
         assertEquals(2, items.size());
         assertEquals(2, databaseItems.get("milk").getQuantity());
@@ -117,7 +122,7 @@ public class DBInventoryDataAccessTest {
     @Test
     void successCanUseItemTest() {
         final Inventory inventory = inventoryFactory.create("testuser");
-        Map<String, AbstractFood> items = new HashMap<>();
+        final Map<String, AbstractFood> items = new HashMap<>();
         items.put("milk", foodItemFactory.create("milk"));
         inventory.setItems(items);
 
@@ -130,12 +135,12 @@ public class DBInventoryDataAccessTest {
     @Test
     void successGetInventoryTest() {
         final Inventory inventory = inventoryFactory.create("testuser");
-        Map<String, AbstractFood> items = new HashMap<>();
+        final Map<String, AbstractFood> items = new HashMap<>();
         items.put("milk", foodItemFactory.create("milk"));
         inventory.setItems(items);
         inventoryRepository.save(inventory);
 
-        Inventory retrievedInventory = inventoryRepository.getInventory("testuser");
+        final Inventory retrievedInventory = inventoryRepository.getInventory("testuser");
         assertNotNull(retrievedInventory);
         assertEquals("testuser", retrievedInventory.getOwnerId());
         assertEquals(1, retrievedInventory.getItems().get("milk").getQuantity());

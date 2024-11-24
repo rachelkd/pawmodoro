@@ -1,14 +1,17 @@
 package use_case.food_management;
 
+import java.util.Map;
+
 import data_access.DBInventoryDataAccessObject;
 import entity.AbstractFood;
 import entity.Inventory;
 
-import java.util.Map;
+/**
+ * An Inventory Service that allows the program to create and use one inventory object for run of program.
+ */
+public final class InventoryService implements InventoryDataAccessInterface {
 
-public class InventoryService implements InventoryDataAccessInterface {
-
-    private static volatile InventoryService instance;
+    private static InventoryService instance;
     private final DBInventoryDataAccessObject inventoryRepository;
     private Inventory inventory;
 
@@ -16,6 +19,11 @@ public class InventoryService implements InventoryDataAccessInterface {
         this.inventoryRepository = inventoryRepository;
     }
 
+    /**
+     * Returns the Inventory Service object and ensures no duplicates.
+     * @param inventoryRepository the inventory database
+     * @return the inventory service object
+     */
     public static InventoryService getInstance(DBInventoryDataAccessObject inventoryRepository) {
         if (instance == null) {
             synchronized (InventoryService.class) {
@@ -41,9 +49,9 @@ public class InventoryService implements InventoryDataAccessInterface {
     }
 
     @Override
-    public void save(Inventory inventory) {
+    public void save(Inventory newInventory) {
         if (inventory != null) {
-            inventoryRepository.save(inventory);
+            inventoryRepository.save(newInventory);
         }
 
     }

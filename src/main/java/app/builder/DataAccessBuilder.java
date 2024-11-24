@@ -1,7 +1,6 @@
 package app.builder;
 
 import app.components.DataAccessComponents;
-
 import data_access.AdoptionDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
@@ -42,7 +41,7 @@ public class DataAccessBuilder {
      * @return this builder
      */
     public DataAccessBuilder buildInventoryDataAccess() {
-        DBInventoryDataAccessObject dbInventoryDataAccess =
+        final DBInventoryDataAccessObject dbInventoryDataAccess =
                 new DBInventoryDataAccessObject(new FoodInventoryFactory(), new FoodItemFactory());
         this.inventoryDataAccess = InventoryService.getInstance(dbInventoryDataAccess);
         return this;

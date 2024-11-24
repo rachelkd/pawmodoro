@@ -7,9 +7,6 @@ import entity.AbstractFood;
 import entity.FoodInventory;
 import entity.Inventory;
 import use_case.food_management.InventoryDataAccessInterface;
-import use_case.food_management.create_inventory.CreateInventoryInventoryDataAccessInterface;
-import use_case.food_management.add_to_inventory.AddToInventoryDataAccessInterface;
-import use_case.food_management.use_item_in_inventory.UseItemDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing user's inventory data. This
@@ -37,8 +34,8 @@ public class InMemoryInventoryDataAccessObject implements InventoryDataAccessInt
     @Override
     public Inventory getInventory(String ownerId) {
         // for testing purposes return a deep copy
-        Inventory inventory = inventoryStorage.get(ownerId);
-        Inventory copyInventory = new FoodInventory(inventory.getOwnerId());
+        final Inventory inventory = inventoryStorage.get(ownerId);
+        final Inventory copyInventory = new FoodInventory(inventory.getOwnerId());
 
         // for loop through items?
 
@@ -54,11 +51,12 @@ public class InMemoryInventoryDataAccessObject implements InventoryDataAccessInt
 
     @Override
     public boolean updateInventory(Inventory inventory) {
+        boolean isSuccess = false;
         if (existsByOwnerId(inventory.getOwnerId())) {
             inventoryStorage.put(inventory.getOwnerId(), inventory);
-            return true;
+            isSuccess = true;
         }
-        return false;
+        return isSuccess;
     }
 
     /**

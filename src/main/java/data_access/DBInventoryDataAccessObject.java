@@ -1,23 +1,31 @@
 package data_access;
 
-import config.SupabaseConfig;
-import entity.*;
-import okhttp3.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import use_case.food_management.InventoryDataAccessInterface;
-import use_case.food_management.create_inventory.CreateInventoryInventoryDataAccessInterface;
-import use_case.food_management.add_to_inventory.AddToInventoryDataAccessInterface;
-import use_case.food_management.use_item_in_inventory.UseItemDataAccessInterface;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import config.SupabaseConfig;
+import entity.AbstractFood;
+import entity.FoodInventoryFactory;
+import entity.FoodItemFactory;
+import entity.Inventory;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import use_case.food_management.InventoryDataAccessInterface;
 
 /**
  * Database implementation of the Inventory Data Access Object.
  */
 public class DBInventoryDataAccessObject implements InventoryDataAccessInterface {
+    private static final String FOOD_KEY = "food_name";
+    private static final String QUANTITY_KEY = "quantity";
+
     private static final String API_KEY_HEADER = "apikey";
     private static final String AUTH_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
@@ -39,10 +47,10 @@ public class DBInventoryDataAccessObject implements InventoryDataAccessInterface
     private final FoodInventoryFactory foodInventoryFactory;
     private final FoodItemFactory foodItemFactory;
 
-
     /**
      * Creates new DBInventoryDAO.
      * @param foodInventoryFactory factory for creating inventories
+     * @param foodItemFactory factory for creating food items
      */
     public DBInventoryDataAccessObject(FoodInventoryFactory foodInventoryFactory, FoodItemFactory foodItemFactory) {
         this.foodInventoryFactory = foodInventoryFactory;
@@ -57,7 +65,7 @@ public class DBInventoryDataAccessObject implements InventoryDataAccessInterface
      */
     @Override
     public void save(Inventory inventory) {
-        boolean isSuccessful = false;
+
         if (!existsByOwnerId(inventory.getOwnerId())) {
             final JSONObject jsonBody = new JSONObject()
                     .put(USERNAME_COLUMN, inventory.getOwnerId())
@@ -77,38 +85,37 @@ public class DBInventoryDataAccessObject implements InventoryDataAccessInterface
                     .build();
 
             try {
-                final Response response = client.newCall(request).execute();
-                isSuccessful = response.isSuccessful();
+                client.newCall(request).execute();
             }
             catch (final IOException exception) {
                 // Keep isSuccessful as false
             }
         }
-        // return isSuccessful;
+
     }
 
     JSONArray getJsonArray(Inventory inventory) {
         final JSONArray jsonArray = new JSONArray();
-        Map<String, AbstractFood> inventoryMap = inventory.getItems();
+        final Map<String, AbstractFood> inventoryMap = inventory.getItems();
 
         for (Map.Entry<String, AbstractFood> entry : inventoryMap.entrySet()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("food_name", entry.getKey());
-            jsonObject.put("quantity", entry.getValue().getQuantity());
+            final JSONObject jsonObject = new JSONObject();
+            jsonObject.put(FOOD_KEY, entry.getKey());
+            jsonObject.put(QUANTITY_KEY, entry.getValue().getQuantity());
             jsonArray.put(jsonObject);
         }
         return jsonArray;
     }
 
     Map<String, AbstractFood> getHashMap(JSONArray jsonArray) {
-        Map<String, AbstractFood> hashMap = new HashMap<String, AbstractFood>();
+        final Map<String, AbstractFood> hashMap = new HashMap<String, AbstractFood>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
-            String key = jsonObject.getString("food_name");
-            int quantity = jsonObject.getInt("quantity");
+            final JSONObject jsonObject = jsonArray.getJSONObject(i);
+            final String key = jsonObject.getString(FOOD_KEY);
+            final int quantity = jsonObject.getInt(QUANTITY_KEY);
 
-            AbstractFood foodObject = foodItemFactory.create(key);
+            final AbstractFood foodObject = foodItemFactory.create(key);
             foodObject.setQuantity(quantity);
             hashMap.put(key, foodObject);
         }
@@ -216,11 +223,11 @@ public class DBInventoryDataAccessObject implements InventoryDataAccessInterface
             if (response.isSuccessful() && !responseBody.equals(EMPTY_JSON_ARRAY)) {
                 final JSONArray jsonArray = new JSONArray(responseBody);
                 final JSONObject inventoryJson = jsonArray.getJSONObject(0);
-                JSONArray foodItems = inventoryJson.getJSONArray(FOOD_INVENTORY_COLUMN);
+                final JSONArray foodItems = inventoryJson.getJSONArray(FOOD_INVENTORY_COLUMN);
 
                 for (int i = 0; i < foodItems.length(); i++) {
-                    JSONObject food = foodItems.getJSONObject(i);
-                    if (food.getString("food_name").equals(foodId) && food.getInt("quantity") > 0) {
+                    final JSONObject food = foodItems.getJSONObject(i);
+                    if (food.getString(FOOD_KEY).equals(foodId) && food.getInt(QUANTITY_KEY) > 0) {
                         exists = true;
                     }
                 }
@@ -259,6 +266,6 @@ public class DBInventoryDataAccessObject implements InventoryDataAccessInterface
                 // Keep isSuccessful as false
             }
         }
-         return isSuccess;
+        return isSuccess;
     }
 }

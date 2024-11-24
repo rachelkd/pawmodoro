@@ -1,9 +1,9 @@
 package use_case.food_management;
 
+import java.util.Map;
+
 import entity.AbstractFood;
 import entity.Inventory;
-
-import java.util.Map;
 
 /**
  * Repository interface for managing food inventory persistence.
@@ -42,6 +42,7 @@ public interface InventoryDataAccessInterface {
      *
      * @param inventory
      *            the inventory to update
+     * @return boolean of whether successfully updated
      * @throws IllegalArgumentException
      *             if inventory is null
      */

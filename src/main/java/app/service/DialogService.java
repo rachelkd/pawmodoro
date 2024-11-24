@@ -1,6 +1,7 @@
 package app.service;
 
-import javax.swing.*;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
@@ -12,6 +13,7 @@ import view.InventoryView;
  */
 public class DialogService {
     private JDialog inventoryDialog;
+
     /**
      * Shows the cat stats dialog.
      *
@@ -26,6 +28,7 @@ public class DialogService {
      * Return the inventory dialog.
      * @param parent the parent frame
      * @param viewModel the view model for the dialog
+     * @return the Inventory View
      */
     public InventoryView createInventoryDialog(JFrame parent, InventoryViewModel viewModel) {
         // avoid duplicating dialog
