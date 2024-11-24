@@ -19,7 +19,7 @@ public class SessionViewModels {
     public SessionViewModels(SetupSessionViewModel setupSessionViewModel,
             InventoryViewModel inventoryViewModel,
             TimerViewModel timerViewModel, StudySessionViewModel studySessionViewModel,
-                             BreakSessionViewModel breakSessionViewModel) {
+            BreakSessionViewModel breakSessionViewModel) {
         this.setupSessionViewModel = setupSessionViewModel;
         this.inventoryViewModel = inventoryViewModel;
         this.timerViewModel = timerViewModel;
@@ -43,7 +43,7 @@ public class SessionViewModels {
         return studySessionViewModel;
     }
 
-    public BreakSessionViewModel getBreaksessionViewModel() {
+    public BreakSessionViewModel getBreakSessionViewModel() {
         return breakSessionViewModel;
     }
 }

@@ -1,5 +1,6 @@
 package app.factory.viewmodel;
 
+import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
@@ -53,5 +54,14 @@ public class SessionViewModelFactory {
      */
     public LoginViewModel createLoginViewModel() {
         return new LoginViewModel();
+    }
+
+    /**
+     * Creates a new break session view model.
+     *
+     * @return the break session view model
+     */
+    public BreakSessionViewModel createBreakSessionViewModel() {
+        return new BreakSessionViewModel();
     }
 }
