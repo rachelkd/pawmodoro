@@ -25,8 +25,8 @@ public class SetupSessionPresenter implements SetupSessionOutputBoundary {
         this.studySessionViewModel.setState(studySessionState);
         studySessionViewModel.firePropertyChanged();
 
-        // viewManagerModel.setState(studySessionViewModel.getViewName());
-        //viewManagerModel.firePropertyChanged();
+        viewManagerModel.setState(studySessionViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
         switchToStudyView();
     }
 
