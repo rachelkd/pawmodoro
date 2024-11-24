@@ -74,6 +74,7 @@ public class InventoryExample {
         // inventory does not exist yet
         DialogService dialogService = new DialogService();
         dialogService.createInventoryDialog(application, inventoryViewModel);
+        dialogService.showInventoryDialog();
 
         controller.execute("chiually");
 
@@ -108,7 +109,9 @@ public class InventoryExample {
         application.add(cardPanel);
 
         DialogService dialogService = new DialogService();
-        dialogService.createInventoryDialog(application, inventoryViewModel);
+        inventoryView = dialogService.createInventoryDialog(application, inventoryViewModel);
+        dialogService.showInventoryDialog();
+        inventoryView.setUseItemController(useItemController);
 
         createInventoryController.execute("chiually");
         addToInventoryController.execute("chiually", "cheese");
@@ -127,8 +130,8 @@ public class InventoryExample {
         foodItem.setQuantity(2);
         anotherFoodItem.setQuantity(1);
         Map<String, AbstractFood> inventoryItems = inventory.getItems();
-        inventoryItems.put("milk", foodItem);
-        inventoryItems.put("tuna", anotherFoodItem);
+        inventoryItems.put("Milk", foodItem);
+        inventoryItems.put("Tuna", anotherFoodItem);
         inventory.setItems(inventoryItems);
         inventoryRepository.save(inventory);
     }

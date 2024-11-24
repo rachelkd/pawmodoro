@@ -89,7 +89,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
                 final InventoryState state = (InventoryState) evt.getNewValue();
                 userInventory = state.getInventoryItems();
 
-                buildInventory();
+                buildInventory(state.getOwnerId());
                 mainPanel.add(inventoryPanel, BorderLayout.CENTER);
                 inventoryPanel.revalidate();
                 inventoryPanel.repaint();
@@ -113,7 +113,8 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
             SwingUtilities.invokeLater( () -> {
                 final InventoryState state = (InventoryState) evt.getNewValue();
                 userInventory = state.getInventoryItems();
-                refreshInventory();
+                refreshInventory(state.getOwnerId());
+
                 inventoryPanel.revalidate();
                 inventoryPanel.repaint();
             });
@@ -132,7 +133,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         this.useItemController = useItemController;
     }
 
-    void buildInventory() {
+    void buildInventory(String ownerId) {
         if (!userInventory.isEmpty()) {
             inventoryPanel.setLayout(new BoxLayout(inventoryPanel, BoxLayout.Y_AXIS));
 
@@ -146,8 +147,8 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
                     event -> {
                         if (selectedLabel[0] != null) {
                             final String selectedText = selectedLabel[0].getText();
-                            //TODO implement what happens when button pressed
                             JOptionPane.showMessageDialog(null, "Selected Item: " + selectedText);
+                            useItemController.execute(ownerId, selectedText);
                         }
                         else {
                             JOptionPane.showMessageDialog(null, "Please select an item first.");
@@ -191,10 +192,11 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         inventoryPanel.add(labelPanel);
     }
 
-    void refreshInventory() {
+    void refreshInventory(String ownerId) {
         inventoryPanel.removeAll();
         buttonPanel.remove(1);
-        buildInventory();
+
+        buildInventory(ownerId);
     }
 
     public String getViewName() {

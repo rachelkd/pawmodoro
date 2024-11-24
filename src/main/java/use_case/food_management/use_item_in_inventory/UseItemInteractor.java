@@ -45,6 +45,7 @@ public class UseItemInteractor implements UseItemInputBoundary {
             }
             else {
                 inventoryItems = inventory.getItems();
+                // when testing need to use capitals
                 inventoryItems.remove(useItemInputData.getFoodName());
                 inventory.setItems(inventoryItems);
 

@@ -29,10 +29,10 @@ public class DialogService {
      */
     public InventoryView createInventoryDialog(JFrame parent, InventoryViewModel viewModel) {
         // avoid duplicating dialog
-        if (inventoryDialog != null && inventoryDialog.isVisible()) {
+        if (inventoryDialog != null) {
             return null;
         }
-        inventoryDialog = new InventoryView(parent, viewModel);
+        this.inventoryDialog = new InventoryView(parent, viewModel);
         return (InventoryView) inventoryDialog;
     }
 
