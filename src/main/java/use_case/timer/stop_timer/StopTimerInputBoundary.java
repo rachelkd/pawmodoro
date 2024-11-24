@@ -1,14 +1,14 @@
 package use_case.timer.stop_timer;
 
 /**
- * Input boundary for the Stop Timer Use Case.
- * Defines the method to execute the stop timer operation.
+ * Input boundary for the StopTimer use case.
+ * Defines the contract for stopping the timer.
  */
 public interface StopTimerInputBoundary {
     /**
-     * Executes the stop timer use case.
+     * Stops the timer using the provided input data.
      *
-     * @param stopTimerInputData The input data for stopping the timer.
+     * @param inputData The input data for stopping the timer.
      */
-    void execute(StopTimerInputData stopTimerInputData);
+    void stopTimer(StopTimerInputData inputData);
 }

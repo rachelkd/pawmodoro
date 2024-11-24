@@ -1,54 +1,54 @@
 package use_case.timer.stop_timer;
 
+import constants.Constants;
 import entity.Timer;
 import entity.TimerFactory;
+import use_case.timer.TimerOutputBoundary;
+import use_case.timer.TimerOutputData;
 
 /**
- * Interactor for the Stop Timer Use Case.
- * Implements the use case logic for stopping the timer.
+ * Interactor for stopping the timer.
+ * Implements the StopTimerInputBoundary and handles the business logic for stopping the timer.
  */
 public class StopTimerInteractor implements StopTimerInputBoundary {
     private final TimerFactory timerFactory;
-    private final StopTimerOutputBoundary stopTimerOutputBoundary;
-    private Timer currentTimer;
-    private long startTime;
+    private final TimerOutputBoundary outputBoundary;
 
     /**
-     * Constructs a StopTimerInteractor object.
+     * Constructs a StopTimerInteractor.
      *
-     * @param timerFactory   The factory for creating Timer entities.
-     * @param stopTimerOutputBoundary1 The output boundary for presenting the output data.
+     * @param timerFactory   The factory used to create timer entities.
+     * @param outputBoundary The output boundary used to communicate with the presenter.
      */
-    public StopTimerInteractor(TimerFactory timerFactory, StopTimerOutputBoundary stopTimerOutputBoundary1) {
+    public StopTimerInteractor(TimerFactory timerFactory, TimerOutputBoundary outputBoundary) {
         this.timerFactory = timerFactory;
-        this.stopTimerOutputBoundary = stopTimerOutputBoundary1;
-        this.currentTimer = timerFactory.create();
+        this.outputBoundary = outputBoundary;
     }
 
     /**
-     * Executes the stop timer use case.
+     * Stops the timer using the provided input data.
      *
-     * @param stopTimerInputData The input data for stopping the timer.
+     * @param inputData The input data for stopping the timer.
      */
     @Override
-    public void execute(StopTimerInputData stopTimerInputData) {
-        if ("RUNNING".equals(currentTimer.getStatus())) {
-            final long elapsedTime = System.currentTimeMillis() - startTime + currentTimer.getElapsedTime();
-            this.currentTimer = timerFactory.create(
-                    "STOPPED",
-                    currentTimer.getCurrentInterval(),
-                    elapsedTime,
-                    currentTimer.getIntervalDuration()
-            );
-        }
+    public void stopTimer(StopTimerInputData inputData) {
+        // Extract input data (e.g., username if applicable)
+        final String username = inputData.getUsername();
 
-        final StopTimerOutputData stopTimerOutputData = new StopTimerOutputData(
-                currentTimer.getStatus(),
-                currentTimer.getCurrentInterval(),
-                currentTimer.getElapsedTime(),
-                currentTimer.getIntervalDuration()
+        // Create a new Timer entity with a "STOPPED" status
+        // Assuming that the current timer settings are preserved in the Timer entity
+        final Timer timer = timerFactory.create("STOPPED", "WORK", 0, Constants.DEFAULT_WORK_DURATION_MS); // Interval duration as per your logic
+
+        // Convert the Timer entity to TimerOutputData to pass to the output boundary (Presenter)
+        final TimerOutputData timerOutputData = new TimerOutputData(
+                timer.getStatus(),
+                timer.getCurrentInterval(),
+                timer.getElapsedTime(),
+                timer.getIntervalDuration()
         );
 
-        stopTimerOutputBoundary.present(stopTimerOutputData);
+        // Notify the presenter to update the view model
+        outputBoundary.updateTimerState(timerOutputData);
     }
 }
+

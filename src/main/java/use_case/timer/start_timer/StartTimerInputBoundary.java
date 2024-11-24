@@ -1,12 +1,13 @@
 package use_case.timer.start_timer;
 
 /**
- * Input Boundary for Start Timer Use Case.
+ * Input boundary for the StartTimer use case.
  */
 public interface StartTimerInputBoundary {
     /**
-     * Executes Start Timer Use Case.
-     * @param startTimerInputData the input data
+     * Starts the timer using the provided input data.
+     *
+     * @param inputData The input data for starting the timer.
      */
-    void execute(StartTimerInputData startTimerInputData);
+    void startTimer(StartTimerInputData inputData);
 }

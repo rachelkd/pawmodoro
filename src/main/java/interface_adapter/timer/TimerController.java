@@ -1,5 +1,6 @@
 package interface_adapter.timer;
 
+import constants.Constants;
 import use_case.timer.start_timer.StartTimerInputBoundary;
 import use_case.timer.start_timer.StartTimerInputData;
 import use_case.timer.stop_timer.StopTimerInputBoundary;
@@ -30,7 +31,9 @@ public class TimerController {
      * @param username The username of the user starting the timer.
      */
     public void startTimer(String username) {
-        startTimerUseCase.execute(new StartTimerInputData(username));
+        final long intervalDuration = Constants.DEFAULT_WORK_DURATION_MS;
+        final StartTimerInputData startTimerInputData = new StartTimerInputData(username, intervalDuration);
+        startTimerUseCase.startTimer(startTimerInputData);
     }
 
     /**
@@ -39,6 +42,7 @@ public class TimerController {
      * @param username The username of the user stopping the timer.
      */
     public void stopTimer(String username) {
-        stopTimerUseCase.execute(new StopTimerInputData(username));
+        final StopTimerInputData stopTimerInputData = new StopTimerInputData(username);
+        stopTimerUseCase.stopTimer(stopTimerInputData);
     }
 }

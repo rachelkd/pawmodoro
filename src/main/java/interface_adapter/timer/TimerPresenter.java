@@ -1,15 +1,13 @@
 package interface_adapter.timer;
 
-import use_case.timer.start_timer.StartTimerOutputBoundary;
-import use_case.timer.start_timer.StartTimerOutputData;
-import use_case.timer.stop_timer.StopTimerOutputBoundary;
-import use_case.timer.stop_timer.StopTimerOutputData;
+import use_case.timer.TimerOutputBoundary;
+import use_case.timer.TimerOutputData;
 
 /**
  * Presenter for timer-related view updates.
  * Transforms use case output data into a format suitable for the view model.
  */
-public class TimerPresenter implements StartTimerOutputBoundary, StopTimerOutputBoundary {
+public class TimerPresenter implements TimerOutputBoundary {
     private final TimerViewModel timerViewModel;
 
     /**
@@ -22,35 +20,17 @@ public class TimerPresenter implements StartTimerOutputBoundary, StopTimerOutput
     }
 
     /**
-     * Updates the view model with the output data from the start timer use case.
+     * Updates the timer state in the view model and notifies observers.
      *
-     * @param startTimerOutputData The output data from the start timer operation.
+     * @param outputData The data provided by the use case.
      */
     @Override
-    public void present(StartTimerOutputData startTimerOutputData) {
-        updateViewModel(startTimerOutputData.getStatus(), startTimerOutputData.getCurrentInterval(),
-                startTimerOutputData.getElapsedTime(), startTimerOutputData.getIntervalDuration());
-    }
-
-    /**
-     * Updates the view model with the output data from the stop timer use case.
-     *
-     * @param stopTimerOutputData The output data from the stop timer operation.
-     */
-    @Override
-    public void present(StopTimerOutputData stopTimerOutputData) {
-        updateViewModel(stopTimerOutputData.getStatus(), stopTimerOutputData.getCurrentInterval(),
-                stopTimerOutputData.getElapsedTime(), stopTimerOutputData.getIntervalDuration());
-    }
-
-    private void updateViewModel(String status, String currentInterval, long elapsedTime, long intervalDuration) {
-        final TimerState state = new TimerState();
-        state.setStatus(status);
-        state.setCurrentInterval(currentInterval);
-        state.setElapsedTime(elapsedTime);
-        state.setIntervalDuration(intervalDuration);
-
-        timerViewModel.setState(state);
+    public void updateTimerState(TimerOutputData outputData) {
+        final TimerState state = timerViewModel.getState();
+        state.setStatus(outputData.getStatus());
+        state.setCurrentInterval(outputData.getCurrentInterval());
+        state.setElapsedTime(outputData.getElapsedTime());
+        state.setIntervalDuration(outputData.getIntervalDuration());
         timerViewModel.firePropertyChanged();
     }
 }

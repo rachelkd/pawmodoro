@@ -11,4 +11,18 @@ public class StudySessionController {
     public StudySessionController(StudySessionInputBoundary studySessionInteractor) {
         this.studySessionInteractor = studySessionInteractor;
     }
+
+    /**
+     * Executes the 'switch to setup session view' Use Case.
+     */
+    public void switchToSetupSessionView() {
+        studySessionInteractor.switchToSetupSessionView();
+    }
+
+    /**
+     * Executes the 'switch to logout' Use Case.
+     */
+    public void logout() {
+        studySessionInteractor.logout();
+    }
 }

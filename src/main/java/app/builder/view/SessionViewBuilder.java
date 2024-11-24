@@ -13,6 +13,11 @@ import app.factory.ViewFactory;
 import app.factory.viewmodel.SessionViewModelFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.study_session.StudySessionController;
+import interface_adapter.study_session.StudySessionPresenter;
+import use_case.studysession.StudySessionInputBoundary;
+import use_case.studysession.StudySessionInteractor;
+import use_case.studysession.StudySessionOutputBoundary;
 import view.InventoryView;
 import view.SetupSessionView;
 import view.StudySessionView;
@@ -82,13 +87,21 @@ public class SessionViewBuilder {
      * @return this builder
      */
     public SessionViewBuilder buildStudySessionView() {
+        final StudySessionOutputBoundary presenter = new StudySessionPresenter(
+                viewManagerModel,
+                sessionViewModelFactory.createLoginViewModel(),
+                viewModels.getStudySessionViewModel());
+
+        final StudySessionInputBoundary interactor = new StudySessionInteractor(presenter);
+        final StudySessionController studySessionController = new StudySessionController(interactor);
+
         this.studySessionView = viewFactory.createStudySessionView(
                 viewModels.getStudySessionViewModel(),
-                viewModels.getTimerViewModel(),
                 catViewsAndModels.getViewModels().getCatViewModel(),
                 catViewsAndModels.getViewModels().getDisplayCatStatsViewModel(),
                 dialogService,
-                catViewsAndModels.getViews().getCatView());
+                catViewsAndModels.getViews().getCatView(),
+                studySessionController);
         cardPanel.add(studySessionView, studySessionView.getViewName());
         return this;
     }

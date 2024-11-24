@@ -2,53 +2,49 @@ package use_case.timer.start_timer;
 
 import entity.Timer;
 import entity.TimerFactory;
+import use_case.timer.TimerOutputBoundary;
+import use_case.timer.TimerOutputData;
 
 /**
- * Interactor for the Start Timer Use Case.
- * Implements the use case logic for starting the timer.
+ * Interactor for starting the timer.
+ * Implements the StartTimerInputBoundary and handles the business logic for starting the timer.
  */
 public class StartTimerInteractor implements StartTimerInputBoundary {
     private final TimerFactory timerFactory;
-    private final StartTimerOutputBoundary startTimerOutputBoundary;
-    private Timer currentTimer;
-    private long startTime;
+    private final TimerOutputBoundary outputBoundary;
 
     /**
-     * Constructs a StartTimerInteractor object.
+     * Constructs a StartTimerInteractor.
      *
-     * @param timerFactory   The factory for creating Timer entities.
-     * @param startTimerOutputBoundary The output boundary for presenting the output data.
+     * @param timerFactory   The factory used to create timer entities.
+     * @param outputBoundary The output boundary used to communicate with the presenter.
      */
-    public StartTimerInteractor(TimerFactory timerFactory, StartTimerOutputBoundary startTimerOutputBoundary) {
+    public StartTimerInteractor(TimerFactory timerFactory, TimerOutputBoundary outputBoundary) {
         this.timerFactory = timerFactory;
-        this.startTimerOutputBoundary = startTimerOutputBoundary;
-        this.currentTimer = timerFactory.create();
+        this.outputBoundary = outputBoundary;
     }
 
     /**
-     * Executes the start timer use case.
+     * Starts the timer using the provided input data.
      *
-     * @param startTimerInputData The input data for starting the timer.
+     * @param inputData The input data for starting the timer.
      */
     @Override
-    public void execute(StartTimerInputData startTimerInputData) {
-        if (!"RUNNING".equals(currentTimer.getStatus())) {
-            this.startTime = System.currentTimeMillis();
-            this.currentTimer = timerFactory.create(
-                    "RUNNING",
-                    currentTimer.getCurrentInterval(),
-                    currentTimer.getElapsedTime(),
-                    currentTimer.getIntervalDuration()
-            );
-        }
+    public void startTimer(StartTimerInputData inputData) {
+        final long intervalDuration = inputData.getIntervalDuration();
 
-        final StartTimerOutputData startTimerOutputData = new StartTimerOutputData(
-                currentTimer.getStatus(),
-                currentTimer.getCurrentInterval(),
-                currentTimer.getElapsedTime(),
-                currentTimer.getIntervalDuration()
+        // Business logic: Create a new Timer entity with a "RUNNING" status
+        final Timer timer = timerFactory.create("RUNNING", "WORK", 0, intervalDuration);
+
+        // Convert the Timer entity to TimerOutputData to pass to the output boundary (Presenter)
+        final TimerOutputData timerOutputData = new TimerOutputData(
+                timer.getStatus(),
+                timer.getCurrentInterval(),
+                timer.getElapsedTime(),
+                timer.getIntervalDuration()
         );
 
-        startTimerOutputBoundary.present(startTimerOutputData);
+        // Notify the presenter to update the view model
+        outputBoundary.updateTimerState(timerOutputData);
     }
 }

@@ -12,6 +12,7 @@ import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
 import view.AdoptionView;
@@ -118,18 +119,19 @@ public class ViewFactory {
      * Creates a Study Session View.
      * 
      * @param studySessionViewModel the study session view model
-     * @param timerViewModel the timer view model
      * @param catViewModel the cat view model
      * @param displayCatStatsViewModel the display cat stats view model
      * @param dialogService the dialog service for user interactions
      * @param catView the existing cat view instance
+     * @param studySessionController the control to move from one view to another
      * @return StudySessionView
      */
     public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
-            TimerViewModel timerViewModel, CatViewModel catViewModel,
-            DisplayCatStatsViewModel displayCatStatsViewModel, DialogService dialogService,
-            CatView catView) {
-        return new StudySessionView(studySessionViewModel, timerViewModel, dialogService, catView);
+                                                   CatViewModel catViewModel,
+                                                   DisplayCatStatsViewModel displayCatStatsViewModel,
+                                                   DialogService dialogService, CatView catView,
+                                                   StudySessionController studySessionController) {
+        return new StudySessionView(studySessionViewModel, dialogService, catView, studySessionController);
     }
 
     /**

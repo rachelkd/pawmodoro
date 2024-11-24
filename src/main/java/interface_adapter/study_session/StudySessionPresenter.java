@@ -3,6 +3,7 @@ package interface_adapter.study_session;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.login.LoginState;
+import interface_adapter.setupsession.SetupSessionViewModel;
 import use_case.studysession.StudySessionOutputBoundary;
 
 /**
@@ -11,32 +12,33 @@ import use_case.studysession.StudySessionOutputBoundary;
  */
 public class StudySessionPresenter implements StudySessionOutputBoundary {
     private final ViewManagerModel viewManagerModel;
-    private final StudySessionViewModel studySessionViewModel;
     private final LoginViewModel loginViewModel;
+    private final StudySessionViewModel setupSessionViewModel;
 
-    public StudySessionPresenter(ViewManagerModel viewManagerModel,
-            StudySessionViewModel studySessionViewModel,
-            LoginViewModel loginViewModel) {
+    public StudySessionPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, StudySessionViewModel setupSessionViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.studySessionViewModel = studySessionViewModel;
         this.loginViewModel = loginViewModel;
+        this.setupSessionViewModel = setupSessionViewModel;
     }
 
     @Override
     public void switchToSetupSessionView() {
-        viewManagerModel.setState("setup session");
+        viewManagerModel.setState(setupSessionViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
     @Override
     public void switchToLoginView() {
         prepareLoginView();
-        viewManagerModel.setState("log in");
+        viewManagerModel.setState(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Prepares LoginView.
+     */
     public void prepareLoginView() {
-        LoginState currentState = loginViewModel.getState();
+        final LoginState currentState = loginViewModel.getState();
         // Clear logged-in user's password but not username
         currentState.setPassword("");
         currentState.setLoginError("");

@@ -1,7 +1,7 @@
 package use_case.timer.stop_timer;
 
 /**
- * Represents the input data required to stop the timer.
+ * Input data for the StopTimer use case.
  */
 public class StopTimerInputData {
     private final String username;
@@ -9,16 +9,16 @@ public class StopTimerInputData {
     /**
      * Constructs a StopTimerInputData object.
      *
-     * @param username The username of the user who is stopping the timer.
+     * @param username The username associated with the timer.
      */
     public StopTimerInputData(String username) {
         this.username = username;
     }
 
     /**
-     * Gets the username of the user.
+     * Gets the username associated with the timer.
      *
-     * @return The username of the user.
+     * @return The username.
      */
     public String getUsername() {
         return username;
