@@ -58,13 +58,12 @@ public class SessionViewBuilder {
         this.viewManagerModel = viewManagerModel;
         this.viewFactory = viewFactory;
         this.sessionViewModelFactory = new SessionViewModelFactory();
-        this.dialogService = new DialogService();
+        this.dialogService = new DialogService(cardPanel);
         this.viewModels = new SessionViewModels(
                 sessionViewModelFactory.createSetupSessionViewModel(),
                 sessionViewModelFactory.createInventoryViewModel(),
                 sessionViewModelFactory.createTimerViewModel(),
                 sessionViewModelFactory.createStudySessionViewModel());
-        this.dialogService = dialogService;
         this.catViewsAndModels = catViewsAndModels;
     }
 
