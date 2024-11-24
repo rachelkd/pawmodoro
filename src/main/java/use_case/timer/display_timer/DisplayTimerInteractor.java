@@ -3,7 +3,7 @@ package use_case.timer.display_timer;
 import entity.Timer;
 
 /**
- * Use case interactor for displaying timer information
+ * Use case interactor for displaying timer information.
  */
 public class DisplayTimerInteractor implements DisplayTimerInputBoundary {
     private final DisplayTimerDataAccessInterface timerDataAccess;

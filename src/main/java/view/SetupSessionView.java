@@ -29,6 +29,7 @@ public class SetupSessionView extends JPanel implements ActionListener {
 
     private SetupSessionController setupSessionController;
 
+
     public SetupSessionView(SetupSessionViewModel setupSessionViewModel) {
         this.setupSessionViewModel = setupSessionViewModel;
 
@@ -47,7 +48,20 @@ public class SetupSessionView extends JPanel implements ActionListener {
         returnButton = new JButton(SetupSessionViewModel.RETURN_BUTTON_LABEL);
         buttons.add(returnButton);
 
-        returnButton.addActionListener(this);
+        returnButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+
+                        final SetupSessionState currentState = setupSessionViewModel.getState();
+
+                        setupSessionController.execute(
+                                currentState.getBreakTime(),
+                                currentState.getStudyTime()
+                        );
+
+                        setupSessionController.switchToStudyView();
+                    }
+                });
 
         addBreakTimeListener();
         addStudyTimeListener();

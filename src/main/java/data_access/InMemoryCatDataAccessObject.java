@@ -1,7 +1,5 @@
 package data_access;
 
-import entity.Cat;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -69,7 +67,7 @@ public class InMemoryCatDataAccessObject implements CatDataAccessInterface {
 
     @Override
     public boolean removeCat(String name, String ownerUsername) {
-        // TODO: Implement this method for cat running away use case
+        // TODO: Implement this method for cat running away use case @manahillsajid
         return false;
     }
 

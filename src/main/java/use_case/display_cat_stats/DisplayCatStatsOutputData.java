@@ -11,6 +11,14 @@ public class DisplayCatStatsOutputData {
     private final boolean useCaseFailed;
     private final String error;
 
+    /**
+     * Creates output data for a successful use case.
+     *
+     * @param catName the name of the cat
+     * @param hungerLevel the hunger level of the cat
+     * @param happinessLevel the happiness level of the cat
+     * @param imageFileName the image file name for the cat
+     */
     public DisplayCatStatsOutputData(String catName, int hungerLevel, int happinessLevel, String imageFileName) {
         this.catName = catName;
         this.hungerLevel = hungerLevel;
@@ -21,11 +29,9 @@ public class DisplayCatStatsOutputData {
     }
 
     /**
-     * Constructor for error cases.
-     * Sets the cat name to an empty string, hunger and happiness levels to 0,
-     * use case failed to true, and the error message to the given error.
-     * 
-     * @param error The error message.
+     * Creates output data for a failed use case.
+     *
+     * @param error the error message
      */
     public DisplayCatStatsOutputData(String error) {
         this.catName = "";

@@ -3,6 +3,7 @@ package view;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -19,52 +20,49 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import interface_adapter.display_cat_stats.DisplayCatStatsState;
+import interface_adapter.cat.CatState;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
+import constants.Constants;
 
 /**
  * Dialog for displaying cat statistics.
  */
 public class DisplayCatStatsView extends JDialog implements ActionListener, PropertyChangeListener {
-    private static final int PADDING = 10;
-    private static final int FONT_SIZE = 16;
-    private static final int IMAGE_SIZE = 200;
-
     private final DisplayCatStatsViewModel displayCatStatsViewModel;
     private final JLabel catImageLabel;
     private final JLabel catNameLabel;
     private final JLabel hungerLabel;
     private final JLabel happinessLabel;
 
-    /**
-     * Creates a new DisplayCatStatsView dialog.
-     *
-     * @param parent The parent frame
-     * @param displayCatStatsViewModel The view model
-     */
     public DisplayCatStatsView(JFrame parent, DisplayCatStatsViewModel displayCatStatsViewModel) {
         super(parent, DisplayCatStatsViewModel.TITLE_LABEL, true);
         this.displayCatStatsViewModel = displayCatStatsViewModel;
         this.displayCatStatsViewModel.addPropertyChangeListener(this);
 
-        // Initialize components
-        catImageLabel = new JLabel();
-        catNameLabel = new JLabel();
-        hungerLabel = new JLabel();
-        happinessLabel = new JLabel();
+        // Initialize components with default values
+        catImageLabel = new JLabel("No Image Available");
+        catNameLabel = new JLabel("Loading...");
+        hungerLabel = new JLabel(DisplayCatStatsViewModel.HUNGER_LABEL + "0");
+        happinessLabel = new JLabel(DisplayCatStatsViewModel.HAPPINESS_LABEL + "0");
 
         final JPanel mainPanel = createMainPanel();
         this.add(mainPanel);
         this.pack();
         this.setLocationRelativeTo(parent);
 
-        updateFields(displayCatStatsViewModel.getState());
+        // Only update fields if state is available
+        final CatState initialState = displayCatStatsViewModel.getState();
+        if (initialState != null) {
+            updateFields(initialState);
+        }
     }
 
     private JPanel createMainPanel() {
         final JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(Constants.DISPLAY_CAT_STATS_PADDING,
+                Constants.DISPLAY_CAT_STATS_PADDING, Constants.DISPLAY_CAT_STATS_PADDING,
+                Constants.DISPLAY_CAT_STATS_PADDING));
 
         addImageSection(mainPanel);
         addNameSection(mainPanel);
@@ -77,14 +75,15 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
     private void addImageSection(JPanel mainPanel) {
         catImageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(catImageLabel);
-        mainPanel.add(Box.createVerticalStrut(PADDING));
+        mainPanel.add(Box.createVerticalStrut(Constants.DISPLAY_CAT_STATS_PADDING));
     }
 
     private void addNameSection(JPanel mainPanel) {
         catNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        catNameLabel.setFont(new Font(catNameLabel.getFont().getName(), Font.BOLD, FONT_SIZE));
+        catNameLabel
+                .setFont(new Font(catNameLabel.getFont().getName(), Font.BOLD, Constants.DISPLAY_CAT_STATS_FONT_SIZE));
         mainPanel.add(catNameLabel);
-        mainPanel.add(Box.createVerticalStrut(PADDING));
+        mainPanel.add(Box.createVerticalStrut(Constants.DISPLAY_CAT_STATS_PADDING));
     }
 
     private void addStatsSection(JPanel mainPanel) {
@@ -99,7 +98,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         statsPanel.add(happinessLabel);
 
         mainPanel.add(statsPanel);
-        mainPanel.add(Box.createVerticalStrut(PADDING));
+        mainPanel.add(Box.createVerticalStrut(Constants.DISPLAY_CAT_STATS_PADDING));
     }
 
     private void addCloseButton(JPanel mainPanel) {
@@ -109,23 +108,31 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         mainPanel.add(closeButton);
     }
 
-    private void updateFields(DisplayCatStatsState state) {
+    private void updateFields(CatState state) {
         if (state.getError() != null) {
             JOptionPane.showMessageDialog(this, state.getError());
             this.dispose();
         }
         else {
-            // Load and scale cat image
-            final ImageIcon imageIcon = new ImageIcon(getClass().getResource("/images/" + state.getImageFileName()));
-            final Image image = imageIcon.getImage().getScaledInstance(IMAGE_SIZE, IMAGE_SIZE, Image.SCALE_SMOOTH);
-            catImageLabel.setIcon(new ImageIcon(image));
-
+            // Update name and stats
             catNameLabel.setText(state.getCatName());
             hungerLabel.setText(String.format("%s%d", DisplayCatStatsViewModel.HUNGER_LABEL, state.getHungerLevel()));
             happinessLabel.setText(String.format("%s%d", DisplayCatStatsViewModel.HAPPINESS_LABEL,
                     state.getHappinessLevel()));
 
-            this.pack();
+            // Try to load image if available
+            if (state.getImageFileName() != null) {
+                final ImageIcon imageIcon =
+                        new ImageIcon(getClass().getResource("/images/" + state.getImageFileName()));
+                if (imageIcon.getImageLoadStatus() == MediaTracker.COMPLETE) {
+                    final Image image =
+                            imageIcon.getImage().getScaledInstance(Constants.DISPLAY_CAT_STATS_IMAGE_SIZE,
+                                    Constants.DISPLAY_CAT_STATS_IMAGE_SIZE, Image.SCALE_SMOOTH);
+                    catImageLabel.setIcon(new ImageIcon(image));
+                    catImageLabel.setText(null);
+                }
+                this.pack();
+            }
         }
     }
 
@@ -137,8 +144,28 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
-            final DisplayCatStatsState state = (DisplayCatStatsState) evt.getNewValue();
+            final CatState state = (CatState) evt.getNewValue();
             updateFields(state);
         }
+    }
+
+    /**
+     * Gets the view name.
+     *
+     * @return the view name
+     */
+    public String getViewName() {
+        return displayCatStatsViewModel.getViewName();
+    }
+
+    /**
+     * Shows a new DisplayCatStatsView dialog.
+     *
+     * @param parent the parent frame
+     * @param viewModel the view model
+     */
+    public static void show(JFrame parent, DisplayCatStatsViewModel viewModel) {
+        final DisplayCatStatsView dialog = new DisplayCatStatsView(parent, viewModel);
+        dialog.setVisible(true);
     }
 }

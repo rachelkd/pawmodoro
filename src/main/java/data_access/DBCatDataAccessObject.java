@@ -109,7 +109,10 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
                 final JSONObject catJson = jsonArray.getJSONObject(0);
                 result = catFactory.create(
                         catJson.getString(NAME_COLUMN),
-                        catJson.getString(OWNER_USERNAME_COLUMN));
+                        catJson.getString(OWNER_USERNAME_COLUMN),
+                        catJson.getInt(HAPPINESS_LEVEL_COLUMN),
+                        catJson.getInt(HUNGER_LEVEL_COLUMN),
+                        catJson.getString(IMAGE_FILE_NAME_COLUMN));
             }
         }
         catch (final IOException exception) {
@@ -138,7 +141,10 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
                     final JSONObject catJson = jsonArray.getJSONObject(i);
                     final Cat cat = catFactory.create(
                             catJson.getString(NAME_COLUMN),
-                            catJson.getString(OWNER_USERNAME_COLUMN));
+                            catJson.getString(OWNER_USERNAME_COLUMN),
+                            catJson.getInt(HAPPINESS_LEVEL_COLUMN),
+                            catJson.getInt(HUNGER_LEVEL_COLUMN),
+                            catJson.getString(IMAGE_FILE_NAME_COLUMN));
                     cats.add(cat);
                 }
             }
@@ -230,13 +236,13 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
 
     @Override
     public boolean removeCat(String name, String ownerUsername) {
-        // TODO: Implement this method for cat running away use case
+        // TODO: Implement this method for cat running away use case @manahillsajid
         return false;
     }
 
     @Override
     public int getHungerLevel(String name, String ownerUsername) {
-        Cat cat = getCatByNameAndOwner(name, ownerUsername);
+        final Cat cat = getCatByNameAndOwner(name, ownerUsername);
         if (cat == null) {
             throw new NoCatsFoundException("Cat " + name + " not found for user: " + ownerUsername);
         }
@@ -245,7 +251,7 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
 
     @Override
     public int getHappinessLevel(String name, String ownerUsername) {
-        Cat cat = getCatByNameAndOwner(name, ownerUsername);
+        final Cat cat = getCatByNameAndOwner(name, ownerUsername);
         if (cat == null) {
             throw new NoCatsFoundException("Cat " + name + " not found for user: " + ownerUsername);
         }
