@@ -30,7 +30,7 @@ public class UseItemInteractor implements UseItemInputBoundary {
 
             final int quantity = inventoryDataAccessObject.getInventory(useItemInputData.getOwnerId()).getItems()
                     .get(useItemInputData.getFoodName()).getQuantity();
-            Inventory inventory = inventoryDataAccessObject.getInventory(useItemInputData.getOwnerId());
+            final Inventory inventory = inventoryDataAccessObject.getInventory(useItemInputData.getOwnerId());
 
             // if quantity greater than 1
             if (quantity > 1) {
