@@ -28,11 +28,13 @@ import javax.swing.border.Border;
 
 import entity.AbstractFood;
 import interface_adapter.add_to_inventory.AddToInventoryController;
+import interface_adapter.change_cat_hunger.ChangeCatHungerController;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.InventoryState;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
 
+// TODO: Allyssa will turn into JDialog
 /**
  * The View when user is viewing contents of their inventory.
  */
@@ -45,6 +47,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
     private CreateInventoryController createInventoryController;
     private AddToInventoryController addToInventoryController;
     private UseItemController useItemController;
+    private ChangeCatHungerController changeCatHungerController;
     private Map<String, AbstractFood> userInventory;
     private final JPanel mainPanel;
     private final JPanel inventoryPanel;
@@ -149,6 +152,10 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
 
     public void setUseItemController(UseItemController useItemController) {
         this.useItemController = useItemController;
+    }
+
+    public void setChangeCatHungerController(ChangeCatHungerController changeCatHungerController) {
+        this.changeCatHungerController = changeCatHungerController;
     }
 
     void buildInventory(String ownerId) {

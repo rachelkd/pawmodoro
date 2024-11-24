@@ -60,8 +60,12 @@ public class DialogService {
         dialogFactory.createCatStatsDialog(viewModel).setVisible(true);
     }
 
-    public void showTimerSettingsDialog(TimerViewModel viewModel) {
+    /**
+     * Shows the timer settings dialog.
+     */
+    public void showTimerSettingsDialog() {
         // TODO: implement timer settings dialog @yhj050224
+        // Method should take in a TimerSettingsViewModel
     }
 
     /**
