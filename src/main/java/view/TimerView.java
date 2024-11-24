@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import constants.Constants;
+import interface_adapter.timer.TimerController;
 import interface_adapter.timer.TimerViewModel;
 
 /**
@@ -22,6 +23,8 @@ import interface_adapter.timer.TimerViewModel;
  */
 public class TimerView extends JPanel implements PropertyChangeListener {
     private final TimerViewModel timerViewModel;
+    private TimerController timerController;
+
     private final JLabel timerLabel;
     private final SimpleDateFormat timeFormat = new SimpleDateFormat(Constants.TIME_FORMAT_PATTERN);
 
@@ -58,5 +61,13 @@ public class TimerView extends JPanel implements PropertyChangeListener {
         final long remainingTime = timerViewModel.getState().getIntervalDuration()
                 - timerViewModel.getState().getElapsedTime();
         timerLabel.setText(timeFormat.format(new Date(remainingTime)));
+    }
+
+    public void setTimerController(TimerController timerController) {
+        this.timerController = timerController;
+    }
+
+    public String getViewName() {
+        return timerViewModel.getViewName();
     }
 }

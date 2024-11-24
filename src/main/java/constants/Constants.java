@@ -48,6 +48,11 @@ public final class Constants {
     public static final int DISPLAY_CAT_REFRESH_BUTTON_WIDTH = 100;
     public static final int DISPLAY_CAT_REFRESH_BUTTON_HEIGHT = 30;
 
+    // Display cat stats view constants
+    public static final int DISPLAY_CAT_STATS_PADDING = 10;
+    public static final int DISPLAY_CAT_STATS_FONT_SIZE = 16;
+    public static final int DISPLAY_CAT_STATS_IMAGE_SIZE = 200;
+
     // Cat sprite constants
     public static final int CAT_SPRITE_BASE_SIZE = 32;
     public static final int CAT_SPRITE_SCALE = 2;
