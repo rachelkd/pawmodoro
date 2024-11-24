@@ -36,6 +36,11 @@ public final class Constants {
     public static final int HUNGER_FOR_BETWEEN_41_AND_59 = 25;
     public static final int HUNGER_FOR_60 = 30;
 
+    // Study intervals for points
+    public static final int MINUTES_20 = 20;
+    public static final int MINUTES_40 = 40;
+    public static final int MINUTES_60 = 60;
+
     // Cat Image constants
     public static final int CAT_IMAGE_MAX_WIDTH = 300;
     public static final int CAT_IMAGE_MAX_HEIGHT = 150;

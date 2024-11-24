@@ -11,6 +11,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import constants.Constants;
+import interface_adapter.create_cat.CreateCatController;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -31,6 +32,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JButton logIn;
     private final JButton backToSignUp;
     private LoginController loginController;
+    private CreateCatController createCatController;
 
     // TODO: Fix NCSS complexity
     public LoginView(LoginViewModel loginViewModel) {
@@ -164,5 +166,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
+    }
+
+    public void setCreateCatController(CreateCatController createCatController) {
+        this.createCatController = createCatController;
     }
 }

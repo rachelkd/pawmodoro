@@ -10,6 +10,7 @@ import javax.swing.*;
 
 import app.service.DialogService;
 import constants.Constants;
+import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionViewModel;
@@ -29,6 +30,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     private LogoutController logoutController;
     private StudySessionController studySessionController;
+    private ChangeCatHappinessController changeCatHappinessController;
 
     // TODO: We don't need this import if all the input is handled by TimerController in TimerView @yhj050224
     private TimerController timerController;
@@ -144,6 +146,10 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     public void setStudySessionController(StudySessionController controller) {
         this.studySessionController = controller;
+    }
+
+    public void setChangeCatHappinessController(ChangeCatHappinessController controller) {
+        this.changeCatHappinessController = controller;
     }
 
     @Override
