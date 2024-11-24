@@ -177,7 +177,6 @@ public class StudySessionView extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(timerSettings)) {
             System.out.println("Timer Settings button clicked.");
-            dialogService.showTimerSettingsDialog(null);
             // Ensure studySessionController is not null before using it
             if (studySessionController != null) {
                 studySessionController.switchToSetupSessionView();
