@@ -1,8 +1,8 @@
 package interface_adapter.study_session;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.login.LoginViewModel;
 import interface_adapter.login.LoginState;
+import interface_adapter.login.LoginViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import use_case.studysession.StudySessionOutputBoundary;
 
@@ -16,7 +16,7 @@ public class StudySessionPresenter implements StudySessionOutputBoundary {
     private final SetupSessionViewModel setupSessionViewModel;
 
     public StudySessionPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel,
-                                 SetupSessionViewModel setupSessionViewModel) {
+            SetupSessionViewModel setupSessionViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
         this.setupSessionViewModel = setupSessionViewModel;
