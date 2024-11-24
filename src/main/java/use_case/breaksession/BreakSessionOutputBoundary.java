@@ -21,4 +21,5 @@ public interface BreakSessionOutputBoundary {
      * Called when the login view needs to be prepared.
      */
     void prepareLoginView();
+
 }

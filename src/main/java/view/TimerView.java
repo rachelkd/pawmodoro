@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;

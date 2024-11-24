@@ -32,12 +32,11 @@ public class StopTimerInteractor implements StopTimerInputBoundary {
      */
     @Override
     public void stopTimer(StopTimerInputData inputData) {
-        // Extract input data (e.g., username if applicable)
-        final String username = inputData.getUsername();
 
         // Create a new Timer entity with a "STOPPED" status
         // Assuming that the current timer settings are preserved in the Timer entity
-        final Timer timer = timerFactory.create("STOPPED", "WORK", 0, Constants.DEFAULT_WORK_DURATION_MS); // Interval duration as per your logic
+        final Timer timer = timerFactory.create("STOPPED", "WORK", 0,
+                Constants.DEFAULT_WORK_DURATION_MS);
 
         // Convert the Timer entity to TimerOutputData to pass to the output boundary (Presenter)
         final TimerOutputData timerOutputData = new TimerOutputData(

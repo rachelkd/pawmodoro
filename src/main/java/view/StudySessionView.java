@@ -1,12 +1,20 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import app.service.DialogService;
 import constants.Constants;
@@ -33,7 +41,7 @@ public class StudySessionView extends JPanel implements ActionListener {
     private final JButton stopTimerButton;
 
     private final JLabel timerLabel;
-    private Timer swingTimer;
+    private final Timer swingTimer;
     private long remainingTime = Constants.DEFAULT_WORK_DURATION_MS;
 
     private DialogService dialogService;
@@ -150,7 +158,7 @@ public class StudySessionView extends JPanel implements ActionListener {
         buttonPanel.add(startTimerButton);
         buttonPanel.add(stopTimerButton);
 
-        timerPanel.add(Box.createVerticalStrut(10));
+        timerPanel.add(Box.createVerticalStrut(Constants.TIMER_VERTICAL_SPACING));
         timerPanel.add(buttonPanel);
 
         return timerPanel;

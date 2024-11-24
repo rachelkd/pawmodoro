@@ -44,10 +44,10 @@ public class TimerState {
     /**
      * Sets the current status of the timer.
      *
-     * @param status The new status of the timer.
+     * @param newStatus The new status of the timer.
      */
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(String newStatus) {
+        this.status = newStatus;
     }
 
     /**
@@ -62,10 +62,10 @@ public class TimerState {
     /**
      * Sets the current interval type of the timer.
      *
-     * @param currentInterval The new interval type.
+     * @param newCurrentInterval The new interval type.
      */
-    public void setCurrentInterval(String currentInterval) {
-        this.currentInterval = currentInterval;
+    public void setCurrentInterval(String newCurrentInterval) {
+        this.currentInterval = newCurrentInterval;
     }
 
     /**
@@ -80,10 +80,10 @@ public class TimerState {
     /**
      * Sets the elapsed time of the timer in milliseconds.
      *
-     * @param elapsedTime The new elapsed time in milliseconds.
+     * @param newElapsedTime The new elapsed time in milliseconds.
      */
-    public void setElapsedTime(long elapsedTime) {
-        this.elapsedTime = elapsedTime;
+    public void setElapsedTime(long newElapsedTime) {
+        this.elapsedTime = newElapsedTime;
     }
 
     /**
@@ -98,25 +98,26 @@ public class TimerState {
     /**
      * Sets the total duration of the current interval in milliseconds.
      *
-     * @param intervalDuration The new interval duration in milliseconds.
+     * @param newIntervalDuration The new interval duration in milliseconds.
      */
-    public void setIntervalDuration(long intervalDuration) {
-        this.intervalDuration = intervalDuration;
+    public void setIntervalDuration(long newIntervalDuration) {
+        this.intervalDuration = newIntervalDuration;
     }
 
     /**
      * Updates the timer state with new values.
      *
-     * @param status          The updated status of the timer.
-     * @param currentInterval The updated interval type.
-     * @param elapsedTime     The updated elapsed time in milliseconds.
-     * @param intervalDuration The updated total duration of the interval in milliseconds.
+     * @param newStatus          The updated status of the timer.
+     * @param newCurrentInterval The updated interval type.
+     * @param newElapsedTime     The updated elapsed time in milliseconds.
+     * @param newIntervalDuration The updated total duration of the interval in milliseconds.
      */
-    public void updateState(String status, String currentInterval, long elapsedTime, long intervalDuration) {
-        this.status = status;
-        this.currentInterval = currentInterval;
-        this.elapsedTime = elapsedTime;
-        this.intervalDuration = intervalDuration;
+    public void updateState(String newStatus, String newCurrentInterval, long newElapsedTime,
+                            long newIntervalDuration) {
+        this.status = newStatus;
+        this.currentInterval = newCurrentInterval;
+        this.elapsedTime = newElapsedTime;
+        this.intervalDuration = newIntervalDuration;
     }
 
     /**
@@ -129,3 +130,4 @@ public class TimerState {
         this.intervalDuration = Constants.DEFAULT_WORK_DURATION_MS;
     }
 }
+

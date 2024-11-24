@@ -1,8 +1,8 @@
 package interface_adapter.break_session;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.login.LoginViewModel;
 import interface_adapter.login.LoginState;
+import interface_adapter.login.LoginViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
 import use_case.breaksession.BreakSessionOutputBoundary;
 
@@ -15,7 +15,8 @@ public class BreakSessionPresenter implements BreakSessionOutputBoundary {
     private final LoginViewModel loginViewModel;
     private final StudySessionViewModel studySessionViewModel;
 
-    public BreakSessionPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, StudySessionViewModel studySessionViewModel) {
+    public BreakSessionPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel,
+                                 StudySessionViewModel studySessionViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
         this.studySessionViewModel = studySessionViewModel;
@@ -23,6 +24,7 @@ public class BreakSessionPresenter implements BreakSessionOutputBoundary {
 
     @Override
     public void switchToStudySessionView() {
+        System.out.println("Switching to Study Session View...");
         viewManagerModel.setState(studySessionViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
