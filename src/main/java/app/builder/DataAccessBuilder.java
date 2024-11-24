@@ -1,22 +1,26 @@
 package app.builder;
 
 import app.components.DataAccessComponents;
+
 import data_access.AdoptionDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
+import data_access.DBInventoryDataAccessObject;
 import data_access.DBUserDataAccessObject;
-import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
 import entity.CatFactory;
 import entity.CatImageFactory;
 import entity.CommonUserFactory;
+import entity.FoodInventoryFactory;
+import entity.FoodItemFactory;
+import use_case.food_management.InventoryService;
 
 /**
  * Builder for data access components.
  */
 public class DataAccessBuilder {
     private DBUserDataAccessObject userDataAccess;
-    private InMemoryInventoryDataAccessObject inventoryDataAccess;
+    private InventoryService inventoryDataAccess;
     private InMemoryTimerDataAccessObject timerDataAccess;
     private AdoptionDataAccessObject adoptionDataAccess;
     private ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
@@ -38,7 +42,9 @@ public class DataAccessBuilder {
      * @return this builder
      */
     public DataAccessBuilder buildInventoryDataAccess() {
-        this.inventoryDataAccess = new InMemoryInventoryDataAccessObject();
+        DBInventoryDataAccessObject dbInventoryDataAccess =
+                new DBInventoryDataAccessObject(new FoodInventoryFactory(), new FoodItemFactory());
+        this.inventoryDataAccess = InventoryService.getInstance(dbInventoryDataAccess);
         return this;
     }
 

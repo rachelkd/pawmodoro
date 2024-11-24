@@ -40,7 +40,6 @@ public class InventoryUseCaseBuilder extends AbstractUseCaseBuilder {
     public InventoryUseCaseBuilder buildCreateInventoryUseCase() {
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
         final CreateInventoryOutputBoundary outputBoundary = new CreateInventoryPresenter(
-                getViews().getViewManagerModel(),
                 getViews().getSession().getViewModels().getInventoryViewModel());
 
         final CreateInventoryInputBoundary interactor = new CreateInventoryInteractor(
@@ -48,7 +47,7 @@ public class InventoryUseCaseBuilder extends AbstractUseCaseBuilder {
                 outputBoundary, inventoryFactory);
 
         final CreateInventoryController controller = new CreateInventoryController(interactor);
-        getViews().getSession().getViews().getInventoryView().setCreateInventoryController(controller);
+        // getViews().getSession().getViews().getInventoryView().setCreateInventoryController(controller);
         return this;
     }
 
@@ -67,7 +66,7 @@ public class InventoryUseCaseBuilder extends AbstractUseCaseBuilder {
                 foodItemFactory);
 
         final AddToInventoryController controller = new AddToInventoryController(interactor);
-        getViews().getSession().getViews().getInventoryView().setAddToInventoryController(controller);
+        // getViews().getSession().getViews().getInventoryView().setAddToInventoryController(controller);
         return this;
     }
 
@@ -83,9 +82,9 @@ public class InventoryUseCaseBuilder extends AbstractUseCaseBuilder {
         final UseItemInputBoundary interactor = new UseItemInteractor(
                 getDataAccess().getInventoryDataAccess(),
                 outputBoundary);
-
+        // TODO figure out controller stuff for dialog
         final UseItemController controller = new UseItemController(interactor);
-        getViews().getSession().getViews().getInventoryView().setUseItemController(controller);
+        // getViews().getSession().getViews().getInventoryView().setUseItemController(controller);
         return this;
     }
 

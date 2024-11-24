@@ -2,13 +2,14 @@ package app.builder.view;
 
 import java.awt.CardLayout;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import app.builder.view.session.SessionViewModels;
 import app.builder.view.session.SessionViews;
 import app.builder.view.session.SessionViewsAndModels;
 import app.factory.ViewFactory;
 import app.factory.viewmodel.SessionViewModelFactory;
+import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
 import view.InventoryView;
 import view.SetupSessionView;
@@ -24,6 +25,8 @@ public class SessionViewBuilder {
     private final ViewFactory viewFactory;
     private final SessionViewModelFactory sessionViewModelFactory;
     private final SessionViewModels viewModels;
+    private final DialogService dialogService;
+
 
     // Views
     private SetupSessionView setupSessionView;
@@ -47,6 +50,7 @@ public class SessionViewBuilder {
         this.viewManagerModel = viewManagerModel;
         this.viewFactory = viewFactory;
         this.sessionViewModelFactory = new SessionViewModelFactory();
+        this.dialogService = new DialogService();
         this.viewModels = new SessionViewModels(
                 sessionViewModelFactory.createSetupSessionViewModel(),
                 sessionViewModelFactory.createInventoryViewModel(),
@@ -83,8 +87,10 @@ public class SessionViewBuilder {
      * @return this builder
      */
     public SessionViewBuilder buildInventoryView() {
-        inventoryView = viewFactory.createInventoryView(viewModels.getInventoryViewModel());
-        cardPanel.add(inventoryView, inventoryView.getViewName());
+        // have inventory run in background
+        inventoryView = viewFactory
+                .createInventoryView((JFrame) cardPanel.getParent(), viewModels.getInventoryViewModel(), dialogService);
+        // cardPanel.add(inventoryView, inventoryView.getViewName()); // find way to get inventory from here and set to visible
         return this;
     }
 

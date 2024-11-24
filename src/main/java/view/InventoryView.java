@@ -17,10 +17,9 @@ import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.InventoryState;
 import interface_adapter.create_inventory.InventoryViewModel;
-import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
 
-// TODO: Allyssa will turn into JDialog
+
 /**
  * The View when user is viewing contents of their inventory.
  */
@@ -147,6 +146,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
                     event -> {
                         if (selectedLabel[0] != null) {
                             final String selectedText = selectedLabel[0].getText();
+                            //TODO implement what happens when button pressed
                             JOptionPane.showMessageDialog(null, "Selected Item: " + selectedText);
                         }
                         else {

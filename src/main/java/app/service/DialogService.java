@@ -23,19 +23,34 @@ public class DialogService {
     }
 
     /**
-     * Shows the inventory dialog.
+     * Return the inventory dialog.
      * @param parent the parent frame
      * @param viewModel the view model for the dialog
      */
-    public void showInventoryDialog(JFrame parent, InventoryViewModel viewModel) {
+    public InventoryView createInventoryDialog(JFrame parent, InventoryViewModel viewModel) {
         // avoid duplicating dialog
         if (inventoryDialog != null && inventoryDialog.isVisible()) {
-            return;
+            return null;
         }
-
         inventoryDialog = new InventoryView(parent, viewModel);
-        // viewModel.addPropertyChangeListener(event -> {});
+        return (InventoryView) inventoryDialog;
+    }
 
-        inventoryDialog.setVisible(true);
+    /**
+     * Show the Inventory Dialog.
+     */
+    public void showInventoryDialog() {
+        if (inventoryDialog != null && !inventoryDialog.isVisible()) {
+            inventoryDialog.setVisible(true);
+        }
+    }
+
+    /**
+     * Hide the Inventory Dialog.
+     */
+    public void hideInventoryDialog() {
+        if (inventoryDialog != null && inventoryDialog.isVisible()) {
+            inventoryDialog.setVisible(false);
+        }
     }
 }

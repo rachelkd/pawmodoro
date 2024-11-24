@@ -6,13 +6,14 @@ import data_access.DBCatDataAccessObject;
 import data_access.DBUserDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
+import use_case.food_management.InventoryService;
 
 /**
  * Holds all data access components for the application.
  */
 public class DataAccessComponents {
     private final DBUserDataAccessObject userDataAccess;
-    private final InMemoryInventoryDataAccessObject inventoryDataAccess;
+    private final InventoryService inventoryDataAccess;
     private final InMemoryTimerDataAccessObject timerDataAccess;
     private final AdoptionDataAccessObject adoptionDataAccess;
     private final ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
@@ -29,11 +30,11 @@ public class DataAccessComponents {
      * @param catDataAccess the cat data access object
      */
     public DataAccessComponents(DBUserDataAccessObject userDataAccess,
-            InMemoryInventoryDataAccessObject inventoryDataAccess,
-            InMemoryTimerDataAccessObject timerDataAccess,
-            AdoptionDataAccessObject adoptionDataAccess,
-            ApiDisplayCatImageDataAccessObject displayCatImageDataAccess,
-            DBCatDataAccessObject catDataAccess) {
+                                InventoryService inventoryDataAccess,
+                                InMemoryTimerDataAccessObject timerDataAccess,
+                                AdoptionDataAccessObject adoptionDataAccess,
+                                ApiDisplayCatImageDataAccessObject displayCatImageDataAccess,
+                                DBCatDataAccessObject catDataAccess) {
         this.userDataAccess = userDataAccess;
         this.inventoryDataAccess = inventoryDataAccess;
         this.timerDataAccess = timerDataAccess;
@@ -46,7 +47,7 @@ public class DataAccessComponents {
         return userDataAccess;
     }
 
-    public InMemoryInventoryDataAccessObject getInventoryDataAccess() {
+    public InventoryService getInventoryDataAccess() {
         return inventoryDataAccess;
     }
 

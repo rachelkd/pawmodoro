@@ -28,6 +28,8 @@ import view.SetupSessionView;
 import view.SignupView;
 import view.StudySessionView;
 
+import javax.swing.*;
+
 /**
  * Default implementation of ViewFactory.
  * Responsible for creating various view components in the application.
@@ -138,8 +140,9 @@ public class ViewFactory {
      * @param inventoryViewModel the inventory view model
      * @return InventoryView
      */
-    public InventoryView createInventoryView(InventoryViewModel inventoryViewModel) {
-        return new InventoryView(inventoryViewModel);
+    public InventoryView createInventoryView(JFrame app, InventoryViewModel inventoryViewModel, DialogService dialogService) {
+        return dialogService.createInventoryDialog(app, inventoryViewModel);
+
     }
 
     /**
