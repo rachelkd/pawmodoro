@@ -24,6 +24,8 @@ import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerController;
 import interface_adapter.timer.TimerViewModel;
+import interface_adapter.music_control.MusicControlController;
+import interface_adapter.music_control.MusicControlViewModel;
 
 /**
  * Views for Study sessions.
@@ -35,10 +37,12 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private final CatView catView;
 
     private final TimerViewModel timerViewModel;
+    private final MusicControlViewModel musicControlViewModel;
 
     private LogoutController logoutController;
     private StudySessionController studySessionController;
     private ChangeCatHappinessController changeCatHappinessController;
+    private MusicControlController musicControlController;
 
     // TODO: We don't need timerController if all the input is handled by TimerController in TimerView @yhj050224
     // Inject TimerView into StudySessionView similar to CatView instead of creating a new instance
@@ -48,16 +52,18 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     private final JButton timerSettings;
     private final JButton logOutSettings;
+    private final JButton playPauseSettings;
 
     private DialogService dialogService;
 
     public StudySessionView(StudySessionViewModel studySessionViewModel, TimerViewModel timerViewModel,
-            DialogService dialogService, CatView catView) {
+            DialogService dialogService, CatView catView, MusicControlViewModel musicControlViewModel) {
 
         studySessionViewModel.addPropertyChangeListener(this);
 
         this.dialogService = dialogService;
         this.timerViewModel = timerViewModel;
+        this.musicControlViewModel = musicControlViewModel;
 
         this.timerView = new TimerView(timerViewModel);
         this.catView = catView;
@@ -66,9 +72,11 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
         timerSettings = createButton("Timer Settings");
         logOutSettings = createButton("Log Out");
+        playPauseSettings = createButton("Play");
 
         timerSettings.addActionListener(this);
         logOutSettings.addActionListener(this);
+        playPauseSettings.addActionListener(this);
 
         // Add components to main panel
         this.add(createTopPanel(), BorderLayout.NORTH);
@@ -102,10 +110,14 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         final JPanel leftButtons = new JPanel(new FlowLayout(FlowLayout.LEFT));
         leftButtons.add(timerSettings);
 
+        final JPanel centerButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        centerButtons.add(playPauseSettings);
+
         final JPanel rightButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightButtons.add(logOutSettings);
 
         buttonsPanel.add(leftButtons, BorderLayout.WEST);
+        buttonsPanel.add(centerButtons, BorderLayout.CENTER);
         buttonsPanel.add(rightButtons, BorderLayout.EAST);
 
         return buttonsPanel;
@@ -172,6 +184,13 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         else if (evt.getSource().equals(logOutSettings)) {
             // Execute the logout use case through the Controller
             this.logoutController.execute("");
+        }
+        else if (evt.getSource().equals(playPauseSettings)) {
+            // Toggle playback
+            musicControlController.togglePlayback();
+            // Update button text based on the new state
+            boolean isPlaying = musicControlViewModel.getState().isPlaying();
+            playPauseSettings.setText(isPlaying ? "Pause" : "Play");
         }
     }
 

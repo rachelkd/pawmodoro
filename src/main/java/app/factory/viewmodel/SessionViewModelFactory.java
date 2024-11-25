@@ -5,6 +5,7 @@ import interface_adapter.get_cat_fact.GetCatFactViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
+import interface_adapter.music_control.MusicControlViewModel;
 
 /**
  * Factory for creating session-related view models.
@@ -53,5 +54,14 @@ public class SessionViewModelFactory {
      */
     public GetCatFactViewModel createGetCatFactViewModel() {
         return new GetCatFactViewModel();
+    }
+
+    /**
+     * Creates a new music control view model.
+     *
+     * @return the music control view model
+     */
+    public MusicControlViewModel createMusicControlViewModel() {
+        return new MusicControlViewModel();
     }
 }

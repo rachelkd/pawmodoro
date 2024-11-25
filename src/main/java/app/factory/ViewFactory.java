@@ -17,6 +17,7 @@ import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
+import interface_adapter.music_control.MusicControlViewModel;
 import view.AdoptionView;
 import view.CatView;
 import view.DisplayCatImageView;
@@ -131,8 +132,9 @@ public class ViewFactory {
     public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
             TimerViewModel timerViewModel, CatViewModel catViewModel,
             DisplayCatStatsViewModel displayCatStatsViewModel, DialogService dialogService,
-            CatView catView) {
-        return new StudySessionView(studySessionViewModel, timerViewModel, dialogService, catView);
+            CatView catView, MusicControlViewModel musicControlViewModel) {
+        return new StudySessionView(studySessionViewModel, timerViewModel, dialogService, catView,
+                musicControlViewModel);
     }
 
     /**
