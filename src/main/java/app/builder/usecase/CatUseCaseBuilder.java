@@ -17,7 +17,7 @@ import interface_adapter.display_cat_stats.DisplayCatStatsPresenter;
 import interface_adapter.maxcatserror.MaxCatsErrorController;
 import interface_adapter.maxcatserror.MaxCatsErrorPresenter;
 import interface_adapter.runawaycat.RunawayCatController;
-import interface_adapter.runawaycat.RunawayPresenter;
+import interface_adapter.runawaycat.RunawayCatPresenter;
 import use_case.adoption.AdoptionInputBoundary;
 import use_case.adoption.AdoptionInteractor;
 import use_case.adoption.AdoptionOutputBoundary;
@@ -136,11 +136,11 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
      * @return this builder
      */
     public CatUseCaseBuilder buildRunawayCatUseCase() {
-        final RunawayCatOutputBoundary outputBoundary = new RunawayPresenter(
+        final RunawayCatOutputBoundary outputBoundary = new RunawayCatPresenter(
                 getViews().getCat().getViewModels().getRunawayCatViewModel(),
                 getViews().getViewManagerModel());
 
-        final RunawayCatInputBoundary interactor = new RunawayCatInteractor(outputBoundary);
+        final RunawayCatInputBoundary interactor = new RunawayCatInteractor(outputBoundary, getDataAccess().getCatDataAccessObject());
         final RunawayCatController controller =
                 new RunawayCatController(getViews().getCat().getViewModels().getRunawayCatViewModel(), interactor);
         getViews().getCat().getViews().getRunawayCatView().setRunawayCatController(controller);
@@ -165,7 +165,7 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
         getViews().getAuth().getViews().getSignupView().setCreateCatController(controller);
         getViews().getAuth().getViews().getLoginView().setCreateCatController(controller);
         // whatever view will have new cat button
-        getViews().getAuth().getViews().getLoggedInView().setCreateCatController(controller);
+        // getViews().getAuth().getViews().getLoggedInView().setCreateCatController(controller);
         return this;
     }
 
