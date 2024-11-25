@@ -113,6 +113,16 @@ public class SessionViewBuilder {
     }
 
     /**
+     * Builds the get cat fact view.
+     * @return this builder
+     */
+    public SessionViewBuilder buildGetCatFactView() {
+        this.getCatFactView = viewFactory.createGetCatFactView(viewModels.getGetCatFactViewModel());
+        cardPanel.add(getCatFactView, getCatFactView.getViewName());
+        return this;
+    }
+
+    /**
      * Builds and returns the session views and models.
      * @return the session views and models
      */
@@ -120,7 +130,8 @@ public class SessionViewBuilder {
         this.buildSetupSessionView()
                 .buildInventoryView()
                 .buildStudySessionView()
-                .buildBreakSessionView();
+                .buildBreakSessionView()
+                .buildGetCatFactView();
 
         final SessionViews views = new SessionViews(
                 setupSessionView,
