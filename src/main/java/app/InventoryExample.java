@@ -73,9 +73,9 @@ public class InventoryExample {
         application.add(cardPanel);
 
         // inventory does not exist yet
-        DialogService dialogService = new DialogService(cardPanel);
+        final DialogService dialogService = new DialogService(cardPanel);
         dialogService.createInventoryDialog(application, inventoryViewModel);
-        dialogService.showInventoryDialog();
+        dialogService.showInventoryDialog(inventoryViewModel);
 
         controller.execute("chiually");
 
@@ -113,9 +113,9 @@ public class InventoryExample {
 
         application.add(cardPanel);
 
-        DialogService dialogService = new DialogService(cardPanel);
+        final DialogService dialogService = new DialogService(cardPanel);
         inventoryView = dialogService.createInventoryDialog(application, inventoryViewModel);
-        dialogService.showInventoryDialog();
+        dialogService.showInventoryDialog(inventoryViewModel);
         inventoryView.setUseItemController(useItemController);
 
         createInventoryController.execute("chiually");

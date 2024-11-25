@@ -71,9 +71,7 @@ public class DataAccessBuilder {
      * @return this builder
      */
     private DataAccessBuilder buildInventoryDataAccess() {
-        final DBInventoryDataAccessObject dbInventoryDataAccess =
-                new DBInventoryDataAccessObject(new FoodInventoryFactory(), new FoodItemFactory());
-        this.inventoryDataAccess = InventoryService.getInstance(dbInventoryDataAccess);
+        this.inventoryDataAccess = factory.createInventoryAccessFactory();
         return this;
     }
 

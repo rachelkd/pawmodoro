@@ -4,12 +4,16 @@ import data_access.AdoptionDataAccessObject;
 import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
+import data_access.DBInventoryDataAccessObject;
 import data_access.DBUserDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
 import entity.CatFactory;
 import entity.CatImageFactory;
 import entity.CommonUserFactory;
+import entity.FoodInventoryFactory;
+import entity.FoodItemFactory;
+import use_case.food_management.InventoryService;
 
 /**
  * Factory for creating data access objects.
@@ -76,5 +80,15 @@ public class DataAccessFactory {
      */
     public ApiCatFactDataAccessObject createCatFactDataAccess() {
         return new ApiCatFactDataAccessObject();
+    }
+
+    /**
+     * Creates a inventory data access object.
+     * @return the inventory data access object
+     */
+    public InventoryService createInventoryAccessFactory() {
+        final DBInventoryDataAccessObject dbInventoryDataAccess =
+                new DBInventoryDataAccessObject(new FoodInventoryFactory(), new FoodItemFactory());
+        return InventoryService.getInstance(dbInventoryDataAccess);
     }
 }

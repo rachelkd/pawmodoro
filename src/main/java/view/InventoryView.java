@@ -173,7 +173,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
                     // TODO feeding cats all at once?
                     final String selectedText = selectedLabel[0].getText();
                     useItemController.execute(ownerId, selectedText);
-                    changeCatHungerController.execute("name", ownerId, selectedText);
+                    // changeCatHungerController.execute("name", ownerId, selectedText);
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Please select an item first.");
