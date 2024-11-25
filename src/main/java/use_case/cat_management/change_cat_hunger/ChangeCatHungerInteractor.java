@@ -21,7 +21,8 @@ public class ChangeCatHungerInteractor implements ChangeCatHungerInputBoundary {
     @Override
     public void execute(ChangeCatHungerInputData changeCatHungerInputData) {
         // get the cat, cat object should already exist dues to create cat use case
-        final Cat cat = changeCatHungerInputData.getCat();
+        final Cat cat = catDataAccessObject.getCatByNameAndOwner(changeCatHungerInputData.getCatName(),
+                changeCatHungerInputData.getOwnerUsername());
         int hungerChange = 0;
 
         if (changeCatHungerInputData.getFood() != null) {
@@ -46,17 +47,19 @@ public class ChangeCatHungerInteractor implements ChangeCatHungerInputBoundary {
     }
 
     int hungerDecreaseCalculator(int studySessionLength) {
-        if (studySessionLength <= 20) {
-            return Constants.HUNGER_FOR_LESS_EQUAL_20;
+        final int hungerPoints;
+        if (studySessionLength <= Constants.MINUTES_20) {
+            hungerPoints = Constants.HUNGER_FOR_LESS_EQUAL_20;
         }
-        else if (studySessionLength <= 40) {
-            return Constants.HUNGER_FOR_BETWEEN_21_AND_40;
+        else if (studySessionLength <= Constants.MINUTES_40) {
+            hungerPoints = Constants.HUNGER_FOR_BETWEEN_21_AND_40;
         }
-        else if (studySessionLength < 60) {
-            return Constants.HUNGER_FOR_BETWEEN_41_AND_59;
+        else if (studySessionLength < Constants.MINUTES_60) {
+            hungerPoints = Constants.HUNGER_FOR_BETWEEN_41_AND_59;
         }
         else {
-            return Constants.HUNGER_FOR_60;
+            hungerPoints = Constants.HUNGER_FOR_60;
         }
+        return hungerPoints;
     }
 }

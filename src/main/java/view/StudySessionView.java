@@ -1,15 +1,24 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import app.service.DialogService;
 import constants.Constants;
+import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionViewModel;
@@ -29,8 +38,12 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     private LogoutController logoutController;
     private StudySessionController studySessionController;
+    private ChangeCatHappinessController changeCatHappinessController;
 
-    // TODO: We don't need this import if all the input is handled by TimerController in TimerView @yhj050224
+    // TODO: We don't need timerController if all the input is handled by TimerController in TimerView @yhj050224
+    // Inject TimerView into StudySessionView similar to CatView instead of creating a new instance
+    // Similar to CatView
+    // Remove TimerViewModel from this class and constructor
     private TimerController timerController;
 
     private final JButton timerSettings;
@@ -59,7 +72,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
         // Add components to main panel
         this.add(createTopPanel(), BorderLayout.NORTH);
-        this.add(createTimerView(), BorderLayout.CENTER);
+        this.add(createTimerPanel(), BorderLayout.CENTER);
         this.add(createCatPanel(), BorderLayout.SOUTH);
 
         // Make sure this panel is visible
@@ -107,7 +120,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         return titlePanel;
     }
 
-    private TimerView createTimerView() {
+    private TimerView createTimerPanel() {
         timerView.setAlignmentX(Component.CENTER_ALIGNMENT);
         timerView.setVisible(true);
         return timerView;
@@ -146,11 +159,15 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         this.studySessionController = controller;
     }
 
+    public void setChangeCatHappinessController(ChangeCatHappinessController controller) {
+        this.changeCatHappinessController = controller;
+    }
+
     @Override
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(timerSettings)) {
             // TODO: Switch to TimerSettingsView @yhj050224
-            dialogService.showTimerSettingsDialog(timerViewModel);
+            dialogService.showTimerSettingsDialog();
         }
         else if (evt.getSource().equals(logOutSettings)) {
             // Execute the logout use case through the Controller

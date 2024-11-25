@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.MediaTracker;
@@ -20,9 +21,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import constants.Constants;
 import interface_adapter.cat.CatState;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
-import constants.Constants;
 
 /**
  * Dialog for displaying cat statistics.
@@ -33,20 +34,26 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
     private final JLabel catNameLabel;
     private final JLabel hungerLabel;
     private final JLabel happinessLabel;
+    private final GetCatFactView getCatFactView;
 
-    public DisplayCatStatsView(JFrame parent, DisplayCatStatsViewModel displayCatStatsViewModel) {
+    public DisplayCatStatsView(JFrame parent, DisplayCatStatsViewModel displayCatStatsViewModel,
+            GetCatFactView getCatFactView) {
         super(parent, DisplayCatStatsViewModel.TITLE_LABEL, true);
         this.displayCatStatsViewModel = displayCatStatsViewModel;
+        this.getCatFactView = getCatFactView;
+        this.setLocationRelativeTo(parent);
         this.displayCatStatsViewModel.addPropertyChangeListener(this);
 
         // Initialize components with default values
-        catImageLabel = new JLabel("No Image Available");
-        catNameLabel = new JLabel("Loading...");
+        catImageLabel = new JLabel(Constants.NO_IMAGE_AVAILABLE);
+        catNameLabel = new JLabel(Constants.LOADING);
         hungerLabel = new JLabel(DisplayCatStatsViewModel.HUNGER_LABEL + "0");
         happinessLabel = new JLabel(DisplayCatStatsViewModel.HAPPINESS_LABEL + "0");
 
         final JPanel mainPanel = createMainPanel();
-        this.add(mainPanel);
+        mainPanel.setPreferredSize(
+                new Dimension(Constants.DISPLAY_CAT_STATS_MAX_WIDTH, Constants.DISPLAY_CAT_STATS_HEIGHT));
+        this.setContentPane(mainPanel);
         this.pack();
         this.setLocationRelativeTo(parent);
 
@@ -67,6 +74,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         addImageSection(mainPanel);
         addNameSection(mainPanel);
         addStatsSection(mainPanel);
+        addCatFactSection(mainPanel);
         addCloseButton(mainPanel);
 
         return mainPanel;
@@ -80,8 +88,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
 
     private void addNameSection(JPanel mainPanel) {
         catNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        catNameLabel
-                .setFont(new Font(catNameLabel.getFont().getName(), Font.BOLD, Constants.DISPLAY_CAT_STATS_FONT_SIZE));
+        catNameLabel.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.DISPLAY_CAT_STATS_FONT_SIZE));
         mainPanel.add(catNameLabel);
         mainPanel.add(Box.createVerticalStrut(Constants.DISPLAY_CAT_STATS_PADDING));
     }
@@ -101,10 +108,26 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         mainPanel.add(Box.createVerticalStrut(Constants.DISPLAY_CAT_STATS_PADDING));
     }
 
+    private void addCatFactSection(JPanel mainPanel) {
+        final JPanel catFactPanel = new JPanel();
+        catFactPanel.setLayout(new BoxLayout(catFactPanel, BoxLayout.Y_AXIS));
+        catFactPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        getCatFactView.setAlignmentX(Component.CENTER_ALIGNMENT);
+        getCatFactView.setVisible(true);
+
+        catFactPanel.add(getCatFactView);
+        mainPanel.add(catFactPanel);
+        mainPanel.add(Box.createVerticalStrut(Constants.DISPLAY_CAT_STATS_PADDING));
+    }
+
     private void addCloseButton(JPanel mainPanel) {
         final JButton closeButton = new JButton(DisplayCatStatsViewModel.CLOSE_BUTTON_LABEL);
         closeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         closeButton.addActionListener(this);
+
+        // Add padding before the button
+        mainPanel.add(Box.createVerticalStrut(Constants.DISPLAY_CAT_STATS_PADDING));
         mainPanel.add(closeButton);
     }
 
@@ -125,9 +148,8 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
                 final ImageIcon imageIcon =
                         new ImageIcon(getClass().getResource("/images/" + state.getImageFileName()));
                 if (imageIcon.getImageLoadStatus() == MediaTracker.COMPLETE) {
-                    final Image image =
-                            imageIcon.getImage().getScaledInstance(Constants.DISPLAY_CAT_STATS_IMAGE_SIZE,
-                                    Constants.DISPLAY_CAT_STATS_IMAGE_SIZE, Image.SCALE_SMOOTH);
+                    final Image image = imageIcon.getImage().getScaledInstance(Constants.DISPLAY_CAT_STATS_IMAGE_SIZE,
+                            Constants.DISPLAY_CAT_STATS_IMAGE_SIZE, Image.SCALE_SMOOTH);
                     catImageLabel.setIcon(new ImageIcon(image));
                     catImageLabel.setText(null);
                 }
@@ -163,9 +185,10 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
      *
      * @param parent the parent frame
      * @param viewModel the view model
+     * @param getCatFactView the get cat fact view
      */
-    public static void show(JFrame parent, DisplayCatStatsViewModel viewModel) {
-        final DisplayCatStatsView dialog = new DisplayCatStatsView(parent, viewModel);
+    public static void show(JFrame parent, DisplayCatStatsViewModel viewModel, GetCatFactView getCatFactView) {
+        final DisplayCatStatsView dialog = new DisplayCatStatsView(parent, viewModel, getCatFactView);
         dialog.setVisible(true);
     }
 }
