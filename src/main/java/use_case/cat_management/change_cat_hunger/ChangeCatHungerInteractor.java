@@ -3,6 +3,7 @@ package use_case.cat_management.change_cat_hunger;
 import constants.Constants;
 import entity.AbstractFood;
 import entity.Cat;
+import entity.FoodItemFactory;
 import use_case.cat.CatDataAccessInterface;
 
 /**
@@ -25,8 +26,9 @@ public class ChangeCatHungerInteractor implements ChangeCatHungerInputBoundary {
                 changeCatHungerInputData.getOwnerUsername());
         int hungerChange = 0;
 
-        if (changeCatHungerInputData.getFood() != null) {
-            final AbstractFood food = changeCatHungerInputData.getFood();
+        if (changeCatHungerInputData.getFoodName() != null) {
+            final FoodItemFactory foodItemFactory = new FoodItemFactory();
+            final AbstractFood food = foodItemFactory.create(changeCatHungerInputData.getFoodName());
 
             hungerChange += food.getPoints();
             cat.updateHungerLevel(hungerChange);
