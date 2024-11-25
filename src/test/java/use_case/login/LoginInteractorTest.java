@@ -170,7 +170,7 @@ class LoginInteractorTest {
 
             @Override
             public void switchToStudySessionView() {
-
+                fail("Use case switch to study session view is unexpected.");
             }
         };
 
