@@ -63,7 +63,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         // Only update fields if state is available
         final CatState initialState = displayCatStatsViewModel.getState();
         if (initialState != null) {
-            updateFields(initialState);
+            this.updateFields(initialState);
         }
     }
 
@@ -170,7 +170,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
     public void propertyChange(PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
             final CatState state = (CatState) evt.getNewValue();
-            updateFields(state);
+            this.updateFields(state);
         }
     }
 
