@@ -121,7 +121,8 @@ public class SessionViewBuilder {
     public SessionViewsAndModels build() {
         this.buildSetupSessionView()
                 .buildInventoryView()
-                .buildStudySessionView();
+                .buildStudySessionView()
+                .buildBreakSessionView();
 
         final SessionViews views = new SessionViews(
                 setupSessionView,

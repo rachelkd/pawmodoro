@@ -39,7 +39,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private JButton logOut;
 
-    private final JButton logOut = new JButton("Log Out");
     private final JTextField passwordInputField = new JTextField(15);
     private JButton changePassword;
 
@@ -92,11 +91,13 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         usernamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
         final JLabel usernameGreeting = new JLabel("Hello, ");
+        username = new JLabel();
         final JLabel usernameExclamation = new JLabel("!");
 
         usernamePanel.add(usernameGreeting);
         usernamePanel.add(username);
         usernamePanel.add(usernameExclamation);
+
         return usernamePanel;
     }
 
@@ -206,13 +207,15 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
+            // returns value of property when change occurs
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             username.setText(state.getUsername());
         }
         else if (evt.getPropertyName().equals("password")) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
-            JOptionPane.showMessageDialog(null, "Password updated for " + state.getUsername());
+            JOptionPane.showMessageDialog(null, "password updated for " + state.getUsername());
         }
+        // Timer-related property change is handled by TimerView
     }
 
     public String getViewName() {

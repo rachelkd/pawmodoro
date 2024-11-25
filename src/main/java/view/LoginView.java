@@ -85,13 +85,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         final JPanel buttons = new JPanel();
         buttons.add(logIn);
         buttons.add(backToSignUp);
-        this.add(buttons);
-    }
 
-    logIn.addActionListener(this);backToSignUp.addActionListener(this);
+        logIn.addActionListener(this);
+        backToSignUp.addActionListener(this);
 
-    return buttons;
-
+        return buttons;
     }
 
     private void configureErrorField() {
@@ -151,7 +149,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             JPanel buttons) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-    private void addComponentsToPanel() {
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
+        this.add(pawmodoro);
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         this.add(title);
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING / 2)));
