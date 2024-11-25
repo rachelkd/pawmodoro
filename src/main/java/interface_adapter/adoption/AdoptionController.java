@@ -1,6 +1,5 @@
 package interface_adapter.adoption;
 
-import entity.User;
 import use_case.adoption.AdoptionInputBoundary;
 import use_case.adoption.AdoptionInputData;
 
@@ -16,9 +15,9 @@ public class AdoptionController {
     }
 
     /**
-     * Executes the Adoption Use Case
-     *
+     * Executes the Adoption Use Case.
      * @param catName the name of the adopted cat
+     * @param owner the owner of the adopted cat
      */
     public void execute(String catName, String owner) {
         final AdoptionInputData adoptionInputData = new AdoptionInputData(catName, owner);
@@ -27,7 +26,7 @@ public class AdoptionController {
     }
 
     /**
-     * Executes the switch to Setup Session View use case/
+     * Executes the switch to Setup Session View use case.
      */
     public void switchToSetupView() {
         adoptionUseCaseInteractor.switchToSetupView();

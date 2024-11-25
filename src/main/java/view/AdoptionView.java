@@ -14,7 +14,6 @@ import constants.Constants;
 import interface_adapter.adoption.AdoptionController;
 import interface_adapter.adoption.AdoptionState;
 import interface_adapter.adoption.AdoptionViewModel;
-import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.create_cat.CreateCatController;
 
 /**
@@ -32,7 +31,6 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
 
     /**
      * Creates a new AdoptionView.
-     * 
      * @param adoptionViewModel the view model for the adoption use case
      */
     public AdoptionView(AdoptionViewModel adoptionViewModel) {
@@ -50,22 +48,21 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
         finish.add(cancelButton);
 
         confirmButton.addActionListener(
-            new ActionListener() {
+                new ActionListener() {
 
-                public void actionPerformed(ActionEvent e) {
-                    if (e.getSource().equals(confirmButton)) {
-                        final AdoptionState currentState = adoptionViewModel.getState();
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getSource().equals(confirmButton)) {
+                            final AdoptionState currentState = adoptionViewModel.getState();
 
-                        AdoptionView.this.createCatController.execute(currentState.getCatName(), currentState.getOwner());
+                            AdoptionView.this.createCatController.execute(currentState.getCatName(),
+                                    currentState.getOwner());
 
-                        adoptionController.execute(
-                                currentState.getCatName(),
-                                currentState.getOwner()
-                        );
+                            adoptionController.execute(
+                                    currentState.getCatName(),
+                                    currentState.getOwner());
+                        }
                     }
-                }
-            }
-        );
+                });
         cancelButton.addActionListener(this);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -78,13 +75,19 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
             }
 
             @Override
-            public void insertUpdate(DocumentEvent e) {documentListenerHelper();}
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
 
             @Override
-            public void removeUpdate(DocumentEvent e) {documentListenerHelper();}
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
 
             @Override
-            public void changedUpdate(DocumentEvent e) {documentListenerHelper();}
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
         });
 
         this.add(title);
@@ -103,14 +106,13 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final AdoptionState state = (AdoptionState) evt.getNewValue();
-        if(state.getAdoptionError() != null) {
+        if (state.getAdoptionError() != null) {
             JOptionPane.showMessageDialog(this, state.getAdoptionError());
         }
     }
 
     /**
      * Gets the name of this view.
-     * 
      * @return the view name
      */
     public String getViewName() {

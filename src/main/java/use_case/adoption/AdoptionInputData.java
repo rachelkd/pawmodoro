@@ -1,7 +1,7 @@
 package use_case.adoption;
 
 /**
- * The Input Data for the Adoption Use Case
+ * The Input Data for the Adoption Use Case.
  */
 public class AdoptionInputData {
     private final String catName;
@@ -13,8 +13,7 @@ public class AdoptionInputData {
     }
 
     /**
-     * Returns the cat's name
-     *
+     * Returns the cat's name.
      * @return cat's name
      */
     String getCatName() {
@@ -22,8 +21,7 @@ public class AdoptionInputData {
     }
 
     /**
-     * Return the owner's name
-     *
+     * Returns the owner's name.
      * @return owner's name
      */
     String getOwnerName() {
