@@ -4,6 +4,7 @@ import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.display_cat_image.DisplayCatImageViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
+import interface_adapter.get_cat_fact.GetCatFactViewModel;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.runawaycat.RunawayCatViewModel;
 
@@ -63,5 +64,14 @@ public class CatViewModelFactory {
      */
     public DisplayCatStatsViewModel createDisplayCatStatsViewModel() {
         return new DisplayCatStatsViewModel();
+    }
+
+    /**
+     * Creates a new get cat fact view model.
+     *
+     * @return the get cat fact view model
+     */
+    public GetCatFactViewModel createGetCatFactViewModel() {
+        return new GetCatFactViewModel();
     }
 }

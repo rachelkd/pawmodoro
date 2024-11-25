@@ -1,8 +1,8 @@
 package interface_adapter.study_session;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.login.LoginViewModel;
 import interface_adapter.login.LoginState;
+import interface_adapter.login.LoginViewModel;
 import use_case.studysession.StudySessionOutputBoundary;
 
 /**
@@ -35,8 +35,11 @@ public class StudySessionPresenter implements StudySessionOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Prepares the login view by clearing the password and login error.
+     */
     public void prepareLoginView() {
-        LoginState currentState = loginViewModel.getState();
+        final LoginState currentState = loginViewModel.getState();
         // Clear logged-in user's password but not username
         currentState.setPassword("");
         currentState.setLoginError("");

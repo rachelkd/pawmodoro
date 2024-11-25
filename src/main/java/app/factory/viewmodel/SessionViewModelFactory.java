@@ -1,6 +1,7 @@
 package app.factory.viewmodel;
 
 import interface_adapter.create_inventory.InventoryViewModel;
+import interface_adapter.get_cat_fact.GetCatFactViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
@@ -43,5 +44,14 @@ public class SessionViewModelFactory {
      */
     public StudySessionViewModel createStudySessionViewModel() {
         return new StudySessionViewModel();
+    }
+
+    /**
+     * Creates a new get cat fact view model.
+     *
+     * @return the get cat fact view model
+     */
+    public GetCatFactViewModel createGetCatFactViewModel() {
+        return new GetCatFactViewModel();
     }
 }
