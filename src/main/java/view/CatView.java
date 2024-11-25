@@ -14,6 +14,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import app.service.DialogService;
@@ -33,6 +34,7 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
     private final DialogService dialogService;
     private DisplayCatStatsController displayCatStatsController;
     private final GetCatFactView getCatFactView;
+    private final DisplayCatStatsViewModel displayCatStatsViewModel;
 
     /**
      * Creates a new CatView.
@@ -48,14 +50,15 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
         this.catViewModel.addPropertyChangeListener(this);
         this.dialogService = dialogService;
         this.getCatFactView = getCatFactView;
+        this.displayCatStatsViewModel = displayCatStatsViewModel;
 
         // Set layout to BorderLayout for centering at bottom
         this.setLayout(new BorderLayout());
 
         // Create and configure image label
         imageLabel = new JLabel();
-        imageLabel.setHorizontalAlignment(JLabel.CENTER);
-        imageLabel.setVerticalAlignment(JLabel.BOTTOM);
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        imageLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 
         // Set initial sizes for the image label only
         final Dimension size = new Dimension(Constants.CAT_SPRITE_DISPLAY_SIZE, Constants.CAT_SPRITE_DISPLAY_SIZE);
@@ -67,17 +70,8 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
         imageLabel.setOpaque(true);
         imageLabel.setVisible(true);
 
-        // When cat is clicked, display cat stats dialog
-        imageLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (displayCatStatsController != null) {
-                    final CatState state = catViewModel.getState();
-                    displayCatStatsController.execute(state.getOwnerUsername(), state.getCatName());
-                    dialogService.showCatStatsDialog(displayCatStatsViewModel, getCatFactView);
-                }
-            }
-        });
+        // Set up mouse listener
+        this.setupMouseListener();
 
         // Add the image label to the bottom center of the panel
         this.add(imageLabel, BorderLayout.PAGE_END);
@@ -91,6 +85,23 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
             this.setVisible(true);
             this.revalidate();
             this.repaint();
+        });
+    }
+
+    /**
+     * Sets up the mouse listener for the cat image.
+     * When clicked, displays the cat's statistics.
+     */
+    private void setupMouseListener() {
+        imageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (displayCatStatsController != null) {
+                    final CatState state = catViewModel.getState();
+                    displayCatStatsController.execute(state.getOwnerUsername(), state.getCatName());
+                    dialogService.showCatStatsDialog(displayCatStatsViewModel, getCatFactView);
+                }
+            }
         });
     }
 
