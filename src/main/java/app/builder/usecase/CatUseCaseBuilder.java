@@ -165,7 +165,7 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
         getViews().getAuth().getViews().getSignupView().setCreateCatController(controller);
         getViews().getAuth().getViews().getLoginView().setCreateCatController(controller);
         // whatever view will have new cat button
-        getViews().getAuth().getViews().getLoggedInView().setCreateCatController(controller);
+        // getViews().getAuth().getViews().getLoggedInView().setCreateCatController(controller);
         return this;
     }
 
@@ -194,7 +194,8 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
     public CatUseCaseBuilder buildChangeCatHappinessUseCase() {
         final ChangeCatHappinessOutputBoundary outputBoundary =
                 new ChangeCatHappinessPresenter(getViews().getViewManagerModel(),
-                        getViews().getCat().getViewModels().getDisplayCatStatsViewModel());
+                        getViews().getCat().getViewModels().getDisplayCatStatsViewModel(),
+                        getViews().getCat().getViewModels().getRunawayCatViewModel());
 
         final ChangeCatHappinessInputBoundary interactor = new ChangeCatHappinessInteractor(
                 getDataAccess().getCatDataAccessObject(), outputBoundary);

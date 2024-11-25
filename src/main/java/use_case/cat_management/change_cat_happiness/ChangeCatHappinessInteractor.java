@@ -35,10 +35,18 @@ public class ChangeCatHappinessInteractor implements ChangeCatHappinessInputBoun
         cat.updateHappinessLevel(newHappiness);
         catDataAccessObject.updateCat(cat);
 
-        final ChangeCatHappinessOutputData changeCatHappinessOutputData = new ChangeCatHappinessOutputData(
-                cat.getOwnerUsername(), cat.getName(), 
-                catDataAccessObject.getHappinessLevel(cat.getName(), cat.getOwnerUsername()));
-        changeCatHappinessPresenter.prepareSuccessView(changeCatHappinessOutputData);
+        if (cat.getHappinessLevel() <= 0) {
+            catDataAccessObject.removeCat(cat.getName(), cat.getOwnerUsername());
+            changeCatHappinessPresenter.switchToRunawayCatView(cat.getName(), cat.getOwnerUsername());
+        }
+        else {
+
+            final ChangeCatHappinessOutputData changeCatHappinessOutputData = new ChangeCatHappinessOutputData(
+                    cat.getOwnerUsername(), cat.getName(),
+                    catDataAccessObject.getHappinessLevel(cat.getName(), cat.getOwnerUsername()));
+
+            changeCatHappinessPresenter.prepareSuccessView(changeCatHappinessOutputData);
+        }
 
     }
 
