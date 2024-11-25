@@ -3,7 +3,7 @@ package use_case.setupsession;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SetupSessionInputDataTest {
+class SetupSessionInputDataTest {
     @Test
     void successTest() {
         final SetupSessionInputData inputData = new SetupSessionInputData(35, 10);
@@ -22,6 +22,5 @@ public class SetupSessionInputDataTest {
         final SetupSessionInputBoundary interactor = new SetupSessionInteractor(successPresenter);
         interactor.execute(inputData);
     }
-
     // There is no fail test for this particular usecase.
 }
