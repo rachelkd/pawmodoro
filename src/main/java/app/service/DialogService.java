@@ -53,18 +53,16 @@ public class DialogService {
     }
 
     /**
-     * Return the inventory dialog.
-     * @param parent the parent frame
+     * Create the inventory dialog.
      * @param viewModel the view model for the dialog
-     * @return the Inventory View
      */
-    public InventoryView createInventoryDialog(JFrame parent, InventoryViewModel viewModel) {
-        // avoid duplicating dialog
-        if (inventoryDialog != null) {
-            return null;
+    public void createInventoryDialog(InventoryViewModel viewModel) {
+        if (mainFrame == null) {
+            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
         }
-        this.inventoryDialog = new InventoryView(parent, viewModel);
-        return (InventoryView) inventoryDialog;
+        if (inventoryDialog == null) {
+            inventoryDialog = dialogFactory.createInventoryDialog(viewModel);
+        }
     }
 
     /**

@@ -133,8 +133,8 @@ public class ViewFactory {
      * @return InventoryView
      */
     public InventoryView createInventoryView(InventoryViewModel inventoryViewModel, DialogService dialogService) {
-        // Show the inventory dialog when the view is created
-        dialogService.showInventoryDialog(inventoryViewModel);
+        // have the dialog run in the background so it listens for changes, but by default won't be visible
+        dialogService.createInventoryDialog(inventoryViewModel);
         return (InventoryView) dialogService.getInventoryDialog();
     }
 
