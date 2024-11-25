@@ -16,23 +16,21 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
-import app.service.DialogService;
 import constants.Constants;
 import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionViewModel;
-import interface_adapter.timer.TimerController;
 import interface_adapter.timer.TimerViewModel;
 
 /**
  * Views for Study sessions.
  */
 public class StudySessionView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final String viewName = "study session";
-
     private final TimerView timerView;
     private final CatView catView;
+
+    private final StudySessionViewModel studySessionViewModel;
 
     private final TimerViewModel timerViewModel;
 
@@ -40,23 +38,15 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private StudySessionController studySessionController;
     private ChangeCatHappinessController changeCatHappinessController;
 
-    // TODO: We don't need timerController if all the input is handled by TimerController in TimerView @yhj050224
-    // Inject TimerView into StudySessionView similar to CatView instead of creating a new instance
-    // Similar to CatView
-    // Remove TimerViewModel from this class and constructor
-    private TimerController timerController;
-
     private final JButton timerSettings;
     private final JButton logOutSettings;
 
-    private DialogService dialogService;
-
     public StudySessionView(StudySessionViewModel studySessionViewModel, TimerViewModel timerViewModel,
-            DialogService dialogService, CatView catView) {
+            CatView catView) {
 
         studySessionViewModel.addPropertyChangeListener(this);
+        this.studySessionViewModel = studySessionViewModel;
 
-        this.dialogService = dialogService;
         this.timerViewModel = timerViewModel;
 
         this.timerView = new TimerView(timerViewModel);
@@ -144,11 +134,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     }
 
     public String getViewName() {
-        return viewName;
-    }
-
-    public void setTimerController(TimerController timerController) {
-        this.timerController = timerController;
+        return studySessionViewModel.getViewName();
     }
 
     public void setLogoutController(LogoutController controller) {

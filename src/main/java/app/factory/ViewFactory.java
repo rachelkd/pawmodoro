@@ -115,15 +115,14 @@ public class ViewFactory {
      * @param timerViewModel the timer view model
      * @param catViewModel the cat view model
      * @param displayCatStatsViewModel the display cat stats view model
-     * @param dialogService the dialog service for user interactions
      * @param catView the existing cat view instance
      * @return StudySessionView
      */
     public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
             TimerViewModel timerViewModel, CatViewModel catViewModel,
-            DisplayCatStatsViewModel displayCatStatsViewModel, DialogService dialogService,
+            DisplayCatStatsViewModel displayCatStatsViewModel,
             CatView catView) {
-        return new StudySessionView(studySessionViewModel, timerViewModel, dialogService, catView);
+        return new StudySessionView(studySessionViewModel, timerViewModel, catView);
     }
 
     /**
