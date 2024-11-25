@@ -20,9 +20,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import constants.Constants;
 import interface_adapter.cat.CatState;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
-import constants.Constants;
 
 /**
  * Dialog for displaying cat statistics.
@@ -37,6 +37,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
     public DisplayCatStatsView(JFrame parent, DisplayCatStatsViewModel displayCatStatsViewModel) {
         super(parent, DisplayCatStatsViewModel.TITLE_LABEL, true);
         this.displayCatStatsViewModel = displayCatStatsViewModel;
+        this.setLocationRelativeTo(parent);
         this.displayCatStatsViewModel.addPropertyChangeListener(this);
 
         // Initialize components with default values

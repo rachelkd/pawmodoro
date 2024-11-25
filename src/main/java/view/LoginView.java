@@ -26,61 +26,70 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     private final JTextField usernameInputField = new JTextField(15);
     private final JLabel userErrorField = new JLabel();
-
     private final JPasswordField passwordInputField = new JPasswordField(15);
 
-    private final JButton logIn;
-    private final JButton backToSignUp;
+    private final JButton logIn = new JButton("log in");
+    private final JButton backToSignUp = new JButton("back to sign up");
+
     private LoginController loginController;
     private CreateCatController createCatController;
 
-    // TODO: Fix NCSS complexity
     public LoginView(LoginViewModel loginViewModel) {
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
+        final JLabel pawmodoro = createPawmodoroLabel();
+        final JLabel title = createTitleLabel();
+
+        final LabelTextPanel usernameInfo = createUsernamePanel();
+        final LabelTextPanel passwordInfo = createPasswordPanel();
+        final JPanel buttons = createButtonPanel();
+
+        configureErrorField();
+        setupDocumentListeners();
+        setupLayout(pawmodoro, title, usernameInfo, passwordInfo, buttons);
+    }
+
+    private JLabel createPawmodoroLabel() {
         final JLabel pawmodoro = new JLabel("Pawmodoro");
         pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
         pawmodoro.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TITLE));
         pawmodoro.setForeground(Color.PINK);
+        return pawmodoro;
+    }
 
+    private JLabel createTitleLabel() {
         final JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return title;
+    }
 
-        final LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel("Username"), usernameInputField);
-        final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel("Password"), passwordInputField);
+    private LabelTextPanel createUsernamePanel() {
+        return new LabelTextPanel(new JLabel("Username"), usernameInputField);
+    }
 
+    private LabelTextPanel createPasswordPanel() {
+        return new LabelTextPanel(new JLabel("Password"), passwordInputField);
+    }
+
+    private JPanel createButtonPanel() {
         final JPanel buttons = new JPanel();
-        logIn = new JButton("log in");
         buttons.add(logIn);
-        backToSignUp = new JButton("back to sign up");
         buttons.add(backToSignUp);
 
-        logIn.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(logIn)) {
-                            final LoginState currentState = loginViewModel.getState();
+        logIn.addActionListener(this);
+        backToSignUp.addActionListener(this);
 
-                            loginController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword());
-                        }
-                    }
-                });
+        return buttons;
+    }
 
-        backToSignUp.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        loginController.switchToSignUpView();
-                    }
-                });
+    private void configureErrorField() {
+        userErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        userErrorField.setForeground(Color.RED);
+    }
 
+    private void setupDocumentListeners() {
         usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
-
             private void documentListenerHelper() {
                 final LoginState currentState = loginViewModel.getState();
                 currentState.setUsername(usernameInputField.getText());
@@ -103,10 +112,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             }
         });
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
-
             private void documentListenerHelper() {
                 final LoginState currentState = loginViewModel.getState();
                 currentState.setPassword(new String(passwordInputField.getPassword()));
@@ -128,14 +134,21 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 documentListenerHelper();
             }
         });
+    }
+
+    private void setupLayout(JLabel pawmodoro, JLabel title, LabelTextPanel usernameInfo, LabelTextPanel passwordInfo,
+            JPanel buttons) {
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         this.add(pawmodoro);
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
         this.add(title);
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING / 2)));
         this.add(usernameInfo);
         this.add(userErrorField);
         this.add(passwordInfo);
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING / 2)));
         this.add(buttons);
     }
 
@@ -145,7 +158,17 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
      * @param evt the ActionEvent to react to
      */
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+        if (evt.getSource().equals(logIn)) {
+            // Log in
+            final LoginState currentState = loginViewModel.getState();
+            loginController.execute(
+                    currentState.getUsername(),
+                    currentState.getPassword());
+        }
+        else if (evt.getSource().equals(backToSignUp)) {
+            // Switch to the Sign Up View
+            loginController.switchToSignUpView();
+        }
     }
 
     @Override

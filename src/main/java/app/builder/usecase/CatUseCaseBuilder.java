@@ -194,7 +194,8 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
     public CatUseCaseBuilder buildChangeCatHappinessUseCase() {
         final ChangeCatHappinessOutputBoundary outputBoundary =
                 new ChangeCatHappinessPresenter(getViews().getViewManagerModel(),
-                        getViews().getCat().getViewModels().getDisplayCatStatsViewModel());
+                        getViews().getCat().getViewModels().getDisplayCatStatsViewModel(),
+                        getViews().getCat().getViewModels().getRunawayCatViewModel());
 
         final ChangeCatHappinessInputBoundary interactor = new ChangeCatHappinessInteractor(
                 getDataAccess().getCatDataAccessObject(), outputBoundary);
