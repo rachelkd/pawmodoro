@@ -12,13 +12,17 @@ import app.factory.ViewFactory;
 import app.factory.viewmodel.SessionViewModelFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.break_session.BreakSessionController;
 import interface_adapter.break_session.BreakSessionPresenter;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionPresenter;
+import use_case.breaksession.BreakSessionInputBoundary;
+import use_case.breaksession.BreakSessionInteractor;
 import use_case.studysession.StudySessionInputBoundary;
 import use_case.studysession.StudySessionInteractor;
 import use_case.studysession.StudySessionOutputBoundary;
 import use_case.breaksession.BreakSessionOutputBoundary;
+import view.BreakSessionView;
 import view.InventoryView;
 import view.SetupSessionView;
 import view.StudySessionView;
@@ -37,6 +41,7 @@ public class SessionViewBuilder {
     private final CatViewsAndModels catViewsAndModels;
 
     // Views
+    private BreakSessionView breakSessionView;
     private SetupSessionView setupSessionView;
     private InventoryView inventoryView;
     private StudySessionView studySessionView;
@@ -67,7 +72,8 @@ public class SessionViewBuilder {
                 sessionViewModelFactory.createInventoryViewModel(),
                 sessionViewModelFactory.createTimerViewModel(),
                 sessionViewModelFactory.createStudySessionViewModel(),
-                sessionViewModelFactory.createBreakSessionViewModel());
+                sessionViewModelFactory.createBreakSessionViewModel(),
+                sessionViewModelFactory.createLoginViewModel());
         this.dialogService = dialogService;
         this.catViewsAndModels = catViewsAndModels;
     }
@@ -89,34 +95,19 @@ public class SessionViewBuilder {
      * @return this builder
      */
     public SessionViewBuilder buildStudySessionView() {
-        final StudySessionOutputBoundary presenter = new StudySessionPresenter(
-                viewManagerModel,
-                sessionViewModelFactory.createLoginViewModel(),
-                viewModels.getSetupSessionViewModel(),
-                viewModels.getBreakSessionViewModel());
-
-        final StudySessionInputBoundary interactor = new StudySessionInteractor(presenter);
-        final StudySessionController studySessionController = new StudySessionController(interactor);
-
         this.studySessionView = viewFactory.createStudySessionView(
                 viewModels.getStudySessionViewModel(),
                 catViewsAndModels.getViewModels().getCatViewModel(),
                 catViewsAndModels.getViewModels().getDisplayCatStatsViewModel(),
                 dialogService,
-                catViewsAndModels.getViews().getCatView(),
-                studySessionController,
-                presenter);
+                catViewsAndModels.getViews().getCatView());
         cardPanel.add(studySessionView, studySessionView.getViewName());
         return this;
     }
 
     public SessionViewBuilder buildBreakSessionView() {
-        final BreakSessionOutputBoundary presenter = new BreakSessionPresenter(
-                viewManagerModel,
-                viewModels.getLoginViewModel(),
+        this.breakSessionView = viewFactory.createBreakSessionView(
                 viewModels.getBreakSessionViewModel());
-
-        this.breakSessionView = viewFactory.createBreakSessionView(viewModels.getBreakSessionViewModel());
         cardPanel.add(breakSessionView, breakSessionView.getViewName());
         return this;
     }
@@ -140,12 +131,14 @@ public class SessionViewBuilder {
     public SessionViewsAndModels build() {
         this.buildSetupSessionView()
                 .buildInventoryView()
-                .buildStudySessionView();
+                .buildStudySessionView()
+                .buildBreakSessionView();
 
         final SessionViews views = new SessionViews(
                 setupSessionView,
                 inventoryView,
-                studySessionView);
+                studySessionView,
+                breakSessionView);
 
         return new SessionViewsAndModels(views, viewModels);
     }

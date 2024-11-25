@@ -33,7 +33,6 @@ public class StudySessionView extends JPanel implements ActionListener {
 
     private LogoutController logoutController;
     private StudySessionController studySessionController;
-    private final StudySessionOutputBoundary studySessionOutputBoundary;
 
     private final JButton timerSettings;
     private final JButton logOutSettings;
@@ -46,12 +45,8 @@ public class StudySessionView extends JPanel implements ActionListener {
 
     private DialogService dialogService;
 
-    public StudySessionView(StudySessionViewModel studySessionViewModel, DialogService dialogService, CatView catView,
-                            StudySessionController studySessionController,
-                            StudySessionOutputBoundary studySessionOutputBoundary) {
+    public StudySessionView(StudySessionViewModel studySessionViewModel, DialogService dialogService, CatView catView) {
 
-        this.studySessionController = studySessionController;
-        this.studySessionOutputBoundary = studySessionOutputBoundary;
         this.dialogService = dialogService;
         this.catView = catView;
 
@@ -89,8 +84,9 @@ public class StudySessionView extends JPanel implements ActionListener {
                     System.out.println("Time is up! Switching to Break Session...");
 
                     // Notify the presenter or controller to switch the view
-                    if (studySessionOutputBoundary != null) {
-                        studySessionOutputBoundary.switchToBreakSessionView();
+                    if (studySessionController != null) {
+                        System.out.println("test");
+                        studySessionController.switchToBreakSessionView();
                     }
                     else {
                         System.err.println("StudySessionOutputBoundary is not initialized.");
@@ -189,8 +185,8 @@ public class StudySessionView extends JPanel implements ActionListener {
         this.logoutController = controller;
     }
 
-    public void setStudySessionController(StudySessionController controller) {
-        this.studySessionController = controller;
+    public void setStudySessionController(StudySessionController studySessionController) {
+        this.studySessionController = studySessionController;
     }
 
     @Override

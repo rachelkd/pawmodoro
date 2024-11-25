@@ -25,4 +25,11 @@ public class StudySessionController {
     public void logout() {
         studySessionInteractor.logout();
     }
+
+    /**
+     * Executes the 'switch to break session view' Use Case.
+     */
+    public void switchToBreakSessionView() {
+        studySessionInteractor.switchToBreakSessionView();
+    }
 }

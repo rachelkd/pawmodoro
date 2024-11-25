@@ -14,4 +14,9 @@ public interface StudySessionInputBoundary {
      * Logs out the user. Executes the switch to login view.
      */
     void logout();
+
+    /**
+     * Executes the switch to break session view.
+     */
+    void switchToBreakSessionView();
 }

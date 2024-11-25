@@ -2,6 +2,8 @@ package app.factory;
 
 import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
+import interface_adapter.break_session.BreakSessionController;
+import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
@@ -15,20 +17,9 @@ import interface_adapter.signup.SignupViewModel;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
+import use_case.breaksession.BreakSessionOutputBoundary;
 import use_case.studysession.StudySessionOutputBoundary;
-import view.AdoptionView;
-import view.CatView;
-import view.DisplayCatImageView;
-import view.DisplayCatStatsView;
-import view.InventoryView;
-import view.LoggedInView;
-import view.LoginView;
-import view.MaxCatsErrorView;
-import view.RunawayCatView;
-import view.SetupSessionView;
-import view.SignupView;
-import view.StudySessionView;
-import view.TimerView;
+import view.*;
 
 /**
  * Default implementation of ViewFactory.
@@ -120,22 +111,17 @@ public class ViewFactory {
      * Creates a Study Session View.
      * 
      * @param studySessionViewModel the study session view model
-     * @param studySessionOutputBoundary the study session output boundary
      * @param catViewModel the cat view model
      * @param displayCatStatsViewModel the display cat stats view model
      * @param dialogService the dialog service for user interactions
      * @param catView the existing cat view instance
-     * @param studySessionController the control to move from one view to another
      * @return StudySessionView
      */
     public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
                                                    CatViewModel catViewModel,
                                                    DisplayCatStatsViewModel displayCatStatsViewModel,
-                                                   DialogService dialogService, CatView catView,
-                                                   StudySessionController studySessionController,
-                                                   StudySessionOutputBoundary studySessionOutputBoundary) {
-        return new StudySessionView(studySessionViewModel, dialogService, catView, studySessionController,
-                studySessionOutputBoundary);
+                                                   DialogService dialogService, CatView catView) {
+        return new StudySessionView(studySessionViewModel, dialogService, catView);
     }
 
     /**
@@ -181,5 +167,9 @@ public class ViewFactory {
      */
     public TimerView createTimerView(TimerViewModel timerViewModel) {
         return new TimerView(timerViewModel);
+    }
+
+    public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel) {
+        return new BreakSessionView(breakSessionViewModel);
     }
 }

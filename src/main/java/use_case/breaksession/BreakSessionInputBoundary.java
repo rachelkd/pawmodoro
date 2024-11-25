@@ -8,7 +8,7 @@ public interface BreakSessionInputBoundary {
     /**
      * Executes the switch to study session view.
      */
-    void switchToSetupSessionView();
+    void switchToStudySessionView();
 
     /**
      * Logs out the user. Executes the switch to login view.

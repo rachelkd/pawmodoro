@@ -16,8 +16,12 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import constants.Constants;
+import interface_adapter.break_session.BreakSessionController;
+import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.study_session.StudySessionController;
 import use_case.breaksession.BreakSessionOutputBoundary;
+import use_case.studysession.StudySessionOutputBoundary;
 
 /**
  * Views for Break Session.
@@ -26,7 +30,7 @@ public class BreakSessionView extends JPanel implements ActionListener {
     private final String viewName = "break session";
 
     private LogoutController logoutController;
-    private final BreakSessionOutputBoundary breakSessionOutputBoundary;
+    private BreakSessionController breakSessionController;
 
     private final JButton logOutSettings;
     private final JButton startTimerButton;
@@ -35,8 +39,7 @@ public class BreakSessionView extends JPanel implements ActionListener {
     private Timer swingTimer;
     private long remainingTime = Constants.DEFAULT_BREAK_DURATION_MS;
 
-    public BreakSessionView(BreakSessionOutputBoundary breakSessionOutputBoundary) {
-        this.breakSessionOutputBoundary = breakSessionOutputBoundary;
+    public BreakSessionView(BreakSessionViewModel breakSessionViewModel) {
 
         this.setLayout(new BorderLayout());
 
@@ -70,8 +73,8 @@ public class BreakSessionView extends JPanel implements ActionListener {
                     System.out.println("Break time is up! Switching to Study Session...");
 
                     // Notify the presenter to switch the view to study session
-                    if (breakSessionOutputBoundary != null) {
-                        breakSessionOutputBoundary.switchToStudySessionView();
+                    if (breakSessionController != null) {
+                        breakSessionController.switchToStudySessionView();
                     }
                     else {
                         System.err.println("BreakSessionOutputBoundary is not initialized.");
@@ -123,6 +126,10 @@ public class BreakSessionView extends JPanel implements ActionListener {
         final JPanel logOutPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         logOutPanel.add(logOutSettings);
         return logOutPanel;
+    }
+
+    public void setBreakSessionController(BreakSessionController brakSessionController) {
+        this.breakSessionController = breakSessionController;
     }
 
     @Override

@@ -16,7 +16,7 @@ public class BreakSessionController {
      * Executes the 'switch to study session view' Use Case.
      */
     public void switchToStudySessionView() {
-        breakSessionInteractor.switchToSetupSessionView();
+        breakSessionInteractor.switchToStudySessionView();
     }
 
     /**
