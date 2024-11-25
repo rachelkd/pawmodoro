@@ -118,8 +118,6 @@ public class ViewFactory {
      * @return StudySessionView
      */
     public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
-            CatViewModel catViewModel,
-            DisplayCatStatsViewModel displayCatStatsViewModel,
             DialogService dialogService, CatView catView) {
         return new StudySessionView(studySessionViewModel, dialogService, catView);
     }
