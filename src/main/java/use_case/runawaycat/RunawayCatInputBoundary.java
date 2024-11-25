@@ -7,6 +7,8 @@ public interface RunawayCatInputBoundary {
 
     /**
      * Executes the runaway cat use case.
+     *
+     * @param runawayCatInputData the input data of use case
      */
     void execute(RunawayCatInputData runawayCatInputData);
 
