@@ -245,12 +245,14 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
                 .addHeader(PREFER_HEADER, PREFER_RETURN_MINIMAL)
                 .build();
 
-        try {
-            final Response response = client.newCall(request).execute();
-            isSuccessful = response.isSuccessful();
-        }
-        catch (final IOException exception) {
-            // Keep isSuccessful false
+        if (existsByNameAndOwner(name, ownerUsername)) {
+            try {
+                final Response response = client.newCall(request).execute();
+                isSuccessful = response.isSuccessful();
+            }
+            catch (final IOException exception) {
+                // Keep isSuccessful false
+            }
         }
         return isSuccessful;
     }
