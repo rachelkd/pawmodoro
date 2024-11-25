@@ -3,6 +3,7 @@ package app.builder;
 import app.components.DataAccessComponents;
 import app.factory.DataAccessFactory;
 import data_access.AdoptionDataAccessObject;
+import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
 import data_access.DBUserDataAccessObject;
@@ -20,6 +21,7 @@ public class DataAccessBuilder {
     private AdoptionDataAccessObject adoptionDataAccess;
     private ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
     private DBCatDataAccessObject catDataAccess;
+    private ApiCatFactDataAccessObject catFactDataAccess;
 
     public DataAccessBuilder() {
         this.factory = new DataAccessFactory();
@@ -36,7 +38,8 @@ public class DataAccessBuilder {
                 .buildTimerDataAccess()
                 .buildAdoptionDataAccess()
                 .buildDisplayCatImageDataAccess()
-                .buildCatDataAccess();
+                .buildCatDataAccess()
+                .buildCatFactDataAccess();
 
         return new DataAccessComponents(
                 userDataAccess,
@@ -44,7 +47,8 @@ public class DataAccessBuilder {
                 timerDataAccess,
                 adoptionDataAccess,
                 displayCatImageDataAccess,
-                catDataAccess);
+                catDataAccess,
+                catFactDataAccess);
     }
 
     /**
@@ -104,6 +108,16 @@ public class DataAccessBuilder {
      */
     private DataAccessBuilder buildCatDataAccess() {
         this.catDataAccess = factory.createCatDataAccess();
+        return this;
+    }
+
+    /**
+     * Builds the cat fact data access.
+     * 
+     * @return this builder
+     */
+    private DataAccessBuilder buildCatFactDataAccess() {
+        this.catFactDataAccess = factory.createCatFactDataAccess();
         return this;
     }
 }
