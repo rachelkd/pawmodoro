@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
@@ -20,16 +22,20 @@ import interface_adapter.cat.CatState;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsController;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
+import interface_adapter.get_cat_fact.GetCatFactController;
 
 /**
  * A view component that displays a cat's image and handles click interactions.
  * When clicked, it should display a random cat fact and provide access to the
  * cat's statistics.
  */
-public class CatView extends JPanel implements PropertyChangeListener {
+public class CatView extends JPanel implements ActionListener, PropertyChangeListener {
     private final CatViewModel catViewModel;
     private final JLabel imageLabel;
+    private final GetCatFactView getCatFactView;
+    private final DialogService dialogService;
     private DisplayCatStatsController displayCatStatsController;
+    private GetCatFactController getCatFactController;
 
     /**
      * Creates a new CatView.
@@ -37,12 +43,15 @@ public class CatView extends JPanel implements PropertyChangeListener {
      * @param catViewModel the view model for this cat view
      * @param displayCatStatsViewModel the view model for displaying cat stats
      * @param dialogService the service for showing dialogs
+     * @param getCatFactView the view for displaying cat facts
      */
 
     public CatView(CatViewModel catViewModel, DisplayCatStatsViewModel displayCatStatsViewModel,
-            DialogService dialogService) {
+            DialogService dialogService, GetCatFactView getCatFactView) {
         this.catViewModel = catViewModel;
         this.catViewModel.addPropertyChangeListener(this);
+        this.dialogService = dialogService;
+        this.getCatFactView = getCatFactView;
 
         // Set layout to BorderLayout for centering at bottom
         this.setLayout(new BorderLayout());
@@ -66,10 +75,11 @@ public class CatView extends JPanel implements PropertyChangeListener {
         imageLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (displayCatStatsController != null) {
+                if (displayCatStatsController != null && getCatFactController != null) {
                     final CatState state = catViewModel.getState();
                     displayCatStatsController.execute(state.getOwnerUsername(), state.getCatName());
-                    dialogService.showCatStatsDialog(displayCatStatsViewModel);
+                    getCatFactController.execute();
+                    dialogService.showCatStatsDialog(displayCatStatsViewModel, getCatFactView);
                 }
             }
         });
@@ -78,7 +88,8 @@ public class CatView extends JPanel implements PropertyChangeListener {
         this.add(imageLabel, BorderLayout.PAGE_END);
 
         // Update the image initially
-        updateCatImage();
+        final CatState state = catViewModel.getState();
+        updateCatImage(state);
 
         // Make sure we're visible after everything is set up
         SwingUtilities.invokeLater(() -> {
@@ -92,9 +103,11 @@ public class CatView extends JPanel implements PropertyChangeListener {
         this.displayCatStatsController = controller;
     }
 
-    private void updateCatImage() {
-        final CatState state = catViewModel.getState();
+    public void setGetCatFactController(GetCatFactController controller) {
+        this.getCatFactController = controller;
+    }
 
+    private void updateCatImage(CatState state) {
         if (state != null && state.getImageFileName() != null) {
             final String imagePath = "/images/" + state.getImageFileName();
             final URL imageUrl = getClass().getResource(imagePath);
@@ -119,9 +132,15 @@ public class CatView extends JPanel implements PropertyChangeListener {
     }
 
     @Override
+    public void actionPerformed(ActionEvent e) {
+        // Mouse click is handled by MouseAdapter
+    }
+
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
-            updateCatImage();
+            final CatState state = (CatState) evt.getNewValue();
+            updateCatImage(state);
         }
     }
 

@@ -10,10 +10,6 @@ import interface_adapter.change_cat_hunger.ChangeCatHungerController;
 import interface_adapter.change_cat_hunger.ChangeCatHungerPresenter;
 import interface_adapter.create_cat.CreateCatController;
 import interface_adapter.create_cat.CreateCatPresenter;
-import interface_adapter.display_cat_image.DisplayCatImageController;
-import interface_adapter.display_cat_image.DisplayCatImagePresenter;
-import interface_adapter.display_cat_stats.DisplayCatStatsController;
-import interface_adapter.display_cat_stats.DisplayCatStatsPresenter;
 import interface_adapter.maxcatserror.MaxCatsErrorController;
 import interface_adapter.maxcatserror.MaxCatsErrorPresenter;
 import interface_adapter.runawaycat.RunawayCatController;
@@ -30,12 +26,6 @@ import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputBoundary;
 import use_case.cat_management.create_cat.CreateCatInputBoundary;
 import use_case.cat_management.create_cat.CreateCatInteractor;
 import use_case.cat_management.create_cat.CreateCatOutputBoundary;
-import use_case.display_cat_image.DisplayCatImageInputBoundary;
-import use_case.display_cat_image.DisplayCatImageInteractor;
-import use_case.display_cat_image.DisplayCatImageOutputBoundary;
-import use_case.display_cat_stats.DisplayCatStatsInputBoundary;
-import use_case.display_cat_stats.DisplayCatStatsInteractor;
-import use_case.display_cat_stats.DisplayCatStatsOutputBoundary;
 import use_case.maxcatserror.MaxCatsErrorInputBoundary;
 import use_case.maxcatserror.MaxCatsErrorInteractor;
 import use_case.maxcatserror.MaxCatsErrorOutputBoundary;
@@ -43,18 +33,17 @@ import use_case.runawaycat.RunawayCatInputBoundary;
 import use_case.runawaycat.RunawayCatInteractor;
 import use_case.runawaycat.RunawayCatOutputBoundary;
 
-// TODO: @rachelkd Make new *UseCaseBuilder class to fix fan out complexity
 /**
- * Builder for cat-related use cases.
+ * Builder for cat management-related use cases.
  */
-public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
+public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
-     * Creates a new cat use case builder.
+     * Creates a new cat management use case builder.
      *
      * @param views the views
      * @param dataAccess the data access components
      */
-    public CatUseCaseBuilder(Views views, DataAccessComponents dataAccess) {
+    public CatManagementUseCaseBuilder(Views views, DataAccessComponents dataAccess) {
         super(views, dataAccess);
     }
 
@@ -63,7 +52,7 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
      *
      * @return this builder
      */
-    public CatUseCaseBuilder buildAdoptionUseCase() {
+    public CatManagementUseCaseBuilder buildAdoptionUseCase() {
         final AdoptionOutputBoundary outputBoundary = new AdoptionPresenter(
                 getViews().getSession().getViewModels().getSetupSessionViewModel(),
                 getViews().getCat().getViewModels().getAdoptionViewModel(),
@@ -77,49 +66,11 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
     }
 
     /**
-     * Builds the display cat image use case.
-     *
-     * @return this builder
-     */
-    public CatUseCaseBuilder buildDisplayCatImageUseCase() {
-        final DisplayCatImageOutputBoundary outputBoundary = new DisplayCatImagePresenter(
-                getViews().getCat().getViewModels().getDisplayCatImageViewModel());
-
-        final DisplayCatImageInputBoundary interactor = new DisplayCatImageInteractor(
-                getDataAccess().getDisplayCatImageDataAccess(),
-                outputBoundary);
-
-        final DisplayCatImageController controller = new DisplayCatImageController(interactor);
-        getViews().getCat().getViews().getDisplayCatImageView().setDisplayCatImageController(controller);
-        return this;
-    }
-
-    /**
-     * Builds the display cat stats use case.
-     *
-     * @return this builder
-     */
-    public CatUseCaseBuilder buildDisplayCatStatsUseCase() {
-        final DisplayCatStatsOutputBoundary presenter = new DisplayCatStatsPresenter(
-                getViews().getCat().getViewModels().getDisplayCatStatsViewModel());
-
-        final DisplayCatStatsInputBoundary interactor = new DisplayCatStatsInteractor(
-                getDataAccess().getCatDataAccessObject(),
-                presenter);
-
-        final DisplayCatStatsController controller = new DisplayCatStatsController(interactor);
-
-        getViews().getCat().getViews().getCatView().setDisplayCatStatsController(controller);
-
-        return this;
-    }
-
-    /**
      * Builds the max cats error use case.
      *
      * @return this builder
      */
-    public CatUseCaseBuilder buildMaxCatsErrorUseCase() {
+    public CatManagementUseCaseBuilder buildMaxCatsErrorUseCase() {
         final MaxCatsErrorOutputBoundary outputBoundary = new MaxCatsErrorPresenter(
                 getViews().getViewManagerModel(),
                 getViews().getCat().getViewModels().getMaxCatsErrorViewModel());
@@ -135,7 +86,7 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
      *
      * @return this builder
      */
-    public CatUseCaseBuilder buildRunawayCatUseCase() {
+    public CatManagementUseCaseBuilder buildRunawayCatUseCase() {
         final RunawayCatOutputBoundary outputBoundary = new RunawayPresenter(
                 getViews().getCat().getViewModels().getRunawayCatViewModel(),
                 getViews().getViewManagerModel());
@@ -150,36 +101,38 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds Create Cat use case.
+     * 
      * @return this builder
      */
-    public CatUseCaseBuilder buildCreateCatUseCase() {
+    public CatManagementUseCaseBuilder buildCreateCatUseCase() {
         final CreateCatOutputBoundary outputBoundary = new CreateCatPresenter(getViews().getViewManagerModel(),
                 getViews().getCat().getViewModels().getMaxCatsErrorViewModel(),
                 getViews().getAuth().getViewModels().getLoginViewModel(),
                 getViews().getAuth().getViewModels().getSignupViewModel());
 
-        final CreateCatInputBoundary interactor = new CreateCatInteractor(getDataAccess().getCatDataAccessObject(),
+        final CreateCatInputBoundary interactor = new CreateCatInteractor(getDataAccess().getCatDataAccess(),
                 outputBoundary);
         final CreateCatController controller = new CreateCatController(interactor);
         // views are lowkey guesses for where these uses cases will be needed, can be added to or removed as needed
         getViews().getAuth().getViews().getSignupView().setCreateCatController(controller);
         getViews().getAuth().getViews().getLoginView().setCreateCatController(controller);
         // whatever view will have new cat button
-        getViews().getAuth().getViews().getLoggedInView().setCreateCatController(controller);
+        // getViews().getAuth().getViews().getLoggedInView().setCreateCatController(controller);
         return this;
     }
 
     /**
      * Builds Change Cat Hunger Use Case.
+     * 
      * @return this builder
      */
-    public CatUseCaseBuilder buildChangeCatHungerUseCase() {
+    public CatManagementUseCaseBuilder buildChangeCatHungerUseCase() {
         final ChangeCatHungerOutputBoundary outputBoundary =
                 new ChangeCatHungerPresenter(getViews().getViewManagerModel(),
                         getViews().getCat().getViewModels().getDisplayCatStatsViewModel());
 
         final ChangeCatHungerInputBoundary interactor =
-                new ChangeCatHungerInteractor(getDataAccess().getCatDataAccessObject(), outputBoundary);
+                new ChangeCatHungerInteractor(getDataAccess().getCatDataAccess(), outputBoundary);
         final ChangeCatHungerController controller = new ChangeCatHungerController(interactor);
 
         getViews().getSession().getViews().getInventoryView().setChangeCatHungerController(controller);
@@ -189,15 +142,17 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds Change Cat Happiness Use Case.
+     * 
      * @return this builder
      */
-    public CatUseCaseBuilder buildChangeCatHappinessUseCase() {
+    public CatManagementUseCaseBuilder buildChangeCatHappinessUseCase() {
         final ChangeCatHappinessOutputBoundary outputBoundary =
                 new ChangeCatHappinessPresenter(getViews().getViewManagerModel(),
-                        getViews().getCat().getViewModels().getDisplayCatStatsViewModel());
+                        getViews().getCat().getViewModels().getDisplayCatStatsViewModel(),
+                        getViews().getCat().getViewModels().getRunawayCatViewModel());
 
         final ChangeCatHappinessInputBoundary interactor = new ChangeCatHappinessInteractor(
-                getDataAccess().getCatDataAccessObject(), outputBoundary);
+                getDataAccess().getCatDataAccess(), outputBoundary);
         final ChangeCatHappinessController controller = new ChangeCatHappinessController(interactor);
 
         getViews().getSession().getViews().getStudySessionView().setChangeCatHappinessController(controller);
@@ -205,15 +160,13 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
     }
 
     /**
-     * Builds all cat-related use cases.
+     * Builds all cat management-related use cases.
      *
      * @return this builder
      */
-    public CatUseCaseBuilder build() {
+    public CatManagementUseCaseBuilder build() {
         return this
                 .buildAdoptionUseCase()
-                .buildDisplayCatImageUseCase()
-                .buildDisplayCatStatsUseCase()
                 .buildMaxCatsErrorUseCase()
                 .buildRunawayCatUseCase()
                 .buildCreateCatUseCase()
