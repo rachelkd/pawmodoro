@@ -4,6 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,10 +22,10 @@ import javax.swing.Timer;
 
 import app.service.DialogService;
 import constants.Constants;
+import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionViewModel;
-import use_case.studysession.StudySessionOutputBoundary;
 
 /**
  * Views for Study sessions.
@@ -33,6 +37,7 @@ public class StudySessionView extends JPanel implements ActionListener {
 
     private LogoutController logoutController;
     private StudySessionController studySessionController;
+    private ChangeCatHappinessController changeCatHappinessController;
 
     private final JButton timerSettings;
     private final JButton logOutSettings;
@@ -187,6 +192,10 @@ public class StudySessionView extends JPanel implements ActionListener {
 
     public void setStudySessionController(StudySessionController studySessionController) {
         this.studySessionController = studySessionController;
+    }
+
+    public void setChangeCatHappinessController(ChangeCatHappinessController controller) {
+        this.changeCatHappinessController = controller;
     }
 
     @Override

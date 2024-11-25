@@ -20,6 +20,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import constants.Constants;
+import interface_adapter.create_cat.CreateCatController;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -29,73 +30,76 @@ import interface_adapter.login.LoginViewModel;
  */
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private final String viewName = "log in";
+    private static final String VIEW_NAME = "log in";
     private final LoginViewModel loginViewModel;
 
     private final JTextField usernameInputField = new JTextField(15);
     private final JLabel userErrorField = new JLabel();
-
     private final JPasswordField passwordInputField = new JPasswordField(15);
 
-    private final JButton logIn = new JButton("log in");
-    private final JButton backToSignUp = new JButton("back to sign up");
-    private LoginController loginController;
+    private final JButton logIn = new JButton("Log in");
+    private final JButton backToSignUp = new JButton("Back to sign up");
 
-    // Reduced NCSS complexity by breaking down constructor into helper methods
+    private LoginController loginController;
+    private CreateCatController createCatController;
+
     public LoginView(LoginViewModel loginViewModel) {
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
-        setupTitleLabel();
-        setupInputFields();
-        setupButtonsPanel();
-        setupListeners();
+        final JLabel pawmodoro = createPawmodoroLabel();
+        final JLabel title = createTitleLabel();
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        addComponentsToPanel();
+        final LabelTextPanel usernameInfo = createUsernamePanel();
+        final LabelTextPanel passwordInfo = createPasswordPanel();
+        final JPanel buttons = createButtonPanel();
+
+        configureErrorField();
+        setupDocumentListeners();
+        setupLayout(pawmodoro, title, usernameInfo, passwordInfo, buttons);
     }
 
-    private void setupTitleLabel() {
+    private JLabel createPawmodoroLabel() {
         final JLabel pawmodoro = new JLabel("Pawmodoro");
         pawmodoro.setAlignmentX(Component.CENTER_ALIGNMENT);
         pawmodoro.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TITLE));
         pawmodoro.setForeground(Color.PINK);
-        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
-        this.add(pawmodoro);
-        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
+        return pawmodoro;
+    }
 
+    private JLabel createTitleLabel() {
         final JLabel title = new JLabel("Login Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.add(title);
+        return title;
     }
 
-    private void setupInputFields() {
-        final LabelTextPanel usernameInfo = new LabelTextPanel(new JLabel("Username"), usernameInputField);
-        final LabelTextPanel passwordInfo = new LabelTextPanel(new JLabel("Password"), passwordInputField);
-        this.add(usernameInfo);
-        this.add(userErrorField);
-        this.add(passwordInfo);
+    private LabelTextPanel createUsernamePanel() {
+        return new LabelTextPanel(new JLabel("Username"), usernameInputField);
     }
 
-    private void setupButtonsPanel() {
+    private LabelTextPanel createPasswordPanel() {
+        return new LabelTextPanel(new JLabel("Password"), passwordInputField);
+    }
+
+    private JPanel createButtonPanel() {
         final JPanel buttons = new JPanel();
         buttons.add(logIn);
         buttons.add(backToSignUp);
         this.add(buttons);
     }
 
-    private void setupListeners() {
-        logIn.addActionListener(
-                evt -> {
-                    if (evt.getSource().equals(logIn)) {
-                        final LoginState currentState = loginViewModel.getState();
-                        loginController.execute(currentState.getUsername(), currentState.getPassword());
-                    }
-                });
+    logIn.addActionListener(this);backToSignUp.addActionListener(this);
 
-        backToSignUp.addActionListener(
-                evt -> loginController.switchToSignUpView());
+    return buttons;
 
+    }
+
+    private void configureErrorField() {
+        userErrorField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        userErrorField.setForeground(Color.RED);
+    }
+
+    private void setupDocumentListeners() {
         usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
             private void documentListenerHelper() {
                 final LoginState currentState = loginViewModel.getState();
@@ -143,13 +147,37 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         });
     }
 
+    private void setupLayout(JLabel pawmodoro, JLabel title, LabelTextPanel usernameInfo, LabelTextPanel passwordInfo,
+            JPanel buttons) {
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
     private void addComponentsToPanel() {
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
+        this.add(title);
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING / 2)));
+        this.add(usernameInfo);
+        this.add(userErrorField);
+        this.add(passwordInfo);
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING / 2)));
+        this.add(buttons);
     }
 
-    @Override
+    /**
+     * React to a button click that results in evt.
+     * @param evt the ActionEvent to react to
+     */
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+        if (evt.getSource().equals(logIn)) {
+            // Log in
+            final LoginState currentState = loginViewModel.getState();
+            loginController.execute(
+                    currentState.getUsername(),
+                    currentState.getPassword());
+        }
+        else if (evt.getSource().equals(backToSignUp)) {
+            // Switch to the Sign Up View
+            loginController.switchToSignUpView();
+        }
     }
 
     @Override
@@ -165,10 +193,14 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     }
 
     public String getViewName() {
-        return viewName;
+        return VIEW_NAME;
     }
 
     public void setLoginController(LoginController loginController) {
         this.loginController = loginController;
+    }
+
+    public void setCreateCatController(CreateCatController createCatController) {
+        this.createCatController = createCatController;
     }
 }

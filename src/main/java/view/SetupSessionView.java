@@ -48,7 +48,7 @@ public class SetupSessionView extends JPanel implements ActionListener {
 
         returnButton.addActionListener(
                 new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
+                    public void actionPerformed(ActionEvent evt) {
 
                         final SetupSessionState currentState = setupSessionViewModel.getState();
 

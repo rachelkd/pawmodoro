@@ -27,11 +27,12 @@ public class SetupSessionPresenter implements SetupSessionOutputBoundary {
 
         viewManagerModel.setState(studySessionViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+        switchToStudyView();
     }
 
     @Override
     public void switchToStudyView() {
-        viewManagerModel.setState(studySessionViewModel.getViewName());
+        viewManagerModel.setState("study session");
         viewManagerModel.firePropertyChanged();
     }
 }

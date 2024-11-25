@@ -4,8 +4,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import view.DisplayCatStatsView;
+import view.GetCatFactView;
+import view.InventoryView;
 
 /**
  * Factory for creating dialog views.
@@ -16,7 +19,6 @@ public class DialogFactory {
 
     /**
      * Creates a new DialogFactory.
-     * 
      * @param mainPanel the main panel of the application
      */
     public DialogFactory(JPanel mainPanel) {
@@ -25,7 +27,6 @@ public class DialogFactory {
 
     /**
      * Sets the main frame of the application.
-     * 
      * @param frame the main application frame
      */
     public void setMainFrame(JFrame frame) {
@@ -34,7 +35,6 @@ public class DialogFactory {
 
     /**
      * Gets the parent frame of the application.
-     * 
      * @return the parent frame
      */
     private JFrame getParentFrame() {
@@ -49,12 +49,24 @@ public class DialogFactory {
     }
 
     /**
-     * Creates a new DisplayCatStatsView dialog.
-     * 
+     * Creates a new InventoryView dialog.
      * @param viewModel the view model for the dialog
-     * @return the created dialog
+     * @return the inventory view dialog
      */
-    public DisplayCatStatsView createCatStatsDialog(DisplayCatStatsViewModel viewModel) {
-        return new DisplayCatStatsView(getParentFrame(), viewModel);
+    public InventoryView createInventoryDialog(InventoryViewModel viewModel) {
+        return new InventoryView(getParentFrame(), viewModel);
+    }
+
+    /**
+     * Creates a new DisplayCatStatsView dialog.
+     * @param viewModel the view model for the dialog
+     * @param getCatFactView the get cat fact view
+     * @return the cat stats dialog
+     */
+    public DisplayCatStatsView createCatStatsDialog(DisplayCatStatsViewModel viewModel, GetCatFactView getCatFactView) {
+        if (mainFrame == null) {
+            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+        }
+        return new DisplayCatStatsView(getParentFrame(), viewModel, getCatFactView);
     }
 }

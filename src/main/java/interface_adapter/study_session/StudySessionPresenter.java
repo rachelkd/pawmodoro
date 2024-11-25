@@ -48,7 +48,7 @@ public class StudySessionPresenter implements StudySessionOutputBoundary {
     }
 
     /**
-     * Prepares LoginView.
+     * Prepares the login view by clearing the password and login error.
      */
     public void prepareLoginView() {
         final LoginState currentState = loginViewModel.getState();

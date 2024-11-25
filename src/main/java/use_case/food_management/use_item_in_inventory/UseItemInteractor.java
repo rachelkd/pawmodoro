@@ -4,17 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import entity.AbstractFood;
+import entity.Inventory;
+import use_case.food_management.InventoryDataAccessInterface;
 
 /**
  * The Use Item Interactor.
  */
 public class UseItemInteractor implements UseItemInputBoundary {
-    private final UseItemDataAccessInterface useItemDataAccessObject;
+    private final InventoryDataAccessInterface inventoryDataAccessObject;
     private final UseItemOutputBoundary useItemPresenter;
 
-    public UseItemInteractor(UseItemDataAccessInterface useItemDataAccessObject,
+    public UseItemInteractor(InventoryDataAccessInterface useItemDataAccessObject,
                              UseItemOutputBoundary useItemOutputBoundary) {
-        this.useItemDataAccessObject = useItemDataAccessObject;
+        this.inventoryDataAccessObject = useItemDataAccessObject;
         this.useItemPresenter = useItemOutputBoundary;
     }
 
@@ -24,27 +26,35 @@ public class UseItemInteractor implements UseItemInputBoundary {
         Map<String, AbstractFood> inventoryItems = new HashMap<>();
 
         // if you can use item
-        if (useItemDataAccessObject.canUseItem(useItemInputData.getOwnerId(), useItemInputData.getFoodId())) {
-            final Integer quantity = useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).getItems()
-                    .get(useItemInputData.getFoodId()).getQuantity();
+        if (inventoryDataAccessObject.canUseItem(useItemInputData.getOwnerId(), useItemInputData.getFoodName())) {
+
+            final int quantity = inventoryDataAccessObject.getInventory(useItemInputData.getOwnerId()).getItems()
+                    .get(useItemInputData.getFoodName()).getQuantity();
+            final Inventory inventory = inventoryDataAccessObject.getInventory(useItemInputData.getOwnerId());
+
             // if quantity greater than 1
             if (quantity > 1) {
-                inventoryItems = useItemDataAccessObject.getInventory(useItemInputData
-                        .getOwnerId()).getItems();
-                inventoryItems.get(useItemInputData.getFoodId()).setQuantity(quantity - 1);
-                useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).setItems(inventoryItems);
-                isSuccess = (quantity - 1) == useItemDataAccessObject.getInventory(useItemInputData.getOwnerId())
-                        .getItems().get(useItemInputData.getFoodId()).getQuantity();
+                inventoryItems = inventory.getItems();
+                inventoryItems.get(useItemInputData.getFoodName()).setQuantity(quantity - 1);
+                inventory.setItems(inventoryItems);
+
+                inventoryDataAccessObject.updateInventory(inventory);
+
+                isSuccess = (quantity - 1) == inventoryDataAccessObject.getInventory(useItemInputData.getOwnerId())
+                        .getItems().get(useItemInputData.getFoodName()).getQuantity();
             }
             else {
-                inventoryItems = useItemDataAccessObject.getInventory(useItemInputData
-                        .getOwnerId()).getItems();
-                inventoryItems.remove(useItemInputData.getFoodId());
-                useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).setItems(inventoryItems);
+                inventoryItems = inventory.getItems();
+                // when testing need to use capitals
+                inventoryItems.remove(useItemInputData.getFoodName());
+                inventory.setItems(inventoryItems);
 
-                isSuccess = !(useItemDataAccessObject.getInventory(useItemInputData.getOwnerId()).getItems()
-                        .containsKey(useItemInputData.getFoodId()));
+                inventoryDataAccessObject.updateInventory(inventory);
+
+                isSuccess = !(inventoryDataAccessObject.getInventory(useItemInputData.getOwnerId()).getItems()
+                        .containsKey(useItemInputData.getFoodName()));
             }
+
         }
 
         final UseItemOutputData useItemOutputData = new UseItemOutputData(isSuccess, inventoryItems);

@@ -1,6 +1,5 @@
 package interface_adapter.use_item_in_inventory;
 
-import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.InventoryState;
 import interface_adapter.create_inventory.InventoryViewModel;
 import use_case.food_management.use_item_in_inventory.UseItemOutputBoundary;

@@ -19,8 +19,9 @@ public class ChangeCatHappinessInteractor implements ChangeCatHappinessInputBoun
 
     @Override
     public void execute(ChangeCatHappinessInputData changeCatHappinessInputData) {
-        // get the cat, cat object should already exist dues to create cat use case
-        final Cat cat = changeCatHappinessInputData.getCat();
+        // get the cat, cat should already exist
+        final Cat cat = catDataAccessObject.getCatByNameAndOwner(changeCatHappinessInputData.getCatName(),
+                changeCatHappinessInputData.getOwnerUsername());
         int newHappiness = 0;
 
         // decrease happiness when user does not complete study session
@@ -34,25 +35,35 @@ public class ChangeCatHappinessInteractor implements ChangeCatHappinessInputBoun
         cat.updateHappinessLevel(newHappiness);
         catDataAccessObject.updateCat(cat);
 
-        final ChangeCatHappinessOutputData changeCatHappinessOutputData = new ChangeCatHappinessOutputData(
-                cat.getOwnerUsername(), cat.getName(), 
-                catDataAccessObject.getHappinessLevel(cat.getName(), cat.getOwnerUsername()));
-        changeCatHappinessPresenter.prepareSuccessView(changeCatHappinessOutputData);
+        if (cat.getHappinessLevel() <= 0) {
+            catDataAccessObject.removeCat(cat.getName(), cat.getOwnerUsername());
+            changeCatHappinessPresenter.switchToRunawayCatView(cat.getName(), cat.getOwnerUsername());
+        }
+        else {
+
+            final ChangeCatHappinessOutputData changeCatHappinessOutputData = new ChangeCatHappinessOutputData(
+                    cat.getOwnerUsername(), cat.getName(),
+                    catDataAccessObject.getHappinessLevel(cat.getName(), cat.getOwnerUsername()));
+
+            changeCatHappinessPresenter.prepareSuccessView(changeCatHappinessOutputData);
+        }
 
     }
 
     int calculateHappinessPoints(int studySessionLength) {
-        if (studySessionLength <= 20) {
-            return Constants.POINTS_FOR_LESS_EQUAL_20;
+        final int happinessPoints;
+        if (studySessionLength <= Constants.MINUTES_20) {
+            happinessPoints = Constants.POINTS_FOR_LESS_EQUAL_20;
         }
-        else if (studySessionLength <= 40) {
-            return Constants.POINTS_FOR_BETWEEN_21_AND_40;
+        else if (studySessionLength <= Constants.MINUTES_40) {
+            happinessPoints = Constants.POINTS_FOR_BETWEEN_21_AND_40;
         }
-        else if (studySessionLength < 60) {
-            return Constants.POINTS_FOR_BETWEEN_41_AND_59;
+        else if (studySessionLength < Constants.MINUTES_60) {
+            happinessPoints = Constants.POINTS_FOR_BETWEEN_41_AND_59;
         }
         else {
-            return Constants.POINTS_FOR_60;
+            happinessPoints = Constants.POINTS_FOR_60;
         }
+        return happinessPoints;
     }
 }

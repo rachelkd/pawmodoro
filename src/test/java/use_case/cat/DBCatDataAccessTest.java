@@ -127,7 +127,7 @@ class DBCatDataAccessTest {
 
     @Test
     void failureRemoveNonexistentCatTest() {
-        assertFalse(catRepository.removeCat("Whiskers", "testuser"));
+        assertFalse(catRepository.removeCat("George", "testuser1"));
     }
 
     @Test
@@ -136,7 +136,8 @@ class DBCatDataAccessTest {
         catRepository.saveCat(cat);
 
         final int hungerLevel = catRepository.getHungerLevel("Whiskers", "testuser");
-        assertEquals(100, hungerLevel); // Assuming initial hunger level is 100
+        // Assuming initial hunger level is 100
+        assertEquals(100, hungerLevel);
     }
 
     @Test
