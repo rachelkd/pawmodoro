@@ -17,12 +17,12 @@ import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
 import use_case.food_management.InventoryDataAccessInterface;
-import use_case.food_management.create_inventory.CreateInventoryInputBoundary;
-import use_case.food_management.create_inventory.CreateInventoryInteractor;
-import use_case.food_management.create_inventory.CreateInventoryOutputBoundary;
 import use_case.food_management.add_to_inventory.AddToInventoryInputBoundary;
 import use_case.food_management.add_to_inventory.AddToInventoryInteractor;
 import use_case.food_management.add_to_inventory.AddToInventoryOutputBoundary;
+import use_case.food_management.create_inventory.CreateInventoryInputBoundary;
+import use_case.food_management.create_inventory.CreateInventoryInteractor;
+import use_case.food_management.create_inventory.CreateInventoryOutputBoundary;
 import use_case.food_management.use_item_in_inventory.UseItemInputBoundary;
 import use_case.food_management.use_item_in_inventory.UseItemInteractor;
 import use_case.food_management.use_item_in_inventory.UseItemOutputBoundary;
@@ -45,6 +45,7 @@ public class InventoryExample {
 
     /**
      * Builds and runs inventory view in app.
+     * 
      * @param args unused arguments
      */
     public static void main(String[] args) {
@@ -94,13 +95,17 @@ public class InventoryExample {
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
-        final CreateInventoryInputBoundary createInventoryInteractor = new CreateInventoryInteractor(dataAccessObject, presenter,
-                inventoryFactory);
-        final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor(dataAccessObject, addItemPresenter, foodItemFactory);
+        final CreateInventoryInputBoundary createInventoryInteractor =
+                new CreateInventoryInteractor(dataAccessObject, presenter,
+                        inventoryFactory);
+        final AddToInventoryInputBoundary addToInventoryInteractor =
+                new AddToInventoryInteractor(dataAccessObject, addItemPresenter, foodItemFactory);
         final UseItemInputBoundary useItemInteractor = new UseItemInteractor(dataAccessObject, useItemPresenter);
 
-        final CreateInventoryController createInventoryController = new CreateInventoryController(createInventoryInteractor);
-        final AddToInventoryController addToInventoryController = new AddToInventoryController(addToInventoryInteractor);
+        final CreateInventoryController createInventoryController =
+                new CreateInventoryController(createInventoryInteractor);
+        final AddToInventoryController addToInventoryController =
+                new AddToInventoryController(addToInventoryInteractor);
         final UseItemController useItemController = new UseItemController(useItemInteractor);
 
         final JFrame application = new JFrame();

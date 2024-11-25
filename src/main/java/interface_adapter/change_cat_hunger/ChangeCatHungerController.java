@@ -1,6 +1,5 @@
 package interface_adapter.change_cat_hunger;
 
-import entity.AbstractFood;
 import use_case.cat_management.change_cat_hunger.ChangeCatHungerInputBoundary;
 import use_case.cat_management.change_cat_hunger.ChangeCatHungerInputData;
 

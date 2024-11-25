@@ -1,5 +1,7 @@
 package use_case.inventory;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -15,8 +17,6 @@ import use_case.food_management.use_item_in_inventory.UseItemInputData;
 import use_case.food_management.use_item_in_inventory.UseItemInteractor;
 import use_case.food_management.use_item_in_inventory.UseItemOutputBoundary;
 import use_case.food_management.use_item_in_inventory.UseItemOutputData;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Testing the Use Item Interactor.

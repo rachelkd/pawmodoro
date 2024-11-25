@@ -1,5 +1,7 @@
 package use_case.cat;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
 import data_access.InMemoryCatDataAccessObject;
@@ -10,8 +12,6 @@ import use_case.cat_management.change_cat_hunger.ChangeCatHungerInputData;
 import use_case.cat_management.change_cat_hunger.ChangeCatHungerInteractor;
 import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputBoundary;
 import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputData;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ChangeCatHungerInteractorTest {
     @Test

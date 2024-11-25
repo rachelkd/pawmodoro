@@ -1,5 +1,7 @@
 package app.factory;
 
+import javax.swing.JFrame;
+
 import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.cat.CatViewModel;
@@ -27,8 +29,6 @@ import view.SetupSessionView;
 import view.SignupView;
 import view.StudySessionView;
 import view.TimerView;
-
-import javax.swing.*;
 
 /**
  * Default implementation of ViewFactory.
@@ -138,9 +138,12 @@ public class ViewFactory {
      * Creates an Inventory View.
      * 
      * @param inventoryViewModel the inventory view model
+     * @param app the main application frame
+     * @param dialogService the dialog service for user interactions
      * @return InventoryView
      */
-    public InventoryView createInventoryView(JFrame app, InventoryViewModel inventoryViewModel, DialogService dialogService) {
+    public InventoryView createInventoryView(JFrame app, InventoryViewModel inventoryViewModel,
+            DialogService dialogService) {
         return dialogService.createInventoryDialog(app, inventoryViewModel);
 
     }
