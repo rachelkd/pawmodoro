@@ -43,14 +43,12 @@ import use_case.runawaycat.RunawayCatInputBoundary;
 import use_case.runawaycat.RunawayCatInteractor;
 import use_case.runawaycat.RunawayCatOutputBoundary;
 
-// TODO: @rachelkd Make new *UseCaseBuilder class to fix fan out complexity
 /**
  * Builder for cat-related use cases.
  */
 public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Creates a new cat use case builder.
-     *
      * @param views the views
      * @param dataAccess the data access components
      */
@@ -60,7 +58,6 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the adoption use case.
-     *
      * @return this builder
      */
     public CatUseCaseBuilder buildAdoptionUseCase() {
@@ -78,7 +75,6 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the display cat image use case.
-     *
      * @return this builder
      */
     public CatUseCaseBuilder buildDisplayCatImageUseCase() {
@@ -96,7 +92,6 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the display cat stats use case.
-     *
      * @return this builder
      */
     public CatUseCaseBuilder buildDisplayCatStatsUseCase() {
@@ -116,7 +111,6 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the max cats error use case.
-     *
      * @return this builder
      */
     public CatUseCaseBuilder buildMaxCatsErrorUseCase() {
@@ -132,7 +126,6 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the runaway cat use case.
-     *
      * @return this builder
      */
     public CatUseCaseBuilder buildRunawayCatUseCase() {
@@ -207,7 +200,6 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds all cat-related use cases.
-     *
      * @return this builder
      */
     public CatUseCaseBuilder build() {
