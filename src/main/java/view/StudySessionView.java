@@ -18,6 +18,7 @@ import javax.swing.SwingUtilities;
 
 import app.service.DialogService;
 import constants.Constants;
+import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionViewModel;
@@ -37,6 +38,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     private LogoutController logoutController;
     private StudySessionController studySessionController;
+    private ChangeCatHappinessController changeCatHappinessController;
 
     // TODO: We don't need timerController if all the input is handled by TimerController in TimerView @yhj050224
     // Inject TimerView into StudySessionView similar to CatView instead of creating a new instance
@@ -155,6 +157,10 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     public void setStudySessionController(StudySessionController controller) {
         this.studySessionController = controller;
+    }
+
+    public void setChangeCatHappinessController(ChangeCatHappinessController controller) {
+        this.changeCatHappinessController = controller;
     }
 
     @Override

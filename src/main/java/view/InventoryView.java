@@ -14,6 +14,7 @@ import javax.swing.border.Border;
 
 import entity.AbstractFood;
 import interface_adapter.add_to_inventory.AddToInventoryController;
+import interface_adapter.change_cat_hunger.ChangeCatHungerController;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.InventoryState;
 import interface_adapter.create_inventory.InventoryViewModel;
@@ -28,6 +29,7 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
     private CreateInventoryController createInventoryController;
     private AddToInventoryController addToInventoryController;
     private UseItemController useItemController;
+    private ChangeCatHungerController changeCatHungerController;
     private Map<String, AbstractFood> userInventory;
     private JPanel inventoryPanel;
     private JLabel[] selectedLabel;
@@ -99,6 +101,10 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
 
     public void setUseItemController(UseItemController useItemController) {
         this.useItemController = useItemController;
+    }
+
+    public void setChangeCatHungerController(ChangeCatHungerController changeCatHungerController) {
+        this.changeCatHungerController = changeCatHungerController;
     }
 
     void buildInventory() {

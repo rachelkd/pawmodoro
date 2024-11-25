@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,11 +12,6 @@ import config.SupabaseConfig;
 import entity.Cat;
 import entity.CatFactory;
 import entity.exceptions.NoCatsFoundException;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 import use_case.cat.CatDataAccessInterface;
 
 /**
@@ -236,8 +232,33 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
 
     @Override
     public boolean removeCat(String name, String ownerUsername) {
-        // TODO: Implement this method for cat running away use case @manahillsajid
-        return false;
+        boolean isSuccessful = false;
+
+        final Request request = new Request.Builder()
+                .url(apiUrl + CATS_ENDPOINT + NAME_QUERY + name + OWNER_QUERY + ownerUsername)
+                .delete()
+                .addHeader(API_KEY_HEADER, apiKey)
+                .addHeader(AUTH_HEADER, BEARER_PREFIX + apiKey)
+                .build();
+
+        // only make request if cat exists
+        if (existsByNameAndOwner(name, ownerUsername)) {
+
+            try (Response response = client.newCall(request).execute()) {
+                // delete does not return any content --> 204
+                if (response.isSuccessful()) {
+                    isSuccessful = true;
+                }
+                else {
+                    System.err.println("Failed to Remove Cat. Response message: " + response.message());
+                }
+            }
+            catch (IOException exception) {
+                System.err.println("Error occurred while removing the cat: " + exception.getMessage());
+            }
+        }
+
+        return isSuccessful;
     }
 
     @Override

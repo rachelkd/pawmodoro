@@ -42,6 +42,11 @@ class LoginInteractorTest {
             public void switchToSignUpView() {
                 fail("Use case switch to sign up view is unexpected.");
             }
+
+            @Override
+            public void switchToStudySessionView() {
+                fail("Use case switch to sign up view is unexpected.");
+            }
         };
 
         final LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
@@ -77,6 +82,11 @@ class LoginInteractorTest {
              */
             @Override
             public void switchToSignUpView() {
+                fail("Use case switch to sign up view is unexpected.");
+            }
+
+            @Override
+            public void switchToStudySessionView() {
                 fail("Use case switch to sign up view is unexpected.");
             }
         };
@@ -119,6 +129,11 @@ class LoginInteractorTest {
             public void switchToSignUpView() {
                 fail("Use case switch to sign up view is unexpected.");
             }
+
+            @Override
+            public void switchToStudySessionView() {
+                fail("Use case switch to sign up view is unexpected.");
+            }
         };
 
         final LoginInputBoundary interactor = new LoginInteractor(userRepository, failurePresenter);
@@ -151,6 +166,11 @@ class LoginInteractorTest {
             @Override
             public void switchToSignUpView() {
                 fail("Use case switch to sign up view is unexpected.");
+            }
+
+            @Override
+            public void switchToStudySessionView() {
+
             }
         };
 
