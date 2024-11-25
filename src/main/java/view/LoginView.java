@@ -1,12 +1,21 @@
 package view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -21,15 +30,15 @@ import interface_adapter.login.LoginViewModel;
  */
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private final String viewName = "log in";
+    private static final String VIEW_NAME = "log in";
     private final LoginViewModel loginViewModel;
 
     private final JTextField usernameInputField = new JTextField(15);
     private final JLabel userErrorField = new JLabel();
     private final JPasswordField passwordInputField = new JPasswordField(15);
 
-    private final JButton logIn = new JButton("log in");
-    private final JButton backToSignUp = new JButton("back to sign up");
+    private final JButton logIn = new JButton("Log in");
+    private final JButton backToSignUp = new JButton("Back to sign up");
 
     private LoginController loginController;
     private CreateCatController createCatController;
@@ -184,7 +193,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     }
 
     public String getViewName() {
-        return viewName;
+        return VIEW_NAME;
     }
 
     public void setLoginController(LoginController loginController) {

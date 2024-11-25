@@ -24,6 +24,12 @@ public final class Constants {
     // Cat Constants
     public static final int MAX_AMOUNT_OF_CATS = 4;
 
+    // Cat Facts API Constants
+    public static final String CAT_FACT_API_URL = "https://catfact.ninja/fact";
+    public static final String CAT_FACT_ERROR_NETWORK = "Could not fetch cat fact. Check your internet connection!";
+    public static final String CAT_FACT_ERROR_API = "Could not fetch cat fact. Try again later!";
+    public static final int CAT_FACT_MAX_LENGTH = 50;
+
     // Happiness points for study session lengths
     public static final int POINTS_FOR_LESS_EQUAL_20 = 10;
     public static final int POINTS_FOR_BETWEEN_21_AND_40 = 20;
@@ -57,11 +63,29 @@ public final class Constants {
     public static final int DISPLAY_CAT_STATS_PADDING = 10;
     public static final int DISPLAY_CAT_STATS_FONT_SIZE = 16;
     public static final int DISPLAY_CAT_STATS_IMAGE_SIZE = 128;
+    public static final int DISPLAY_CAT_STATS_MAX_WIDTH = 360;
+    public static final int DISPLAY_CAT_STATS_HEIGHT = 360;
 
     // Cat sprite constants
     public static final int CAT_SPRITE_BASE_SIZE = 32;
     public static final int CAT_SPRITE_SCALE = 2;
     public static final int CAT_SPRITE_DISPLAY_SIZE = CAT_SPRITE_BASE_SIZE * CAT_SPRITE_SCALE;
+
+    // Cat fact view constants
+    public static final int CAT_FACT_TEXT_WIDTH = 240;
+    public static final String CAT_FACT_TITLE = "Did You Know?";
+    public static final String CAT_FACT_LOADING = "Loading cat fact...";
+    public static final String CAT_FACT_ERROR_PREFIX = "Error: ";
+    public static final int CAT_FACT_FONT_SIZE = 14;
+
+    // Common UI strings
+    public static final String LOADING = "Loading...";
+    public static final String NO_IMAGE_AVAILABLE = "No Image Available";
+    public static final String ERROR = "Error";
+    public static final String IMAGE_LOAD_ERROR = "Failed to load image";
+    public static final String SUCCESS = "Success";
+    public static final String CANCEL = "Cancel";
+    public static final String OK = "OK";
 
     private Constants() {
         // Prevent instantiation

@@ -11,25 +11,32 @@ import view.RunawayCatView;
  * Container for cat-related views.
  */
 public class CatViews {
+    // Management-related views
     private final AdoptionView adoptionView;
     private final RunawayCatView runawayCatView;
     private final MaxCatsErrorView maxCatsErrorView;
+
+    // Display-related views
     private final DisplayCatImageView displayCatImageView;
     private final DisplayCatStatsView displayCatStatsView;
     private final CatView catView;
 
-    public CatViews(AdoptionView adoptionView,
-            RunawayCatView runawayCatView,
-            MaxCatsErrorView maxCatsErrorView,
-            DisplayCatImageView displayCatImageView,
-            DisplayCatStatsView displayCatStatsView,
-            CatView catView) {
-        this.adoptionView = adoptionView;
-        this.runawayCatView = runawayCatView;
-        this.maxCatsErrorView = maxCatsErrorView;
-        this.displayCatImageView = displayCatImageView;
-        this.displayCatStatsView = displayCatStatsView;
-        this.catView = catView;
+    /**
+     * Creates a new CatViews container by combining views from management and display builders.
+     *
+     * @param managementBuilder the cat management view builder
+     * @param displayBuilder the cat display view builder
+     */
+    public CatViews(CatManagementViewBuilder managementBuilder, CatDisplayViewBuilder displayBuilder) {
+        // Management views
+        this.adoptionView = managementBuilder.getAdoptionView();
+        this.runawayCatView = managementBuilder.getRunawayCatView();
+        this.maxCatsErrorView = managementBuilder.getMaxCatsErrorView();
+
+        // Display views
+        this.displayCatImageView = displayBuilder.getDisplayCatImageView();
+        this.displayCatStatsView = displayBuilder.getDisplayCatStatsView();
+        this.catView = displayBuilder.getCatView();
     }
 
     // View getters
