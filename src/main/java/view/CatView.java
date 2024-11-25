@@ -32,6 +32,7 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
     private final JLabel imageLabel;
     private final DialogService dialogService;
     private DisplayCatStatsController displayCatStatsController;
+    private final GetCatFactView getCatFactView;
 
     /**
      * Creates a new CatView.
@@ -39,12 +40,14 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
      * @param catViewModel the view model for this cat view
      * @param displayCatStatsViewModel the view model for displaying cat stats
      * @param dialogService the service for showing dialogs
+     * @param getCatFactView the view for getting cat facts
      */
     public CatView(CatViewModel catViewModel, DisplayCatStatsViewModel displayCatStatsViewModel,
-            DialogService dialogService) {
+            DialogService dialogService, GetCatFactView getCatFactView) {
         this.catViewModel = catViewModel;
         this.catViewModel.addPropertyChangeListener(this);
         this.dialogService = dialogService;
+        this.getCatFactView = getCatFactView;
 
         // Set layout to BorderLayout for centering at bottom
         this.setLayout(new BorderLayout());
@@ -71,7 +74,7 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
                 if (displayCatStatsController != null) {
                     final CatState state = catViewModel.getState();
                     displayCatStatsController.execute(state.getOwnerUsername(), state.getCatName());
-                    dialogService.showCatStatsDialog(displayCatStatsViewModel);
+                    dialogService.showCatStatsDialog(displayCatStatsViewModel, getCatFactView);
                 }
             }
         });
