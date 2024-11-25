@@ -50,6 +50,9 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         hungerLabel = new JLabel(DisplayCatStatsViewModel.HUNGER_LABEL + "0");
         happinessLabel = new JLabel(DisplayCatStatsViewModel.HAPPINESS_LABEL + "0");
 
+        // Fetch a new cat fact when dialog opens
+        getCatFactView.fetchNewFact();
+
         final JPanel mainPanel = createMainPanel();
         mainPanel.setPreferredSize(
                 new Dimension(Constants.DISPLAY_CAT_STATS_MAX_WIDTH, Constants.DISPLAY_CAT_STATS_HEIGHT));
