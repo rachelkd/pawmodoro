@@ -20,7 +20,7 @@ public class AdoptionController {
      *
      * @param catName the name of the adopted cat
      */
-    public void execute(String catName, User owner) {
+    public void execute(String catName, String owner) {
         final AdoptionInputData adoptionInputData = new AdoptionInputData(catName, owner);
 
         adoptionUseCaseInteractor.execute(adoptionInputData);

@@ -14,6 +14,8 @@ import constants.Constants;
 import interface_adapter.adoption.AdoptionController;
 import interface_adapter.adoption.AdoptionState;
 import interface_adapter.adoption.AdoptionViewModel;
+import interface_adapter.change_password.ChangePasswordController;
+import interface_adapter.create_cat.CreateCatController;
 
 /**
  * The view for the Adopting a cat use case.
@@ -26,6 +28,7 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
     private final JButton confirmButton = new JButton(AdoptionViewModel.CONFIRM_BUTTON_LABEL);
     private final JButton cancelButton = new JButton(AdoptionViewModel.CANCEL_BUTTON_LABEL);
     private AdoptionController adoptionController;
+    private CreateCatController createCatController;
 
     /**
      * Creates a new AdoptionView.
@@ -34,7 +37,7 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
      */
     public AdoptionView(AdoptionViewModel adoptionViewModel) {
         this.adoptionViewModel = adoptionViewModel;
-        adoptionViewModel.addPropertyChangeListener(this);
+        this.adoptionViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel(AdoptionViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -48,9 +51,12 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
 
         confirmButton.addActionListener(
             new ActionListener() {
+
                 public void actionPerformed(ActionEvent e) {
                     if (e.getSource().equals(confirmButton)) {
                         final AdoptionState currentState = adoptionViewModel.getState();
+
+                        AdoptionView.this.createCatController.execute(currentState.getCatName(), currentState.getOwner());
 
                         adoptionController.execute(
                                 currentState.getCatName(),
@@ -60,24 +66,10 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
                 }
             }
         );
-
-        cancelButton.addActionListener (
-            new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    adoptionController.switchToSetupView();
-                }
-            }
-        );
+        cancelButton.addActionListener(this);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
-        this.add(information);
-        this.add(finish);
-        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
-    }
-
-    private void addCatNameListener() {
         nameField.getDocument().addDocumentListener(new DocumentListener() {
             private void documentListenerHelper() {
                 final AdoptionState currentState = adoptionViewModel.getState();
@@ -94,11 +86,18 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
             @Override
             public void changedUpdate(DocumentEvent e) {documentListenerHelper();}
         });
+
+        this.add(title);
+        this.add(information);
+        this.add(finish);
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource().equals(cancelButton)) {
+            adoptionController.switchToSetupView();
+        }
     }
 
     @Override
@@ -120,5 +119,9 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
 
     public void setAdoptionController(AdoptionController adoptionController) {
         this.adoptionController = adoptionController;
+    }
+
+    public void setCreateCatController(CreateCatController createCatController) {
+        this.createCatController = createCatController;
     }
 }

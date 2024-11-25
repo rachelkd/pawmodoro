@@ -165,7 +165,7 @@ public class CatUseCaseBuilder extends AbstractUseCaseBuilder {
         getViews().getAuth().getViews().getSignupView().setCreateCatController(controller);
         getViews().getAuth().getViews().getLoginView().setCreateCatController(controller);
         // whatever view will have new cat button
-        // getViews().getAuth().getViews().getLoggedInView().setCreateCatController(controller);
+        getViews().getCat().getViews().getAdoptionView().setCreateCatController(controller);
         return this;
     }
 

@@ -8,14 +8,14 @@ import entity.User;
 public class AdoptionState {
     private String catName = "";
     private String adoptionError = "";
-    private User owner;
+    private String owner = "";
 
     /**
      * Gets the owner object
      *
      * @return the owner
      */
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
