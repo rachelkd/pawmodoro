@@ -91,7 +91,6 @@ public class SessionViewBuilder {
                 viewModels.getTimerViewModel(),
                 catViewsAndModels.getViewModels().getCatViewModel(),
                 catViewsAndModels.getViewModels().getDisplayCatStatsViewModel(),
-                dialogService,
                 catViewsAndModels.getViews().getCatView());
         cardPanel.add(studySessionView, studySessionView.getViewName());
         return this;
