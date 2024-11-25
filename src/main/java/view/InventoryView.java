@@ -169,15 +169,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
             final JButton selectItemButton = new JButton("Use Selected Item");
             buttonPanel.add(selectItemButton, BorderLayout.SOUTH);
             selectItemButton.addActionListener(event -> {
-                if (selectedLabel[0] != null) {
-                    // TODO feeding cats all at once?
-                    final String selectedText = selectedLabel[0].getText();
-                    useItemController.execute(ownerId, selectedText);
-                    // changeCatHungerController.execute("name", ownerId, selectedText);
-                }
-                else {
-                    JOptionPane.showMessageDialog(null, "Please select an item first.");
-                }
+                clickedSelectItemButton(ownerId);
             });
         }
         else {
@@ -186,6 +178,18 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
             final JLabel items = new JLabel(InventoryViewModel.EMPTY_INVENTORY_LABEL);
             items.setAlignmentX(Component.CENTER_ALIGNMENT);
             inventoryPanel.add(items);
+        }
+    }
+
+    void clickedSelectItemButton(String ownerId) {
+        if (selectedLabel[0] != null) {
+            // TODO feeding cats all at once?
+            final String selectedText = selectedLabel[0].getText();
+            useItemController.execute(ownerId, selectedText);
+            // changeCatHungerController.execute("name", ownerId, selectedText);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Please select an item first.");
         }
     }
 
