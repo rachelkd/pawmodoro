@@ -1,6 +1,5 @@
 package use_case.runawaycat;
 
-import entity.Cat;
 import use_case.cat.CatDataAccessInterface;
 
 /**
@@ -12,7 +11,7 @@ public class RunawayCatInteractor implements RunawayCatInputBoundary {
     private final CatDataAccessInterface catDataAccessObject;
 
     public RunawayCatInteractor(RunawayCatOutputBoundary runawayPresenter,
-                                CatDataAccessInterface catDataAccessObject) {
+            CatDataAccessInterface catDataAccessObject) {
         this.runawayPresenter = runawayPresenter;
         this.catDataAccessObject = catDataAccessObject;
     }
@@ -27,6 +26,4 @@ public class RunawayCatInteractor implements RunawayCatInputBoundary {
     public void switchToBreakView() {
         runawayPresenter.switchToBreakView();
     }
-
-
 }
