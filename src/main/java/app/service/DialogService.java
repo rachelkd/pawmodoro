@@ -21,7 +21,6 @@ public class DialogService {
 
     /**
      * Creates a new DialogService.
-     * 
      * @param mainPanel the main panel of the application
      */
     public DialogService(JPanel mainPanel) {
@@ -32,7 +31,6 @@ public class DialogService {
     /**
      * Sets the main frame of the application.
      * This should be called after the main frame is created.
-     * 
      * @param frame the main application frame
      */
     public void setMainFrame(JFrame frame) {
@@ -42,7 +40,6 @@ public class DialogService {
 
     /**
      * Shows the cat stats dialog.
-     * 
      * @param viewModel the view model for the dialog
      */
     public void showCatStatsDialog(DisplayCatStatsViewModel viewModel) {
@@ -54,7 +51,6 @@ public class DialogService {
 
     /**
      * Return the inventory dialog.
-     * 
      * @param parent the parent frame
      * @param viewModel the view model for the dialog
      * @return the Inventory View
@@ -70,11 +66,16 @@ public class DialogService {
 
     /**
      * Show the Inventory Dialog.
+     * @param viewModel the view model for the InventoryView dialog
      */
-    public void showInventoryDialog() {
-        if (inventoryDialog != null && !inventoryDialog.isVisible()) {
-            inventoryDialog.setVisible(true);
+    public void showInventoryDialog(InventoryViewModel viewModel) {
+        if (mainFrame == null) {
+            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
         }
+        if (inventoryDialog == null) {
+            inventoryDialog = dialogFactory.createInventoryDialog(viewModel);
+        }
+        inventoryDialog.setVisible(true);
     }
 
     /**
@@ -84,5 +85,13 @@ public class DialogService {
         if (inventoryDialog != null && inventoryDialog.isVisible()) {
             inventoryDialog.setVisible(false);
         }
+    }
+
+    /**
+     * Gets the inventory dialog.
+     * @return the inventory dialog
+     */
+    public JDialog getInventoryDialog() {
+        return inventoryDialog;
     }
 }

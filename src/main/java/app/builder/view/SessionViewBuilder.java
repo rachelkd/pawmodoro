@@ -38,7 +38,6 @@ public class SessionViewBuilder {
 
     /**
      * Creates a new session view builder.
-     *
      * @param cardPanel the card panel
      * @param cardLayout the card layout
      * @param viewManagerModel the view manager model
@@ -68,7 +67,6 @@ public class SessionViewBuilder {
 
     /**
      * Builds the setup session view.
-     *
      * @return this builder
      */
     public SessionViewBuilder buildSetupSessionView() {
@@ -79,7 +77,6 @@ public class SessionViewBuilder {
 
     /**
      * Builds the study session view.
-     *
      * @return this builder
      */
     public SessionViewBuilder buildStudySessionView() {
@@ -96,19 +93,18 @@ public class SessionViewBuilder {
 
     /**
      * Builds the inventory view.
-     *
      * @return this builder
      */
     public SessionViewBuilder buildInventoryView() {
         // have inventory run in background
-        inventoryView = viewFactory
-                .createInventoryView((JFrame) cardPanel.getParent(), viewModels.getInventoryViewModel(), dialogService);
+        inventoryView = viewFactory.createInventoryView(
+                viewModels.getInventoryViewModel(),
+                dialogService);
         return this;
     }
 
     /**
      * Builds the timer view.
-     *
      * @return this builder
      */
     public SessionViewBuilder buildTimerView() {
@@ -119,7 +115,6 @@ public class SessionViewBuilder {
 
     /**
      * Builds and returns the session views and models.
-     *
      * @return the session views and models
      */
     public SessionViewsAndModels build() {
