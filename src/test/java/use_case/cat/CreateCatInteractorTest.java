@@ -1,5 +1,9 @@
 package use_case.cat;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.Test;
 
 import data_access.InMemoryCatDataAccessObject;
@@ -10,10 +14,6 @@ import use_case.cat_management.create_cat.CreateCatInputData;
 import use_case.cat_management.create_cat.CreateCatInteractor;
 import use_case.cat_management.create_cat.CreateCatOutputBoundary;
 import use_case.cat_management.create_cat.CreateCatOutputData;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 class CreateCatInteractorTest {
 

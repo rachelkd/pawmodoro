@@ -1,4 +1,4 @@
-package use_case.create_inventory;
+package use_case.food_management.create_inventory;
 
 /**
  * Input boundry of the Create Inventory Use Case.

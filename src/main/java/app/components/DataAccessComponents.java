@@ -5,15 +5,15 @@ import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
 import data_access.DBUserDataAccessObject;
-import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
+import use_case.food_management.InventoryService;
 
 /**
  * Holds all data access components for the application.
  */
 public class DataAccessComponents {
     private final DBUserDataAccessObject userDataAccess;
-    private final InMemoryInventoryDataAccessObject inventoryDataAccess;
+    private final InventoryService inventoryDataAccess;
     private final InMemoryTimerDataAccessObject timerDataAccess;
     private final AdoptionDataAccessObject adoptionDataAccess;
     private final ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
@@ -22,7 +22,6 @@ public class DataAccessComponents {
 
     /**
      * Creates a new DataAccessComponents instance.
-     *
      * @param userDataAccess the user data access object
      * @param inventoryDataAccess the inventory data access object
      * @param timerDataAccess the timer data access object
@@ -32,7 +31,7 @@ public class DataAccessComponents {
      * @param catFactDataAccess the cat fact data access object
      */
     public DataAccessComponents(DBUserDataAccessObject userDataAccess,
-            InMemoryInventoryDataAccessObject inventoryDataAccess,
+            InventoryService inventoryDataAccess,
             InMemoryTimerDataAccessObject timerDataAccess,
             AdoptionDataAccessObject adoptionDataAccess,
             ApiDisplayCatImageDataAccessObject displayCatImageDataAccess,
@@ -51,7 +50,7 @@ public class DataAccessComponents {
         return userDataAccess;
     }
 
-    public InMemoryInventoryDataAccessObject getInventoryDataAccess() {
+    public InventoryService getInventoryDataAccess() {
         return inventoryDataAccess;
     }
 

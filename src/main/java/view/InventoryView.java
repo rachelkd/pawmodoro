@@ -1,6 +1,11 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -9,7 +14,16 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 import entity.AbstractFood;
@@ -20,42 +34,66 @@ import interface_adapter.create_inventory.InventoryState;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
 
-// TODO: Allyssa will turn into JDialog
 /**
  * The View when user is viewing contents of their inventory.
  */
-public class InventoryView extends JPanel implements ActionListener, PropertyChangeListener {
+public class InventoryView extends JDialog implements ActionListener, PropertyChangeListener {
+    private static final int INVENTORY_WIDTH = 500;
+    private static final int INVENTORY_HEIGHT = 200;
+    private static final int INDENT = 10;
+
     private final InventoryViewModel inventoryViewModel;
     private CreateInventoryController createInventoryController;
     private AddToInventoryController addToInventoryController;
     private UseItemController useItemController;
     private ChangeCatHungerController changeCatHungerController;
     private Map<String, AbstractFood> userInventory;
-    private JPanel inventoryPanel;
-    private JLabel[] selectedLabel;
+    private final JPanel mainPanel;
+    private final JPanel inventoryPanel;
+    private final JPanel buttonPanel;
+    private final JLabel[] selectedLabel;
 
     /**
      * Creates the Inventory View.
-     * 
+     *
+     * @param parent the application
      * @param inventoryViewModel the view model
      */
-    public InventoryView(InventoryViewModel inventoryViewModel) {
-        this.inventoryViewModel = inventoryViewModel;
-        this.inventoryViewModel.addPropertyChangeListener(this);
+    public InventoryView(JFrame parent, InventoryViewModel inventoryViewModel) {
 
-        setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(500, 200));
+        super(parent, InventoryViewModel.TITLE_LABEL, false);
+        this.inventoryViewModel = inventoryViewModel;
+
+        this.mainPanel = new JPanel();
+
+        mainPanel.setLayout(new BorderLayout());
         final Border border = BorderFactory.createLineBorder(Color.black);
-        this.setBorder(border);
+        mainPanel.setBorder(border);
 
         final JLabel title = new JLabel(InventoryViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
-        this.add(title, BorderLayout.NORTH);
+        title.setBorder(BorderFactory.createEmptyBorder(0, INDENT, 0, 0));
+        mainPanel.add(title, BorderLayout.NORTH);
+
+        this.buttonPanel = new JPanel();
+
+        final JButton closeButton = new JButton("Close Inventory");
+        closeButton.addActionListener(event -> this.setVisible(false));
+        buttonPanel.add(closeButton);
+
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        this.add(mainPanel);
+        this.pack();
+        this.setLocationRelativeTo(parent);
+        this.setSize(new Dimension(INVENTORY_WIDTH, INVENTORY_HEIGHT));
 
         this.inventoryPanel = new JPanel();
         // Track the selected label in view
-        this.selectedLabel = new JLabel[] { null };
+        this.selectedLabel = new JLabel[] {null};
+
+        // listens for property changes to inventory view model
+        inventoryViewModel.addPropertyChangeListener(this);
     }
 
     @Override
@@ -65,29 +103,41 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // move to be in initialization or another function?
+
         if (evt.getPropertyName().equals("inventory_created")) {
+            SwingUtilities.invokeLater(() -> {
+                final InventoryState state = (InventoryState) evt.getNewValue();
+                userInventory = state.getInventoryItems();
 
-            final InventoryState state = (InventoryState) evt.getNewValue();
-            userInventory = state.getInventoryItems();
-
-            buildInventory();
-            this.add(inventoryPanel, BorderLayout.CENTER);
+                buildInventory(state.getOwnerId());
+                mainPanel.add(inventoryPanel, BorderLayout.CENTER);
+                inventoryPanel.revalidate();
+                inventoryPanel.repaint();
+            });
 
         } // add to inventory when complete study session so this use case doesn't need to be here
         else if (evt.getPropertyName().equals("inventory_add")) {
-            final InventoryState state = (InventoryState) evt.getNewValue();
-            final AbstractFood food = state.getNewFoodItem();
-            // update the user inventory
-            userInventory = state.getInventoryItems();
+            SwingUtilities.invokeLater(() -> {
+                final InventoryState state = (InventoryState) evt.getNewValue();
+                final AbstractFood food = state.getNewFoodItem();
+                // update the user inventory
+                userInventory = state.getInventoryItems();
 
-            addFoodLabel(food);
+                addFoodLabel(food);
+                inventoryPanel.revalidate();
+                inventoryPanel.repaint();
+            });
         }
 
         else if (evt.getPropertyName().equals("inventory_item_used")) {
-            final InventoryState state = (InventoryState) evt.getNewValue();
-            userInventory = state.getInventoryItems();
-            refreshInventory();
+            SwingUtilities.invokeLater(() -> {
+                final InventoryState state = (InventoryState) evt.getNewValue();
+                userInventory = state.getInventoryItems();
+                refreshInventory(state.getOwnerId());
+
+                inventoryPanel.revalidate();
+                inventoryPanel.repaint();
+            });
         }
     }
 
@@ -107,9 +157,8 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
         this.changeCatHungerController = changeCatHungerController;
     }
 
-    void buildInventory() {
+    void buildInventory(String ownerId) {
         if (!userInventory.isEmpty()) {
-            // JPanel inventoryPanel = new JPanel();
             inventoryPanel.setLayout(new BoxLayout(inventoryPanel, BoxLayout.Y_AXIS));
 
             for (AbstractFood food : userInventory.values()) {
@@ -117,24 +166,29 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
             }
 
             final JButton selectItemButton = new JButton("Use Selected Item");
-            this.add(selectItemButton, BorderLayout.SOUTH);
-            selectItemButton.addActionListener(
-                    event -> {
-                        if (selectedLabel[0] != null) {
-                            final String selectedText = selectedLabel[0].getText();
-                            JOptionPane.showMessageDialog(null, "Selected Item: " + selectedText);
-                        }
-                        else {
-                            JOptionPane.showMessageDialog(null, "Please select an item first.");
-                        }
-                    });
+            buttonPanel.add(selectItemButton, BorderLayout.SOUTH);
+            selectItemButton.addActionListener(event -> {
+                clickedSelectItemButton(ownerId);
+            });
         }
         else {
             // user does not have an existing inventory or their inventory is empty
             inventoryPanel.setLayout(new GridBagLayout());
-            final JLabel items = new JLabel(inventoryViewModel.EMPTY_INVENTORY_LABEL);
+            final JLabel items = new JLabel(InventoryViewModel.EMPTY_INVENTORY_LABEL);
             items.setAlignmentX(Component.CENTER_ALIGNMENT);
             inventoryPanel.add(items);
+        }
+    }
+
+    void clickedSelectItemButton(String ownerId) {
+        if (selectedLabel[0] != null) {
+            // TODO feeding cats all at once?
+            final String selectedText = selectedLabel[0].getText();
+            useItemController.execute(ownerId, selectedText);
+            // changeCatHungerController.execute("name", ownerId, selectedText);
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Please select an item first.");
         }
     }
 
@@ -166,9 +220,11 @@ public class InventoryView extends JPanel implements ActionListener, PropertyCha
         inventoryPanel.add(labelPanel);
     }
 
-    void refreshInventory() {
+    void refreshInventory(String ownerId) {
         inventoryPanel.removeAll();
-        buildInventory();
+        buttonPanel.remove(1);
+
+        buildInventory(ownerId);
     }
 
     public String getViewName() {
