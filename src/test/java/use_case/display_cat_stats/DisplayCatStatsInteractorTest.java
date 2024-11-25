@@ -2,6 +2,7 @@ package use_case.display_cat_stats;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,7 @@ class DisplayCatStatsInteractorTest {
                 assertEquals(85, displayCatStatsOutputData.getHappinessLevel());
                 assertEquals(cat.getImageFileName(), displayCatStatsOutputData.getImageFileName());
                 assertFalse(displayCatStatsOutputData.isUseCaseFailed());
+                assertEquals(null, displayCatStatsOutputData.getError());
             }
 
             @Override
@@ -59,6 +61,13 @@ class DisplayCatStatsInteractorTest {
             @Override
             public void prepareFailView(String error) {
                 assertEquals("No cats found for user: testuser", error);
+                final DisplayCatStatsOutputData outputData = new DisplayCatStatsOutputData(error);
+                assertTrue(outputData.isUseCaseFailed());
+                assertEquals("", outputData.getCatName());
+                assertEquals(0, outputData.getHungerLevel());
+                assertEquals(0, outputData.getHappinessLevel());
+                assertEquals("", outputData.getImageFileName());
+                assertEquals(error, outputData.getError());
             }
         };
 
@@ -66,6 +75,36 @@ class DisplayCatStatsInteractorTest {
                 catRepository, failurePresenter);
 
         final DisplayCatStatsInputData inputData = new DisplayCatStatsInputData("testuser", "NonexistentCat");
+        interactor.execute(inputData);
+    }
+
+    @Test
+    void failureNullCatTest() {
+        final CatDataAccessInterface catRepository = new InMemoryCatDataAccessObject();
+
+        final DisplayCatStatsOutputBoundary failurePresenter = new DisplayCatStatsOutputBoundary() {
+            @Override
+            public void prepareSuccessView(DisplayCatStatsOutputData displayCatStatsOutputData) {
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("No cats found for user: testuser", error);
+                final DisplayCatStatsOutputData outputData = new DisplayCatStatsOutputData(error);
+                assertTrue(outputData.isUseCaseFailed());
+                assertEquals("", outputData.getCatName());
+                assertEquals(0, outputData.getHungerLevel());
+                assertEquals(0, outputData.getHappinessLevel());
+                assertEquals("", outputData.getImageFileName());
+                assertEquals(error, outputData.getError());
+            }
+        };
+
+        final DisplayCatStatsInputBoundary interactor = new DisplayCatStatsInteractor(
+                catRepository, failurePresenter);
+
+        final DisplayCatStatsInputData inputData = new DisplayCatStatsInputData("testuser", "Whiskers");
         interactor.execute(inputData);
     }
 }
