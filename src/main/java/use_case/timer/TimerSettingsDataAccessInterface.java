@@ -1,7 +1,7 @@
 package use_case.timer;
 
 /**
- * Interface for accessing timer settings and configuration data.
+ * Interface for accessing timer settings.
  */
 public interface TimerSettingsDataAccessInterface {
     /**
@@ -31,5 +31,5 @@ public interface TimerSettingsDataAccessInterface {
      * @param duration the duration in milliseconds
      * @return formatted time string (e.g., "25:00")
      */
-    String formatTimeDisplay(long duration);
+    String formatTime(long duration);
 }

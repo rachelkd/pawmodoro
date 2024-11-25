@@ -1,5 +1,6 @@
 package app.builder.view.session;
 
+import view.GetCatFactView;
 import view.InventoryView;
 import view.SetupSessionView;
 import view.StudySessionView;
@@ -13,13 +14,15 @@ public class SessionViews {
     private final InventoryView inventoryView;
     private final StudySessionView studySessionView;
     private final TimerView timerView;
+    private final GetCatFactView getCatFactView;
 
     public SessionViews(SetupSessionView setupSessionView, InventoryView inventoryView,
-            StudySessionView studySessionView, TimerView timerView) {
+            StudySessionView studySessionView, TimerView timerView, GetCatFactView getCatFactView) {
         this.setupSessionView = setupSessionView;
         this.inventoryView = inventoryView;
         this.studySessionView = studySessionView;
         this.timerView = timerView;
+        this.getCatFactView = getCatFactView;
     }
 
     public SetupSessionView getSetupSessionView() {
@@ -36,5 +39,9 @@ public class SessionViews {
 
     public TimerView getTimerView() {
         return timerView;
+    }
+
+    public GetCatFactView getGetCatFactView() {
+        return getCatFactView;
     }
 }

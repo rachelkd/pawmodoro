@@ -1,6 +1,5 @@
 package use_case.setupsession;
 
-
 /**
  * The Input Data for the setting up session Use Case.
  */

@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 import app.factory.DialogFactory;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
+import view.GetCatFactView;
 import view.InventoryView;
 
 /**
@@ -41,12 +42,14 @@ public class DialogService {
     /**
      * Shows the cat stats dialog.
      * @param viewModel the view model for the dialog
+     * @param getCatFactView the get cat fact view
      */
-    public void showCatStatsDialog(DisplayCatStatsViewModel viewModel) {
+    public void showCatStatsDialog(DisplayCatStatsViewModel viewModel, GetCatFactView getCatFactView) {
         if (mainFrame == null) {
             mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
         }
-        dialogFactory.createCatStatsDialog(viewModel).setVisible(true);
+        dialogFactory.createCatStatsDialog(viewModel, getCatFactView).setVisible(true);
+
     }
 
     /**

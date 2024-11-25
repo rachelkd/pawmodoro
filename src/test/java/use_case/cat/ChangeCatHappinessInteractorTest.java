@@ -1,5 +1,6 @@
 package use_case.cat;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import data_access.InMemoryCatDataAccessObject;
@@ -11,19 +12,26 @@ import use_case.cat_management.change_cat_happiness.ChangeCatHappinessInteractor
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputBoundary;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputData;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ChangeCatHappinessInteractorTest {
+    private CatFactory catFactory;
+    private Cat cat;
+    private InMemoryCatDataAccessObject catRepository;
+
+    @BeforeEach
+    void setUp() {
+        this.catFactory = new CatFactory();
+        this.catRepository = new InMemoryCatDataAccessObject();
+        cat = catFactory.create("Billy", "<3");
+        cat.setCatObjectCreated(true);
+    }
 
     @Test
     void successIncreaseCatHappinessTest() {
-        final CatFactory catFactory = new CatFactory();
-        final Cat cat = catFactory.create("Billy", "<3");
-        cat.setCatObjectCreated(true);
 
         final ChangeCatHappinessInputData inputData = new ChangeCatHappinessInputData(cat.getName(),
                 cat.getOwnerUsername(), true, 20);
-        final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
         cat.updateHappinessLevel(-30);
         catRepository.saveCat(cat);
 
@@ -31,6 +39,11 @@ public class ChangeCatHappinessInteractorTest {
             @Override
             public void prepareSuccessView(ChangeCatHappinessOutputData changeCatHappinessOutputData) {
                 assertEquals(80, changeCatHappinessOutputData.getNewHappinessLevel());
+            }
+
+            @Override
+            public void switchToRunawayCatView(String catName, String ownerUsername) {
+                fail("Use case switch to runaway cat view is unexpected.");
             }
         };
 
@@ -42,13 +55,9 @@ public class ChangeCatHappinessInteractorTest {
 
     @Test
     void successDecreaseCatHappinessTest() {
-        final CatFactory catFactory = new CatFactory();
-        final Cat cat = catFactory.create("Billy", "<3");
-        cat.setCatObjectCreated(true);
 
         final ChangeCatHappinessInputData inputData = new ChangeCatHappinessInputData(cat.getName(),
                 cat.getOwnerUsername(), false, 59);
-        final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
         cat.updateHappinessLevel(-10);
         catRepository.saveCat(cat);
 
@@ -57,10 +66,43 @@ public class ChangeCatHappinessInteractorTest {
             public void prepareSuccessView(ChangeCatHappinessOutputData changeCatHappinessOutputData) {
                 assertEquals(55, changeCatHappinessOutputData.getNewHappinessLevel());
             }
+
+            @Override
+            public void switchToRunawayCatView(String catName, String ownerUsername) {
+                fail("Use case switch to runaway cat view is unexpected.");
+            }
         };
 
         final ChangeCatHappinessInputBoundary interactor =
                 new ChangeCatHappinessInteractor(catRepository, successPresenter);
         interactor.execute(inputData);
+    }
+
+    @Test
+    void successSwitchToRunawayCatViewTest() {
+
+        cat.updateHappinessLevel(-90);
+        catRepository.saveCat(cat);
+        final ChangeCatHappinessInputData inputData = new ChangeCatHappinessInputData(cat.getName(),
+                cat.getOwnerUsername(), false, 60);
+
+        final ChangeCatHappinessOutputBoundary runawayCatPresenter = new ChangeCatHappinessOutputBoundary() {
+
+            @Override
+            public void prepareSuccessView(ChangeCatHappinessOutputData changeCatHappinessOutputData) {
+                fail("Use case is unexpected.");
+            }
+
+            @Override
+            public void switchToRunawayCatView(String catName, String ownerUsername) {
+                // checks if cat is removed
+                assertFalse(catRepository.existsByNameAndOwner(catName, ownerUsername));
+            }
+        };
+
+        final ChangeCatHappinessInputBoundary interactor =
+                new ChangeCatHappinessInteractor(catRepository, runawayCatPresenter);
+        interactor.execute(inputData);
+
     }
 }

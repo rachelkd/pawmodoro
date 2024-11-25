@@ -1,5 +1,7 @@
 package app.factory;
 
+import javax.swing.JFrame;
+
 import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.cat.CatViewModel;
@@ -7,6 +9,7 @@ import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_image.DisplayCatImageViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
+import interface_adapter.get_cat_fact.GetCatFactViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.runawaycat.RunawayCatViewModel;
@@ -18,6 +21,7 @@ import view.AdoptionView;
 import view.CatView;
 import view.DisplayCatImageView;
 import view.DisplayCatStatsView;
+import view.GetCatFactView;
 import view.InventoryView;
 import view.LoggedInView;
 import view.LoginView;
@@ -29,7 +33,7 @@ import view.StudySessionView;
 import view.TimerView;
 
 /**
- * Default implementation of ViewFactory.
+ * The ViewFactory class.
  * Responsible for creating various view components in the application.
  */
 public class ViewFactory {
@@ -138,22 +142,36 @@ public class ViewFactory {
      * Creates a Cat View with associated components.
      * @param catViewModel the cat view model
      * @param displayCatStatsViewModel the display cat stats view model
-     * @param dialogService the dialog service for user interactions
+     * @param dialogService the dialog service
+     * @param getCatFactView the get cat fact view
      * @return CatView
      */
     public CatView createCatView(CatViewModel catViewModel,
             DisplayCatStatsViewModel displayCatStatsViewModel,
-            DialogService dialogService) {
-        return new CatView(catViewModel, displayCatStatsViewModel, dialogService);
+            DialogService dialogService,
+            GetCatFactView getCatFactView) {
+        return new CatView(catViewModel, displayCatStatsViewModel, dialogService, getCatFactView);
+    }
+
+    /**
+     * Creates a Get Cat Fact View.
+     * @param getCatFactViewModel the get cat fact view model
+     * @return GetCatFactView
+     */
+    public GetCatFactView createGetCatFactView(GetCatFactViewModel getCatFactViewModel) {
+        return new GetCatFactView(getCatFactViewModel);
     }
 
     /**
      * Creates a Display Cat Stats View.
+     * @param parent the parent frame
      * @param displayCatStatsViewModel the display cat stats view model
+     * @param getCatFactView the get cat fact view
      * @return DisplayCatStatsView
      */
-    public DisplayCatStatsView createDisplayCatStatsView(DisplayCatStatsViewModel displayCatStatsViewModel) {
-        return null;
+    public DisplayCatStatsView createDisplayCatStatsView(JFrame parent,
+            DisplayCatStatsViewModel displayCatStatsViewModel, GetCatFactView getCatFactView) {
+        return new DisplayCatStatsView(parent, displayCatStatsViewModel, getCatFactView);
     }
 
     /**
@@ -164,4 +182,5 @@ public class ViewFactory {
     public TimerView createTimerView(TimerViewModel timerViewModel) {
         return new TimerView(timerViewModel);
     }
+
 }

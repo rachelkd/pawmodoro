@@ -8,6 +8,7 @@ import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import view.DisplayCatStatsView;
 import view.InventoryView;
+import view.GetCatFactView;
 
 /**
  * Factory for creating dialog views.
@@ -49,15 +50,6 @@ public class DialogFactory {
 
     /**
      * Creates a new DisplayCatStatsView dialog.
-     * @param viewModel the view model for the dialog
-     * @return the created dialog
-     */
-    public DisplayCatStatsView createCatStatsDialog(DisplayCatStatsViewModel viewModel) {
-        return new DisplayCatStatsView(getParentFrame(), viewModel);
-    }
-
-    /**
-     * Creates a new InventoryView dialog.
      * @param viewModel the view model for the dialog
      * @return the created dialog
      */

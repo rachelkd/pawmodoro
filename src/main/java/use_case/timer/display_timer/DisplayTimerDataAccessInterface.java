@@ -3,7 +3,7 @@ package use_case.timer.display_timer;
 import entity.Timer;
 
 /**
- * Interface for Timer data persistence operations.
+ * Interface for accessing timer data for display purposes.
  */
 public interface DisplayTimerDataAccessInterface {
     /**
