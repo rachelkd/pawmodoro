@@ -13,7 +13,7 @@ import app.factory.ViewFactory;
 import app.factory.viewmodel.CatViewModelFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
-
+// TODO changed
 /**
  * Builder for cat-related views.
  */
@@ -54,7 +54,7 @@ public class CatViewBuilder {
                 catViewModelFactory.createRunawayCatViewModel(),
                 catViewModelFactory.createMaxCatsErrorViewModel(),
                 catViewModelFactory.createDisplayCatImageViewModel(),
-                catViewModelFactory.createDisplayCatStatsViewModel(),
+                // catViewModelFactory.createDisplayCatStatsViewModel(),
                 catViewModelFactory.createGetCatFactViewModel(),
                 catViewModelFactory.createCatViewModel());
     }

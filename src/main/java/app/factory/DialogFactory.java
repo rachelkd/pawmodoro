@@ -59,14 +59,17 @@ public class DialogFactory {
 
     /**
      * Creates a new DisplayCatStatsView dialog.
-     * @param viewModel the view model for the dialog
+     * @param displayCatStatsViewModel the view model for the dialog
+     * @param inventoryViewModel the view model for inventory dialog
      * @param getCatFactView the get cat fact view
      * @return the cat stats dialog
      */
-    public DisplayCatStatsView createCatStatsDialog(DisplayCatStatsViewModel viewModel, GetCatFactView getCatFactView) {
+    public DisplayCatStatsView createCatStatsDialog(DisplayCatStatsViewModel displayCatStatsViewModel,
+                                                    InventoryViewModel inventoryViewModel,
+                                                    GetCatFactView getCatFactView) {
         if (mainFrame == null) {
             mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
         }
-        return new DisplayCatStatsView(getParentFrame(), viewModel, getCatFactView);
+        return new DisplayCatStatsView(getParentFrame(), displayCatStatsViewModel, inventoryViewModel, getCatFactView);
     }
 }

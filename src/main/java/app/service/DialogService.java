@@ -40,14 +40,18 @@ public class DialogService {
 
     /**
      * Shows the cat stats dialog.
-     * @param viewModel the view model for the dialog
+     * @param displayCatStatsViewModel the view model for the dialog
+     * @param inventoryViewModel the view model for the inventory dialog
      * @param getCatFactView the get cat fact view
      */
-    public void showCatStatsDialog(DisplayCatStatsViewModel viewModel, GetCatFactView getCatFactView) {
+    public void showCatStatsDialog(DisplayCatStatsViewModel displayCatStatsViewModel,
+                                   InventoryViewModel inventoryViewModel,
+                                   GetCatFactView getCatFactView) {
         if (mainFrame == null) {
             mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
         }
-        dialogFactory.createCatStatsDialog(viewModel, getCatFactView).setVisible(true);
+        dialogFactory.createCatStatsDialog(displayCatStatsViewModel, inventoryViewModel, getCatFactView)
+                .setVisible(true);
 
     }
 

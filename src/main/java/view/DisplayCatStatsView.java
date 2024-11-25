@@ -21,8 +21,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import app.service.DialogService;
 import constants.Constants;
 import interface_adapter.cat.CatState;
+import interface_adapter.create_inventory.CreateInventoryController;
+import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 
 /**
@@ -34,12 +37,17 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
     private final JLabel catNameLabel;
     private final JLabel hungerLabel;
     private final JLabel happinessLabel;
+    private final InventoryViewModel inventoryViewModel;
     private final GetCatFactView getCatFactView;
+    private final DialogService dialogService;
+    private CreateInventoryController createInventoryController;
 
     public DisplayCatStatsView(JFrame parent, DisplayCatStatsViewModel displayCatStatsViewModel,
-            GetCatFactView getCatFactView) {
+                               InventoryViewModel inventoryViewModel,
+                               GetCatFactView getCatFactView) {
         super(parent, DisplayCatStatsViewModel.TITLE_LABEL, true);
         this.displayCatStatsViewModel = displayCatStatsViewModel;
+        this.inventoryViewModel = inventoryViewModel;
         this.getCatFactView = getCatFactView;
         this.setLocationRelativeTo(parent);
         this.displayCatStatsViewModel.addPropertyChangeListener(this);
@@ -75,6 +83,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         addNameSection(mainPanel);
         addStatsSection(mainPanel);
         addCatFactSection(mainPanel);
+        addInventoryButton(mainPanel);
         addCloseButton(mainPanel);
 
         return mainPanel;
@@ -131,6 +140,16 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         mainPanel.add(closeButton);
     }
 
+    private void addInventoryButton(JPanel mainPanel) {
+        final JButton inventoryButton = new JButton(DisplayCatStatsViewModel.INVENTORY_BUTTON_LABEL);
+        inventoryButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        inventoryButton.addActionListener(event -> {
+            dialogService.createInventoryDialog(inventoryViewModel);
+        });
+        mainPanel.add(inventoryButton);
+    }
+
     private void updateFields(CatState state) {
         if (state.getError() != null) {
             JOptionPane.showMessageDialog(this, state.getError());
@@ -161,6 +180,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
     @Override
     public void actionPerformed(ActionEvent e) {
         this.dispose();
+        dialogService.hideInventoryDialog();
     }
 
     @Override
@@ -190,5 +210,9 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
     public static void show(JFrame parent, DisplayCatStatsViewModel viewModel, GetCatFactView getCatFactView) {
         final DisplayCatStatsView dialog = new DisplayCatStatsView(parent, viewModel, getCatFactView);
         dialog.setVisible(true);
+    }
+
+    public void setCreateCatController(CreateInventoryController createInventoryController) {
+        this.createInventoryController = createInventoryController;
     }
 }

@@ -12,11 +12,8 @@ import app.factory.ViewFactory;
 import app.factory.viewmodel.SessionViewModelFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
-import view.GetCatFactView;
-import view.InventoryView;
-import view.SetupSessionView;
-import view.StudySessionView;
-import view.TimerView;
+import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
+import view.*;
 
 /**
  * Builder for session-related views.
@@ -37,6 +34,7 @@ public class SessionViewBuilder {
     private StudySessionView studySessionView;
     private TimerView timerView;
     private GetCatFactView getCatFactView;
+    private DisplayCatStatsView getDisplayCatStatsView;
 
     /**
      * Creates a new session view builder.
@@ -63,7 +61,8 @@ public class SessionViewBuilder {
                 sessionViewModelFactory.createInventoryViewModel(),
                 sessionViewModelFactory.createTimerViewModel(),
                 sessionViewModelFactory.createStudySessionViewModel(),
-                sessionViewModelFactory.createGetCatFactViewModel());
+                sessionViewModelFactory.createGetCatFactViewModel(),
+                sessionViewModelFactory.createDisplayCatStatsViewModel());
         this.dialogService = dialogService;
         this.catViewsAndModels = catViewsAndModels;
     }
@@ -126,6 +125,11 @@ public class SessionViewBuilder {
         return this;
     }
 
+    public SessionViewBuilder buildDisplayCatStatsView() {
+        this.getDisplayCatStatsView = viewFactory.createDisplayCatStatsView( (JFrame)cardPanel.getParent(), viewModels.getDisplayCatStatsViewModel(), viewModels.getInventoryViewModel(),);
+        return this;
+    }
+
     /**
      * Builds and returns the session views and models.
      * @return the session views and models
@@ -135,7 +139,8 @@ public class SessionViewBuilder {
                 .buildInventoryView()
                 .buildStudySessionView()
                 .buildTimerView()
-                .buildGetCatFactView();
+                .buildGetCatFactView()
+                .buildDisplayCatStatsView();
 
         final SessionViews views = new SessionViews(
                 setupSessionView,

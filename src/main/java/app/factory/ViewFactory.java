@@ -142,15 +142,17 @@ public class ViewFactory {
      * Creates a Cat View with associated components.
      * @param catViewModel the cat view model
      * @param displayCatStatsViewModel the display cat stats view model
+     * @param inventoryViewModel the inventory view model
      * @param dialogService the dialog service
      * @param getCatFactView the get cat fact view
      * @return CatView
      */
     public CatView createCatView(CatViewModel catViewModel,
             DisplayCatStatsViewModel displayCatStatsViewModel,
+            InventoryViewModel inventoryViewModel,
             DialogService dialogService,
             GetCatFactView getCatFactView) {
-        return new CatView(catViewModel, displayCatStatsViewModel, dialogService, getCatFactView);
+        return new CatView(catViewModel, displayCatStatsViewModel, inventoryViewModel, dialogService, getCatFactView);
     }
 
     /**
@@ -164,14 +166,18 @@ public class ViewFactory {
 
     /**
      * Creates a Display Cat Stats View.
-     * @param parent the parent frame
+     *
+     * @param parent                   the parent frame
      * @param displayCatStatsViewModel the display cat stats view model
-     * @param getCatFactView the get cat fact view
+     * @param inventoryViewModel        the inventory view model
+     * @param getCatFactView           the get cat fact view
      * @return DisplayCatStatsView
      */
     public DisplayCatStatsView createDisplayCatStatsView(JFrame parent,
-            DisplayCatStatsViewModel displayCatStatsViewModel, GetCatFactView getCatFactView) {
-        return new DisplayCatStatsView(parent, displayCatStatsViewModel, getCatFactView);
+                                                         DisplayCatStatsViewModel displayCatStatsViewModel,
+                                                         InventoryViewModel inventoryViewModel,
+                                                         GetCatFactView getCatFactView) {
+        return new DisplayCatStatsView(parent, displayCatStatsViewModel, inventoryViewModel, getCatFactView);
     }
 
     /**

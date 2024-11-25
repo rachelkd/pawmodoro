@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,6 +11,11 @@ import config.SupabaseConfig;
 import entity.Cat;
 import entity.CatFactory;
 import entity.exceptions.NoCatsFoundException;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import use_case.cat.CatDataAccessInterface;
 
 /**

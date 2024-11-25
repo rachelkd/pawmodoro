@@ -24,14 +24,14 @@ public class CatViewModels {
             RunawayCatViewModel runawayCatViewModel,
             MaxCatsErrorViewModel maxCatsErrorViewModel,
             DisplayCatImageViewModel displayCatImageViewModel,
-            DisplayCatStatsViewModel displayCatStatsViewModel,
+            // DisplayCatStatsViewModel displayCatStatsViewModel,
             GetCatFactViewModel getCatFactViewModel,
             CatViewModel catViewModel) {
         this.adoptionViewModel = adoptionViewModel;
         this.runawayCatViewModel = runawayCatViewModel;
         this.maxCatsErrorViewModel = maxCatsErrorViewModel;
         this.displayCatImageViewModel = displayCatImageViewModel;
-        this.displayCatStatsViewModel = displayCatStatsViewModel;
+        // this.displayCatStatsViewModel = displayCatStatsViewModel;
         this.getCatFactViewModel = getCatFactViewModel;
         this.catViewModel = catViewModel;
     }
@@ -52,9 +52,9 @@ public class CatViewModels {
         return displayCatImageViewModel;
     }
 
-    public DisplayCatStatsViewModel getDisplayCatStatsViewModel() {
-        return displayCatStatsViewModel;
-    }
+//    public DisplayCatStatsViewModel getDisplayCatStatsViewModel() {
+//        return displayCatStatsViewModel;
+//    }
 
     public GetCatFactViewModel getGetCatFactViewModel() {
         return getCatFactViewModel;
