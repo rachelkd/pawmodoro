@@ -182,16 +182,4 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
     public String getViewName() {
         return displayCatStatsViewModel.getViewName();
     }
-
-    /**
-     * Shows a new DisplayCatStatsView dialog.
-     *
-     * @param parent the parent frame
-     * @param viewModel the view model
-     * @param getCatFactView the get cat fact view
-     */
-    public static void show(JFrame parent, DisplayCatStatsViewModel viewModel, GetCatFactView getCatFactView) {
-        final DisplayCatStatsView dialog = new DisplayCatStatsView(parent, viewModel, getCatFactView);
-        dialog.setVisible(true);
-    }
 }
