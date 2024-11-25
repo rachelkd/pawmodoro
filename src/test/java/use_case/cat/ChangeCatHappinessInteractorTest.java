@@ -1,5 +1,9 @@
 package use_case.cat;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +15,6 @@ import use_case.cat_management.change_cat_happiness.ChangeCatHappinessInputData;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessInteractor;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputBoundary;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputData;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ChangeCatHappinessInteractorTest {
     private CatFactory catFactory;

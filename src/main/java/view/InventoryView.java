@@ -34,7 +34,6 @@ import interface_adapter.create_inventory.InventoryState;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
 
-// TODO: Allyssa will turn into JDialog
 /**
  * The View when user is viewing contents of their inventory.
  */

@@ -9,7 +9,6 @@ import app.factory.DialogFactory;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import view.GetCatFactView;
-import view.InventoryView;
 
 /**
  * Service for showing dialogs.

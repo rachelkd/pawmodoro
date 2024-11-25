@@ -6,11 +6,8 @@ import data_access.AdoptionDataAccessObject;
 import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
-import data_access.DBInventoryDataAccessObject;
 import data_access.DBUserDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
-import entity.FoodInventoryFactory;
-import entity.FoodItemFactory;
 import use_case.food_management.InventoryService;
 
 /**
