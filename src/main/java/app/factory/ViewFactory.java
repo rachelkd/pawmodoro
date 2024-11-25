@@ -114,7 +114,6 @@ public class ViewFactory {
      * @param studySessionViewModel the study session view model
      * @param catViewModel the cat view model
      * @param displayCatStatsViewModel the display cat stats view model
-     * @param dialogService the dialog service for user interactions
      * @param catView the existing cat view instance
      * @return StudySessionView
      */

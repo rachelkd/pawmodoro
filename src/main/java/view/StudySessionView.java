@@ -4,12 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -30,10 +28,10 @@ import interface_adapter.study_session.StudySessionViewModel;
 /**
  * Views for Study sessions.
  */
-public class StudySessionView extends JPanel implements ActionListener {
-    private final String viewName = "study session";
-
+public class StudySessionView extends JPanel implements ActionListener, PropertyChangeListener {
     private final CatView catView;
+
+    private final StudySessionViewModel studySessionViewModel;
 
     private LogoutController logoutController;
     private StudySessionController studySessionController;
@@ -53,6 +51,9 @@ public class StudySessionView extends JPanel implements ActionListener {
     public StudySessionView(StudySessionViewModel studySessionViewModel, DialogService dialogService, CatView catView) {
 
         this.dialogService = dialogService;
+        studySessionViewModel.addPropertyChangeListener(this);
+        this.studySessionViewModel = studySessionViewModel;
+
         this.catView = catView;
 
         this.setLayout(new BorderLayout());
@@ -183,7 +184,7 @@ public class StudySessionView extends JPanel implements ActionListener {
     }
 
     public String getViewName() {
-        return viewName;
+        return studySessionViewModel.getViewName();
     }
 
     public void setLogoutController(LogoutController controller) {
@@ -226,5 +227,10 @@ public class StudySessionView extends JPanel implements ActionListener {
         final long minutes = timeInMil / (Constants.SECONDS_TO_MILLIS * Constants.MINUTES_TO_SECONDS);
         final long seconds = (timeInMil / Constants.SECONDS_TO_MILLIS) % Constants.MINUTES_TO_SECONDS;
         return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // Nothing to do here
     }
 }

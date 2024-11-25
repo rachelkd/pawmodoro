@@ -82,8 +82,7 @@ public class CatDisplayUseCaseBuilder extends AbstractUseCaseBuilder {
                 getCatFactPresenter);
 
         final GetCatFactController getCatFactController = new GetCatFactController(getCatFactInteractor);
-        getViews().getCat().getViews().getCatView().setGetCatFactController(getCatFactController);
-
+        getViews().getCat().getViews().getGetCatFactView().setGetCatFactController(getCatFactController);
         return this;
     }
 
