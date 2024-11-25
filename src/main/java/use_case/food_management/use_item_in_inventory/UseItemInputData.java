@@ -5,18 +5,18 @@ package use_case.food_management.use_item_in_inventory;
  */
 public class UseItemInputData {
     private final String ownerId;
-    private final String foodId;
+    private final String foodName;
 
-    public UseItemInputData(String ownerId, String foodId) {
+    public UseItemInputData(String ownerId, String foodName) {
         this.ownerId = ownerId;
-        this.foodId = foodId;
+        this.foodName = foodName;
     }
 
     public String getOwnerId() {
         return ownerId;
     }
 
-    public String getFoodId() {
-        return foodId;
+    public String getFoodName() {
+        return foodName;
     }
 }

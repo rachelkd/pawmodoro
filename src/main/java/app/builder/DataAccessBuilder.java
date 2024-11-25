@@ -7,8 +7,8 @@ import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
 import data_access.DBUserDataAccessObject;
-import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
+import use_case.food_management.InventoryService;
 
 /**
  * Builder for data access components.
@@ -16,7 +16,7 @@ import data_access.InMemoryTimerDataAccessObject;
 public class DataAccessBuilder {
     private final DataAccessFactory factory;
     private DBUserDataAccessObject userDataAccess;
-    private InMemoryInventoryDataAccessObject inventoryDataAccess;
+    private InventoryService inventoryDataAccess;
     private InMemoryTimerDataAccessObject timerDataAccess;
     private AdoptionDataAccessObject adoptionDataAccess;
     private ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
@@ -58,6 +58,7 @@ public class DataAccessBuilder {
      */
     private DataAccessBuilder buildUserDataAccess() {
         this.userDataAccess = factory.createUserDataAccess();
+
         return this;
     }
 
@@ -67,7 +68,7 @@ public class DataAccessBuilder {
      * @return this builder
      */
     private DataAccessBuilder buildInventoryDataAccess() {
-        this.inventoryDataAccess = factory.createInventoryDataAccess();
+        this.inventoryDataAccess = factory.createInventoryAccessFactory();
         return this;
     }
 

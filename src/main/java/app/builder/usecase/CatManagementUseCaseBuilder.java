@@ -13,7 +13,7 @@ import interface_adapter.create_cat.CreateCatPresenter;
 import interface_adapter.maxcatserror.MaxCatsErrorController;
 import interface_adapter.maxcatserror.MaxCatsErrorPresenter;
 import interface_adapter.runawaycat.RunawayCatController;
-import interface_adapter.runawaycat.RunawayPresenter;
+import interface_adapter.runawaycat.RunawayCatPresenter;
 import use_case.adoption.AdoptionInputBoundary;
 import use_case.adoption.AdoptionInteractor;
 import use_case.adoption.AdoptionOutputBoundary;
@@ -38,7 +38,7 @@ import use_case.runawaycat.RunawayCatOutputBoundary;
  */
 public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
-     * Creates a new cat use case builder.
+     * Creates a new cat management use case builder.
      * @param views the views
      * @param dataAccess the data access components
      */
@@ -83,11 +83,12 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
      * @return this builder
      */
     public CatManagementUseCaseBuilder buildRunawayCatUseCase() {
-        final RunawayCatOutputBoundary outputBoundary = new RunawayPresenter(
+        final RunawayCatOutputBoundary outputBoundary = new RunawayCatPresenter(
                 getViews().getCat().getViewModels().getRunawayCatViewModel(),
                 getViews().getViewManagerModel());
 
-        final RunawayCatInputBoundary interactor = new RunawayCatInteractor(outputBoundary);
+        final RunawayCatInputBoundary interactor = new RunawayCatInteractor(outputBoundary,
+                getDataAccess().getCatDataAccess());
         final RunawayCatController controller =
                 new RunawayCatController(getViews().getCat().getViewModels().getRunawayCatViewModel(), interactor);
         getViews().getCat().getViews().getRunawayCatView().setRunawayCatController(controller);
@@ -153,7 +154,7 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
     }
 
     /**
-     * Builds all cat-related use cases.
+     * Builds all cat management-related use cases.
      * @return this builder
      */
     public CatManagementUseCaseBuilder build() {

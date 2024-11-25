@@ -2,7 +2,7 @@ package app.builder.view;
 
 import java.awt.CardLayout;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import app.builder.view.cat.CatViewsAndModels;
 import app.builder.view.session.SessionViewModels;
@@ -40,7 +40,6 @@ public class SessionViewBuilder {
 
     /**
      * Creates a new session view builder.
-     *
      * @param cardPanel the card panel
      * @param cardLayout the card layout
      * @param viewManagerModel the view manager model
@@ -71,7 +70,6 @@ public class SessionViewBuilder {
 
     /**
      * Builds the setup session view.
-     *
      * @return this builder
      */
     public SessionViewBuilder buildSetupSessionView() {
@@ -82,7 +80,6 @@ public class SessionViewBuilder {
 
     /**
      * Builds the study session view.
-     *
      * @return this builder
      */
     public SessionViewBuilder buildStudySessionView() {
@@ -99,18 +96,18 @@ public class SessionViewBuilder {
 
     /**
      * Builds the inventory view.
-     *
      * @return this builder
      */
     public SessionViewBuilder buildInventoryView() {
-        this.inventoryView = viewFactory.createInventoryView(viewModels.getInventoryViewModel());
-        cardPanel.add(inventoryView, inventoryView.getViewName());
+        // have inventory run in background
+        inventoryView = viewFactory.createInventoryView(
+                viewModels.getInventoryViewModel(),
+                dialogService);
         return this;
     }
 
     /**
      * Builds the timer view.
-     *
      * @return this builder
      */
     public SessionViewBuilder buildTimerView() {
@@ -121,7 +118,6 @@ public class SessionViewBuilder {
 
     /**
      * Builds the get cat fact view.
-     *
      * @return this builder
      */
     public SessionViewBuilder buildGetCatFactView() {
@@ -132,7 +128,6 @@ public class SessionViewBuilder {
 
     /**
      * Builds and returns the session views and models.
-     *
      * @return the session views and models
      */
     public SessionViewsAndModels build() {
