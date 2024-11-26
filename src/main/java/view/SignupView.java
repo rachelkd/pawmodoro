@@ -72,7 +72,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     /**
      * Creates the title label with proper styling.
-     * 
      * @return styled title label
      */
     private JLabel createTitleLabel() {
@@ -85,7 +84,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     /**
      * Creates the subtitle label.
-     * 
      * @return subtitle label
      */
     private JLabel createSubtitleLabel() {
@@ -96,7 +94,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     /**
      * Creates a panel containing all input fields.
-     * 
      * @return panel with input fields
      */
     private JPanel createInputPanel() {
@@ -117,7 +114,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     /**
      * Creates a panel containing all buttons.
-     * 
      * @return panel with buttons
      */
     private JPanel createButtonPanel() {
@@ -131,7 +127,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     /**
      * Adds all components to the view with proper spacing.
-     * 
      * @param pawmodoro title label
      * @param title subtitle label
      * @param inputPanel panel containing input fields
@@ -182,7 +177,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     private void addUsernameListener() {
         usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
-
             private void documentListenerHelper() {
                 final SignupState currentState = signupViewModel.getState();
                 currentState.setUsername(usernameInputField.getText());
@@ -208,7 +202,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     private void addPasswordListener() {
         passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
-
             private void documentListenerHelper() {
                 final SignupState currentState = signupViewModel.getState();
                 currentState.setPassword(new String(passwordInputField.getPassword()));
@@ -234,7 +227,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     private void addRepeatPasswordListener() {
         repeatPasswordInputField.getDocument().addDocumentListener(new DocumentListener() {
-
             private void documentListenerHelper() {
                 final SignupState currentState = signupViewModel.getState();
                 currentState.setRepeatPassword(new String(repeatPasswordInputField.getPassword()));
@@ -260,7 +252,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
+        JOptionPane.showMessageDialog(this,
+                "Cancel not implemented yet.");
     }
 
     @Override

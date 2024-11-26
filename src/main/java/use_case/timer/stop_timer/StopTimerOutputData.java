@@ -1,24 +1,23 @@
-package entity;
+package use_case.timer.stop_timer;
 
 /**
- * Represents a timer entity in our program.
+ * Represents the output data after the stop timer operation.
  */
-public class Timer {
+public class StopTimerOutputData {
     private final String status;
     private final String currentInterval;
     private final long elapsedTime;
     private final long intervalDuration;
 
     /**
-     * Creates a new Timer with the specified properties.
-     * 
-     * @param status the current status of the timer (RUNNING, PAUSED, STOPPED)
-     * @param currentInterval the current interval type (WORK, BREAK)
-     * @param elapsedTime the elapsed time in milliseconds
-     * @param intervalDuration the total duration of the interval in milliseconds
+     * Constructs a StopTimerOutputData object.
+     *
+     * @param status          The status of the timer (e.g., STOPPED).
+     * @param currentInterval The current interval type (e.g., WORK).
+     * @param elapsedTime     The elapsed time in milliseconds.
+     * @param intervalDuration The total duration of the interval in milliseconds.
      */
-    public Timer(String status, String currentInterval,
-            long elapsedTime, long intervalDuration) {
+    public StopTimerOutputData(String status, String currentInterval, long elapsedTime, long intervalDuration) {
         this.status = status;
         this.currentInterval = currentInterval;
         this.elapsedTime = elapsedTime;

@@ -1,5 +1,7 @@
 package entity;
 
+import constants.Constants;
+
 /**
  * Factory for creating Timer objects with standardized initialization.
  */
@@ -10,7 +12,7 @@ public class TimerFactory {
      * @return a new Timer instance with default settings
      */
     public Timer create() {
-        return new Timer("STOPPED", "WORK", 0, 25 * 60 * 1000);
+        return new Timer("STOPPED", "WORK", 0, Constants.DEFAULT_WORK_DURATION_MS);
     }
 
     /**

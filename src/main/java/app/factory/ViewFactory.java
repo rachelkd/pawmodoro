@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
+import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
@@ -16,8 +17,8 @@ import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
-import interface_adapter.timer.TimerViewModel;
 import view.AdoptionView;
+import view.BreakSessionView;
 import view.CatView;
 import view.DisplayCatImageView;
 import view.DisplayCatStatsView;
@@ -30,7 +31,6 @@ import view.RunawayCatView;
 import view.SetupSessionView;
 import view.SignupView;
 import view.StudySessionView;
-import view.TimerView;
 
 /**
  * The ViewFactory class.
@@ -112,17 +112,14 @@ public class ViewFactory {
     /**
      * Creates a Study Session View.
      * @param studySessionViewModel the study session view model
-     * @param timerViewModel the timer view model
      * @param catViewModel the cat view model
      * @param displayCatStatsViewModel the display cat stats view model
      * @param catView the existing cat view instance
      * @return StudySessionView
      */
     public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
-            TimerViewModel timerViewModel, CatViewModel catViewModel,
-            DisplayCatStatsViewModel displayCatStatsViewModel,
-            CatView catView) {
-        return new StudySessionView(studySessionViewModel, timerViewModel, catView);
+            DialogService dialogService, CatView catView) {
+        return new StudySessionView(studySessionViewModel, dialogService, catView);
     }
 
     /**
@@ -173,13 +170,7 @@ public class ViewFactory {
         return new DisplayCatStatsView(parent, displayCatStatsViewModel, getCatFactView);
     }
 
-    /**
-     * Creates a Timer View.
-     * @param timerViewModel the timer view model
-     * @return TimerView
-     */
-    public TimerView createTimerView(TimerViewModel timerViewModel) {
-        return new TimerView(timerViewModel);
+    public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel) {
+        return new BreakSessionView(breakSessionViewModel);
     }
-
 }
