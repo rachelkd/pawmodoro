@@ -22,7 +22,7 @@ public class SetupSessionController {
      */
     public void execute(int studyTime, int breakTime) {
         final SetupSessionInputData setupSessionInputData = new SetupSessionInputData(studyTime, breakTime);
-        userSetupInteractor.execute(setupSessionInputData);
+        userSetupInteractor.handle(setupSessionInputData);
     }
 
     /**
