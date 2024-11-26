@@ -1,10 +1,7 @@
 package app.builder.view.cat;
 
 import view.AdoptionView;
-import view.CatView;
 import view.DisplayCatImageView;
-import view.DisplayCatStatsView;
-import view.GetCatFactView;
 import view.MaxCatsErrorView;
 import view.RunawayCatView;
 
@@ -19,13 +16,9 @@ public class CatViews {
 
     // Display-related views
     private final DisplayCatImageView displayCatImageView;
-    private final DisplayCatStatsView displayCatStatsView;
-    private final GetCatFactView getCatFactView;
-    private final CatView catView;
 
     /**
      * Creates a new CatViews container by combining views from management and display builders.
-     *
      * @param managementBuilder the cat management view builder
      * @param displayBuilder the cat display view builder
      */
@@ -37,9 +30,6 @@ public class CatViews {
 
         // Display views
         this.displayCatImageView = displayBuilder.getDisplayCatImageView();
-        this.displayCatStatsView = displayBuilder.getDisplayCatStatsView();
-        this.getCatFactView = displayBuilder.getGetCatFactView();
-        this.catView = displayBuilder.getCatView();
     }
 
     // View getters
@@ -57,17 +47,5 @@ public class CatViews {
 
     public DisplayCatImageView getDisplayCatImageView() {
         return displayCatImageView;
-    }
-
-    public DisplayCatStatsView getDisplayCatStatsView() {
-        return displayCatStatsView;
-    }
-
-    public GetCatFactView getGetCatFactView() {
-        return getCatFactView;
-    }
-
-    public CatView getCatView() {
-        return catView;
     }
 }

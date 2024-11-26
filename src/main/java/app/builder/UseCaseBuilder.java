@@ -3,7 +3,7 @@ package app.builder;
 import app.builder.usecase.AuthUseCaseBuilder;
 import app.builder.usecase.CatDisplayUseCaseBuilder;
 import app.builder.usecase.CatManagementUseCaseBuilder;
-import app.builder.usecase.InventoryUseCaseBuilder;
+import app.builder.usecase.SharedUseCaseBuilder;
 import app.builder.usecase.TimerUseCaseBuilder;
 import app.builder.view.Views;
 import app.components.DataAccessComponents;
@@ -22,18 +22,17 @@ public class UseCaseBuilder {
 
     /**
      * Builds all use cases.
-     *
      * @return this builder
      */
     public UseCaseBuilder build() {
         final AuthUseCaseBuilder authBuilder = new AuthUseCaseBuilder(views, dataAccess);
-        final InventoryUseCaseBuilder inventoryBuilder = new InventoryUseCaseBuilder(views, dataAccess);
+        final SharedUseCaseBuilder sharedBuilder = new SharedUseCaseBuilder(views, dataAccess);
         final CatDisplayUseCaseBuilder catDisplayBuilder = new CatDisplayUseCaseBuilder(views, dataAccess);
         final CatManagementUseCaseBuilder catManagementBuilder = new CatManagementUseCaseBuilder(views, dataAccess);
         final TimerUseCaseBuilder timerBuilder = new TimerUseCaseBuilder(views, dataAccess);
 
+        sharedBuilder.build();
         authBuilder.build();
-        inventoryBuilder.build();
         catDisplayBuilder.build();
         catManagementBuilder.build();
         timerBuilder.build();

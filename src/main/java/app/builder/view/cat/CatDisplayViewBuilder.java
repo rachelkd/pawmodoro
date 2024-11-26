@@ -7,11 +7,7 @@ import javax.swing.JPanel;
 import app.factory.ViewFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
-import view.CatView;
 import view.DisplayCatImageView;
-import view.DisplayCatStatsView;
-import view.GetCatFactView;
 
 /**
  * Builder for cat display-related views.
@@ -25,9 +21,6 @@ public class CatDisplayViewBuilder {
     private final DialogService dialogService;
 
     private DisplayCatImageView displayCatImageView;
-    private DisplayCatStatsView displayCatStatsView;
-    private GetCatFactView getCatFactView;
-    private CatView catView;
 
     /**
      * Creates a new cat display view builder.
@@ -58,20 +51,7 @@ public class CatDisplayViewBuilder {
      * @return this builder
      */
     public CatDisplayViewBuilder build() {
-        return this
-                .buildGetCatFactView()
-                .buildDisplayCatImageView()
-                .buildCatView();
-    }
-
-    /**
-     * Builds the get cat fact view.
-     * @return this builder
-     */
-    private CatDisplayViewBuilder buildGetCatFactView() {
-        getCatFactView = viewFactory.createGetCatFactView(catViewModels.getGetCatFactViewModel());
-        cardPanel.add(getCatFactView, getCatFactView.getViewName());
-        return this;
+        return this.buildDisplayCatImageView();
     }
 
     /**
@@ -79,41 +59,13 @@ public class CatDisplayViewBuilder {
      * @return this builder
      */
     private CatDisplayViewBuilder buildDisplayCatImageView() {
-        displayCatImageView = viewFactory.createDisplayCatImageView(catViewModels.getDisplayCatImageViewModel());
+        displayCatImageView = viewFactory.createDisplayCatImageView(
+                catViewModels.getDisplayCatImageViewModel());
         cardPanel.add(displayCatImageView, displayCatImageView.getViewName());
-        return this;
-    }
-
-    /**
-     * Builds the cat view.
-     * @return this builder
-     */
-    private CatDisplayViewBuilder buildCatView() {
-        final DisplayCatStatsViewModel vm2 = catViewModels.getDisplayCatStatsViewModel();
-        System.out.println("View ViewModel: " + vm2);
-        catView = viewFactory.createCatView(
-                catViewModels.getCatViewModel(),
-                catViewModels.getDisplayCatStatsViewModel(),
-                catViewModels.getInventoryViewModel(),
-                dialogService,
-                getCatFactView);
-        cardPanel.add(catView, catView.getViewName());
         return this;
     }
 
     public DisplayCatImageView getDisplayCatImageView() {
         return displayCatImageView;
-    }
-
-    public DisplayCatStatsView getDisplayCatStatsView() {
-        return displayCatStatsView;
-    }
-
-    public GetCatFactView getGetCatFactView() {
-        return getCatFactView;
-    }
-
-    public CatView getCatView() {
-        return catView;
     }
 }

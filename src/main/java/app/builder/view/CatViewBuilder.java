@@ -52,10 +52,7 @@ public class CatViewBuilder {
                 catViewModelFactory.createAdoptionViewModel(),
                 catViewModelFactory.createRunawayCatViewModel(),
                 catViewModelFactory.createMaxCatsErrorViewModel(),
-                catViewModelFactory.createDisplayCatImageViewModel(),
-                catViewModelFactory.createDisplayCatStatsViewModel(),
-                catViewModelFactory.createGetCatFactViewModel(),
-                catViewModelFactory.createCatViewModel());
+                catViewModelFactory.createDisplayCatImageViewModel());
     }
 
     /**

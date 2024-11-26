@@ -22,6 +22,7 @@ public class DialogFactory {
     /**
      * Creates a new DialogFactory.
      * @param mainPanel the main panel of the application
+     * @param dialogService the dialog service
      */
     public DialogFactory(JPanel mainPanel, DialogService dialogService) {
         this.mainPanel = mainPanel;
@@ -68,11 +69,8 @@ public class DialogFactory {
      * @return the cat stats dialog
      */
     public DisplayCatStatsView createCatStatsDialog(DisplayCatStatsViewModel displayCatStatsViewModel,
-                                                    InventoryViewModel inventoryViewModel,
-                                                    GetCatFactView getCatFactView) {
-        if (mainFrame == null) {
-            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
-        }
+            InventoryViewModel inventoryViewModel,
+            GetCatFactView getCatFactView) {
         return new DisplayCatStatsView(getParentFrame(), displayCatStatsViewModel,
                 inventoryViewModel, getCatFactView, dialogService);
     }
