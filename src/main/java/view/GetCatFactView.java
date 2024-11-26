@@ -19,8 +19,8 @@ import interface_adapter.get_cat_fact.GetCatFactViewModel;
  */
 public class GetCatFactView extends JPanel implements PropertyChangeListener {
     private final GetCatFactViewModel getCatFactViewModel;
-    private JLabel factLabel;
     private GetCatFactController getCatFactController;
+    private JLabel factLabel;
 
     public GetCatFactView(GetCatFactViewModel getCatFactViewModel) {
         this.getCatFactViewModel = getCatFactViewModel;
@@ -67,7 +67,9 @@ public class GetCatFactView extends JPanel implements PropertyChangeListener {
             factLabel.setText(Constants.CAT_FACT_ERROR_PREFIX + state.getError());
         }
         else if (state.getCatFact() != null) {
-            factLabel.setText(state.getCatFact());
+            factLabel.setText("<html><div style='width: "
+                    + (Constants.CAT_FACT_TEXT_WIDTH)
+                    + "px; text-align: center'>" + state.getCatFact() + "</div></html>");
         }
     }
 
@@ -76,11 +78,6 @@ public class GetCatFactView extends JPanel implements PropertyChangeListener {
         if ("state".equals(evt.getPropertyName())) {
             final GetCatFactState state = (GetCatFactState) evt.getNewValue();
             updateView(state);
-            if (state.getCatFact() != null && !state.getCatFact().isEmpty()) {
-                factLabel.setText("<html><div style='width: "
-                        + (Constants.CAT_FACT_TEXT_WIDTH)
-                        + "px; text-align: center'>" + state.getCatFact() + "</div></html>");
-            }
         }
     }
 
@@ -95,5 +92,14 @@ public class GetCatFactView extends JPanel implements PropertyChangeListener {
      */
     public String getViewName() {
         return getCatFactViewModel.getViewName();
+    }
+
+    /**
+     * Fetches a new cat fact using the controller.
+     */
+    public void fetchNewFact() {
+        if (getCatFactController != null) {
+            getCatFactController.execute();
+        }
     }
 }

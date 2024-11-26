@@ -1,7 +1,9 @@
 package app.factory.viewmodel;
 
+import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.get_cat_fact.GetCatFactViewModel;
+import interface_adapter.login.LoginViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
@@ -13,7 +15,6 @@ import interface_adapter.music_control.MusicControlViewModel;
 public class SessionViewModelFactory {
     /**
      * Creates a new timer view model.
-     *
      * @return the timer view model
      */
     public TimerViewModel createTimerViewModel() {
@@ -22,7 +23,6 @@ public class SessionViewModelFactory {
 
     /**
      * Creates a new setup session view model.
-     *
      * @return the setup session view model
      */
     public SetupSessionViewModel createSetupSessionViewModel() {
@@ -31,7 +31,6 @@ public class SessionViewModelFactory {
 
     /**
      * Creates a new inventory view model.
-     *
      * @return the inventory view model
      */
     public InventoryViewModel createInventoryViewModel() {
@@ -40,7 +39,6 @@ public class SessionViewModelFactory {
 
     /**
      * Creates a new study session view model.
-     *
      * @return the study session view model
      */
     public StudySessionViewModel createStudySessionViewModel() {
@@ -49,11 +47,26 @@ public class SessionViewModelFactory {
 
     /**
      * Creates a new get cat fact view model.
-     *
      * @return the get cat fact view model
      */
     public GetCatFactViewModel createGetCatFactViewModel() {
         return new GetCatFactViewModel();
+    }
+
+    /**
+     * Creates a new instance of LoginViewModel.
+     * @return a new LoginViewModel instance.
+     */
+    public LoginViewModel createLoginViewModel() {
+        return new LoginViewModel();
+    }
+
+    /**
+     * Creates a new break session view model.
+     * @return the break session view model
+     */
+    public BreakSessionViewModel createBreakSessionViewModel() {
+        return new BreakSessionViewModel();
     }
 
     /**

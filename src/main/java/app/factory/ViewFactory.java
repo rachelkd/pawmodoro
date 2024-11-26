@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
+import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
@@ -16,9 +17,9 @@ import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
-import interface_adapter.timer.TimerViewModel;
 import interface_adapter.music_control.MusicControlViewModel;
 import view.AdoptionView;
+import view.BreakSessionView;
 import view.CatView;
 import view.DisplayCatImageView;
 import view.DisplayCatStatsView;
@@ -31,7 +32,6 @@ import view.RunawayCatView;
 import view.SetupSessionView;
 import view.SignupView;
 import view.StudySessionView;
-import view.TimerView;
 
 /**
  * The ViewFactory class.
@@ -40,7 +40,6 @@ import view.TimerView;
 public class ViewFactory {
     /**
      * Creates a Login View.
-     * 
      * @param loginViewModel the login view model
      * @return LoginView
      */
@@ -50,7 +49,6 @@ public class ViewFactory {
 
     /**
      * Creates a Signup View.
-     * 
      * @param signupViewModel the signup view model
      * @return SignupView
      */
@@ -60,7 +58,6 @@ public class ViewFactory {
 
     /**
      * Creates a Logged In View with associated components.
-     * 
      * @param loggedInViewModel the logged in view model
      * @return LoggedInView
      */
@@ -70,7 +67,6 @@ public class ViewFactory {
 
     /**
      * Creates an Adoption View.
-     * 
      * @param adoptionViewModel the adoption view model
      * @return AdoptionView
      */
@@ -80,7 +76,6 @@ public class ViewFactory {
 
     /**
      * Creates a Runaway Cat View.
-     * 
      * @param runawayCatViewModel the runaway cat view model
      * @return RunawayCatView
      */
@@ -90,7 +85,6 @@ public class ViewFactory {
 
     /**
      * Creates a Max Cats Error View.
-     * 
      * @param maxCatsErrorViewModel the max cats error view model
      * @return MaxCatsErrorView
      */
@@ -100,7 +94,6 @@ public class ViewFactory {
 
     /**
      * Creates a Display Cat Image View.
-     * 
      * @param displayCatImageViewModel the display cat image view model
      * @return DisplayCatImageView
      */
@@ -110,7 +103,6 @@ public class ViewFactory {
 
     /**
      * Creates a Setup Session View.
-     * 
      * @param setupSessionViewModel the setup session view model
      * @return SetupSessionView
      */
@@ -120,36 +112,31 @@ public class ViewFactory {
 
     /**
      * Creates a Study Session View.
-     * 
      * @param studySessionViewModel the study session view model
-     * @param timerViewModel the timer view model
      * @param catViewModel the cat view model
      * @param displayCatStatsViewModel the display cat stats view model
-     * @param dialogService the dialog service for user interactions
      * @param catView the existing cat view instance
      * @return StudySessionView
      */
     public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
-            TimerViewModel timerViewModel, CatViewModel catViewModel,
-            DisplayCatStatsViewModel displayCatStatsViewModel, DialogService dialogService,
-            CatView catView, MusicControlViewModel musicControlViewModel) {
-        return new StudySessionView(studySessionViewModel, timerViewModel, dialogService, catView,
-                musicControlViewModel);
+            DialogService dialogService, CatView catView, MusicControlViewModel musicControlViewModel) {
+        return new StudySessionView(studySessionViewModel, dialogService, catView, musicControlViewModel);
     }
 
     /**
      * Creates an Inventory View.
-     * 
      * @param inventoryViewModel the inventory view model
+     * @param dialogService the dialog service for user interactions
      * @return InventoryView
      */
-    public InventoryView createInventoryView(InventoryViewModel inventoryViewModel) {
-        return new InventoryView(inventoryViewModel);
+    public InventoryView createInventoryView(InventoryViewModel inventoryViewModel, DialogService dialogService) {
+        // have the dialog run in the background so it listens for changes, but by default won't be visible
+        dialogService.createInventoryDialog(inventoryViewModel);
+        return (InventoryView) dialogService.getInventoryDialog();
     }
 
     /**
-     * Creates a Cat View.
-     * 
+     * Creates a Cat View with associated components.
      * @param catViewModel the cat view model
      * @param displayCatStatsViewModel the display cat stats view model
      * @param dialogService the dialog service
@@ -165,7 +152,6 @@ public class ViewFactory {
 
     /**
      * Creates a Get Cat Fact View.
-     * 
      * @param getCatFactViewModel the get cat fact view model
      * @return GetCatFactView
      */
@@ -175,7 +161,6 @@ public class ViewFactory {
 
     /**
      * Creates a Display Cat Stats View.
-     * 
      * @param parent the parent frame
      * @param displayCatStatsViewModel the display cat stats view model
      * @param getCatFactView the get cat fact view
@@ -186,13 +171,7 @@ public class ViewFactory {
         return new DisplayCatStatsView(parent, displayCatStatsViewModel, getCatFactView);
     }
 
-    /**
-     * Creates a Timer View.
-     * 
-     * @param timerViewModel the timer view model
-     * @return TimerView
-     */
-    public TimerView createTimerView(TimerViewModel timerViewModel) {
-        return new TimerView(timerViewModel);
+    public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel) {
+        return new BreakSessionView(breakSessionViewModel);
     }
 }

@@ -12,6 +12,7 @@ import app.factory.ViewFactory;
 import app.factory.viewmodel.SessionViewModelFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
+import view.BreakSessionView;
 import view.GetCatFactView;
 import view.InventoryView;
 import view.SetupSessionView;
@@ -32,6 +33,7 @@ public class SessionViewBuilder {
     private final CatViewsAndModels catViewsAndModels;
 
     // Views
+    private BreakSessionView breakSessionView;
     private SetupSessionView setupSessionView;
     private InventoryView inventoryView;
     private StudySessionView studySessionView;
@@ -40,7 +42,6 @@ public class SessionViewBuilder {
 
     /**
      * Creates a new session view builder.
-     *
      * @param cardPanel the card panel
      * @param cardLayout the card layout
      * @param viewManagerModel the view manager model
@@ -64,6 +65,8 @@ public class SessionViewBuilder {
                 sessionViewModelFactory.createInventoryViewModel(),
                 sessionViewModelFactory.createTimerViewModel(),
                 sessionViewModelFactory.createStudySessionViewModel(),
+                sessionViewModelFactory.createBreakSessionViewModel(),
+                sessionViewModelFactory.createLoginViewModel(),
                 sessionViewModelFactory.createGetCatFactViewModel(),
                 sessionViewModelFactory.createMusicControlViewModel());
         this.dialogService = dialogService;
@@ -90,40 +93,33 @@ public class SessionViewBuilder {
         this.studySessionView = viewFactory.createStudySessionView(
                 viewModels.getStudySessionViewModel(),
                 viewModels.getTimerViewModel(),
-                catViewsAndModels.getViewModels().getCatViewModel(),
-                catViewsAndModels.getViewModels().getDisplayCatStatsViewModel(),
                 dialogService,
-                catViewsAndModels.getViews().getCatView(),
-                viewModels.getMusicControlViewModel());
+                catViewsAndModels.getViews().getCatView());
         cardPanel.add(studySessionView, studySessionView.getViewName());
+        return this;
+    }
+
+    public SessionViewBuilder buildBreakSessionView() {
+        this.breakSessionView = viewFactory.createBreakSessionView(
+                viewModels.getBreakSessionViewModel());
+        cardPanel.add(breakSessionView, breakSessionView.getViewName());
         return this;
     }
 
     /**
      * Builds the inventory view.
-     *
      * @return this builder
      */
     public SessionViewBuilder buildInventoryView() {
-        this.inventoryView = viewFactory.createInventoryView(viewModels.getInventoryViewModel());
-        cardPanel.add(inventoryView, inventoryView.getViewName());
-        return this;
-    }
-
-    /**
-     * Builds the timer view.
-     *
-     * @return this builder
-     */
-    public SessionViewBuilder buildTimerView() {
-        this.timerView = viewFactory.createTimerView(viewModels.getTimerViewModel());
-        cardPanel.add(timerView, timerView.getViewName());
+        // have inventory run in background
+        inventoryView = viewFactory.createInventoryView(
+                viewModels.getInventoryViewModel(),
+                dialogService);
         return this;
     }
 
     /**
      * Builds the get cat fact view.
-     *
      * @return this builder
      */
     public SessionViewBuilder buildGetCatFactView() {
@@ -134,21 +130,20 @@ public class SessionViewBuilder {
 
     /**
      * Builds and returns the session views and models.
-     *
      * @return the session views and models
      */
     public SessionViewsAndModels build() {
         this.buildSetupSessionView()
                 .buildInventoryView()
                 .buildStudySessionView()
-                .buildTimerView()
+                .buildBreakSessionView()
                 .buildGetCatFactView();
 
         final SessionViews views = new SessionViews(
                 setupSessionView,
                 inventoryView,
                 studySessionView,
-                timerView,
+                breakSessionView,
                 getCatFactView);
 
         return new SessionViewsAndModels(views, viewModels);

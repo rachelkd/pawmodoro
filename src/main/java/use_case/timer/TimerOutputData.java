@@ -1,7 +1,7 @@
 package use_case.timer;
 
 /**
- * Output data for Timer Use Cases.
+ * Output data for timer-related use cases.
  */
 public class TimerOutputData {
     private final String status;
@@ -9,8 +9,15 @@ public class TimerOutputData {
     private final long elapsedTime;
     private final long intervalDuration;
 
-    public TimerOutputData(String status, String currentInterval,
-            long elapsedTime, long intervalDuration) {
+    /**
+     * Constructs a TimerOutputData object.
+     *
+     * @param status          The status of the timer (e.g., "RUNNING").
+     * @param currentInterval The current interval type (e.g., "WORK").
+     * @param elapsedTime     The elapsed time in milliseconds.
+     * @param intervalDuration The interval duration in milliseconds.
+     */
+    public TimerOutputData(String status, String currentInterval, long elapsedTime, long intervalDuration) {
         this.status = status;
         this.currentInterval = currentInterval;
         this.elapsedTime = elapsedTime;
@@ -33,3 +40,4 @@ public class TimerOutputData {
         return intervalDuration;
     }
 }
+

@@ -73,5 +73,4 @@ public class RunawayCatView extends JPanel implements ActionListener, PropertyCh
     public void setRunawayCatController(RunawayCatController runawayCatController) {
         this.runawayCatController = runawayCatController;
     }
-
 }

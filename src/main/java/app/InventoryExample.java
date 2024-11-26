@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.swing.*;
 
+import app.service.DialogService;
 import data_access.InMemoryInventoryDataAccessObject;
 import entity.*;
 import interface_adapter.ViewManagerModel;
@@ -15,15 +16,13 @@ import interface_adapter.create_inventory.CreateInventoryPresenter;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
 import interface_adapter.use_item_in_inventory.UseItemPresenter;
-import use_case.create_inventory.CreateInventoryInputBoundary;
-import use_case.create_inventory.CreateInventoryInteractor;
-import use_case.create_inventory.CreateInventoryInventoryDataAccessInterface;
-import use_case.create_inventory.CreateInventoryOutputBoundary;
-import use_case.food_management.add_to_inventory.AddToInventoryDataAccessInterface;
+import use_case.food_management.InventoryDataAccessInterface;
 import use_case.food_management.add_to_inventory.AddToInventoryInputBoundary;
 import use_case.food_management.add_to_inventory.AddToInventoryInteractor;
 import use_case.food_management.add_to_inventory.AddToInventoryOutputBoundary;
-import use_case.food_management.use_item_in_inventory.UseItemDataAccessInterface;
+import use_case.food_management.create_inventory.CreateInventoryInputBoundary;
+import use_case.food_management.create_inventory.CreateInventoryInteractor;
+import use_case.food_management.create_inventory.CreateInventoryOutputBoundary;
 import use_case.food_management.use_item_in_inventory.UseItemInputBoundary;
 import use_case.food_management.use_item_in_inventory.UseItemInteractor;
 import use_case.food_management.use_item_in_inventory.UseItemOutputBoundary;
@@ -46,6 +45,7 @@ public class InventoryExample {
 
     /**
      * Builds and runs inventory view in app.
+     * 
      * @param args unused arguments
      */
     public static void main(String[] args) {
@@ -58,40 +58,34 @@ public class InventoryExample {
     }
 
     public JFrame build() {
-        inventoryView = new InventoryView(inventoryViewModel);
-        cardPanel.add(inventoryView, inventoryViewModel.getViewName());
 
-        final CreateInventoryInventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
-        final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter(viewManagerModel, inventoryViewModel);
-
-
+        final InventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
+        final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter(inventoryViewModel);
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
 
         final CreateInventoryInputBoundary interactor = new CreateInventoryInteractor(dataAccessObject, presenter,
                 inventoryFactory);
         final CreateInventoryController controller = new CreateInventoryController(interactor);
-        inventoryView.setCreateInventoryController(controller);
 
-        // inventory does not exist yet
-        controller.execute("chiually");
-
-
-        final JFrame application = new JFrame("");
+        final JFrame application = new JFrame("Show up pls");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
-        application.add(inventoryView);
+
+        // inventory does not exist yet
+        final DialogService dialogService = new DialogService(cardPanel);
+        dialogService.createInventoryDialog(inventoryViewModel);
+        dialogService.showInventoryDialog(inventoryViewModel);
+
+        controller.execute("chiually");
 
         return application;
     }
 
     public JFrame buildExistingInventory() {
-        // makes the property fire properly
-        inventoryView = new InventoryView(inventoryViewModel);
-        cardPanel.add(inventoryView, inventoryViewModel.getViewName());
 
-        final CreateInventoryInventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
-        final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter( viewManagerModel, inventoryViewModel);
+        final InventoryDataAccessInterface dataAccessObject = new InMemoryInventoryDataAccessObject();
+        final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter(inventoryViewModel);
         final AddToInventoryOutputBoundary addItemPresenter = new AddToInventoryPresenter(inventoryViewModel);
         final UseItemOutputBoundary useItemPresenter = new UseItemPresenter(inventoryViewModel);
 
@@ -101,41 +95,49 @@ public class InventoryExample {
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
-        final CreateInventoryInputBoundary createInventoryInteractor = new CreateInventoryInteractor(dataAccessObject, presenter,
-                inventoryFactory);
-        final AddToInventoryInputBoundary addToInventoryInteractor = new AddToInventoryInteractor((AddToInventoryDataAccessInterface) dataAccessObject, addItemPresenter, foodItemFactory);
-        final UseItemInputBoundary useItemInteractor = new UseItemInteractor((UseItemDataAccessInterface) dataAccessObject, useItemPresenter);
+        final CreateInventoryInputBoundary createInventoryInteractor =
+                new CreateInventoryInteractor(dataAccessObject, presenter,
+                        inventoryFactory);
+        final AddToInventoryInputBoundary addToInventoryInteractor =
+                new AddToInventoryInteractor(dataAccessObject, addItemPresenter, foodItemFactory);
+        final UseItemInputBoundary useItemInteractor = new UseItemInteractor(dataAccessObject, useItemPresenter);
 
-        final CreateInventoryController createInventoryController = new CreateInventoryController(createInventoryInteractor);
-        final AddToInventoryController addToInventoryController = new AddToInventoryController(addToInventoryInteractor);
+        final CreateInventoryController createInventoryController =
+                new CreateInventoryController(createInventoryInteractor);
+        final AddToInventoryController addToInventoryController =
+                new AddToInventoryController(addToInventoryInteractor);
         final UseItemController useItemController = new UseItemController(useItemInteractor);
-        inventoryView.setCreateInventoryController(createInventoryController);
-
-        createInventoryController.execute("chiually");
-        addToInventoryController.execute("chiually", "cheese");
-        useItemController.execute("chiually", "cheese");
 
         final JFrame application = new JFrame();
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
-        application.add(inventoryView);
+
+        final DialogService dialogService = new DialogService(cardPanel);
+        dialogService.createInventoryDialog(inventoryViewModel);
+        inventoryView = (InventoryView) dialogService.getInventoryDialog();
+        dialogService.showInventoryDialog(inventoryViewModel);
+        inventoryView.setUseItemController(useItemController);
+
+        createInventoryController.execute("chiually");
+        addToInventoryController.execute("chiually", "cheese");
+        useItemController.execute("chiually", "cheese");
 
         return application;
     }
 
-    void createInventory(CreateInventoryInventoryDataAccessInterface inventoryRepository) {
+    void createInventory(InventoryDataAccessInterface inventoryRepository) {
 
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
         Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFood foodItem = foodItemFactory.create("milk", "Milk");
-        final AbstractFood anotherFoodItem = foodItemFactory.create("tuna", "Tuna");
+        final AbstractFood foodItem = foodItemFactory.create("Milk");
+        final AbstractFood anotherFoodItem = foodItemFactory.create("Tuna");
         foodItem.setQuantity(2);
         anotherFoodItem.setQuantity(1);
         Map<String, AbstractFood> inventoryItems = inventory.getItems();
-        inventoryItems.put("milk", foodItem);
-        inventoryItems.put("tuna", anotherFoodItem);
+        inventoryItems.put("Milk", foodItem);
+        inventoryItems.put("Tuna", anotherFoodItem);
         inventory.setItems(inventoryItems);
         inventoryRepository.save(inventory);
     }

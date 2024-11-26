@@ -9,12 +9,14 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import app.service.DialogService;
 import constants.Constants;
@@ -31,12 +33,9 @@ import interface_adapter.music_control.MusicControlViewModel;
  * Views for Study sessions.
  */
 public class StudySessionView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final String viewName = "study session";
-
-    private final TimerView timerView;
     private final CatView catView;
 
-    private final TimerViewModel timerViewModel;
+    private final StudySessionViewModel studySessionViewModel;
     private final MusicControlViewModel musicControlViewModel;
 
     private LogoutController logoutController;
@@ -44,44 +43,73 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private ChangeCatHappinessController changeCatHappinessController;
     private MusicControlController musicControlController;
 
-    // TODO: We don't need timerController if all the input is handled by TimerController in TimerView @yhj050224
-    // Inject TimerView into StudySessionView similar to CatView instead of creating a new instance
-    // Similar to CatView
-    // Remove TimerViewModel from this class and constructor
-    private TimerController timerController;
-
     private final JButton timerSettings;
     private final JButton logOutSettings;
+    private final JButton startTimerButton;
+    private final JButton stopTimerButton;
     private final JButton playPauseSettings;
+
+    private final JLabel timerLabel;
+    private final Timer swingTimer;
+    private long remainingTime = Constants.DEFAULT_WORK_DURATION_MS;
 
     private DialogService dialogService;
 
-    public StudySessionView(StudySessionViewModel studySessionViewModel, TimerViewModel timerViewModel,
-            DialogService dialogService, CatView catView, MusicControlViewModel musicControlViewModel) {
-
-        studySessionViewModel.addPropertyChangeListener(this);
+    public StudySessionView(StudySessionViewModel studySessionViewModel, DialogService dialogService, CatView catView,
+                            MusicControlViewModel musicControlViewModel) {
 
         this.dialogService = dialogService;
-        this.timerViewModel = timerViewModel;
+        studySessionViewModel.addPropertyChangeListener(this);
+        this.studySessionViewModel = studySessionViewModel;
         this.musicControlViewModel = musicControlViewModel;
 
-        this.timerView = new TimerView(timerViewModel);
         this.catView = catView;
 
         this.setLayout(new BorderLayout());
 
+        // Timer label to display the timer countdown
+        timerLabel = new JLabel(formatTime(remainingTime), SwingConstants.CENTER);
+        timerLabel.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TIMER_FONT_SIZE));
+        timerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         timerSettings = createButton("Timer Settings");
         logOutSettings = createButton("Log Out");
         playPauseSettings = createButton("Play");
+        startTimerButton = createButton("Start Timer");
+        stopTimerButton = createButton("Stop Timer");
 
         timerSettings.addActionListener(this);
         logOutSettings.addActionListener(this);
         playPauseSettings.addActionListener(this);
+        startTimerButton.addActionListener(this);
+        stopTimerButton.addActionListener(this);
 
-        // Add components to main panel
+        // Add components to main panel (without the timer)
         this.add(createTopPanel(), BorderLayout.NORTH);
         this.add(createTimerPanel(), BorderLayout.CENTER);
         this.add(createCatPanel(), BorderLayout.SOUTH);
+
+        swingTimer = new Timer(Constants.SECONDS_TO_MILLIS, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (remainingTime > 0) {
+                    remainingTime -= Constants.SECONDS_TO_MILLIS;
+                    updateTimerLabel();
+                }
+                else {
+                    swingTimer.stop();
+                    System.out.println("Time is up! Switching to Break Session...");
+
+                    // Notify the presenter or controller to switch the view
+                    if (studySessionController != null) {
+                        studySessionController.switchToBreakSessionView();
+                    }
+                    else {
+                        System.err.println("StudySessionOutputBoundary is not initialized.");
+                    }
+                }
+            }
+        });
 
         // Make sure this panel is visible
         this.setVisible(true);
@@ -132,10 +160,24 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         return titlePanel;
     }
 
-    private TimerView createTimerPanel() {
-        timerView.setAlignmentX(Component.CENTER_ALIGNMENT);
-        timerView.setVisible(true);
-        return timerView;
+    private JPanel createTimerPanel() {
+        // Create a panel to hold the timer and buttons
+        final JPanel timerPanel = new JPanel();
+        timerPanel.setLayout(new BoxLayout(timerPanel, BoxLayout.Y_AXIS));
+
+        // Add the timer label
+        timerPanel.add(timerLabel);
+
+        // Add the start and stop buttons below the timer label
+        final JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(startTimerButton);
+        buttonPanel.add(stopTimerButton);
+
+        timerPanel.add(Box.createVerticalStrut(Constants.TIMER_VERTICAL_SPACING));
+        timerPanel.add(buttonPanel);
+
+        return timerPanel;
     }
 
     private JPanel createCatPanel() {
@@ -156,19 +198,15 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     }
 
     public String getViewName() {
-        return viewName;
-    }
-
-    public void setTimerController(TimerController timerController) {
-        this.timerController = timerController;
+        return studySessionViewModel.getViewName();
     }
 
     public void setLogoutController(LogoutController controller) {
         this.logoutController = controller;
     }
 
-    public void setStudySessionController(StudySessionController controller) {
-        this.studySessionController = controller;
+    public void setStudySessionController(StudySessionController studySessionController) {
+        this.studySessionController = studySessionController;
     }
 
     public void setChangeCatHappinessController(ChangeCatHappinessController controller) {
@@ -178,26 +216,41 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     @Override
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(timerSettings)) {
-            // TODO: Switch to TimerSettingsView @yhj050224
-            dialogService.showTimerSettingsDialog();
+            studySessionController.switchToSetupSessionView();
         }
         else if (evt.getSource().equals(logOutSettings)) {
             // Execute the logout use case through the Controller
             this.logoutController.execute("");
         }
+        else if (evt.getSource().equals(startTimerButton)) {
+            // Start the timer
+            swingTimer.start();
+        }
+        else if (evt.getSource().equals(stopTimerButton)) {
+            // Stop the timer
+            swingTimer.stop();
+        }
         else if (evt.getSource().equals(playPauseSettings)) {
             // Toggle playback
             musicControlController.togglePlayback();
             // Update button text based on the new state
-            boolean isPlaying = musicControlViewModel.getState().isPlaying();
             playPauseSettings.setText(isPlaying ? "Pause" : "Play");
         }
     }
 
+    // Updated updateTimerLabel() to display the remaining time
+    private void updateTimerLabel() {
+        timerLabel.setText(formatTime(remainingTime));
+    }
+
+    private String formatTime(long timeInMil) {
+        final long minutes = timeInMil / (Constants.SECONDS_TO_MILLIS * Constants.MINUTES_TO_SECONDS);
+        final long seconds = (timeInMil / Constants.SECONDS_TO_MILLIS) % Constants.MINUTES_TO_SECONDS;
+        return String.format("%02d:%02d", minutes, seconds);
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("state")) {
-            // TODO: Implement this: What happens when StudySessionViewModel changes state?
-        }
+        // Nothing to do here
     }
 }

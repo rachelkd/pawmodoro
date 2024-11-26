@@ -7,8 +7,7 @@ import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
 import data_access.DBUserDataAccessObject;
-import data_access.InMemoryInventoryDataAccessObject;
-import data_access.InMemoryTimerDataAccessObject;
+import use_case.food_management.InventoryService;
 
 /**
  * Builder for data access components.
@@ -16,8 +15,7 @@ import data_access.InMemoryTimerDataAccessObject;
 public class DataAccessBuilder {
     private final DataAccessFactory factory;
     private DBUserDataAccessObject userDataAccess;
-    private InMemoryInventoryDataAccessObject inventoryDataAccess;
-    private InMemoryTimerDataAccessObject timerDataAccess;
+    private InventoryService inventoryDataAccess;
     private AdoptionDataAccessObject adoptionDataAccess;
     private ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
     private DBCatDataAccessObject catDataAccess;
@@ -29,13 +27,11 @@ public class DataAccessBuilder {
 
     /**
      * Builds and returns all data access components.
-     *
      * @return the data access components
      */
     public DataAccessComponents build() {
         buildUserDataAccess()
                 .buildInventoryDataAccess()
-                .buildTimerDataAccess()
                 .buildAdoptionDataAccess()
                 .buildDisplayCatImageDataAccess()
                 .buildCatDataAccess()
@@ -44,7 +40,6 @@ public class DataAccessBuilder {
         return new DataAccessComponents(
                 userDataAccess,
                 inventoryDataAccess,
-                timerDataAccess,
                 adoptionDataAccess,
                 displayCatImageDataAccess,
                 catDataAccess,
@@ -53,37 +48,25 @@ public class DataAccessBuilder {
 
     /**
      * Builds the user data access.
-     *
      * @return this builder
      */
     private DataAccessBuilder buildUserDataAccess() {
         this.userDataAccess = factory.createUserDataAccess();
+
         return this;
     }
 
     /**
      * Builds the inventory data access.
-     *
      * @return this builder
      */
     private DataAccessBuilder buildInventoryDataAccess() {
-        this.inventoryDataAccess = factory.createInventoryDataAccess();
-        return this;
-    }
-
-    /**
-     * Builds the timer data access.
-     *
-     * @return this builder
-     */
-    private DataAccessBuilder buildTimerDataAccess() {
-        this.timerDataAccess = factory.createTimerDataAccess();
+        this.inventoryDataAccess = factory.createInventoryAccessFactory();
         return this;
     }
 
     /**
      * Builds the adoption data access.
-     *
      * @return this builder
      */
     private DataAccessBuilder buildAdoptionDataAccess() {
@@ -93,7 +76,6 @@ public class DataAccessBuilder {
 
     /**
      * Builds the display cat image data access.
-     *
      * @return this builder
      */
     private DataAccessBuilder buildDisplayCatImageDataAccess() {
@@ -103,7 +85,6 @@ public class DataAccessBuilder {
 
     /**
      * Builds the cat data access.
-     *
      * @return this builder
      */
     private DataAccessBuilder buildCatDataAccess() {
@@ -113,7 +94,6 @@ public class DataAccessBuilder {
 
     /**
      * Builds the cat fact data access.
-     * 
      * @return this builder
      */
     private DataAccessBuilder buildCatFactDataAccess() {

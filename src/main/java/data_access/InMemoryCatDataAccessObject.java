@@ -68,13 +68,11 @@ public class InMemoryCatDataAccessObject implements CatDataAccessInterface {
     @Override
     public boolean removeCat(String name, String ownerUsername) {
         boolean isSuccessful = false;
-
         final Map<String, Cat> ownerCats = catsByOwner.get(ownerUsername);
         if (ownerCats != null && ownerCats.containsKey(name)) {
             ownerCats.remove(name);
             isSuccessful = true;
         }
-
         return isSuccessful;
     }
 

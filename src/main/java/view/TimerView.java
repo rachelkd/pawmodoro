@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -18,8 +17,7 @@ import interface_adapter.timer.TimerViewModel;
 
 /**
  * A component responsible for displaying the timer. This view shows the current
- * timer
- * state including remaining time in a large, readable format.
+ * timer state, including remaining time in a large, readable format.
  */
 public class TimerView extends JPanel implements PropertyChangeListener {
     private final TimerViewModel timerViewModel;
@@ -37,7 +35,9 @@ public class TimerView extends JPanel implements PropertyChangeListener {
 
         // Initialize timer label with the current state
         final long initialDuration = timerViewModel.getState().getIntervalDuration();
-        timerLabel = new JLabel(timeFormat.format(new Date(initialDuration)));
+        timerLabel = new JLabel(formatTime(initialDuration));
+        timerLabel.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TIMER_FONT_SIZE));
+        timerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         timerLabel.setFont(new Font(
                 Constants.FONT_FAMILY,
@@ -58,13 +58,24 @@ public class TimerView extends JPanel implements PropertyChangeListener {
     }
 
     private void updateTimerDisplay() {
-        final long remainingTime = timerViewModel.getState().getIntervalDuration()
+        long remainingTime = timerViewModel.getState().getIntervalDuration()
                 - timerViewModel.getState().getElapsedTime();
-        timerLabel.setText(timeFormat.format(new Date(remainingTime)));
+
+        // Ensure no negative time display
+        remainingTime = Math.max(remainingTime, 0);
+
+        timerLabel.setText(formatTime(remainingTime));
     }
 
     public void setTimerController(TimerController timerController) {
         this.timerController = timerController;
+    }
+
+    private String formatTime(long timeInMillis) {
+        final long seconds = (timeInMillis / Constants.SECONDS_TO_MILLIS) % Constants.MINUTES_TO_SECONDS;
+        final long minutes = (timeInMillis / (Constants.SECONDS_TO_MILLIS * Constants.MINUTES_TO_SECONDS))
+                % Constants.MINUTES_TO_SECONDS;
+        return String.format("%02d:%02d", minutes, seconds);
     }
 
     public String getViewName() {

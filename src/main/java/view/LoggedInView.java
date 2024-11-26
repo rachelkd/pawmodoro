@@ -72,7 +72,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     /**
      * Creates the title label with proper styling.
-     * 
      * @return styled title label
      */
     private JLabel createTitleLabel() {
@@ -85,7 +84,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     /**
      * Creates the panel containing username greeting.
-     * 
      * @return panel with username greeting
      */
     private JPanel createUsernamePanel() {
@@ -105,7 +103,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     /**
      * Creates the panel containing password input field.
-     * 
      * @return panel with password input
      */
     private LabelTextPanel createPasswordPanel() {
@@ -114,7 +111,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     /**
      * Creates a panel containing all buttons.
-     * 
      * @return panel with buttons
      */
     private JPanel createButtonPanel() {
@@ -128,7 +124,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     /**
      * Adds all components to the view with proper spacing.
-     * 
      * @param pawmodoro title label
      * @param usernamePanel panel with username greeting
      * @param passwordInfo panel with password input
