@@ -9,11 +9,13 @@ import app.builder.view.cat.CatManagementViewBuilder;
 import app.builder.view.cat.CatViewModels;
 import app.builder.view.cat.CatViews;
 import app.builder.view.cat.CatViewsAndModels;
+import app.builder.view.session.SessionViewModels;
 import app.factory.ViewFactory;
 import app.factory.viewmodel.CatViewModelFactory;
+import app.factory.viewmodel.SessionViewModelFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
-// TODO changed
+
 /**
  * Builder for cat-related views.
  */
@@ -23,6 +25,7 @@ public class CatViewBuilder {
     private final ViewManagerModel viewManagerModel;
     private final ViewFactory viewFactory;
     private final CatViewModels catViewModels;
+    private final SessionViewModels sessionViewModels;
     private final DialogService dialogService;
 
     private CatDisplayViewBuilder displayBuilder;
@@ -54,9 +57,17 @@ public class CatViewBuilder {
                 catViewModelFactory.createRunawayCatViewModel(),
                 catViewModelFactory.createMaxCatsErrorViewModel(),
                 catViewModelFactory.createDisplayCatImageViewModel(),
-                // catViewModelFactory.createDisplayCatStatsViewModel(),
                 catViewModelFactory.createGetCatFactViewModel(),
                 catViewModelFactory.createCatViewModel());
+
+        final SessionViewModelFactory sessionViewModelFactory = new SessionViewModelFactory();
+        this.sessionViewModels = new SessionViewModels(
+                sessionViewModelFactory.createSetupSessionViewModel(),
+                sessionViewModelFactory.createInventoryViewModel(),
+                sessionViewModelFactory.createTimerViewModel(),
+                sessionViewModelFactory.createStudySessionViewModel(),
+                sessionViewModelFactory.createGetCatFactViewModel(),
+                sessionViewModelFactory.createDisplayCatStatsViewModel());
     }
 
     /**
@@ -72,6 +83,7 @@ public class CatViewBuilder {
                 viewManagerModel,
                 viewFactory,
                 catViewModels,
+                sessionViewModels,
                 dialogService);
         displayBuilder.build();
 

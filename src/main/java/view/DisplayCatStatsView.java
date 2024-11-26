@@ -44,8 +44,9 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
 
     public DisplayCatStatsView(JFrame parent, DisplayCatStatsViewModel displayCatStatsViewModel,
                                InventoryViewModel inventoryViewModel,
-                               GetCatFactView getCatFactView) {
-        super(parent, DisplayCatStatsViewModel.TITLE_LABEL, true);
+                               GetCatFactView getCatFactView,
+                               DialogService dialogService) {
+        super(parent, DisplayCatStatsViewModel.TITLE_LABEL, false);
         this.displayCatStatsViewModel = displayCatStatsViewModel;
         this.inventoryViewModel = inventoryViewModel;
         this.getCatFactView = getCatFactView;
@@ -57,6 +58,8 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         catNameLabel = new JLabel(Constants.LOADING);
         hungerLabel = new JLabel(DisplayCatStatsViewModel.HUNGER_LABEL + "0");
         happinessLabel = new JLabel(DisplayCatStatsViewModel.HAPPINESS_LABEL + "0");
+
+        this.dialogService = dialogService;
 
         final JPanel mainPanel = createMainPanel();
         mainPanel.setPreferredSize(
@@ -146,6 +149,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
 
         inventoryButton.addActionListener(event -> {
             dialogService.createInventoryDialog(inventoryViewModel);
+            dialogService.showInventoryDialog(inventoryViewModel);
         });
         mainPanel.add(inventoryButton);
     }
@@ -203,14 +207,18 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
     /**
      * Shows a new DisplayCatStatsView dialog.
      *
-     * @param parent the parent frame
-     * @param viewModel the view model
-     * @param getCatFactView the get cat fact view
+     * @param parent                   the parent frame
+     * @param displayCatStatsViewModel the view model
+     * @param inventoryViewModel
+     * @param getCatFactView           the get cat fact view
      */
-    public static void show(JFrame parent, DisplayCatStatsViewModel viewModel, GetCatFactView getCatFactView) {
-        final DisplayCatStatsView dialog = new DisplayCatStatsView(parent, viewModel, getCatFactView);
-        dialog.setVisible(true);
-    }
+//    public static void show(JFrame parent, DisplayCatStatsViewModel displayCatStatsViewModel,
+//                            InventoryViewModel inventoryViewModel, GetCatFactView getCatFactView) {
+//        DialogService dialogService = new DialogService(parent);
+//        final DisplayCatStatsView dialog =
+//                new DisplayCatStatsView(parent, displayCatStatsViewModel, inventoryViewModel, getCatFactView, dialogService);
+//        dialog.setVisible(true);
+//    }
 
     public void setCreateCatController(CreateInventoryController createInventoryController) {
         this.createInventoryController = createInventoryController;

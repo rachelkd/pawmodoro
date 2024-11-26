@@ -12,7 +12,6 @@ import app.factory.ViewFactory;
 import app.factory.viewmodel.SessionViewModelFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import view.*;
 
 /**
@@ -34,7 +33,7 @@ public class SessionViewBuilder {
     private StudySessionView studySessionView;
     private TimerView timerView;
     private GetCatFactView getCatFactView;
-    private DisplayCatStatsView getDisplayCatStatsView;
+    private DisplayCatStatsView displayCatStatsView;
 
     /**
      * Creates a new session view builder.
@@ -86,7 +85,7 @@ public class SessionViewBuilder {
                 viewModels.getStudySessionViewModel(),
                 viewModels.getTimerViewModel(),
                 catViewsAndModels.getViewModels().getCatViewModel(),
-                catViewsAndModels.getViewModels().getDisplayCatStatsViewModel(),
+                viewModels.getDisplayCatStatsViewModel(),
                 dialogService,
                 catViewsAndModels.getViews().getCatView());
         cardPanel.add(studySessionView, studySessionView.getViewName());
@@ -126,7 +125,7 @@ public class SessionViewBuilder {
     }
 
     public SessionViewBuilder buildDisplayCatStatsView() {
-        this.getDisplayCatStatsView = viewFactory.createDisplayCatStatsView( (JFrame)cardPanel.getParent(), viewModels.getDisplayCatStatsViewModel(), viewModels.getInventoryViewModel(),);
+        // created when requested by user
         return this;
     }
 
@@ -147,7 +146,8 @@ public class SessionViewBuilder {
                 inventoryView,
                 studySessionView,
                 timerView,
-                getCatFactView);
+                getCatFactView,
+                displayCatStatsView);
 
         return new SessionViewsAndModels(views, viewModels);
     }

@@ -25,7 +25,7 @@ public class DialogService {
      */
     public DialogService(JPanel mainPanel) {
         this.mainPanel = mainPanel;
-        this.dialogFactory = new DialogFactory(mainPanel);
+        this.dialogFactory = new DialogFactory(mainPanel, this);
     }
 
     /**

@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
+import app.builder.view.session.SessionViewModels;
 import app.factory.ViewFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
@@ -21,6 +22,7 @@ public class CatDisplayViewBuilder {
     private final ViewManagerModel viewManagerModel;
     private final ViewFactory viewFactory;
     private final CatViewModels catViewModels;
+    private final SessionViewModels sessionViewModels;
     private final DialogService dialogService;
 
     private DisplayCatImageView displayCatImageView;
@@ -31,12 +33,13 @@ public class CatDisplayViewBuilder {
     /**
      * Creates a new cat display view builder.
      *
-     * @param cardPanel the card panel
-     * @param cardLayout the card layout
-     * @param viewManagerModel the view manager model
-     * @param viewFactory the view factory
-     * @param catViewModels the cat view models
-     * @param dialogService the dialog service
+     * @param cardPanel         the card panel
+     * @param cardLayout        the card layout
+     * @param viewManagerModel  the view manager model
+     * @param viewFactory       the view factory
+     * @param catViewModels     the cat view models
+     * @param sessionViewModels the session view models
+     * @param dialogService     the dialog service
      */
     public CatDisplayViewBuilder(
             JPanel cardPanel,
@@ -44,12 +47,14 @@ public class CatDisplayViewBuilder {
             ViewManagerModel viewManagerModel,
             ViewFactory viewFactory,
             CatViewModels catViewModels,
+            SessionViewModels sessionViewModels,
             DialogService dialogService) {
         this.cardPanel = cardPanel;
         this.cardLayout = cardLayout;
         this.viewManagerModel = viewManagerModel;
         this.viewFactory = viewFactory;
         this.catViewModels = catViewModels;
+        this.sessionViewModels = sessionViewModels;
         this.dialogService = dialogService;
     }
 
@@ -95,7 +100,8 @@ public class CatDisplayViewBuilder {
     private CatDisplayViewBuilder buildCatView() {
         catView = viewFactory.createCatView(
                 catViewModels.getCatViewModel(),
-                catViewModels.getDisplayCatStatsViewModel(),
+                sessionViewModels.getDisplayCatStatsViewModel(),
+                sessionViewModels.getInventoryViewModel(),
                 dialogService,
                 getCatFactView);
         cardPanel.add(catView, catView.getViewName());

@@ -176,8 +176,10 @@ public class ViewFactory {
     public DisplayCatStatsView createDisplayCatStatsView(JFrame parent,
                                                          DisplayCatStatsViewModel displayCatStatsViewModel,
                                                          InventoryViewModel inventoryViewModel,
-                                                         GetCatFactView getCatFactView) {
-        return new DisplayCatStatsView(parent, displayCatStatsViewModel, inventoryViewModel, getCatFactView);
+                                                         GetCatFactView getCatFactView,
+                                                         DialogService dialogService) {
+        return new DisplayCatStatsView(parent, displayCatStatsViewModel,
+                inventoryViewModel, getCatFactView, dialogService);
     }
 
     /**

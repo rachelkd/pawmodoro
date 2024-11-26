@@ -57,7 +57,7 @@ public class CatDisplayUseCaseBuilder extends AbstractUseCaseBuilder {
      */
     public CatDisplayUseCaseBuilder buildDisplayCatStatsUseCase() {
         final DisplayCatStatsOutputBoundary presenter = new DisplayCatStatsPresenter(
-                getViews().getCat().getViewModels().getDisplayCatStatsViewModel());
+                getViews().getSession().getViewModels().getDisplayCatStatsViewModel());
 
         final DisplayCatStatsInputBoundary interactor = new DisplayCatStatsInteractor(
                 getDataAccess().getCatDataAccess(),
