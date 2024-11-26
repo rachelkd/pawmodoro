@@ -39,7 +39,8 @@ public class TimerUseCaseBuilder extends AbstractUseCaseBuilder {
     public TimerUseCaseBuilder buildSetupSessionUseCase() {
         final SetupSessionOutputBoundary outputBoundary = new SetupSessionPresenter(
                 getViews().getViewManagerModel(),
-                getViews().getSession().getViewModels().getStudySessionViewModel());
+                getViews().getSession().getViewModels().getStudySessionViewModel(),
+                getViews().getSession().getViewModels().getBreakSessionViewModel());
 
         final SetupSessionInputBoundary interactor = new SetupSessionInteractor(outputBoundary);
         final SetupSessionController controller = new SetupSessionController(interactor);

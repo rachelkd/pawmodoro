@@ -18,4 +18,7 @@ public interface SetupSessionInputBoundary {
      */
     void switchToStudyView();
 
+    void setupSession(int studyTime, int breakTime);
+
+    void handle(SetupSessionInputData setupSessionInputData);
 }

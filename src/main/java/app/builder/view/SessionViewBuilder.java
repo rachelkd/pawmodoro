@@ -99,7 +99,8 @@ public class SessionViewBuilder {
      */
     public SessionViewBuilder buildBreakSessionView() {
         this.breakSessionView = viewFactory.createBreakSessionView(
-                viewModels.getBreakSessionViewModel());
+                viewModels.getBreakSessionViewModel(),
+                viewModels.getBreakSessionViewModel().getState());
         cardPanel.add(breakSessionView, breakSessionView.getViewName());
         return this;
     }

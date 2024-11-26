@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
+import interface_adapter.break_session.BreakSessionState;
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.LoggedInViewModel;
@@ -170,7 +171,8 @@ public class ViewFactory {
         return new DisplayCatStatsView(parent, displayCatStatsViewModel, getCatFactView);
     }
 
-    public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel) {
-        return new BreakSessionView(breakSessionViewModel);
+    public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel,
+                                                   BreakSessionState breakSessionState) {
+        return new BreakSessionView(breakSessionViewModel, breakSessionState);
     }
 }

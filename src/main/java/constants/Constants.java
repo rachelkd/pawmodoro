@@ -9,10 +9,11 @@ public final class Constants {
     // Global constants
     public static final String FONT_FAMILY = Font.SANS_SERIF;
     // Timer constants
-    public static final int DEFAULT_WORK_MINUTES = 0;
+    public static final int DEFAULT_WORK_MINUTES = 25;
     public static final int DEFAULT_BREAK_MINUTES = 0;
     public static final int MINUTES_TO_SECONDS = 60;
     public static final int SECONDS_TO_MILLIS = 1000;
+    public static final long SECONDS_TO_MILLIS1 = 1000L;
     public static final int DEFAULT_WORK_DURATION_MS = DEFAULT_WORK_MINUTES * MINUTES_TO_SECONDS * SECONDS_TO_MILLIS;
     public static final int DEFAULT_BREAK_DURATION_MS = DEFAULT_BREAK_MINUTES * MINUTES_TO_SECONDS * SECONDS_TO_MILLIS;
 
