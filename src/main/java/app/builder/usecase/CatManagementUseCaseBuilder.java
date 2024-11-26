@@ -124,13 +124,13 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
     public CatManagementUseCaseBuilder buildChangeCatHungerUseCase() {
         final ChangeCatHungerOutputBoundary outputBoundary =
                 new ChangeCatHungerPresenter(getViews().getViewManagerModel(),
-                        getViews().getSession().getViewModels().getDisplayCatStatsViewModel());
+                        getViews().getShared().getViewModels().getDisplayCatStatsViewModel());
 
         final ChangeCatHungerInputBoundary interactor =
                 new ChangeCatHungerInteractor(getDataAccess().getCatDataAccess(), outputBoundary);
         final ChangeCatHungerController controller = new ChangeCatHungerController(interactor);
 
-        getViews().getSession().getViews().getInventoryView().setChangeCatHungerController(controller);
+        getViews().getShared().getViews().getInventoryView().setChangeCatHungerController(controller);
         return this;
 
     }
@@ -142,7 +142,7 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
     public CatManagementUseCaseBuilder buildChangeCatHappinessUseCase() {
         final ChangeCatHappinessOutputBoundary outputBoundary =
                 new ChangeCatHappinessPresenter(getViews().getViewManagerModel(),
-                        getViews().getSession().getViewModels().getDisplayCatStatsViewModel(),
+                        getViews().getShared().getViewModels().getDisplayCatStatsViewModel(),
                         getViews().getCat().getViewModels().getRunawayCatViewModel());
 
         final ChangeCatHappinessInputBoundary interactor = new ChangeCatHappinessInteractor(

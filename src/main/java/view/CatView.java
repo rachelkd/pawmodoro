@@ -40,15 +40,14 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
 
     /**
      * Creates a new CatView.
-     *
-     * @param catViewModel             the view model for this cat view
+     * @param catViewModel the view model for this cat view
      * @param displayCatStatsViewModel the view model for displaying cat stats
-     * @param inventoryViewModel        the view model for the inventory
-     * @param dialogService            the service for showing dialogs
-     * @param getCatFactView           the view for displaying cat facts
+     * @param inventoryViewModel the view model for the inventory
+     * @param dialogService the service for showing dialogs
+     * @param getCatFactView the view for displaying cat facts
      */
     public CatView(CatViewModel catViewModel, DisplayCatStatsViewModel displayCatStatsViewModel,
-                   InventoryViewModel inventoryViewModel, DialogService dialogService, GetCatFactView getCatFactView) {
+            InventoryViewModel inventoryViewModel, DialogService dialogService, GetCatFactView getCatFactView) {
         this.catViewModel = catViewModel;
         this.catViewModel.addPropertyChangeListener(this);
         this.inventoryViewModel = inventoryViewModel;
@@ -152,7 +151,6 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
 
     /**
      * Gets the view name.
-     *
      * @return the view name
      */
     public String getViewName() {
