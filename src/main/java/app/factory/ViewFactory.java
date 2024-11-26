@@ -171,6 +171,12 @@ public class ViewFactory {
         return new DisplayCatStatsView(parent, displayCatStatsViewModel, getCatFactView);
     }
 
+    /**
+     * Creates Break Session View.
+     * @param breakSessionViewModel the break session view model
+     * @param breakSessionState the break session state
+     * @return BreakSessionView
+     */
     public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel,
                                                    BreakSessionState breakSessionState) {
         return new BreakSessionView(breakSessionViewModel, breakSessionState);

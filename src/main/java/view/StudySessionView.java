@@ -199,13 +199,16 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(timerSettings)) {
             studySessionController.switchToSetupSessionView();
-        } else if (evt.getSource().equals(logOutSettings)) {
+        }
+        else if (evt.getSource().equals(logOutSettings)) {
             // Execute the logout use case through the Controller
             this.logoutController.execute("");
-        } else if (evt.getSource().equals(startTimerButton)) {
+        }
+        else if (evt.getSource().equals(startTimerButton)) {
             // Start the timer
             swingTimer.start();
-        } else if (evt.getSource().equals(stopTimerButton)) {
+        }
+        else if (evt.getSource().equals(stopTimerButton)) {
             // Stop the timer
             swingTimer.stop();
         }

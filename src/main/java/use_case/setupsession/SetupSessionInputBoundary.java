@@ -7,7 +7,7 @@ package use_case.setupsession;
 public interface SetupSessionInputBoundary {
 
     /**
-     * Executes the set up session use case.
+     * Executes the setup session use case.
      *
      * @param setupSessionInputData the input data
      */
@@ -18,7 +18,9 @@ public interface SetupSessionInputBoundary {
      */
     void switchToStudyView();
 
-    void setupSession(int studyTime, int breakTime);
-
+    /**
+     * Handles the passing of Inputdata.
+     * @param setupSessionInputData the seteupSessionInputdata
+     */
     void handle(SetupSessionInputData setupSessionInputData);
 }

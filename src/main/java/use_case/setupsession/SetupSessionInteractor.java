@@ -26,11 +26,6 @@ public class SetupSessionInteractor implements SetupSessionInputBoundary {
     }
 
     @Override
-    public void setupSession(int studyTime, int breakTime) {
-        execute(new SetupSessionInputData(studyTime, breakTime));
-    }
-
-    @Override
     public void handle(SetupSessionInputData setupSessionInputData) {
         execute(setupSessionInputData);
     }

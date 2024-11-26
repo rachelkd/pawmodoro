@@ -8,8 +8,6 @@ import interface_adapter.setupsession.SetupSessionController;
 import interface_adapter.setupsession.SetupSessionPresenter;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionPresenter;
-import interface_adapter.timer.TimerController;
-import interface_adapter.timer.TimerPresenter;
 import use_case.breaksession.BreakSessionInputBoundary;
 import use_case.breaksession.BreakSessionInteractor;
 import use_case.breaksession.BreakSessionOutputBoundary;

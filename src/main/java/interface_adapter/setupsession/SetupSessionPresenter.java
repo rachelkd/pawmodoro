@@ -2,10 +2,10 @@ package interface_adapter.setupsession;
 
 import constants.Constants;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.break_session.BreakSessionState;
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.study_session.StudySessionState;
 import interface_adapter.study_session.StudySessionViewModel;
-import interface_adapter.break_session.BreakSessionState;
 import use_case.setupsession.SetupSessionOutputBoundary;
 import use_case.setupsession.SetupSessionOutputData;
 
