@@ -2,16 +2,23 @@ package app.builder.usecase;
 
 import app.builder.view.Views;
 import app.components.DataAccessComponents;
+import interface_adapter.break_session.BreakSessionController;
+import interface_adapter.break_session.BreakSessionPresenter;
 import interface_adapter.setupsession.SetupSessionController;
 import interface_adapter.setupsession.SetupSessionPresenter;
+import interface_adapter.study_session.StudySessionController;
+import interface_adapter.study_session.StudySessionPresenter;
 import interface_adapter.timer.TimerController;
 import interface_adapter.timer.TimerPresenter;
+import use_case.breaksession.BreakSessionInputBoundary;
+import use_case.breaksession.BreakSessionInteractor;
+import use_case.breaksession.BreakSessionOutputBoundary;
 import use_case.setupsession.SetupSessionInputBoundary;
 import use_case.setupsession.SetupSessionInteractor;
 import use_case.setupsession.SetupSessionOutputBoundary;
-import use_case.timer.display_timer.DisplayTimerInputBoundary;
-import use_case.timer.display_timer.DisplayTimerInteractor;
-import use_case.timer.display_timer.DisplayTimerOutputBoundary;
+import use_case.studysession.StudySessionInputBoundary;
+import use_case.studysession.StudySessionInteractor;
+import use_case.studysession.StudySessionOutputBoundary;
 
 /**
  * Builder for timer-related use cases.
@@ -22,25 +29,8 @@ public class TimerUseCaseBuilder extends AbstractUseCaseBuilder {
         super(views, dataAccess);
     }
 
-    /**
-     * Builds the timer use case.
-     *
-     * @return this builder
-     */
-    public TimerUseCaseBuilder buildTimerUseCase() {
-        final DisplayTimerOutputBoundary outputBoundary = new TimerPresenter(
-                getViews().getSession().getViewModels().getTimerViewModel());
-
-        final DisplayTimerInputBoundary interactor = new DisplayTimerInteractor(
-                getDataAccess().getTimerDataAccess(),
-                outputBoundary);
-
-        final TimerController controller = new TimerController(interactor);
-        getViews().getSession().getViews().getTimerView().setTimerController(controller);
-        return this;
-    }
-
     // TODO: Move this into SessionsUseCaseBuilder?
+
     /**
      * Builds the setup session use case.
      *
@@ -58,13 +48,49 @@ public class TimerUseCaseBuilder extends AbstractUseCaseBuilder {
     }
 
     /**
+     * Builds the study session use case.
+     *
+     * @return this builder
+     */
+    public TimerUseCaseBuilder buildStudySessionUseCase() {
+        final StudySessionOutputBoundary studySessionOutputBoundary = new StudySessionPresenter(
+                getViews().getViewManagerModel(),
+                getViews().getSession().getViewModels().getLoginViewModel(),
+                getViews().getSession().getViewModels().getSetupSessionViewModel(),
+                getViews().getSession().getViewModels().getBreakSessionViewModel());
+
+        final StudySessionInputBoundary studySessionInteractor = new StudySessionInteractor(studySessionOutputBoundary);
+        final StudySessionController studySessionController = new StudySessionController(studySessionInteractor);
+        getViews().getSession().getViews().getStudySessionView().setStudySessionController(studySessionController);
+        return this;
+    }
+
+    /**
+     * Builds the break session use case.
+     *
+     * @return this builder
+     */
+    public TimerUseCaseBuilder buildBreakSessionUseCase() {
+        final BreakSessionOutputBoundary breakSessionOutputBoundary = new BreakSessionPresenter(
+                getViews().getViewManagerModel(),
+                getViews().getSession().getViewModels().getLoginViewModel(),
+                getViews().getSession().getViewModels().getStudySessionViewModel());
+
+        final BreakSessionInputBoundary breakSessionInteractor = new BreakSessionInteractor(breakSessionOutputBoundary);
+        final BreakSessionController breakSessionController = new BreakSessionController(breakSessionInteractor);
+        getViews().getSession().getViews().getBreakSessionView().setBreakSessionController(breakSessionController);
+        return this;
+    }
+
+    /**
      * Builds all timer-related use cases.
      *
      * @return this builder
      */
     public TimerUseCaseBuilder build() {
         return this
-                .buildTimerUseCase()
-                .buildSetupSessionUseCase();
+                .buildSetupSessionUseCase()
+                .buildStudySessionUseCase()
+                .buildBreakSessionUseCase();
     }
 }

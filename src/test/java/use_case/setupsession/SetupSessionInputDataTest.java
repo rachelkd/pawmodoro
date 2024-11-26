@@ -1,7 +1,8 @@
 package use_case.setupsession;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 class SetupSessionInputDataTest {
     @Test
@@ -16,7 +17,7 @@ class SetupSessionInputDataTest {
 
             @Override
             public void switchToStudyView() {
-                //This is expected
+                // This is expected
             }
         };
         final SetupSessionInputBoundary interactor = new SetupSessionInteractor(successPresenter);

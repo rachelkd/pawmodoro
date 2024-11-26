@@ -11,4 +11,11 @@ public interface ChangeCatHappinessOutputBoundary {
      */
     void prepareSuccessView(ChangeCatHappinessOutputData changeCatHappinessOutputData);
 
+    /**
+     * Switches to RunawayCat view when cat runs away due to low happiness.
+     * @param catName the name of the cat running away
+     * @param ownerUsername username of cat owner
+     */
+    void switchToRunawayCatView(String catName, String ownerUsername);
+
 }

@@ -1,16 +1,11 @@
 package interface_adapter.runawaycat;
 
 /**
- * The state for the Runaway Cat View Model
+ * The state for the runaway cat use case.
  */
 public class RunawayCatState {
     private String catName = "";
-    
-    public RunawayCatState(RunawayCatState copy) {
-        catName = copy.catName;
-    }
-
-    public RunawayCatState() {}
+    private String ownerName = "";
 
     public String getCatName() {
         return catName;
@@ -19,4 +14,12 @@ public class RunawayCatState {
     public void setCatName(String catName) {
         this.catName = catName;
     }
-} 
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+}

@@ -7,7 +7,6 @@ public class CreateCatInputData {
     private final String catName;
     private final String ownerUsername;
 
-
     public CreateCatInputData(String catName, String ownerUsername) {
         this.catName = catName;
         this.ownerUsername = ownerUsername;

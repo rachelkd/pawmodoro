@@ -91,6 +91,12 @@ class InMemoryCatDataAccessTest {
     }
 
     @Test
+    void failureRemoveNonexistentCatTest() {
+        final Cat cat = factory.create("Whiskers", "testuser");
+        assertFalse(catRepository.removeCat(cat.getName(), cat.getOwnerUsername()));
+    }
+
+    @Test
     void successGetHungerLevelTest() {
         final Cat cat = factory.create("Whiskers", "testuser");
         catRepository.saveCat(cat);

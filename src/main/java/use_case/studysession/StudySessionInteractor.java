@@ -19,4 +19,9 @@ public class StudySessionInteractor implements StudySessionInputBoundary {
     public void logout() {
         studySessionPresenter.switchToLoginView();
     }
+
+    @Override
+    public void switchToBreakSessionView() {
+        studySessionPresenter.switchToBreakSessionView();
+    }
 }

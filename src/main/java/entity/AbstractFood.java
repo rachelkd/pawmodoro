@@ -6,8 +6,6 @@ package entity;
  * implementations.
  */
 public abstract class AbstractFood {
-    // Unique identifier (e.g., "tuna_can", "dry_kibble")
-    private final String foodId;
     // Display name (e.g., "Tuna Can", "Dry Kibble")
     private final String name;
     private final int points;
@@ -16,8 +14,6 @@ public abstract class AbstractFood {
     /**
      * Creates a new food item.
      *
-     * @param foodId
-     *            unique identifier with no spaces (e.g., "tuna_can")
      * @param name
      *            display name that can contain spaces (e.g., "Tuna Can")
      * @param points
@@ -26,15 +22,11 @@ public abstract class AbstractFood {
      *            the initial quantity
      * @throws IllegalArgumentException
      *             if:
-     *             - foodId is null, empty, or contains spaces
      *             - name is null or empty
      *             - points is negative
      *             - quantity is negative
      */
-    protected AbstractFood(String foodId, String name, int points, int quantity) {
-        if (foodId == null || foodId.trim().isEmpty() || foodId.contains(" ")) {
-            throw new IllegalArgumentException("Food ID cannot be null, empty, or contain spaces");
-        }
+    protected AbstractFood(String name, int points, int quantity) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Food name cannot be null or empty");
         }
@@ -45,19 +37,9 @@ public abstract class AbstractFood {
             throw new IllegalArgumentException("Food quantity cannot be negative");
         }
 
-        this.foodId = foodId;
         this.name = name;
         this.points = points;
         this.quantity = quantity;
-    }
-
-    /**
-     * Gets the unique identifier of this food type.
-     *
-     * @return the food ID (e.g., "tuna_can")
-     */
-    public String getFoodId() {
-        return foodId;
     }
 
     /**

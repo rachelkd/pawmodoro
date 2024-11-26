@@ -7,8 +7,10 @@ public interface RunawayCatInputBoundary {
 
     /**
      * Executes the runaway cat use case.
+     *
+     * @param runawayCatInputData the input data of use case
      */
-    void execute();
+    void execute(RunawayCatInputData runawayCatInputData);
 
     /**
      * Executes the switch to Break Session view.

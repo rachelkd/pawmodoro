@@ -5,18 +5,18 @@ package use_case.food_management.add_to_inventory;
  */
 public class AddToInventoryInputData {
     private final String ownerId;
-    private final String foodId;
+    private final String foodName;
 
-    public AddToInventoryInputData(String ownerId, String foodId) {
+    public AddToInventoryInputData(String ownerId, String foodName) {
         this.ownerId = ownerId;
-        this.foodId = foodId;
+        this.foodName = foodName;
     }
 
     public String getOwnerId() {
         return ownerId;
     }
 
-    public String getFoodId() {
-        return foodId;
+    public String getFoodName() {
+        return foodName;
     }
 }
