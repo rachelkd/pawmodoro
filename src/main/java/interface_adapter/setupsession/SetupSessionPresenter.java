@@ -32,7 +32,6 @@ public class SetupSessionPresenter implements SetupSessionOutputBoundary {
                 * Constants.SECONDS_TO_MILLIS1);
         studySessionViewModel.setState(studySessionState);
         studySessionViewModel.firePropertyChanged();
-        studySessionViewModel.firePropertyChanged();
 
         // Update the BreakSessionState with the selected break interval
         final BreakSessionState breakSessionState = breakSessionViewModel.getState();

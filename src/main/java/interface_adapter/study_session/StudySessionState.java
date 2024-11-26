@@ -51,6 +51,7 @@ public class StudySessionState {
     public void setBreakInterval(long breakInterval) {
         this.breakInterval = breakInterval;
     }
+
     /**
      * Resets the work interval to the default value of 25 minutes.
      */

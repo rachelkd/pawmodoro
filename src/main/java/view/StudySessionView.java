@@ -23,6 +23,7 @@ import constants.Constants;
 import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.study_session.StudySessionController;
+import interface_adapter.study_session.StudySessionState;
 import interface_adapter.study_session.StudySessionViewModel;
 
 /**
@@ -87,15 +88,11 @@ public class StudySessionView extends JPanel implements ActionListener, Property
                 }
                 else {
                     swingTimer.stop();
-                    System.out.println("Time is up! Switching to Break Session...");
-
-                    // Notify the presenter or controller to switch the view
-                    if (studySessionController != null) {
-                        studySessionController.switchToBreakSessionView();
-                    }
-                    else {
-                        System.err.println("StudySessionOutputBoundary is not initialized.");
-                    }
+                    // Notify controller to switch the view
+                    studySessionController.switchToBreakSessionView();
+                    studySessionViewModel.getState().resetToDefaultWorkInterval();
+                    remainingTime = studySessionViewModel.getState().getWorkInterval();
+                    updateTimerLabel();
                 }
             }
         });
@@ -202,16 +199,13 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(timerSettings)) {
             studySessionController.switchToSetupSessionView();
-        }
-        else if (evt.getSource().equals(logOutSettings)) {
+        } else if (evt.getSource().equals(logOutSettings)) {
             // Execute the logout use case through the Controller
             this.logoutController.execute("");
-        }
-        else if (evt.getSource().equals(startTimerButton)) {
+        } else if (evt.getSource().equals(startTimerButton)) {
             // Start the timer
             swingTimer.start();
-        }
-        else if (evt.getSource().equals(stopTimerButton)) {
+        } else if (evt.getSource().equals(stopTimerButton)) {
             // Stop the timer
             swingTimer.stop();
         }
@@ -230,6 +224,10 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // Nothing to do here
+        if ("state".equals(evt.getPropertyName())) {
+            final StudySessionState newState = (StudySessionState) evt.getNewValue();
+            remainingTime = newState.getWorkInterval();
+            updateTimerLabel();
+        }
     }
 }
