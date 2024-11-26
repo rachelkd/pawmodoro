@@ -38,7 +38,6 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Gets the logout controller.
-     * 
      * @return the logout controller
      */
     public LogoutController getLogoutController() {
@@ -47,7 +46,6 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the login use case.
-     *
      * @return this builder
      */
     public AuthUseCaseBuilder buildLoginUseCase() {
@@ -67,7 +65,6 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the signup use case.
-     *
      * @return this builder
      */
     public AuthUseCaseBuilder buildSignupUseCase() {
@@ -88,7 +85,6 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the logout use case.
-     *
      * @return this builder
      */
     public AuthUseCaseBuilder buildLogoutUseCase() {
@@ -103,16 +99,16 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
 
         logoutController = new LogoutController(interactor);
 
-        // Set the logout controller for both views that need it
+        // Set the logout controller for views that need it
         getViews().getAuth().getViews().getLoggedInView().setLogoutController(logoutController);
         getViews().getSession().getViews().getStudySessionView().setLogoutController(logoutController);
+        getViews().getSession().getViews().getBreakSessionView().setLogoutController(logoutController);
 
         return this;
     }
 
     /**
      * Builds the change password use case.
-     *
      * @return this builder
      */
     public AuthUseCaseBuilder buildChangePasswordUseCase() {
@@ -131,7 +127,6 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds all authentication use cases.
-     *
      * @return this builder
      */
     public AuthUseCaseBuilder build() {

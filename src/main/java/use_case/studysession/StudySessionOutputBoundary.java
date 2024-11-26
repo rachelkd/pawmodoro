@@ -21,4 +21,10 @@ public interface StudySessionOutputBoundary {
      * Called when the login view needs to be prepared.
      */
     void prepareLoginView();
+
+    /**
+     * Switches the view to the break session view.
+     * Called when the user goes on break after completing the work interval.
+     */
+    void switchToBreakSessionView();
 }

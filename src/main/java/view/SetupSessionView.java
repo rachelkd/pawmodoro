@@ -18,11 +18,10 @@ import interface_adapter.setupsession.SetupSessionViewModel;
  * The view for when the user is setting up their study session.
  */
 public class SetupSessionView extends JPanel implements ActionListener {
-    private final String viewName = "setup study session";
     private final SetupSessionViewModel setupSessionViewModel;
-    private String[] studyChoices = {"10 mins", "15 mins", "20 mins", "25 mins", "30 mins", "35 mins", "40 mins",
-        "45 mins", "50 mins", "55 mins", "60 mins"};
-    private String[] breakChoices = {"5 mins", "10 mins"};
+    private String[] studyChoices = {"10 mins", "15 mins", "20 mins", "25 mins", "30 mins", "35 mins",
+            "40 mins", "45 mins", "50 mins", "55 mins", "60 mins" };
+    private String[] breakChoices = {"5 mins", "10 mins" };
     private final JComboBox<String> studytime = new JComboBox<String>(studyChoices);
     private final JComboBox<String> breaktime = new JComboBox<String>(breakChoices);
     private final JButton returnButton;
@@ -54,9 +53,8 @@ public class SetupSessionView extends JPanel implements ActionListener {
                         final SetupSessionState currentState = setupSessionViewModel.getState();
 
                         setupSessionController.execute(
-                                currentState.getBreakTime(),
-                                currentState.getStudyTime()
-                        );
+                                currentState.getStudyTime(),
+                                currentState.getBreakTime());
 
                         setupSessionController.switchToStudyView();
                     }
@@ -81,13 +79,8 @@ public class SetupSessionView extends JPanel implements ActionListener {
 
             setupSessionController.execute(
                     currentState.getBreakTime(),
-                    currentState.getStudyTime()
-            );
+                    currentState.getStudyTime());
         }
-    }
-
-    public String getViewName() {
-        return viewName;
     }
 
     public void setSetupSessionController(SetupSessionController setupSessionController) {
@@ -105,8 +98,12 @@ public class SetupSessionView extends JPanel implements ActionListener {
     private void addBreakTimeListener() {
         breaktime.addActionListener(evt -> {
             final SetupSessionState currentState = setupSessionViewModel.getState();
-            currentState.setBreakTime((String) studytime.getSelectedItem());
+            currentState.setBreakTime((String) breaktime.getSelectedItem());
             setupSessionViewModel.setState(currentState);
         });
+    }
+
+    public String getViewName() {
+        return setupSessionViewModel.getViewName();
     }
 }

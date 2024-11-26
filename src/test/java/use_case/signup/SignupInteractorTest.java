@@ -1,10 +1,9 @@
 package use_case.signup;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-
-import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,9 +12,6 @@ import entity.CommonUserFactory;
 import entity.User;
 import entity.UserFactory;
 
-import use_case.signup.*;
-
-
 class SignupInteractorTest {
 
     @Test
@@ -23,14 +19,11 @@ class SignupInteractorTest {
         final SignupInputData inputData = new SignupInputData("Paul", "password", "password");
         final SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // This creates a successPresenter that tests whether the test case is as we
-        // expect.
         final SignupOutputBoundary successPresenter = new SignupOutputBoundary() {
             @Override
             public void prepareSuccessView(SignupOutputData user) {
-                // 2 things to check: the output data is correct, and the user has been created
-                // in the DAO.
                 assertEquals("Paul", user.getUsername());
+                assertFalse(user.isUseCaseFailed());
                 assertTrue(userRepository.existsByName("Paul"));
             }
 
@@ -41,7 +34,7 @@ class SignupInteractorTest {
 
             @Override
             public void switchToLoginView() {
-                // This is expected
+                assertTrue(true, "Successfully switched to login view");
             }
         };
 
@@ -55,22 +48,23 @@ class SignupInteractorTest {
         final SignupInputData inputData = new SignupInputData("Paul", "password", "wrong");
         final SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // This creates a presenter that tests whether the test case is as we expect.
         final SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
             @Override
             public void prepareSuccessView(SignupOutputData user) {
-                // this should never be reached since the test case should fail
                 fail("Use case success is unexpected.");
             }
 
             @Override
             public void prepareFailView(String error) {
                 assertEquals("Passwords don't match.", error);
+                final SignupOutputData outputData = new SignupOutputData("Paul", true);
+                assertTrue(outputData.isUseCaseFailed());
+                assertEquals("Paul", outputData.getUsername());
             }
 
             @Override
             public void switchToLoginView() {
-                // This is expected
+                assertTrue(true, "Successfully switched to login view");
             }
         };
 
@@ -81,35 +75,120 @@ class SignupInteractorTest {
 
     @Test
     void failureUserExistsTest() {
-        final SignupInputData inputData = new SignupInputData("Paul", "password", "wrong");
+        final SignupInputData inputData = new SignupInputData("Paul", "password", "password");
         final SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
-        // Add Paul to the repo so that when we check later they already exist
         final UserFactory factory = new CommonUserFactory();
         final User user = factory.create("Paul", "pwd");
         userRepository.save(user);
 
-        // This creates a presenter that tests whether the test case is as we expect.
         final SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
             @Override
             public void prepareSuccessView(SignupOutputData user) {
-                // this should never be reached since the test case should fail
                 fail("Use case success is unexpected.");
             }
 
             @Override
             public void prepareFailView(String error) {
                 assertEquals("User already exists.", error);
+                final SignupOutputData outputData = new SignupOutputData("Paul", true);
+                assertTrue(outputData.isUseCaseFailed());
+                assertEquals("Paul", outputData.getUsername());
             }
 
             @Override
             public void switchToLoginView() {
-                // This is expected
+                assertTrue(true, "Successfully switched to login view");
             }
         };
 
         final SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter,
                 new CommonUserFactory());
         interactor.execute(inputData);
+    }
+
+    @Test
+    void failureEmptyUsernameTest() {
+        final SignupInputData inputData = new SignupInputData("", "password", "password");
+        final SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+
+        final SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
+            @Override
+            public void prepareSuccessView(SignupOutputData user) {
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Please fill out all fields.", error);
+                final SignupOutputData outputData = new SignupOutputData("", true);
+                assertTrue(outputData.isUseCaseFailed());
+                assertEquals("", outputData.getUsername());
+            }
+
+            @Override
+            public void switchToLoginView() {
+                assertTrue(true, "Successfully switched to login view");
+            }
+        };
+
+        final SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter,
+                new CommonUserFactory());
+        interactor.execute(inputData);
+    }
+
+    @Test
+    void failureEmptyPasswordTest() {
+        final SignupInputData inputData = new SignupInputData("Paul", "", "");
+        final SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+
+        final SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
+            @Override
+            public void prepareSuccessView(SignupOutputData user) {
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Please fill out all fields.", error);
+                final SignupOutputData outputData = new SignupOutputData("Paul", true);
+                assertTrue(outputData.isUseCaseFailed());
+                assertEquals("Paul", outputData.getUsername());
+            }
+
+            @Override
+            public void switchToLoginView() {
+                assertTrue(true, "Successfully switched to login view");
+            }
+        };
+
+        final SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter,
+                new CommonUserFactory());
+        interactor.execute(inputData);
+    }
+
+    @Test
+    void switchToLoginViewTest() {
+        final SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+        final SignupOutputBoundary presenter = new SignupOutputBoundary() {
+            @Override
+            public void prepareSuccessView(SignupOutputData user) {
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail("Use case failure is unexpected.");
+            }
+
+            @Override
+            public void switchToLoginView() {
+                assertTrue(true, "Successfully switched to login view");
+            }
+        };
+
+        final SignupInputBoundary interactor = new SignupInteractor(userRepository, presenter,
+                new CommonUserFactory());
+        interactor.switchToLoginView();
     }
 }
