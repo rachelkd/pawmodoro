@@ -70,7 +70,6 @@ public class BreakSessionView extends JPanel implements ActionListener {
                 }
                 else {
                     swingTimer.stop();
-                    System.out.println("Break time is up! Switching to Study Session...");
 
                     // Notify the presenter to switch the view to study session
                     if (breakSessionController != null) {
@@ -128,19 +127,18 @@ public class BreakSessionView extends JPanel implements ActionListener {
         return logOutPanel;
     }
 
-    public void setBreakSessionController(BreakSessionController brakSessionController) {
+    public void setBreakSessionController(BreakSessionController breakSessionController) {
         this.breakSessionController = breakSessionController;
+    }
+
+    public void setLogoutController(LogoutController logoutController) {
+        this.logoutController = logoutController;
     }
 
     @Override
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(logOutSettings)) {
-            if (logoutController != null) {
-                logoutController.execute("");
-            }
-            else {
-                System.err.println("LogoutController is not initialized.");
-            }
+            logoutController.execute("");
         }
         else if (evt.getSource().equals(startTimerButton)) {
             swingTimer.start();
@@ -161,8 +159,5 @@ public class BreakSessionView extends JPanel implements ActionListener {
         return viewName;
     }
 
-    public void setLogoutController(LogoutController controller) {
-        this.logoutController = controller;
-    }
 }
 

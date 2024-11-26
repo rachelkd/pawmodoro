@@ -91,7 +91,6 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
                     // Notify the presenter or controller to switch the view
                     if (studySessionController != null) {
-                        System.out.println("test");
                         studySessionController.switchToBreakSessionView();
                     }
                     else {
