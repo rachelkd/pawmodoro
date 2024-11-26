@@ -1,10 +1,6 @@
 package app.builder.view.session;
 
-import view.BreakSessionView;
-import view.GetCatFactView;
-import view.InventoryView;
-import view.SetupSessionView;
-import view.StudySessionView;
+import view.*;
 
 /**
  * Container for session-related views.

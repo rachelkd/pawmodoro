@@ -103,7 +103,7 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
                 if (displayCatStatsController != null) {
                     final CatState state = catViewModel.getState();
                     displayCatStatsController.execute(state.getOwnerUsername(), state.getCatName());
-                    dialogService.showCatStatsDialog(displayCatStatsViewModel, getCatFactView);
+                    dialogService.showCatStatsDialog(displayCatStatsViewModel, inventoryViewModel, getCatFactView);
                 }
             }
         });

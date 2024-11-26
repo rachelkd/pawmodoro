@@ -66,6 +66,8 @@ public class CatViewBuilder {
                 sessionViewModelFactory.createInventoryViewModel(),
                 sessionViewModelFactory.createTimerViewModel(),
                 sessionViewModelFactory.createStudySessionViewModel(),
+                sessionViewModelFactory.createBreakSessionViewModel(),
+                sessionViewModelFactory.createLoginViewModel(),
                 sessionViewModelFactory.createGetCatFactViewModel(),
                 sessionViewModelFactory.createDisplayCatStatsViewModel());
     }
