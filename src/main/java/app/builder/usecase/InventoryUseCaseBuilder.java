@@ -47,7 +47,11 @@ public class InventoryUseCaseBuilder extends AbstractUseCaseBuilder {
                 outputBoundary, inventoryFactory);
 
         final CreateInventoryController controller = new CreateInventoryController(interactor);
+
         getViews().getSession().getViews().getInventoryView().setCreateInventoryController(controller);
+        getViews().getAuth().getViews().getLoginView().setCreateInventoryController(controller);
+        getViews().getAuth().getViews().getSignupView().setCreateInventoryController(controller);
+
         return this;
     }
 
