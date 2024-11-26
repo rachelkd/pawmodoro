@@ -9,7 +9,7 @@ public class MusicControlInteractor implements MusicControlInputBoundary{
     private MusicPlayer musicPlayer;
     private final MusicControlOutputBoundary musicPresenter;
     private Clip audioClip;
-    private static final String MUSIC_DIRECTORY = "src/main/resources/music/study.wav";
+    private static final String MUSIC_DIRECTORY = "src/main/resources/sounds/study.wav";
 
     public MusicControlInteractor(MusicControlOutputBoundary musicPresenter) {
         this.musicPlayer = new MusicPlayer();
@@ -19,19 +19,39 @@ public class MusicControlInteractor implements MusicControlInputBoundary{
 
     private void initializeAudio() {
         try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(MUSIC_DIRECTORY));
+            File audioFile = new File(MUSIC_DIRECTORY);
+            if (!audioFile.exists()) {
+                musicPresenter.prepareFailView("Audio file not found at: " + MUSIC_DIRECTORY);
+                return;
+            }
+
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
             audioClip = AudioSystem.getClip();
             audioClip.open(audioStream);
             audioClip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            musicPresenter.prepareFailView("Error loading audio file: " + e.getMessage());
+
+            // Initialize with stopped state
+            audioClip.stop();
+            musicPlayer.setPlaying(false);
+
+        } catch (UnsupportedAudioFileException e) {
+            musicPresenter.prepareFailView("Unsupported audio format: " + e.getMessage());
+        } catch (IOException e) {
+            musicPresenter.prepareFailView("Error reading audio file: " + e.getMessage());
+        } catch (LineUnavailableException e) {
+            musicPresenter.prepareFailView("Audio line unavailable: " + e.getMessage());
         }
     }
 
     @Override
     public void togglePlayback() {
-        if (audioClip.isRunning()) {
-            if (musicPlayer.isPlaying()) {
+        if (audioClip == null) {
+            musicPresenter.prepareFailView("Audio system not properly initialized");
+            return;
+        }
+        
+        try {
+            if (audioClip.isRunning()) {
                 audioClip.stop();
                 musicPlayer.setPlaying(false);
             } else {
@@ -39,6 +59,8 @@ public class MusicControlInteractor implements MusicControlInputBoundary{
                 musicPlayer.setPlaying(true);
             }
             musicPresenter.prepareSuccessView(musicPlayer.isPlaying());
+        } catch (Exception e) {
+            musicPresenter.prepareFailView("Error toggling playback: " + e.getMessage());
         }
     }
 

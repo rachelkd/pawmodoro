@@ -5,6 +5,7 @@ import app.builder.usecase.CatDisplayUseCaseBuilder;
 import app.builder.usecase.CatManagementUseCaseBuilder;
 import app.builder.usecase.InventoryUseCaseBuilder;
 import app.builder.usecase.TimerUseCaseBuilder;
+import app.builder.usecase.MusicControlUseCaseBuilder;
 import app.builder.view.Views;
 import app.components.DataAccessComponents;
 
@@ -31,12 +32,15 @@ public class UseCaseBuilder {
         final CatDisplayUseCaseBuilder catDisplayBuilder = new CatDisplayUseCaseBuilder(views, dataAccess);
         final CatManagementUseCaseBuilder catManagementBuilder = new CatManagementUseCaseBuilder(views, dataAccess);
         final TimerUseCaseBuilder timerBuilder = new TimerUseCaseBuilder(views, dataAccess);
+        final MusicControlUseCaseBuilder musicBuilder = new MusicControlUseCaseBuilder(views, dataAccess);
+
 
         authBuilder.build();
         inventoryBuilder.build();
         catDisplayBuilder.build();
         catManagementBuilder.build();
         timerBuilder.build();
+        musicBuilder.build();
 
         return this;
     }

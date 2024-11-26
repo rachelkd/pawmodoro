@@ -22,12 +22,11 @@ import app.service.DialogService;
 import constants.Constants;
 import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
 import interface_adapter.logout.LogoutController;
-import interface_adapter.study_session.StudySessionController;
-import interface_adapter.study_session.StudySessionViewModel;
-import interface_adapter.timer.TimerController;
-import interface_adapter.timer.TimerViewModel;
 import interface_adapter.music_control.MusicControlController;
 import interface_adapter.music_control.MusicControlViewModel;
+import interface_adapter.study_session.StudySessionController;
+import interface_adapter.study_session.StudySessionViewModel;
+
 
 /**
  * Views for Study sessions.
@@ -47,7 +46,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private final JButton logOutSettings;
     private final JButton startTimerButton;
     private final JButton stopTimerButton;
-    private final JButton playPauseSettings;
+    private final JButton playPauseButton;
 
     private final JLabel timerLabel;
     private final Timer swingTimer;
@@ -74,13 +73,13 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
         timerSettings = createButton("Timer Settings");
         logOutSettings = createButton("Log Out");
-        playPauseSettings = createButton("Play");
+        playPauseButton = createButton("Play");
         startTimerButton = createButton("Start Timer");
         stopTimerButton = createButton("Stop Timer");
 
         timerSettings.addActionListener(this);
         logOutSettings.addActionListener(this);
-        playPauseSettings.addActionListener(this);
+        playPauseButton.addActionListener(this);
         startTimerButton.addActionListener(this);
         stopTimerButton.addActionListener(this);
 
@@ -139,7 +138,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         leftButtons.add(timerSettings);
 
         final JPanel centerButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        centerButtons.add(playPauseSettings);
+        centerButtons.add(playPauseButton);
 
         final JPanel rightButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightButtons.add(logOutSettings);
@@ -213,6 +212,10 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         this.changeCatHappinessController = controller;
     }
 
+    public void setMusicControlController(MusicControlController musicControlController) {
+        this.musicControlController = musicControlController;
+    }
+
     @Override
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(timerSettings)) {
@@ -230,11 +233,11 @@ public class StudySessionView extends JPanel implements ActionListener, Property
             // Stop the timer
             swingTimer.stop();
         }
-        else if (evt.getSource().equals(playPauseSettings)) {
+        else if (evt.getSource().equals(playPauseButton)) {
             // Toggle playback
             musicControlController.togglePlayback();
             // Update button text based on the new state
-            playPauseSettings.setText(isPlaying ? "Pause" : "Play");
+            playPauseButton.setText(musicControlViewModel.getState().isPlaying() ? "Pause" : "Play");
         }
     }
 
