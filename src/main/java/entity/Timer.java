@@ -13,7 +13,7 @@ public class Timer {
      * Creates a new Timer with the specified properties.
      * 
      * @param status the current status of the timer (RUNNING, PAUSED, STOPPED)
-     * @param currentInterval the current interval type
+     * @param currentInterval the current interval type (WORK, BREAK)
      * @param elapsedTime the elapsed time in milliseconds
      * @param intervalDuration the total duration of the interval in milliseconds
      */

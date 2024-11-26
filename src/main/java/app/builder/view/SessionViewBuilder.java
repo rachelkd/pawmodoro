@@ -28,10 +28,10 @@ public class SessionViewBuilder {
     private final CatViewsAndModels catViewsAndModels;
 
     // Views
+    private BreakSessionView breakSessionView;
     private SetupSessionView setupSessionView;
     private InventoryView inventoryView;
     private StudySessionView studySessionView;
-    private TimerView timerView;
     private GetCatFactView getCatFactView;
     private DisplayCatStatsView displayCatStatsView;
 
@@ -60,6 +60,8 @@ public class SessionViewBuilder {
                 sessionViewModelFactory.createInventoryViewModel(),
                 sessionViewModelFactory.createTimerViewModel(),
                 sessionViewModelFactory.createStudySessionViewModel(),
+                sessionViewModelFactory.createBreakSessionViewModel(),
+                sessionViewModelFactory.createLoginViewModel(),
                 sessionViewModelFactory.createGetCatFactViewModel(),
                 sessionViewModelFactory.createDisplayCatStatsViewModel());
         this.dialogService = dialogService;
@@ -83,12 +85,17 @@ public class SessionViewBuilder {
     public SessionViewBuilder buildStudySessionView() {
         this.studySessionView = viewFactory.createStudySessionView(
                 viewModels.getStudySessionViewModel(),
-                viewModels.getTimerViewModel(),
-                catViewsAndModels.getViewModels().getCatViewModel(),
                 viewModels.getDisplayCatStatsViewModel(),
                 dialogService,
                 catViewsAndModels.getViews().getCatView());
         cardPanel.add(studySessionView, studySessionView.getViewName());
+        return this;
+    }
+
+    public SessionViewBuilder buildBreakSessionView() {
+        this.breakSessionView = viewFactory.createBreakSessionView(
+                viewModels.getBreakSessionViewModel());
+        cardPanel.add(breakSessionView, breakSessionView.getViewName());
         return this;
     }
 
@@ -101,16 +108,6 @@ public class SessionViewBuilder {
         inventoryView = viewFactory.createInventoryView(
                 viewModels.getInventoryViewModel(),
                 dialogService);
-        return this;
-    }
-
-    /**
-     * Builds the timer view.
-     * @return this builder
-     */
-    public SessionViewBuilder buildTimerView() {
-        this.timerView = viewFactory.createTimerView(viewModels.getTimerViewModel());
-        cardPanel.add(timerView, timerView.getViewName());
         return this;
     }
 
@@ -137,7 +134,7 @@ public class SessionViewBuilder {
         this.buildSetupSessionView()
                 .buildInventoryView()
                 .buildStudySessionView()
-                .buildTimerView()
+                .buildBreakSessionView()
                 .buildGetCatFactView()
                 .buildDisplayCatStatsView();
 
@@ -145,7 +142,7 @@ public class SessionViewBuilder {
                 setupSessionView,
                 inventoryView,
                 studySessionView,
-                timerView,
+                breakSessionView,
                 getCatFactView,
                 displayCatStatsView);
 

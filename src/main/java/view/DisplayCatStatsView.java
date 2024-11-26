@@ -59,6 +59,9 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         hungerLabel = new JLabel(DisplayCatStatsViewModel.HUNGER_LABEL + "0");
         happinessLabel = new JLabel(DisplayCatStatsViewModel.HAPPINESS_LABEL + "0");
 
+        // Fetch a new cat fact when dialog opens
+        getCatFactView.fetchNewFact();
+
         this.dialogService = dialogService;
 
         final JPanel mainPanel = createMainPanel();
@@ -71,7 +74,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         // Only update fields if state is available
         final CatState initialState = displayCatStatsViewModel.getState();
         if (initialState != null) {
-            updateFields(initialState);
+            this.updateFields(initialState);
         }
     }
 
@@ -191,7 +194,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
     public void propertyChange(PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
             final CatState state = (CatState) evt.getNewValue();
-            updateFields(state);
+            this.updateFields(state);
         }
     }
 
@@ -202,25 +205,5 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
      */
     public String getViewName() {
         return displayCatStatsViewModel.getViewName();
-    }
-
-    /**
-     * Shows a new DisplayCatStatsView dialog.
-     *
-     * @param parent                   the parent frame
-     * @param displayCatStatsViewModel the view model
-     * @param inventoryViewModel
-     * @param getCatFactView           the get cat fact view
-     */
-//    public static void show(JFrame parent, DisplayCatStatsViewModel displayCatStatsViewModel,
-//                            InventoryViewModel inventoryViewModel, GetCatFactView getCatFactView) {
-//        DialogService dialogService = new DialogService(parent);
-//        final DisplayCatStatsView dialog =
-//                new DisplayCatStatsView(parent, displayCatStatsViewModel, inventoryViewModel, getCatFactView, dialogService);
-//        dialog.setVisible(true);
-//    }
-
-    public void setCreateCatController(CreateInventoryController createInventoryController) {
-        this.createInventoryController = createInventoryController;
     }
 }

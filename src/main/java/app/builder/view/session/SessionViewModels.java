@@ -1,8 +1,10 @@
 package app.builder.view.session;
 
+import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.get_cat_fact.GetCatFactViewModel;
+import interface_adapter.login.LoginViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
@@ -11,21 +13,26 @@ import interface_adapter.timer.TimerViewModel;
  * Container for session-related view models.
  */
 public class SessionViewModels {
+    private final LoginViewModel loginViewModel;
     private final SetupSessionViewModel setupSessionViewModel;
     private final InventoryViewModel inventoryViewModel;
     private final TimerViewModel timerViewModel;
     private final StudySessionViewModel studySessionViewModel;
+    private final BreakSessionViewModel breakSessionViewModel;
     private final GetCatFactViewModel getCatFactViewModel;
     private final DisplayCatStatsViewModel displayCatStatsViewModel;
 
     public SessionViewModels(SetupSessionViewModel setupSessionViewModel,
             InventoryViewModel inventoryViewModel,
             TimerViewModel timerViewModel, StudySessionViewModel studySessionViewModel,
+            BreakSessionViewModel breakSessionViewModel, LoginViewModel loginViewModel,
             GetCatFactViewModel getCatFactViewModel, DisplayCatStatsViewModel displayCatStatsViewModel) {
         this.setupSessionViewModel = setupSessionViewModel;
         this.inventoryViewModel = inventoryViewModel;
         this.timerViewModel = timerViewModel;
         this.studySessionViewModel = studySessionViewModel;
+        this.breakSessionViewModel = breakSessionViewModel;
+        this.loginViewModel = loginViewModel;
         this.getCatFactViewModel = getCatFactViewModel;
         this.displayCatStatsViewModel = displayCatStatsViewModel;
     }
@@ -44,6 +51,14 @@ public class SessionViewModels {
 
     public StudySessionViewModel getStudySessionViewModel() {
         return studySessionViewModel;
+    }
+
+    public LoginViewModel getLoginViewModel() {
+        return loginViewModel;
+    }
+
+    public BreakSessionViewModel getBreakSessionViewModel() {
+        return breakSessionViewModel;
     }
 
     public GetCatFactViewModel getGetCatFactViewModel() {

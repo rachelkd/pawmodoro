@@ -14,6 +14,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import app.service.DialogService;
@@ -23,21 +24,19 @@ import interface_adapter.cat.CatViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsController;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
-import interface_adapter.get_cat_fact.GetCatFactController;
 
 /**
  * A view component that displays a cat's image and handles click interactions.
- * When clicked, it should display a random cat fact and provide access to the
- * cat's statistics.
+ * When clicked, it displays the cat's statistics.
  */
 public class CatView extends JPanel implements ActionListener, PropertyChangeListener {
     private final CatViewModel catViewModel;
     private final InventoryViewModel inventoryViewModel;
     private final JLabel imageLabel;
-    private final GetCatFactView getCatFactView;
     private final DialogService dialogService;
     private DisplayCatStatsController displayCatStatsController;
-    private GetCatFactController getCatFactController;
+    private final GetCatFactView getCatFactView;
+    private final DisplayCatStatsViewModel displayCatStatsViewModel;
 
     /**
      * Creates a new CatView.
@@ -48,7 +47,6 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
      * @param dialogService            the service for showing dialogs
      * @param getCatFactView           the view for displaying cat facts
      */
-
     public CatView(CatViewModel catViewModel, DisplayCatStatsViewModel displayCatStatsViewModel,
                    InventoryViewModel inventoryViewModel, DialogService dialogService, GetCatFactView getCatFactView) {
         this.catViewModel = catViewModel;
@@ -56,14 +54,15 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
         this.inventoryViewModel = inventoryViewModel;
         this.dialogService = dialogService;
         this.getCatFactView = getCatFactView;
+        this.displayCatStatsViewModel = displayCatStatsViewModel;
 
         // Set layout to BorderLayout for centering at bottom
         this.setLayout(new BorderLayout());
 
         // Create and configure image label
         imageLabel = new JLabel();
-        imageLabel.setHorizontalAlignment(JLabel.CENTER);
-        imageLabel.setVerticalAlignment(JLabel.BOTTOM);
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        imageLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 
         // Set initial sizes for the image label only
         final Dimension size = new Dimension(Constants.CAT_SPRITE_DISPLAY_SIZE, Constants.CAT_SPRITE_DISPLAY_SIZE);
@@ -75,18 +74,8 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
         imageLabel.setOpaque(true);
         imageLabel.setVisible(true);
 
-        // When cat is clicked, display cat stats dialog
-        imageLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (displayCatStatsController != null && getCatFactController != null) {
-                    final CatState state = catViewModel.getState();
-                    displayCatStatsController.execute(state.getOwnerUsername(), state.getCatName());
-                    getCatFactController.execute();
-                    dialogService.showCatStatsDialog(displayCatStatsViewModel, inventoryViewModel, getCatFactView);
-                }
-            }
-        });
+        // Set up mouse listener
+        this.setupMouseListener();
 
         // Add the image label to the bottom center of the panel
         this.add(imageLabel, BorderLayout.PAGE_END);
@@ -103,12 +92,25 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
         });
     }
 
-    public void setDisplayCatStatsController(DisplayCatStatsController controller) {
-        this.displayCatStatsController = controller;
+    /**
+     * Sets up the mouse listener for the cat image.
+     * When clicked, displays the cat's statistics.
+     */
+    private void setupMouseListener() {
+        imageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (displayCatStatsController != null) {
+                    final CatState state = catViewModel.getState();
+                    displayCatStatsController.execute(state.getOwnerUsername(), state.getCatName());
+                    dialogService.showCatStatsDialog(displayCatStatsViewModel, getCatFactView);
+                }
+            }
+        });
     }
 
-    public void setGetCatFactController(GetCatFactController controller) {
-        this.getCatFactController = controller;
+    public void setDisplayCatStatsController(DisplayCatStatsController controller) {
+        this.displayCatStatsController = controller;
     }
 
     private void updateCatImage(CatState state) {

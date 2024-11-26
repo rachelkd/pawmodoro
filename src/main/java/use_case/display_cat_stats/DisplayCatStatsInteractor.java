@@ -19,15 +19,14 @@ public class DisplayCatStatsInteractor implements DisplayCatStatsInputBoundary {
 
     @Override
     public void execute(DisplayCatStatsInputData displayCatStatsInputData) {
-        try {
-            final String catName = displayCatStatsInputData.getCatName();
-            final String username = displayCatStatsInputData.getUsername();
+        final String catName = displayCatStatsInputData.getCatName();
+        final String username = displayCatStatsInputData.getUsername();
 
-            final Cat cat = catDataAccessObject.getCatByNameAndOwner(catName, username);
-            if (cat == null) {
-                throw new NoCatsFoundException(username);
-            }
-
+        final Cat cat = catDataAccessObject.getCatByNameAndOwner(catName, username);
+        if (cat == null) {
+            displayCatStatsPresenter.prepareFailView(new NoCatsFoundException(username).getMessage());
+        }
+        else {
             final DisplayCatStatsOutputData outputData = new DisplayCatStatsOutputData(
                     catName,
                     cat.getHungerLevel(),
@@ -35,9 +34,6 @@ public class DisplayCatStatsInteractor implements DisplayCatStatsInputBoundary {
                     cat.getImageFileName());
 
             displayCatStatsPresenter.prepareSuccessView(outputData);
-        }
-        catch (NoCatsFoundException exception) {
-            displayCatStatsPresenter.prepareFailView(exception.getMessage());
         }
     }
 }

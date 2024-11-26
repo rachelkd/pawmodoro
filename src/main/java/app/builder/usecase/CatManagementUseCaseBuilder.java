@@ -13,7 +13,7 @@ import interface_adapter.create_cat.CreateCatPresenter;
 import interface_adapter.maxcatserror.MaxCatsErrorController;
 import interface_adapter.maxcatserror.MaxCatsErrorPresenter;
 import interface_adapter.runawaycat.RunawayCatController;
-import interface_adapter.runawaycat.RunawayPresenter;
+import interface_adapter.runawaycat.RunawayCatPresenter;
 import use_case.adoption.AdoptionInputBoundary;
 import use_case.adoption.AdoptionInteractor;
 import use_case.adoption.AdoptionOutputBoundary;
@@ -39,7 +39,6 @@ import use_case.runawaycat.RunawayCatOutputBoundary;
 public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Creates a new cat management use case builder.
-     *
      * @param views the views
      * @param dataAccess the data access components
      */
@@ -49,7 +48,6 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the adoption use case.
-     *
      * @return this builder
      */
     public CatManagementUseCaseBuilder buildAdoptionUseCase() {
@@ -67,7 +65,6 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the max cats error use case.
-     *
      * @return this builder
      */
     public CatManagementUseCaseBuilder buildMaxCatsErrorUseCase() {
@@ -83,15 +80,15 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the runaway cat use case.
-     *
      * @return this builder
      */
     public CatManagementUseCaseBuilder buildRunawayCatUseCase() {
-        final RunawayCatOutputBoundary outputBoundary = new RunawayPresenter(
+        final RunawayCatOutputBoundary outputBoundary = new RunawayCatPresenter(
                 getViews().getCat().getViewModels().getRunawayCatViewModel(),
                 getViews().getViewManagerModel());
 
-        final RunawayCatInputBoundary interactor = new RunawayCatInteractor(outputBoundary);
+        final RunawayCatInputBoundary interactor = new RunawayCatInteractor(outputBoundary,
+                getDataAccess().getCatDataAccess());
         final RunawayCatController controller =
                 new RunawayCatController(getViews().getCat().getViewModels().getRunawayCatViewModel(), interactor);
         getViews().getCat().getViews().getRunawayCatView().setRunawayCatController(controller);
@@ -101,7 +98,6 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds Create Cat use case.
-     * 
      * @return this builder
      */
     public CatManagementUseCaseBuilder buildCreateCatUseCase() {
@@ -123,7 +119,6 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds Change Cat Hunger Use Case.
-     * 
      * @return this builder
      */
     public CatManagementUseCaseBuilder buildChangeCatHungerUseCase() {
@@ -142,7 +137,6 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds Change Cat Happiness Use Case.
-     * 
      * @return this builder
      */
     public CatManagementUseCaseBuilder buildChangeCatHappinessUseCase() {
@@ -161,7 +155,6 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds all cat management-related use cases.
-     *
      * @return this builder
      */
     public CatManagementUseCaseBuilder build() {

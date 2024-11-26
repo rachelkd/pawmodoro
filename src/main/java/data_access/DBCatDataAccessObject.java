@@ -17,10 +17,10 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import use_case.cat.CatDataAccessInterface;
-
 /**
  * Database implementation of CatDataAccessInterface using Supabase.
  */
+
 public class DBCatDataAccessObject implements CatDataAccessInterface {
     private static final String API_KEY_HEADER = "apikey";
     private static final String AUTH_HEADER = "Authorization";
@@ -237,31 +237,23 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
     @Override
     public boolean removeCat(String name, String ownerUsername) {
         boolean isSuccessful = false;
-
         final Request request = new Request.Builder()
                 .url(apiUrl + CATS_ENDPOINT + NAME_QUERY + name + OWNER_QUERY + ownerUsername)
                 .delete()
                 .addHeader(API_KEY_HEADER, apiKey)
                 .addHeader(AUTH_HEADER, BEARER_PREFIX + apiKey)
+                .addHeader(PREFER_HEADER, PREFER_RETURN_MINIMAL)
                 .build();
 
-        // only make request if cat exists
         if (existsByNameAndOwner(name, ownerUsername)) {
-
-            try (Response response = client.newCall(request).execute()) {
-                // delete does not return any content --> 204
-                if (response.isSuccessful()) {
-                    isSuccessful = true;
-                }
-                else {
-                    System.err.println("Failed to Remove Cat. Response message: " + response.message());
-                }
+            try {
+                final Response response = client.newCall(request).execute();
+                isSuccessful = response.isSuccessful();
             }
-            catch (IOException exception) {
-                System.err.println("Error occurred while removing the cat: " + exception.getMessage());
+            catch (final IOException exception) {
+                // Keep isSuccessful false
             }
         }
-
         return isSuccessful;
     }
 

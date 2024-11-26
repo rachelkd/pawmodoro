@@ -18,12 +18,17 @@ public class DisplayCatImageInteractor implements DisplayCatImageInputBoundary {
     }
 
     @Override
-    public void execute(DisplayCatImageInputData inputData) {
+    public void execute() {
         try {
             final CatImage catImage = catImageDataAccessObject.fetchRandomCatImage();
-            final DisplayCatImageOutputData outputData = new DisplayCatImageOutputData(catImage.getImageId(),
-                    catImage.getImageUrl(), false);
-            displayCatImagePresenter.prepareSuccessView(outputData);
+            if (catImage == null) {
+                displayCatImagePresenter.prepareFailView("Failed to fetch cat image: No cat image found");
+            }
+            else {
+                final DisplayCatImageOutputData outputData = new DisplayCatImageOutputData(catImage.getImageId(),
+                        catImage.getImageUrl(), false);
+                displayCatImagePresenter.prepareSuccessView(outputData);
+            }
         }
         catch (CatImageFetchException exception) {
             displayCatImagePresenter.prepareFailView("Failed to fetch cat image: " + exception.getMessage());
