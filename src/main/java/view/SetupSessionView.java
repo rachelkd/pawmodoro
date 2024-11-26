@@ -53,8 +53,8 @@ public class SetupSessionView extends JPanel implements ActionListener {
                         final SetupSessionState currentState = setupSessionViewModel.getState();
 
                         setupSessionController.execute(
-                                currentState.getBreakTime(),
-                                currentState.getStudyTime());
+                                currentState.getStudyTime(),
+                                currentState.getBreakTime());
 
                         setupSessionController.switchToStudyView();
                     }
@@ -98,7 +98,7 @@ public class SetupSessionView extends JPanel implements ActionListener {
     private void addBreakTimeListener() {
         breaktime.addActionListener(evt -> {
             final SetupSessionState currentState = setupSessionViewModel.getState();
-            currentState.setBreakTime((String) studytime.getSelectedItem());
+            currentState.setBreakTime((String) breaktime.getSelectedItem());
             setupSessionViewModel.setState(currentState);
         });
     }

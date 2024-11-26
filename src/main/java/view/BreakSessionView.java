@@ -6,6 +6,9 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.logging.Logger;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,17 +20,18 @@ import javax.swing.Timer;
 
 import constants.Constants;
 import interface_adapter.break_session.BreakSessionController;
+import interface_adapter.break_session.BreakSessionState;
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.logout.LogoutController;
-import interface_adapter.study_session.StudySessionController;
-import use_case.breaksession.BreakSessionOutputBoundary;
-import use_case.studysession.StudySessionOutputBoundary;
 
 /**
  * Views for Break Session.
  */
-public class BreakSessionView extends JPanel implements ActionListener {
-    private final String viewName = "break session";
+public class BreakSessionView extends JPanel implements ActionListener, PropertyChangeListener {
+    private static final Logger LOGGER = Logger.getLogger(BreakSessionView.class.getName());
+
+    private final BreakSessionViewModel breakSessionViewModel;
+    private final BreakSessionState breakSessionState;
 
     private LogoutController logoutController;
     private BreakSessionController breakSessionController;
@@ -37,11 +41,16 @@ public class BreakSessionView extends JPanel implements ActionListener {
 
     private final JLabel timerLabel;
     private Timer swingTimer;
-    private long remainingTime = Constants.DEFAULT_BREAK_DURATION_MS;
+    private long remainingTime;
 
-    public BreakSessionView(BreakSessionViewModel breakSessionViewModel) {
-
+    public BreakSessionView(BreakSessionViewModel breakSessionViewModel, BreakSessionState breakSessionState) {
         this.setLayout(new BorderLayout());
+        this.breakSessionViewModel = breakSessionViewModel;
+        this.breakSessionState = breakSessionState;
+
+        // Initialize remaining time with the break interval from the state
+        breakSessionViewModel.addPropertyChangeListener(this);
+        this.remainingTime = breakSessionState.getBreakInterval();
 
         // Timer label to display the countdown timer
         timerLabel = new JLabel(formatTime(remainingTime), SwingConstants.CENTER);
@@ -70,14 +79,10 @@ public class BreakSessionView extends JPanel implements ActionListener {
                 }
                 else {
                     swingTimer.stop();
-
-                    // Notify the presenter to switch the view to study session
-                    if (breakSessionController != null) {
                         breakSessionController.switchToStudySessionView();
-                    }
-                    else {
-                        System.err.println("BreakSessionOutputBoundary is not initialized.");
-                    }
+                        breakSessionState.resetToDefaultBreakInterval();
+                        remainingTime = breakSessionState.getBreakInterval();
+                        updateTimerLabel();
                 }
             }
         });
@@ -156,8 +161,16 @@ public class BreakSessionView extends JPanel implements ActionListener {
     }
 
     public String getViewName() {
-        return viewName;
+        return breakSessionViewModel.getViewName();
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if ("state".equals(evt.getPropertyName())) {
+            final BreakSessionState newState = (BreakSessionState) evt.getNewValue();
+            remainingTime = newState.getBreakInterval();
+            updateTimerLabel();
+        }
+    }
 }
 

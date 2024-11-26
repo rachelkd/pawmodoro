@@ -100,9 +100,14 @@ public class SessionViewBuilder {
         return this;
     }
 
+    /**
+     * Builds the break session view.
+     * @return this builder
+     */
     public SessionViewBuilder buildBreakSessionView() {
         this.breakSessionView = viewFactory.createBreakSessionView(
-                viewModels.getBreakSessionViewModel());
+                viewModels.getBreakSessionViewModel(),
+                viewModels.getBreakSessionViewModel().getState());
         cardPanel.add(breakSessionView, breakSessionView.getViewName());
         return this;
     }

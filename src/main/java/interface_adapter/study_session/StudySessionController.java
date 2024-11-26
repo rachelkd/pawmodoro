@@ -32,4 +32,5 @@ public class StudySessionController {
     public void switchToBreakSessionView() {
         studySessionInteractor.switchToBreakSessionView();
     }
+
 }
