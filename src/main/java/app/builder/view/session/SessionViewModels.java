@@ -65,5 +65,7 @@ public class SessionViewModels {
         return getCatFactViewModel;
     }
 
-    public DisplayCatStatsViewModel getDisplayCatStatsViewModel() { return displayCatStatsViewModel;}
+    public DisplayCatStatsViewModel getDisplayCatStatsViewModel() {
+        return displayCatStatsViewModel;
+    }
 }

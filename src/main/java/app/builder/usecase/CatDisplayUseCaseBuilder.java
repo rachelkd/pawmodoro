@@ -6,6 +6,7 @@ import interface_adapter.display_cat_image.DisplayCatImageController;
 import interface_adapter.display_cat_image.DisplayCatImagePresenter;
 import interface_adapter.display_cat_stats.DisplayCatStatsController;
 import interface_adapter.display_cat_stats.DisplayCatStatsPresenter;
+import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.get_cat_fact.GetCatFactController;
 import interface_adapter.get_cat_fact.GetCatFactPresenter;
 import use_case.display_cat_image.DisplayCatImageInputBoundary;
@@ -24,7 +25,6 @@ import use_case.get_cat_fact.GetCatFactOutputBoundary;
 public class CatDisplayUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Creates a new cat display use case builder.
-     *
      * @param views the views
      * @param dataAccess the data access components
      */
@@ -34,7 +34,6 @@ public class CatDisplayUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the display cat image use case.
-     *
      * @return this builder
      */
     public CatDisplayUseCaseBuilder buildDisplayCatImageUseCase() {
@@ -52,10 +51,11 @@ public class CatDisplayUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the display cat stats use case.
-     *
      * @return this builder
      */
     public CatDisplayUseCaseBuilder buildDisplayCatStatsUseCase() {
+        final DisplayCatStatsViewModel vm1 = getViews().getSession().getViewModels().getDisplayCatStatsViewModel();
+        System.out.println("Presenter ViewModel: " + vm1);
         final DisplayCatStatsOutputBoundary presenter = new DisplayCatStatsPresenter(
                 getViews().getSession().getViewModels().getDisplayCatStatsViewModel());
 
@@ -70,7 +70,6 @@ public class CatDisplayUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the get cat fact use case.
-     *
      * @return this builder
      */
     public CatDisplayUseCaseBuilder buildGetCatFactUseCase() {
@@ -88,7 +87,6 @@ public class CatDisplayUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds all cat display-related use cases.
-     *
      * @return this builder
      */
     public CatDisplayUseCaseBuilder build() {
