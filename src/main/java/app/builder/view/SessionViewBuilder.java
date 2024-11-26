@@ -2,7 +2,7 @@ package app.builder.view;
 
 import java.awt.CardLayout;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import app.builder.view.cat.CatViewsAndModels;
 import app.builder.view.session.SessionViewModels;
@@ -93,6 +93,10 @@ public class SessionViewBuilder {
         return this;
     }
 
+    /**
+     * Builds the break session view.
+     * @return this builder
+     */
     public SessionViewBuilder buildBreakSessionView() {
         this.breakSessionView = viewFactory.createBreakSessionView(
                 viewModels.getBreakSessionViewModel());

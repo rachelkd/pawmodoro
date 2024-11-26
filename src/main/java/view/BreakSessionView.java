@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -19,15 +21,14 @@ import constants.Constants;
 import interface_adapter.break_session.BreakSessionController;
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.logout.LogoutController;
-import interface_adapter.study_session.StudySessionController;
-import use_case.breaksession.BreakSessionOutputBoundary;
-import use_case.studysession.StudySessionOutputBoundary;
 
 /**
  * Views for Break Session.
  */
 public class BreakSessionView extends JPanel implements ActionListener {
-    private final String viewName = "break session";
+    private static final Logger LOGGER = Logger.getLogger(BreakSessionView.class.getName());
+
+    private final BreakSessionViewModel breakSessionViewModel;
 
     private LogoutController logoutController;
     private BreakSessionController breakSessionController;
@@ -40,8 +41,8 @@ public class BreakSessionView extends JPanel implements ActionListener {
     private long remainingTime = Constants.DEFAULT_BREAK_DURATION_MS;
 
     public BreakSessionView(BreakSessionViewModel breakSessionViewModel) {
-
         this.setLayout(new BorderLayout());
+        this.breakSessionViewModel = breakSessionViewModel;
 
         // Timer label to display the countdown timer
         timerLabel = new JLabel(formatTime(remainingTime), SwingConstants.CENTER);
@@ -76,7 +77,7 @@ public class BreakSessionView extends JPanel implements ActionListener {
                         breakSessionController.switchToStudySessionView();
                     }
                     else {
-                        System.err.println("BreakSessionOutputBoundary is not initialized.");
+                        LOGGER.log(Level.SEVERE, "BreakSessionOutputBoundary is not initialized.");
                     }
                 }
             }
@@ -156,8 +157,6 @@ public class BreakSessionView extends JPanel implements ActionListener {
     }
 
     public String getViewName() {
-        return viewName;
+        return breakSessionViewModel.getViewName();
     }
-
 }
-
