@@ -2,6 +2,7 @@ package use_case.food_management.add_to_inventory;
 
 import java.util.Map;
 
+import constants.Constants;
 import entity.AbstractFood;
 import entity.FoodItemFactory;
 import entity.Inventory;
@@ -32,32 +33,35 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
 
         // item in inventory already
         if (inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                .getItems().containsKey(addToInventoryInputData.getFoodName())) {
+                .getItems().containsKey(getFoodName(addToInventoryInputData.getStudySessionLength()))) {
+
+            final String foodName = getFoodName(addToInventoryInputData.getStudySessionLength());
 
             final int prevQuantity = inventoryDataAccessObject
                     .getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().get(addToInventoryInputData.getFoodName()).getQuantity();
+                    .getItems().get(foodName).getQuantity();
+
             final Inventory inventory = inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId());
-            foodItem = inventory.getItems().get(addToInventoryInputData.getFoodName());
+            foodItem = inventory.getItems().get(foodName);
             foodItem.setQuantity(prevQuantity + 1);
             // since food object mutable
             inventoryDataAccessObject.updateInventory(inventory);
 
             isSuccess = inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().containsKey(addToInventoryInputData.getFoodName()) && inventoryDataAccessObject
+                    .getItems().containsKey(foodName) && inventoryDataAccessObject
                     .getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().get(addToInventoryInputData.getFoodName()).getQuantity() == prevQuantity + 1;
+                    .getItems().get(foodName).getQuantity() == prevQuantity + 1;
 
         } // item not in inventory
         else {
-            foodItem = foodFactory.create(addToInventoryInputData.getFoodName());
+            foodItem = getRewardFoodItem(addToInventoryInputData.getStudySessionLength());
             foodItem.setQuantity(1);
 
             final Map<String, AbstractFood> newInventoryItems = inventoryDataAccessObject
                     .getInventory(addToInventoryInputData.getOwnerId())
                     .getItems();
 
-            newInventoryItems.put(addToInventoryInputData.getFoodName(), foodItem);
+            newInventoryItems.put(foodItem.getName(), foodItem);
 
             final Inventory inventory = inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId());
 
@@ -66,9 +70,9 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
             inventoryDataAccessObject.updateInventory(inventory);
 
             isSuccess = inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().containsKey(addToInventoryInputData.getFoodName())
+                    .getItems().containsKey(foodItem.getName())
                     && inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().get(addToInventoryInputData.getFoodName()).getQuantity() == 1;
+                    .getItems().get(foodItem.getName()).getQuantity() == 1;
         }
 
         final AddToInventoryOutputData addToInventoryOutputData =
@@ -78,7 +82,39 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
     }
 
     AbstractFood getRewardFoodItem(int studySessionLength) {
-        return;
+        AbstractFood foodItem = null;
+
+        if (studySessionLength < Constants.MINUTES_20) {
+            foodItem = foodFactory.create("Milk");
+        }
+        else if (studySessionLength < Constants.MINUTES_40) {
+            foodItem = foodFactory.create("Cheese");
+        }
+        else if (studySessionLength < Constants.MINUTES_60) {
+            foodItem = foodFactory.create("Tuna");
+        }
+        else {
+            foodItem = foodFactory.create("Treat");
+        }
+        return foodItem;
+    }
+
+    String getFoodName(int studySessionLength) {
+        String foodName = null;
+
+        if (studySessionLength < Constants.MINUTES_20) {
+            foodName = "Milk";
+        }
+        else if (studySessionLength < Constants.MINUTES_40) {
+            foodName = "Cheese";
+        }
+        else if (studySessionLength < Constants.MINUTES_60) {
+            foodName = "Tuna";
+        }
+        else {
+            foodName = "Treat";
+        }
+        return foodName;
     }
 
 }

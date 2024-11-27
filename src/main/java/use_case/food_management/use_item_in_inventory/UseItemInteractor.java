@@ -23,7 +23,8 @@ public class UseItemInteractor implements UseItemInputBoundary {
     @Override
     public void execute(UseItemInputData useItemInputData) {
         boolean isSuccess = false;
-        Map<String, AbstractFood> inventoryItems = new HashMap<>();
+        Map<String, AbstractFood> inventoryItems =
+                inventoryDataAccessObject.getInventoryItems(useItemInputData.getOwnerId());
 
         // if you can use item
         if (inventoryDataAccessObject.canUseItem(useItemInputData.getOwnerId(), useItemInputData.getFoodName())) {

@@ -25,7 +25,7 @@ class AddToInventoryInteractorTest {
 
     @Test
     void successAddToEmptyInventoryTest() {
-        final AddToInventoryInputData inputData = new AddToInventoryInputData("chiually", "milk");
+        final AddToInventoryInputData inputData = new AddToInventoryInputData("chiually", 10);
         final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
 
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
@@ -51,7 +51,7 @@ class AddToInventoryInteractorTest {
     @Test
     void successAddToInventoryWithItemTest() {
         final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
-        final AddToInventoryInputData inputData = new AddToInventoryInputData("chiually", "milk");
+        final AddToInventoryInputData inputData = new AddToInventoryInputData("chiually", 10);
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
 

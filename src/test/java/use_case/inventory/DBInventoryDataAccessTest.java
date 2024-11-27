@@ -128,7 +128,7 @@ class DBInventoryDataAccessTest {
 
         inventoryRepository.save(inventory);
 
-        assertTrue(inventoryRepository.canUseItem("testuser", "milk"));
+        assertTrue(inventoryRepository.canUseItem("testuser", "Milk"));
         assertFalse(inventoryRepository.canUseItem("testuser", "tuna"));
     }
 
