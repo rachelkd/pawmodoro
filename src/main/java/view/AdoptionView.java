@@ -1,12 +1,23 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -58,13 +69,13 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
         final JLabel title = new JLabel(AdoptionViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setBorder(BorderFactory.createEmptyBorder(0, INDENT, 0, 0));
-        mainPanel.add(title, BorderLayout.NORTH);
 
         information.add(name);
         information.add(nameField);
         finish.add(confirmButton);
         finish.add(cancelButton);
 
+        mainPanel.add(title, BorderLayout.NORTH);
         mainPanel.add(information, BorderLayout.CENTER);
         mainPanel.add(finish, BorderLayout.SOUTH);
 
@@ -113,7 +124,6 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
                 documentListenerHelper();
             }
         });
-
 
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
     }

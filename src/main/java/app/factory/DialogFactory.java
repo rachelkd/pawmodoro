@@ -72,6 +72,11 @@ public class DialogFactory {
         return new DisplayCatStatsView(getParentFrame(), viewModel, getCatFactView);
     }
 
+    /**
+     * Creats a new AdoptionView dialog.
+     * @param viewModel the view model for the dialog
+     * @return the adoption view dialog
+     */
     public AdoptionView createAdoptionDialog(AdoptionViewModel viewModel) {
         return new AdoptionView(getParentFrame(), viewModel);
     }

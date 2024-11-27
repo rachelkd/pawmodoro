@@ -98,24 +98,24 @@ public class DialogService {
     }
 
     /**
-     * Creates the Adoption Dialog
-     *
+     * Creates the Adoption Dialog.
+     * @param viewModel the view model for the adoption dialog
      */
     public void createAdoptionDialog(AdoptionViewModel viewModel) {
-        if(mainFrame == null) {
+        if (mainFrame == null) {
             mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
         }
-        if(adoptionDialog == null) {
+        if (adoptionDialog == null) {
             adoptionDialog = dialogFactory.createAdoptionDialog(viewModel);
         }
     }
 
     /**
-     * Shows the adoption dialog
-     *
+     * Shows the adoption dialog.
+     * @param viewModel the view model for the adoption dialog
      */
     public void showAdoptionDialog(AdoptionViewModel viewModel) {
-        if(mainFrame == null) {
+        if (mainFrame == null) {
             mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
         }
         if (adoptionDialog == null) {
@@ -125,18 +125,17 @@ public class DialogService {
     }
 
     /**
-     * Hides the adoption dialog
-     *
+     * Hides the adoption dialog.
      */
-    public void HideAdoptionDialog() {
+    public void hideAdoptionDialog() {
         if (adoptionDialog != null && adoptionDialog.isVisible()) {
             adoptionDialog.setVisible(false);
         }
     }
 
     /**
-     * Gets the adoption dialog
-     *
+     * Gets the adoption dialog.
+     * @return the adoption dialog
      */
     public JDialog getAdoptionDialog() {
         return adoptionDialog;
