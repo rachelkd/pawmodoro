@@ -42,7 +42,7 @@ public class ChangeCatHungerInteractor implements ChangeCatHungerInputBoundary {
         catDataAccessObject.updateCat(cat);
 
         final ChangeCatHungerOutputData changeCatHungerOutputData = new ChangeCatHungerOutputData(
-                cat.getOwnerUsername(), cat,
+                cat.getOwnerUsername(), cat.getName(),
                 catDataAccessObject.getHungerLevel(cat.getName(), cat.getOwnerUsername()));
         changeCatHungerPresenter.prepareSuccessView(changeCatHungerOutputData);
 
