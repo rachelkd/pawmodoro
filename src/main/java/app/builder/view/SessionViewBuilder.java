@@ -13,6 +13,8 @@ import app.factory.viewmodel.SessionViewModelFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
 import view.BreakSessionView;
+import view.GetCatFactView;
+import view.InventoryView;
 import view.SetupSessionView;
 import view.StudySessionView;
 
@@ -112,7 +114,8 @@ public class SessionViewBuilder {
      */
     private SessionViewBuilder buildBreakSessionView() {
         this.breakSessionView = viewFactory.createBreakSessionView(
-                viewModels.getBreakSessionViewModel());
+                viewModels.getBreakSessionViewModel(),
+                viewModels.getBreakSessionViewModel().getState());
         cardPanel.add(breakSessionView, breakSessionView.getViewName());
         return this;
     }
