@@ -1,8 +1,6 @@
 package app.service;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import app.factory.DialogFactory;
 import interface_adapter.adoption.AdoptionViewModel;
@@ -115,7 +113,6 @@ public class DialogService {
     }
 
     /**
-
      * Creates the display cat stats dialog.
      * @param displayCatStatsViewModel the view model for the dialog
      * @param inventoryViewModel the view model for the inventory dialog
@@ -148,8 +145,9 @@ public class DialogService {
      */
     public DisplayCatStatsView getDisplayCatStatsDialog() {
         return displayCatStatsDialog;
-      
-     /**
+    }
+
+    /**
      * Creates the Adoption Dialog.
      * @param viewModel the view model for the adoption dialog
      */
