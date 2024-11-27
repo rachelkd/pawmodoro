@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import app.factory.DialogFactory;
+import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import view.GetCatFactView;
@@ -15,6 +16,7 @@ import view.GetCatFactView;
  */
 public class DialogService {
     private JDialog inventoryDialog;
+    private JDialog adoptionDialog;
     private final JPanel mainPanel;
     private final DialogFactory dialogFactory;
     private JFrame mainFrame;
@@ -93,5 +95,50 @@ public class DialogService {
      */
     public JDialog getInventoryDialog() {
         return inventoryDialog;
+    }
+
+    /**
+     * Creates the Adoption Dialog
+     *
+     */
+    public void createAdoptionDialog(AdoptionViewModel viewModel) {
+        if(mainFrame == null) {
+            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+        }
+        if(adoptionDialog == null) {
+            adoptionDialog = dialogFactory.createAdoptionDialog(viewModel);
+        }
+    }
+
+    /**
+     * Shows the adoption dialog
+     *
+     */
+    public void showAdoptionDialog(AdoptionViewModel viewModel) {
+        if(mainFrame == null) {
+            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+        }
+        if (adoptionDialog == null) {
+            adoptionDialog = dialogFactory.createAdoptionDialog(viewModel);
+        }
+        adoptionDialog.setVisible(true);
+    }
+
+    /**
+     * Hides the adoption dialog
+     *
+     */
+    public void HideAdoptionDialog() {
+        if (adoptionDialog != null && adoptionDialog.isVisible()) {
+            adoptionDialog.setVisible(false);
+        }
+    }
+
+    /**
+     * Gets the adoption dialog
+     *
+     */
+    public JDialog getAdoptionDialog() {
+        return adoptionDialog;
     }
 }

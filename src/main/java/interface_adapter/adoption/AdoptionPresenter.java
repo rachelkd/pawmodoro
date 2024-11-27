@@ -44,12 +44,6 @@ public class AdoptionPresenter implements AdoptionOutputBoundary {
         adoptionViewModel.firePropertyChanged();
     }
 
-    @Override
-    public void switchToSetupView() {
-        viewManagerModel.setState("adoption");
-        viewManagerModel.firePropertyChanged();
-    }
-
     public boolean getSuccessViewCalled() {
         return prepareSuccessViewCalled;
     }

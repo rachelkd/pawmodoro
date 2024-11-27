@@ -69,7 +69,7 @@ public class CatManagementViewBuilder {
      * @return this builder
      */
     private CatManagementViewBuilder buildAdoptionView() {
-        adoptionView = viewFactory.createAdoptionView(catViewModels.getAdoptionViewModel());
+        adoptionView = viewFactory.createAdoptionView(catViewModels.getAdoptionViewModel(), dialogService);
         cardPanel.add(adoptionView, adoptionView.getViewName());
         return this;
     }

@@ -24,11 +24,4 @@ public class AdoptionController {
 
         adoptionUseCaseInteractor.execute(adoptionInputData);
     }
-
-    /**
-     * Executes the switch to Setup Session View use case.
-     */
-    public void switchToSetupView() {
-        adoptionUseCaseInteractor.switchToSetupView();
-    }
 }

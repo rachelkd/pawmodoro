@@ -20,8 +20,4 @@ public class AdoptionInteractor implements AdoptionInputBoundary {
         adoptionPresenter.prepareSuccessView(adoptionOutputData);
     }
 
-    @Override
-    public void switchToSetupView() {
-        adoptionPresenter.switchToSetupView();
-    }
 }

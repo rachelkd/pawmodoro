@@ -12,8 +12,4 @@ public interface AdoptionInputBoundary {
      */
     void execute(AdoptionInputData adoptionInputData);
 
-    /**
-     * Executes the switch to setup session use case
-     */
-    void switchToSetupView();
 }

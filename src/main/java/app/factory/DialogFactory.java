@@ -4,8 +4,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
+import view.AdoptionView;
 import view.DisplayCatStatsView;
 import view.GetCatFactView;
 import view.InventoryView;
@@ -68,5 +70,9 @@ public class DialogFactory {
             mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
         }
         return new DisplayCatStatsView(getParentFrame(), viewModel, getCatFactView);
+    }
+
+    public AdoptionView createAdoptionDialog(AdoptionViewModel viewModel) {
+        return new AdoptionView(getParentFrame(), viewModel);
     }
 }

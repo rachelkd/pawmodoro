@@ -18,8 +18,4 @@ public interface AdoptionOutputBoundary {
      */
     void prepareFailView(String errorMessage);
 
-    /**
-     * Switches to the adoption view
-     */
-    void switchToSetupView();
 }

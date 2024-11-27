@@ -1,19 +1,13 @@
 package view;
 
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -26,7 +20,8 @@ import interface_adapter.create_cat.CreateCatController;
 /**
  * The view for the Adopting a cat use case.
  */
-public class AdoptionView extends JPanel implements ActionListener, PropertyChangeListener {
+public class AdoptionView extends JDialog implements ActionListener, PropertyChangeListener {
+    private static final int INDENT = 10;
     private final AdoptionViewModel adoptionViewModel;
     private final String viewName = "adoption";
     private final JLabel name = new JLabel(AdoptionViewModel.NAME_LABEL);
@@ -35,24 +30,43 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
     private final JButton cancelButton = new JButton(AdoptionViewModel.CANCEL_BUTTON_LABEL);
     private AdoptionController adoptionController;
     private CreateCatController createCatController;
+    private final JPanel mainPanel;
+    private final JPanel information;
+    private final JPanel finish;
+    private final JPanel adoptionPanel;
 
     /**
      * Creates a new AdoptionView.
+     *
+     * @param parent the application
      * @param adoptionViewModel the view model for the adoption use case
      */
-    public AdoptionView(AdoptionViewModel adoptionViewModel) {
+    public AdoptionView(JFrame parent, AdoptionViewModel adoptionViewModel) {
+        super(parent, AdoptionViewModel.TITLE_LABEL, true);
         this.adoptionViewModel = adoptionViewModel;
         this.adoptionViewModel.addPropertyChangeListener(this);
 
+        this.mainPanel = new JPanel();
+        mainPanel.setPreferredSize(new Dimension(Constants.ADOPTION_VIEW_WIDTH, Constants.ADOPTION_VIEW_HEIGHT));
+        mainPanel.setLayout(new BorderLayout());
+        final Border border = BorderFactory.createLineBorder(Color.black);
+        mainPanel.setBorder(border);
+
+        this.information = new JPanel();
+        this.finish = new JPanel();
+
         final JLabel title = new JLabel(AdoptionViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setBorder(BorderFactory.createEmptyBorder(0, INDENT, 0, 0));
+        mainPanel.add(title, BorderLayout.NORTH);
 
-        final JPanel information = new JPanel();
         information.add(name);
         information.add(nameField);
-        final JPanel finish = new JPanel();
         finish.add(confirmButton);
         finish.add(cancelButton);
+
+        mainPanel.add(information, BorderLayout.CENTER);
+        mainPanel.add(finish, BorderLayout.SOUTH);
 
         confirmButton.addActionListener(
                 new ActionListener() {
@@ -70,9 +84,12 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
                         }
                     }
                 });
-        cancelButton.addActionListener(this);
+        cancelButton.addActionListener(event -> this.setVisible(false));
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(mainPanel);
+        this.pack();
+        this.setLocationRelativeTo(parent);
+        this.adoptionPanel = new JPanel();
 
         nameField.getDocument().addDocumentListener(new DocumentListener() {
             private void documentListenerHelper() {
@@ -97,17 +114,13 @@ public class AdoptionView extends JPanel implements ActionListener, PropertyChan
             }
         });
 
-        this.add(title);
-        this.add(information);
-        this.add(finish);
+
         this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
     }
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource().equals(cancelButton)) {
-            adoptionController.switchToSetupView();
-        }
+        JOptionPane.showMessageDialog(this, "");
     }
 
     @Override
