@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import app.factory.DialogFactory;
+import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import view.DisplayCatStatsView;
@@ -15,8 +16,11 @@ import view.InventoryView;
  * Service for showing dialogs.
  */
 public class DialogService {
+
     private InventoryView inventoryDialog;
     private DisplayCatStatsView displayCatStatsDialog;
+    private JDialog adoptionDialog;
+
     private final JPanel mainPanel;
     private final DialogFactory dialogFactory;
     private JFrame mainFrame;
@@ -111,6 +115,7 @@ public class DialogService {
     }
 
     /**
+
      * Creates the display cat stats dialog.
      * @param displayCatStatsViewModel the view model for the dialog
      * @param inventoryViewModel the view model for the inventory dialog
@@ -143,5 +148,49 @@ public class DialogService {
      */
     public DisplayCatStatsView getDisplayCatStatsDialog() {
         return displayCatStatsDialog;
+      
+     /**
+     * Creates the Adoption Dialog.
+     * @param viewModel the view model for the adoption dialog
+     */
+    public void createAdoptionDialog(AdoptionViewModel viewModel) {
+        if (mainFrame == null) {
+            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+        }
+        if (adoptionDialog == null) {
+            adoptionDialog = dialogFactory.createAdoptionDialog(viewModel);
+        }
+    }
+
+    /**
+     * Shows the adoption dialog.
+     * @param viewModel the view model for the adoption dialog
+     */
+    public void showAdoptionDialog(AdoptionViewModel viewModel) {
+        if (mainFrame == null) {
+            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+        }
+        if (adoptionDialog == null) {
+            adoptionDialog = dialogFactory.createAdoptionDialog(viewModel);
+        }
+        adoptionDialog.setVisible(true);
+    }
+
+    /**
+     * Hides the adoption dialog.
+     */
+    public void hideAdoptionDialog() {
+        if (adoptionDialog != null && adoptionDialog.isVisible()) {
+            adoptionDialog.setVisible(false);
+        }
+    }
+
+    /**
+     * Gets the adoption dialog.
+     * @return the adoption dialog
+     */
+    public JDialog getAdoptionDialog() {
+        return adoptionDialog;
+
     }
 }

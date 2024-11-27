@@ -66,10 +66,12 @@ public class ViewFactory {
     /**
      * Creates an Adoption View.
      * @param adoptionViewModel the adoption view model
+     * @param dialogService the dialog service for user interactions
      * @return AdoptionView
      */
-    public AdoptionView createAdoptionView(AdoptionViewModel adoptionViewModel) {
-        return new AdoptionView(adoptionViewModel);
+    public AdoptionView createAdoptionView(AdoptionViewModel adoptionViewModel, DialogService dialogService) {
+        dialogService.createAdoptionDialog(adoptionViewModel);
+        return (AdoptionView) dialogService.getAdoptionDialog();
     }
 
     /**

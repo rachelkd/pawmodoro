@@ -14,6 +14,9 @@ public class AdoptionPresenter implements AdoptionOutputBoundary {
     private final SetupSessionViewModel setupSessionViewModel;
     private final ViewManagerModel viewManagerModel;
 
+    private boolean prepareSuccessViewCalled;
+    private boolean switchToSetupViewCalled;
+
     public AdoptionPresenter(SetupSessionViewModel setupSessionViewModel, AdoptionViewModel adoptionViewModel,
                              ViewManagerModel viewManagerModel) {
         this.setupSessionViewModel = setupSessionViewModel;
@@ -24,6 +27,7 @@ public class AdoptionPresenter implements AdoptionOutputBoundary {
     @Override
     public void prepareSuccessView(AdoptionOutputData response) {
         // On success, switch to the set up study session view
+        prepareSuccessViewCalled = true;
         final SetupSessionState setupSessionState = setupSessionViewModel.getState();
         this.setupSessionViewModel.setState(setupSessionState);
         this.setupSessionViewModel.firePropertyChanged();
@@ -34,14 +38,17 @@ public class AdoptionPresenter implements AdoptionOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
+        switchToSetupViewCalled = true;
         final AdoptionState adoptionState = adoptionViewModel.getState();
         adoptionState.setAdoptionError(error);
         adoptionViewModel.firePropertyChanged();
     }
 
-    @Override
-    public void switchToSetupView() {
-        viewManagerModel.setState("adoption");
-        viewManagerModel.firePropertyChanged();
+    public boolean getSuccessViewCalled() {
+        return prepareSuccessViewCalled;
+    }
+
+    public boolean getSwitchToSetupViewCalled() {
+        return switchToSetupViewCalled;
     }
 }

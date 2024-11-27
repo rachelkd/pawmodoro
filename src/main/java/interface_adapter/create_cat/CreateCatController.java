@@ -18,7 +18,7 @@ public class CreateCatController {
      * @param catName name of cat
      * @param ownerUsername username of cat owner
      */
-    void execute(String catName, String ownerUsername) {
+    public void execute(String catName, String ownerUsername) {
         final CreateCatInputData createCatInputData = new CreateCatInputData(catName, ownerUsername);
         createCatInteractor.execute(createCatInputData);
     }

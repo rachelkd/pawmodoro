@@ -1,27 +1,23 @@
 package interface_adapter.adoption;
 
-import entity.User;
-
 /**
  * The state for the Adoption View Model.
  */
 public class AdoptionState {
     private String catName = "";
     private String adoptionError = "";
-    private User owner;
+    private String owner = "";
 
     /**
-     * Gets the owner object
-     *
+     * Gets the owner object.
      * @return the owner
      */
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
     /**
      * Gets the cat name.
-     * 
      * @return the cat name
      */
     public String getCatName() {
@@ -30,7 +26,6 @@ public class AdoptionState {
 
     /**
      * Sets the cat name.
-     * 
      * @param catName the cat name to set
      */
     public void setCatName(String catName) {
@@ -38,7 +33,7 @@ public class AdoptionState {
     }
 
     /**
-     * Sets the error message
+     * Sets the error message.
      * @param error the error message
      */
     public void setAdoptionError(String error) {
@@ -46,7 +41,7 @@ public class AdoptionState {
     }
 
     /**
-     * Gets the error message
+     * Gets the error message.
      * @return The error message
      */
     public String getAdoptionError() {

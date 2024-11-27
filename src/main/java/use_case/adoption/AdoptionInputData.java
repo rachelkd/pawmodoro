@@ -1,26 +1,30 @@
 package use_case.adoption;
 
-import entity.User;
-
 /**
- * The Input Data for the Adoption Use Case
+ * The Input Data for the Adoption Use Case.
  */
 public class AdoptionInputData {
     private final String catName;
-    private final User user;
+    private final String ownerName;
 
-    public AdoptionInputData(String catName, User user) {
+    public AdoptionInputData(String catName, String ownerName) {
         this.catName = catName;
-        this.user = user;
+        this.ownerName = ownerName;
     }
 
     /**
-     * Returns the cat's name
-     *
+     * Returns the cat's name.
      * @return cat's name
      */
     String getCatName() {
         return catName;
     }
 
+    /**
+     * Returns the owner's name.
+     * @return owner's name
+     */
+    String getOwnerName() {
+        return ownerName;
+    }
 }
