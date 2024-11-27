@@ -1,15 +1,24 @@
 package use_case.music_control;
 
-import entity.MusicPlayer;
-import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
-public class MusicControlInteractor implements MusicControlInputBoundary{
-    private MusicPlayer musicPlayer;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
+import entity.MusicPlayer;
+
+/**
+ * The Interactor for the music_control usecase.
+ */
+public class MusicControlInteractor implements MusicControlInputBoundary {
+    private static final String MUSIC_DIRECTORY = "src/main/resources/sounds/study.wav";
+    private final MusicPlayer musicPlayer;
     private final MusicControlOutputBoundary musicPresenter;
     private Clip audioClip;
-    private static final String MUSIC_DIRECTORY = "src/main/resources/sounds/study.wav";
 
     public MusicControlInteractor(MusicControlOutputBoundary musicPresenter) {
         this.musicPlayer = new MusicPlayer();
@@ -19,26 +28,28 @@ public class MusicControlInteractor implements MusicControlInputBoundary{
 
     private void initializeAudio() {
         try {
-            File audioFile = new File(MUSIC_DIRECTORY);
+            final File audioFile = new File(MUSIC_DIRECTORY);
             if (!audioFile.exists()) {
                 musicPresenter.prepareFailView("Audio file not found at: " + MUSIC_DIRECTORY);
-                return;
             }
 
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+            // Keep reference to audioStream
+            final AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
             audioClip = AudioSystem.getClip();
             audioClip.open(audioStream);
-            audioClip.loop(Clip.LOOP_CONTINUOUSLY);
 
-            // Initialize with stopped state
+            // Initialize with stopped state. Don't start looping until play is pressed
             audioClip.stop();
             musicPlayer.setPlaying(false);
 
-        } catch (UnsupportedAudioFileException e) {
+        }
+        catch (UnsupportedAudioFileException e) {
             musicPresenter.prepareFailView("Unsupported audio format: " + e.getMessage());
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             musicPresenter.prepareFailView("Error reading audio file: " + e.getMessage());
-        } catch (LineUnavailableException e) {
+        }
+        catch (LineUnavailableException e) {
             musicPresenter.prepareFailView("Audio line unavailable: " + e.getMessage());
         }
     }
@@ -47,30 +58,27 @@ public class MusicControlInteractor implements MusicControlInputBoundary{
     public void togglePlayback() {
         if (audioClip == null) {
             musicPresenter.prepareFailView("Audio system not properly initialized");
-            return;
         }
         
         try {
             if (audioClip.isRunning()) {
                 audioClip.stop();
                 musicPlayer.setPlaying(false);
-            } else {
+            }
+            else {
+                audioClip.setFramePosition(0);
+                audioClip.loop(Clip.LOOP_CONTINUOUSLY);
                 audioClip.start();
                 musicPlayer.setPlaying(true);
+                audioClip.loop(Clip.LOOP_CONTINUOUSLY);
             }
             musicPresenter.prepareSuccessView(musicPlayer.isPlaying());
-        } catch (Exception e) {
-            musicPresenter.prepareFailView("Error toggling playback: " + e.getMessage());
         }
-    }
+        catch (Exception e) {
+            musicPresenter.prepareFailView("Error toggling playback: " + e.getMessage());
 
-    @Override
-    public void setVolume(int volume) {
-        if(audioClip != null) {
-            FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
-            float dB = (float) (Math.log(volume / 100.0) / Math.log(10.0) * 20.0);
-            gainControl.setValue(dB);
-            musicPlayer.setVolume(volume);
+            // Try to reinitialize audio if there's an error
+            initializeAudio();
         }
     }
 }

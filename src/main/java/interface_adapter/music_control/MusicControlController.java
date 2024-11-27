@@ -2,6 +2,9 @@ package interface_adapter.music_control;
 
 import use_case.music_control.MusicControlInputBoundary;
 
+/**
+ * The controller for music playback controls.
+ */
 public class MusicControlController {
     private final MusicControlInputBoundary musicInteractor;
     
@@ -9,15 +12,11 @@ public class MusicControlController {
         this.musicInteractor = musicInteractor;
     }
 
-    public void executeTogglePlayback() {
-        musicInteractor.togglePlayback();
-    }
-
+    /**
+     * Toggles playback.
+     */
     public void togglePlayback() {
         musicInteractor.togglePlayback();
     }
 
-    public void setVolume(int volume) {
-        musicInteractor.setVolume(volume);
-    }
 }

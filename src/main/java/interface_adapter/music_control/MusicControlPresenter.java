@@ -2,6 +2,9 @@ package interface_adapter.music_control;
 
 import use_case.music_control.MusicControlOutputBoundary;
 
+/**
+ * The presenter for the music_control usecase.
+ */
 public class MusicControlPresenter implements MusicControlOutputBoundary {
     private final MusicControlViewModel musicControlViewModel;
 

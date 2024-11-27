@@ -1,7 +1,10 @@
 package interface_adapter.music_control;
 
+/**
+ * The state for music_control usecase.
+ */
 public class MusicControlState {
-    private boolean isPlaying = false;
+    private boolean isPlaying;
     private String buttonText = "Play";
     private String error = "";
 

@@ -8,12 +8,20 @@ import use_case.music_control.MusicControlInputBoundary;
 import use_case.music_control.MusicControlInteractor;
 import use_case.music_control.MusicControlOutputBoundary;
 
+/**
+ * Builder for music related use cases.
+ */
 public class MusicControlUseCaseBuilder extends AbstractUseCaseBuilder {
 
     public MusicControlUseCaseBuilder(Views views, DataAccessComponents dataAccess) {
         super(views, dataAccess);
     }
-    
+
+    /**
+     * Builds the music_control use case.
+     *
+     * @return this builder
+     */
     public MusicControlUseCaseBuilder buildMusicControlUseCase() {
         final MusicControlOutputBoundary outputBoundary = new MusicControlPresenter(
             getViews().getSession().getViewModels().getMusicControlViewModel());
@@ -27,6 +35,11 @@ public class MusicControlUseCaseBuilder extends AbstractUseCaseBuilder {
         return this;
     }
 
+    /**
+     * Builds all music control related use cases.
+     *
+     * @return this builder
+     */
     public MusicControlUseCaseBuilder build() {
         return this.buildMusicControlUseCase();
     }

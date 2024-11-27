@@ -4,10 +4,10 @@ import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.get_cat_fact.GetCatFactViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.music_control.MusicControlViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
-import interface_adapter.music_control.MusicControlViewModel;
 
 /**
  * Factory for creating session-related view models.
