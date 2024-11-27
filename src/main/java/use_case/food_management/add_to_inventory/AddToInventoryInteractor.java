@@ -77,4 +77,8 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
 
     }
 
+    AbstractFood getRewardFoodItem(int studySessionLength) {
+        return;
+    }
+
 }
