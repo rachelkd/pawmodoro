@@ -4,6 +4,7 @@ import interface_adapter.cat.CatViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.get_cat_fact.GetCatFactViewModel;
+import interface_adapter.adoption.AdoptionViewModel;
 
 /**
  * Container for view models that are shared across multiple views.
@@ -13,6 +14,7 @@ public class SharedViewModels {
     private final InventoryViewModel inventoryViewModel;
     private final CatViewModel catViewModel;
     private final GetCatFactViewModel getCatFactViewModel;
+    private final AdoptionViewModel adoptionViewModel;
 
     /**
      * Creates a new SharedViewModels container.
@@ -25,11 +27,13 @@ public class SharedViewModels {
             DisplayCatStatsViewModel displayCatStatsViewModel,
             InventoryViewModel inventoryViewModel,
             CatViewModel catViewModel,
-            GetCatFactViewModel getCatFactViewModel) {
+            GetCatFactViewModel getCatFactViewModel,
+            AdoptionViewModel adoptionViewModel) {
         this.displayCatStatsViewModel = displayCatStatsViewModel;
         this.inventoryViewModel = inventoryViewModel;
         this.catViewModel = catViewModel;
         this.getCatFactViewModel = getCatFactViewModel;
+        this.adoptionViewModel = adoptionViewModel;
     }
 
     public DisplayCatStatsViewModel getDisplayCatStatsViewModel() {
@@ -47,4 +51,6 @@ public class SharedViewModels {
     public GetCatFactViewModel getGetCatFactViewModel() {
         return getCatFactViewModel;
     }
+
+    public AdoptionViewModel getAdoptionViewModel() { return adoptionViewModel; }
 }

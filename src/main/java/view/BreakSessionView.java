@@ -23,6 +23,9 @@ import interface_adapter.break_session.BreakSessionController;
 import interface_adapter.break_session.BreakSessionState;
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.adoption.AdoptionViewModel;
+import interface_adapter.adoption.AdoptionState;
+import app.service.DialogService;
 
 /**
  * Views for Break Session.
@@ -43,10 +46,16 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     private Timer swingTimer;
     private long remainingTime;
 
-    public BreakSessionView(BreakSessionViewModel breakSessionViewModel, BreakSessionState breakSessionState) {
+    private final AdoptionViewModel adoptionViewModel;
+    private final DialogService dialogService;
+
+    public BreakSessionView(BreakSessionViewModel breakSessionViewModel, BreakSessionState breakSessionState, AdoptionViewModel adoptionViewModel, DialogService dialogService) {
         this.setLayout(new BorderLayout());
         this.breakSessionViewModel = breakSessionViewModel;
         this.breakSessionState = breakSessionState;
+
+        this.adoptionViewModel = adoptionViewModel;
+        this.dialogService = dialogService;
 
         // Initialize remaining time with the break interval from the state
         breakSessionViewModel.addPropertyChangeListener(this);
@@ -67,6 +76,7 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         // Add components to main panel
         this.add(createTitlePanel(), BorderLayout.NORTH);
         this.add(createTimerPanel(), BorderLayout.CENTER);
+        this.add(createAdoptionPanel());
         this.add(createLogOutPanel(), BorderLayout.SOUTH);
 
         // Initialize the timer to decrement remaining time
@@ -130,6 +140,22 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         final JPanel logOutPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         logOutPanel.add(logOutSettings);
         return logOutPanel;
+    }
+
+    private JPanel createAdoptionPanel() {
+        final JButton adoptionButton = createButton(BreakSessionViewModel.ADOPTION_LABEL);
+        adoptionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        adoptionButton.addActionListener( event -> {
+            dialogService.createAdoptionDialog(adoptionViewModel);
+            dialogService.showAdoptionDialog(adoptionViewModel);
+
+            final AdoptionState adoptionState = adoptionViewModel.getState();
+            adoptionViewModel.setState(adoptionState);
+        });
+        JPanel adoptionPanel = new JPanel();
+        adoptionPanel.add(adoptionButton);
+        return adoptionPanel;
     }
 
     public void setBreakSessionController(BreakSessionController breakSessionController) {

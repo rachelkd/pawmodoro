@@ -115,7 +115,9 @@ public class SessionViewBuilder {
     private SessionViewBuilder buildBreakSessionView() {
         this.breakSessionView = viewFactory.createBreakSessionView(
                 viewModels.getBreakSessionViewModel(),
-                viewModels.getBreakSessionViewModel().getState());
+                viewModels.getBreakSessionViewModel().getState(),
+                sharedViewsAndModels.getViewModels().getAdoptionViewModel(),
+                dialogService);
         cardPanel.add(breakSessionView, breakSessionView.getViewName());
         return this;
     }

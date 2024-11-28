@@ -186,7 +186,7 @@ public class ViewFactory {
      * @return BreakSessionView
      */
     public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel,
-                                                   BreakSessionState breakSessionState) {
-        return new BreakSessionView(breakSessionViewModel, breakSessionState);
+                                                   BreakSessionState breakSessionState, AdoptionViewModel adoptionViewModel, DialogService dialogService) {
+        return new BreakSessionView(breakSessionViewModel, breakSessionState, adoptionViewModel, dialogService);
     }
 }
