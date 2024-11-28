@@ -209,7 +209,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
                     quantitylabel.setText(": " + food.getQuantity());
                     foodLabel.revalidate();
                     foodLabel.repaint();
-                    return;
+                    break;
                 }
             }
         }
