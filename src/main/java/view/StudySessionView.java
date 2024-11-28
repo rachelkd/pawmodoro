@@ -93,16 +93,18 @@ public class StudySessionView extends JPanel implements ActionListener, Property
                 else {
                     final StudySessionState state = studySessionViewModel.getState();
                     swingTimer.stop();
+
+                    final int workInterval = (int) state.getWorkInterval()
+                            / Constants.SECONDS_TO_MILLIS
+                            / Constants.MINUTES_TO_SECONDS;
+                    System.out.println(workInterval);
+                    addToInventoryController.execute(state.getUsername(), workInterval);
+
                     // Notify controller to switch the view
                     studySessionController.switchToBreakSessionView();
                     state.resetToDefaultWorkInterval();
                     remainingTime = studySessionViewModel.getState().getWorkInterval();
                     updateTimerLabel();
-                    // TODO work interval returning the wrong time - always returning 25
-                    final int workInterval = (int) state.getWorkInterval()
-                            / Constants.SECONDS_TO_MILLIS
-                            / Constants.MINUTES_TO_SECONDS;
-                    addToInventoryController.execute(state.getUsername(), workInterval);
                 }
             }
         });
