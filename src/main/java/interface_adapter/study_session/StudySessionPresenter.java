@@ -55,7 +55,6 @@ public class StudySessionPresenter implements StudySessionOutputBoundary {
         final StudySessionState studySessionState = studySessionViewModel.getState();
         studySessionState.setTimerStopped();
         studySessionViewModel.setState(studySessionState);
-        studySessionViewModel.firePropertyChanged();
     }
 
     /**
