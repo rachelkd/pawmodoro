@@ -19,6 +19,7 @@ public class UseItemPresenter implements UseItemOutputBoundary {
     public void prepareSuccessView(UseItemOutputData useInventoryOutputData) {
         final InventoryState inventoryState = inventoryViewModel.getState();
         inventoryState.setInventoryItems(useInventoryOutputData.getNewFoodItems());
+        inventoryState.setOwnerId(useInventoryOutputData.getOwnerId());
         inventoryViewModel.firePropertyChanged("inventory_item_used");
     }
 }

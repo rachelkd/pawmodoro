@@ -116,14 +116,14 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
                 inventoryPanel.repaint();
             });
 
-        } // add to inventory when complete study session so this use case doesn't need to be here
+        }
         else if (evt.getPropertyName().equals("inventory_add")) {
             SwingUtilities.invokeLater(() -> {
                 final InventoryState state = (InventoryState) evt.getNewValue();
+                clearEmptyMessage(state.getOwnerId());
                 addToInventory(state);
                 // update the user inventory
                 userInventory = state.getInventoryItems();
-
                 inventoryPanel.revalidate();
                 inventoryPanel.repaint();
             });
@@ -164,12 +164,8 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
             for (AbstractFood food : userInventory.values()) {
                 addFoodLabel(food);
             }
+            addSelectItemButton(ownerId);
 
-            final JButton selectItemButton = new JButton("Use Selected Item");
-            buttonPanel.add(selectItemButton, BorderLayout.SOUTH);
-            selectItemButton.addActionListener(event -> {
-                clickedSelectItemButton(ownerId);
-            });
         }
         else {
             // user does not have an existing inventory or their inventory is empty
@@ -180,14 +176,38 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         }
     }
 
+    void addSelectItemButton(String ownerId) {
+        final JButton selectItemButton = new JButton("Use Selected Item");
+        buttonPanel.add(selectItemButton, BorderLayout.SOUTH);
+        selectItemButton.addActionListener(event -> {
+            clickedSelectItemButton(ownerId);
+        });
+    }
+
     void clickedSelectItemButton(String ownerId) {
         if (selectedLabel[0] != null) {
             final String selectedText = selectedLabel[0].getText();
             useItemController.execute(ownerId, selectedText);
-            changeCatHungerController.execute(inventoryViewModel.getState().getCurrentCatName(), ownerId, selectedText);
+            // TODO uncomment once cats initializer works
+            // changeCatHungerController.execute(inventoryViewModel.getState().getCurrentCatName(), ownerId, selectedText);
         }
         else {
             JOptionPane.showMessageDialog(null, "Please select an item first.");
+        }
+    }
+
+    void clearEmptyMessage(String ownerId) {
+        if (inventoryPanel.getComponent(0) instanceof JLabel) {
+            System.out.println("sorta");
+            final JLabel firstLabel = (JLabel) inventoryPanel.getComponent(0);
+            if (InventoryViewModel.EMPTY_INVENTORY_LABEL.equals(firstLabel.getText())) {
+                System.out.println("u tried");
+                inventoryPanel.remove(firstLabel);
+                addSelectItemButton(ownerId);
+
+                inventoryPanel.revalidate();
+                inventoryPanel.repaint();
+            }
         }
     }
 

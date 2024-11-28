@@ -97,7 +97,6 @@ public class StudySessionView extends JPanel implements ActionListener, Property
                     final int workInterval = (int) state.getWorkInterval()
                             / Constants.SECONDS_TO_MILLIS
                             / Constants.MINUTES_TO_SECONDS;
-                    System.out.println(workInterval);
                     addToInventoryController.execute(state.getUsername(), workInterval);
 
                     // Notify controller to switch the view

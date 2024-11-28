@@ -115,6 +115,7 @@ public class SharedUseCaseBuilder extends AbstractUseCaseBuilder {
         final AddToInventoryController controller = new AddToInventoryController(interactor);
         getViews().getShared().getViews().getInventoryView().setAddToInventoryController(controller);
         getViews().getSession().getViews().getStudySessionView().setAddToInventoryController(controller);
+        getViews().getAuth().getViews().getLoginView().setAddToInventoryController(controller);
         return this;
     }
 
