@@ -37,10 +37,14 @@ public final class InventoryService implements InventoryDataAccessInterface {
 
     @Override
     public Inventory getInventory(String ownerId) {
+        Inventory userInventory = null;
         if (inventory == null) {
             inventory = inventoryRepository.getInventory(ownerId);
         }
-        return inventory;
+        if (inventory != null && inventory.getOwnerId().equals(ownerId)) {
+            userInventory = inventory;
+        }
+        return userInventory;
     }
 
     @Override
@@ -50,10 +54,8 @@ public final class InventoryService implements InventoryDataAccessInterface {
 
     @Override
     public void save(Inventory newInventory) {
-        if (inventory != null) {
-            inventoryRepository.save(newInventory);
-        }
-
+        inventoryRepository.save(newInventory);
+        inventory = newInventory;
     }
 
     @Override
@@ -63,10 +65,14 @@ public final class InventoryService implements InventoryDataAccessInterface {
 
     @Override
     public Map<String, AbstractFood> getInventoryItems(String ownerId) {
+        Map<String, AbstractFood> inventoryItems = null;
         if (inventory == null) {
             inventory = inventoryRepository.getInventory(ownerId);
         }
-        return inventory.getItems();
+        if (inventory != null && inventory.getOwnerId().equals(ownerId)) {
+            inventoryItems = inventory.getItems();
+        }
+        return inventoryItems;
     }
 
     @Override

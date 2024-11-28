@@ -20,6 +20,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import constants.Constants;
+import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.create_cat.CreateCatController;
 import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.login.LoginController;
@@ -44,6 +45,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private LoginController loginController;
     private CreateCatController createCatController;
     private CreateInventoryController createInventoryController;
+    private AddToInventoryController addToInventoryController;
 
     public LoginView(LoginViewModel loginViewModel) {
         this.loginViewModel = loginViewModel;
@@ -175,6 +177,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     currentState.getUsername(),
                     currentState.getPassword());
             createInventoryController.execute(currentState.getUsername());
+            // TODO get rid of following code, currently for testing purposes
+            // addToInventoryController.execute(currentState.getUsername(), 0);
         }
         else if (evt.getSource().equals(backToSignUp)) {
             // Switch to the Sign Up View
@@ -208,5 +212,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     public void setCreateInventoryController(CreateInventoryController createInventoryController) {
         this.createInventoryController = createInventoryController;
+    }
+
+    public void setAddToInventoryController(AddToInventoryController addToInventoryController) {
+        this.addToInventoryController = addToInventoryController;
     }
 }
