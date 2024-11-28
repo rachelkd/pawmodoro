@@ -1,14 +1,20 @@
 package app;
 
-import java.awt.*;
+import java.awt.CardLayout;
 import java.util.Map;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import app.service.DialogService;
 import data_access.DBInventoryDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
-import entity.*;
+import entity.AbstractFood;
+import entity.FoodInventoryFactory;
+import entity.FoodItemFactory;
+import entity.Inventory;
+import entity.InventoryFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.add_to_inventory.AddToInventoryPresenter;
@@ -52,8 +58,8 @@ public class InventoryExample {
      */
     public static void main(String[] args) {
         final InventoryExample inventoryExample = new InventoryExample();
-        JFrame pawmodoro = inventoryExample.buildExistingInventory();
-        // JFrame pawmodoro = inventoryExample.build();
+        final JFrame pawmodoro = inventoryExample.buildExistingInventory();
+        // final JFrame pawmodoro = inventoryExample.build();
 
         pawmodoro.pack();
         pawmodoro.setVisible(true);

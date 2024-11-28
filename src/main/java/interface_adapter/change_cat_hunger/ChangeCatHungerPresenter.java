@@ -1,6 +1,5 @@
 package interface_adapter.change_cat_hunger;
 
-import entity.Cat;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.cat.CatState;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;

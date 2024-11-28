@@ -16,10 +16,11 @@ public class AddToInventoryController {
     /**
      * Executes the Add to Inventory Use Case.
      * @param ownerId id of owner
-     * @param studySessionLength
+     * @param studySessionLength the length of the study session.
      */
     public void execute(String ownerId, int studySessionLength) {
-        final AddToInventoryInputData addToInventoryInputData = new AddToInventoryInputData(ownerId, studySessionLength);
+        final AddToInventoryInputData addToInventoryInputData =
+                new AddToInventoryInputData(ownerId, studySessionLength);
 
         inventoryAddToInventoryUseCaseInteractor.execute(addToInventoryInputData);
     }
