@@ -73,7 +73,7 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         startTimerButton = createButton("Start Timer");
 
         // Set preferred size to match buttons
-        Dimension buttonSize = new Dimension(150, 40);
+        final Dimension buttonSize = new Dimension(Constants.DEFAULT_BUTTON_SIZE_W, Constants.DEFAULT_BUTTON_SIZE_H);
         startTimerButton.setPreferredSize(buttonSize);
 
         logOutSettings.addActionListener(this);
@@ -94,16 +94,10 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
                 }
                 else {
                     swingTimer.stop();
-                    //LOGGER.info("Break time is over, switching to study session.");
-
-//                    if (breakSessionController != null) {
-//                        breakSessionController.switchToStudySessionView();
-//                        breakSessionState.resetToDefaultBreakInterval();
-//                        remainingTime = breakSessionState.getBreakInterval();
-//                        updateTimerLabel();
-//                    } else {
-//                        LOGGER.severe("BreakSessionController is not initialized.");
-//                    }
+                    breakSessionController.switchToStudySessionView();
+                    breakSessionState.resetToDefaultBreakInterval();
+                    remainingTime = breakSessionState.getBreakInterval();
+                    updateTimerLabel();
 
                     // Reset buttons
                     startTimerButton.setEnabled(true);
@@ -155,7 +149,7 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
 
         // Create and add the adoption button in the center
         final JButton adoptionButton = createButton(BreakSessionViewModel.ADOPTION_LABEL);
-        adoptionButton.setPreferredSize(buttonSize);  // Set size to match startTimerButton
+        adoptionButton.setPreferredSize(buttonSize);
         adoptionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         adoptionButton.addActionListener(event -> {
             dialogService.createAdoptionDialog(adoptionViewModel);
@@ -194,7 +188,7 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         }
         else if (evt.getSource().equals(startTimerButton)) {
             swingTimer.start();
-            startTimerButton.setEnabled(false);  // Disable the start button while the timer is running
+            startTimerButton.setEnabled(false);
         }
     }
 
@@ -218,7 +212,7 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
             final BreakSessionState newState = (BreakSessionState) evt.getNewValue();
             remainingTime = newState.getBreakInterval();
             updateTimerLabel();
-            startTimerButton.setEnabled(true); // Enable the start button when the state changes
+            startTimerButton.setEnabled(true);
         }
     }
 }
