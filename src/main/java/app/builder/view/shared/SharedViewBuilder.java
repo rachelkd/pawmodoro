@@ -153,7 +153,8 @@ public class SharedViewBuilder {
                 catView,
                 displayCatStatsView,
                 getCatFactView,
-                inventoryView);
+                inventoryView,
+                catContainerView);
         return new SharedViewsAndModels(views, viewModels);
     }
 }

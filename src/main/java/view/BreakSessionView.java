@@ -10,13 +10,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Logger;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import constants.Constants;
 import interface_adapter.break_session.BreakSessionController;
@@ -43,10 +37,15 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     private Timer swingTimer;
     private long remainingTime;
 
-    public BreakSessionView(BreakSessionViewModel breakSessionViewModel, BreakSessionState breakSessionState) {
+    private CatContainerView catContainerView;
+
+    public BreakSessionView(BreakSessionViewModel breakSessionViewModel,
+                            BreakSessionState breakSessionState,
+                            CatContainerView catContainerView) {
         this.setLayout(new BorderLayout());
         this.breakSessionViewModel = breakSessionViewModel;
         this.breakSessionState = breakSessionState;
+        this.catContainerView = catContainerView;
 
         // Initialize remaining time with the break interval from the state
         breakSessionViewModel.addPropertyChangeListener(this);
@@ -64,10 +63,15 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         logOutSettings.addActionListener(this);
         startTimerButton.addActionListener(this);
 
+        final JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+
         // Add components to main panel
         this.add(createTitlePanel(), BorderLayout.NORTH);
         this.add(createTimerPanel(), BorderLayout.CENTER);
-        this.add(createLogOutPanel(), BorderLayout.SOUTH);
+        bottomPanel.add(createCatsPanel());
+        bottomPanel.add(createLogOutPanel());
+        this.add(bottomPanel, BorderLayout.SOUTH);
 
         // Initialize the timer to decrement remaining time
         swingTimer = new Timer(Constants.SECONDS_TO_MILLIS, new ActionListener() {
@@ -158,6 +162,23 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         final long minutes = timeInMillis / (Constants.SECONDS_TO_MILLIS * Constants.MINUTES_TO_SECONDS);
         final long seconds = (timeInMillis / Constants.SECONDS_TO_MILLIS) % Constants.MINUTES_TO_SECONDS;
         return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    private JPanel createCatsPanel() {
+        final JPanel catsPanel = new JPanel(new BorderLayout());
+        catsPanel.setVisible(true);
+        catsPanel.setOpaque(true);
+
+        catContainerView.setVisible(true);
+        catsPanel.add(catContainerView, BorderLayout.CENTER);
+
+        SwingUtilities.invokeLater(() -> {
+            catContainerView.setVisible(true);
+            catContainerView.revalidate();
+            catContainerView.repaint();
+        });
+
+        return catsPanel;
     }
 
     public String getViewName() {

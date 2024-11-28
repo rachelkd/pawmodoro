@@ -12,7 +12,6 @@ import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModelFactory;
 import interface_adapter.get_cat_fact.GetCatFactViewModel;
 import interface_adapter.initialize_cats.CatViewFactory;
-import interface_adapter.initialize_cats.CatViewModelFactory;
 import interface_adapter.initialize_cats.InitializeCatsViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
@@ -192,12 +191,15 @@ public class ViewFactory {
 
     /**
      * Creates Break Session View.
+     *
      * @param breakSessionViewModel the break session view model
-     * @param breakSessionState the break session state
+     * @param breakSessionState     the break session state
+     * @param catContainerView the cat container view
      * @return BreakSessionView
      */
     public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel,
-                                                   BreakSessionState breakSessionState) {
-        return new BreakSessionView(breakSessionViewModel, breakSessionState);
+                                                   BreakSessionState breakSessionState,
+                                                   CatContainerView catContainerView) {
+        return new BreakSessionView(breakSessionViewModel, breakSessionState, catContainerView);
     }
 }
