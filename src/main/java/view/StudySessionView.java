@@ -33,6 +33,7 @@ import interface_adapter.study_session.StudySessionViewModel;
  */
 public class StudySessionView extends JPanel implements ActionListener, PropertyChangeListener {
     private final CatView catView;
+    private final CatContainerView catContainerView;
 
     private final StudySessionViewModel studySessionViewModel;
 

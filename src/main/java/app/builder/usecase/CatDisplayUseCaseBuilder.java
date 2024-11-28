@@ -4,6 +4,13 @@ import app.builder.view.Views;
 import app.components.DataAccessComponents;
 import interface_adapter.display_cat_image.DisplayCatImageController;
 import interface_adapter.display_cat_image.DisplayCatImagePresenter;
+import interface_adapter.initialize_cats.CatViewFactory;
+import interface_adapter.initialize_cats.CatViewModelFactory;
+import interface_adapter.initialize_cats.InitializeCatsController;
+import interface_adapter.initialize_cats.InitializeCatsPresenter;
+import use_case.cat_management.initialize_cats.InitializeCatsInputBoundary;
+import use_case.cat_management.initialize_cats.InitializeCatsInteractor;
+import use_case.cat_management.initialize_cats.InitializeCatsOutputBoundary;
 import use_case.display_cat_image.DisplayCatImageInputBoundary;
 import use_case.display_cat_image.DisplayCatImageInteractor;
 import use_case.display_cat_image.DisplayCatImageOutputBoundary;
@@ -35,6 +42,24 @@ public class CatDisplayUseCaseBuilder extends AbstractUseCaseBuilder {
 
         final DisplayCatImageController controller = new DisplayCatImageController(interactor);
         getViews().getCat().getViews().getDisplayCatImageView().setDisplayCatImageController(controller);
+        return this;
+    }
+
+    /**
+     * Builds the Initialize Cat use case.
+     */
+    public CatDisplayUseCaseBuilder initializeCatsUsecase() {
+        final CatViewModelFactory catViewModelFactory = new CatViewModelFactory();
+
+        final InitializeCatsOutputBoundary outputBoundary =
+                new InitializeCatsPresenter(getViews().getShared().getViewModels().getInitializeCatsViewModel(),
+                        catViewModelFactory);
+        final InitializeCatsInputBoundary interactor =
+                new InitializeCatsInteractor(getDataAccess().getCatDataAccess(), outputBoundary);
+
+        final InitializeCatsController controller = new InitializeCatsController(interactor);
+        // add controller to login and sign up?
+        getViews().getAuth().getViews().getLoginView().setInitializeCatsController(controller);
         return this;
     }
 

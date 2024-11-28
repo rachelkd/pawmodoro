@@ -9,33 +9,28 @@ import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_image.DisplayCatImageViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
+import interface_adapter.display_cat_stats.DisplayCatStatsViewModelFactory;
 import interface_adapter.get_cat_fact.GetCatFactViewModel;
+import interface_adapter.initialize_cats.CatViewFactory;
+import interface_adapter.initialize_cats.CatViewModelFactory;
+import interface_adapter.initialize_cats.InitializeCatsViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
-import view.AdoptionView;
-import view.BreakSessionView;
-import view.CatView;
-import view.DisplayCatImageView;
-import view.DisplayCatStatsView;
-import view.GetCatFactView;
-import view.InventoryView;
-import view.LoggedInView;
-import view.LoginView;
-import view.MaxCatsErrorView;
-import view.RunawayCatView;
-import view.SetupSessionView;
-import view.SignupView;
-import view.StudySessionView;
+import view.*;
 
 /**
  * The ViewFactory class.
  * Responsible for creating various view components in the application.
  */
 public class ViewFactory {
+    private final CatViewFactory catViewModelFactory = new CatViewFactory();
+    private final DisplayCatStatsViewModelFactory displayCatStatsViewModelFactory =
+            new DisplayCatStatsViewModelFactory();
+
     /**
      * Creates a Login View.
      * @param loginViewModel the login view model
@@ -150,6 +145,22 @@ public class ViewFactory {
             GetCatFactView getCatFactView) {
         return new CatView(catViewModel, displayCatStatsViewModel, inventoryViewModel,
                 dialogService, getCatFactView);
+    }
+
+    /**
+     * Creates a Cat Container View.
+     * @param initializeCatsViewModel the initialize cats view model
+     * @param inventoryViewModel the inventory view model
+     * @param dialogService the dialog service
+     * @param getCatFactView get cat fact view
+     * @return CatContainer View
+     */
+    public CatContainerView createCatContainerView(InitializeCatsViewModel initializeCatsViewModel,
+                                                   InventoryViewModel inventoryViewModel,
+                                                   DialogService dialogService,
+                                                   GetCatFactView getCatFactView) {
+        return new CatContainerView(initializeCatsViewModel, inventoryViewModel, dialogService, getCatFactView,
+                catViewModelFactory, displayCatStatsViewModelFactory);
     }
 
     /**

@@ -72,4 +72,8 @@ public class CatContainerView extends JPanel implements PropertyChangeListener {
             updateCatViews();
         }
     }
+
+    public String getViewName() {
+        return initializeCatsViewModel.getViewName();
+    }
 }

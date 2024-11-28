@@ -2,6 +2,7 @@ package app.builder.view.cat;
 
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.display_cat_image.DisplayCatImageViewModel;
+import interface_adapter.initialize_cats.InitializeCatsViewModel;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.runawaycat.RunawayCatViewModel;
 
@@ -15,9 +16,9 @@ public class CatViewModels {
     private final DisplayCatImageViewModel displayCatImageViewModel;
 
     public CatViewModels(AdoptionViewModel adoptionViewModel,
-            RunawayCatViewModel runawayCatViewModel,
-            MaxCatsErrorViewModel maxCatsErrorViewModel,
-            DisplayCatImageViewModel displayCatImageViewModel) {
+                         RunawayCatViewModel runawayCatViewModel,
+                         MaxCatsErrorViewModel maxCatsErrorViewModel,
+                         DisplayCatImageViewModel displayCatImageViewModel) {
         this.adoptionViewModel = adoptionViewModel;
         this.runawayCatViewModel = runawayCatViewModel;
         this.maxCatsErrorViewModel = maxCatsErrorViewModel;
