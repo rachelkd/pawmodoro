@@ -134,6 +134,7 @@ public class InventoryExample {
 
         createInventoryController.execute("chiually");
         addToInventoryController.execute("chiually", 10);
+        addToInventoryController.execute("chiually", 59);
         // useItemController.execute("chiually", "Cheese");
 
         return application;

@@ -121,6 +121,9 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
             SwingUtilities.invokeLater(() -> {
                 final InventoryState state = (InventoryState) evt.getNewValue();
                 addToInventory(state);
+                // update the user inventory
+                userInventory = state.getInventoryItems();
+
                 inventoryPanel.revalidate();
                 inventoryPanel.repaint();
             });
@@ -206,11 +209,10 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
                     quantitylabel.setText(": " + food.getQuantity());
                     foodLabel.revalidate();
                     foodLabel.repaint();
+                    return;
                 }
             }
         }
-        // update the user inventory
-        userInventory = state.getInventoryItems();
     }
 
     void addFoodLabel(AbstractFood food) {
