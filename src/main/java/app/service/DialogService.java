@@ -9,9 +9,11 @@ import app.factory.DialogFactory;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
+import interface_adapter.runawaycat.RunawayCatViewModel;
 import view.DisplayCatStatsView;
 import view.GetCatFactView;
 import view.InventoryView;
+import view.RunawayCatView;
 
 /**
  * Service for showing dialogs.
@@ -21,6 +23,7 @@ public class DialogService {
     private InventoryView inventoryDialog;
     private DisplayCatStatsView displayCatStatsDialog;
     private JDialog adoptionDialog;
+    private JDialog runawayCatDialog;
 
     private final JPanel mainPanel;
     private final DialogFactory dialogFactory;
@@ -194,4 +197,49 @@ public class DialogService {
         return adoptionDialog;
 
     }
+
+    /**
+     * Creates the Runaway Cat Dialog.
+     * @param viewModel the view model for the runaway cat dialog
+     */
+    public void createRunawayCatDialog(RunawayCatViewModel viewModel) {
+        if (mainFrame == null) {
+            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+        }
+        if (runawayCatDialog == null) {
+            runawayCatDialog = dialogFactory.createRunawayCatDialog(viewModel);
+        }
+    }
+
+    /**
+    * Shows the Runaway Cat Dialog.
+    * @param viewModel the view model for the runaway cat dialog
+    */
+    public void showRunawayCatDialog(RunawayCatViewModel viewModel) {
+        if (mainFrame == null) {
+            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+        }
+        if (runawayCatDialog == null) {
+            runawayCatDialog = dialogFactory.createRunawayCatDialog(viewModel);
+        }
+        runawayCatDialog.setVisible(true);
+    }
+
+    /**
+    * Hides the runaway cat dialog.
+    */
+    public void hideRunawayCatDialog() {
+        if (runawayCatDialog != null && runawayCatDialog.isVisible()) {
+            runawayCatDialog.setVisible(false);
+        }
+    }
+
+    /**
+    * Gets the runaway cat dialog.
+    * @return the runaway cat dialog
+    */
+    public JDialog getRunawayCatDialog() {
+        return runawayCatDialog;
+    }
+
 }

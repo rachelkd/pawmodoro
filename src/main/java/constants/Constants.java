@@ -72,9 +72,14 @@ public final class Constants {
     public static final int DISPLAY_CAT_STATS_MAX_WIDTH = 360;
     public static final int DISPLAY_CAT_STATS_HEIGHT = 360;
 
-    // Adoption view contstants
+    // Adoption view constants
     public static final int ADOPTION_VIEW_WIDTH = 360;
     public static final int ADOPTION_VIEW_HEIGHT = 360;
+
+    // Runaway cat view constants
+    public static final int RUNAWAYCAT_VIEW_WIDTH = 380;
+    public static final int RUNAWAYCAT_VIEW_HEIGHT = 380;
+
     // Cat sprite constants
     public static final int CAT_SPRITE_BASE_SIZE = 32;
     public static final int CAT_SPRITE_SCALE = 2;
