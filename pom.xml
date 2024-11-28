@@ -55,13 +55,6 @@
             <version>42.7.1</version>
         </dependency>
 
-        <!-- Spotify Web API Wrapper -->
-        <dependency>
-            <groupId>se.michaelthelin.spotify</groupId>
-            <artifactId>spotify-web-api-java</artifactId>
-            <version>8.4.1</version>
-        </dependency>
-
     </dependencies>
 
     <properties>
