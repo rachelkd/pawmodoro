@@ -111,6 +111,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
 
                 buildInventory(state.getOwnerId());
                 mainPanel.add(inventoryPanel, BorderLayout.CENTER);
+
                 inventoryPanel.revalidate();
                 inventoryPanel.repaint();
             });
@@ -119,11 +120,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         else if (evt.getPropertyName().equals("inventory_add")) {
             SwingUtilities.invokeLater(() -> {
                 final InventoryState state = (InventoryState) evt.getNewValue();
-                final AbstractFood food = state.getNewFoodItem();
-                // update the user inventory
-                userInventory = state.getInventoryItems();
-
-                addFoodLabel(food);
+                addToInventory(state);
                 inventoryPanel.revalidate();
                 inventoryPanel.repaint();
             });
@@ -189,6 +186,31 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         else {
             JOptionPane.showMessageDialog(null, "Please select an item first.");
         }
+    }
+
+    void addToInventory(InventoryState state) {
+        final AbstractFood food = state.getNewFoodItem();
+        if (!userInventory.containsKey(food.getName())) {
+            addFoodLabel(food);
+        }
+        else {
+            final Component[] foodLabels = inventoryPanel.getComponents();
+            // update label
+            for (int i = 0; i < foodLabels.length; i++) {
+                final JPanel labelPanel = (JPanel) foodLabels[i];
+
+                final JLabel foodLabel = (JLabel) labelPanel.getComponent(0);
+
+                if (foodLabel.getText().equalsIgnoreCase(food.getName())) {
+                    final JLabel quantitylabel = (JLabel) labelPanel.getComponent(2);
+                    quantitylabel.setText(": " + food.getQuantity());
+                    foodLabel.revalidate();
+                    foodLabel.repaint();
+                }
+            }
+        }
+        // update the user inventory
+        userInventory = state.getInventoryItems();
     }
 
     void addFoodLabel(AbstractFood food) {
