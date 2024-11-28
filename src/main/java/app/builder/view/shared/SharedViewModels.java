@@ -22,6 +22,7 @@ public class SharedViewModels {
      * @param inventoryViewModel the inventory view model
      * @param catViewModel the cat view model
      * @param getCatFactViewModel the get cat fact view model
+     * @param initializeCatsViewModel the initialize cat view model
      */
     public SharedViewModels(
             DisplayCatStatsViewModel displayCatStatsViewModel,

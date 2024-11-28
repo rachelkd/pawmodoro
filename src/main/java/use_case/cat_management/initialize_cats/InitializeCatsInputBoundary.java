@@ -5,5 +5,9 @@ package use_case.cat_management.initialize_cats;
  */
 public interface InitializeCatsInputBoundary {
 
+    /**
+     * Excutes the initialize cat use case.
+     * @param initializeCatsInputData the input data
+     */
     void execute(InitializeCatsInputData initializeCatsInputData);
 }

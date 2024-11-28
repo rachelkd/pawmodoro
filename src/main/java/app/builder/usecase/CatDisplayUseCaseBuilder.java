@@ -4,7 +4,6 @@ import app.builder.view.Views;
 import app.components.DataAccessComponents;
 import interface_adapter.display_cat_image.DisplayCatImageController;
 import interface_adapter.display_cat_image.DisplayCatImagePresenter;
-import interface_adapter.initialize_cats.CatViewFactory;
 import interface_adapter.initialize_cats.CatViewModelFactory;
 import interface_adapter.initialize_cats.InitializeCatsController;
 import interface_adapter.initialize_cats.InitializeCatsPresenter;
@@ -48,7 +47,7 @@ public class CatDisplayUseCaseBuilder extends AbstractUseCaseBuilder {
     /**
      * Builds the Initialize Cat use case.
      */
-    public CatDisplayUseCaseBuilder initializeCatsUsecase() {
+    public CatDisplayUseCaseBuilder buildInitializeCatsUsecase() {
         final CatViewModelFactory catViewModelFactory = new CatViewModelFactory();
 
         final InitializeCatsOutputBoundary outputBoundary =
@@ -68,6 +67,8 @@ public class CatDisplayUseCaseBuilder extends AbstractUseCaseBuilder {
      * @return this builder
      */
     public CatDisplayUseCaseBuilder build() {
-        return this.buildDisplayCatImageUseCase();
+        return this
+                .buildDisplayCatImageUseCase()
+                .buildInitializeCatsUsecase();
     }
 }

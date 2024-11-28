@@ -1,12 +1,12 @@
 package interface_adapter.initialize_cats;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import entity.Cat;
 import interface_adapter.cat.CatViewModel;
 import use_case.cat_management.initialize_cats.InitializeCatsOutputBoundary;
 import use_case.cat_management.initialize_cats.InitializeCatsOutputData;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class InitializeCatsPresenter implements InitializeCatsOutputBoundary {
     private final InitializeCatsViewModel initializeCatsViewModel;
@@ -26,6 +26,6 @@ public class InitializeCatsPresenter implements InitializeCatsOutputBoundary {
             catViewModels.add(catViewModelFactory.create(cat));
         }
         initializeCatsViewModel.getState().setCatViewModels(catViewModels);
-        initializeCatsViewModel.firePropertyChanged();
+        initializeCatsViewModel.firePropertyChanged("initialize_cats");
     }
 }
