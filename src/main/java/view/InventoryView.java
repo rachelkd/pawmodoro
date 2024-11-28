@@ -198,10 +198,9 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
 
     void clearEmptyMessage(String ownerId) {
         if (inventoryPanel.getComponent(0) instanceof JLabel) {
-            System.out.println("sorta");
             final JLabel firstLabel = (JLabel) inventoryPanel.getComponent(0);
             if (InventoryViewModel.EMPTY_INVENTORY_LABEL.equals(firstLabel.getText())) {
-                System.out.println("u tried");
+
                 inventoryPanel.remove(firstLabel);
                 addSelectItemButton(ownerId);
 
