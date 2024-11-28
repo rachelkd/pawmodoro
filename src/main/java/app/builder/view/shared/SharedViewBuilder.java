@@ -8,11 +8,7 @@ import app.factory.ViewFactory;
 import app.factory.viewmodel.SharedViewModelFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
-import view.AdoptionView;
-import view.CatView;
-import view.DisplayCatStatsView;
-import view.GetCatFactView;
-import view.InventoryView;
+import view.*;
 
 /**
  * Builder for shared views and view models.

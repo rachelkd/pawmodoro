@@ -1,22 +1,13 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Logger;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import app.service.DialogService;
 import constants.Constants;
@@ -93,7 +84,6 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         bottomPanel.add(createCatsPanel());
         bottomPanel.add(createAdoptionAndLogOutPanel(buttonSize));
         this.add(bottomPanel, BorderLayout.SOUTH);
-        // this.add(createAdoptionAndLogOutPanel(buttonSize), BorderLayout.SOUTH);
 
         // Initialize the timer to decrement remaining time
         swingTimer = new Timer(Constants.SECONDS_TO_MILLIS, new ActionListener() {
