@@ -1,10 +1,10 @@
 package app.builder.view.shared;
 
+import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.get_cat_fact.GetCatFactViewModel;
-import interface_adapter.adoption.AdoptionViewModel;
 
 /**
  * Container for view models that are shared across multiple views.
@@ -22,6 +22,7 @@ public class SharedViewModels {
      * @param inventoryViewModel the inventory view model
      * @param catViewModel the cat view model
      * @param getCatFactViewModel the get cat fact view model
+     * @param adoptionViewModel the adoption view model
      */
     public SharedViewModels(
             DisplayCatStatsViewModel displayCatStatsViewModel,
@@ -52,5 +53,7 @@ public class SharedViewModels {
         return getCatFactViewModel;
     }
 
-    public AdoptionViewModel getAdoptionViewModel() { return adoptionViewModel; }
+    public AdoptionViewModel getAdoptionViewModel() {
+        return adoptionViewModel;
+    }
 }

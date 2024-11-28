@@ -19,14 +19,14 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
+import app.service.DialogService;
 import constants.Constants;
+import interface_adapter.adoption.AdoptionState;
+import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.break_session.BreakSessionController;
 import interface_adapter.break_session.BreakSessionState;
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.logout.LogoutController;
-import interface_adapter.adoption.AdoptionViewModel;
-import interface_adapter.adoption.AdoptionState;
-import app.service.DialogService;
 
 /**
  * Views for Break Session.
@@ -50,7 +50,8 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     private final AdoptionViewModel adoptionViewModel;
     private final DialogService dialogService;
 
-    public BreakSessionView(BreakSessionViewModel breakSessionViewModel, BreakSessionState breakSessionState, AdoptionViewModel adoptionViewModel, DialogService dialogService) {
+    public BreakSessionView(BreakSessionViewModel breakSessionViewModel, BreakSessionState breakSessionState,
+                            AdoptionViewModel adoptionViewModel, DialogService dialogService) {
         this.setLayout(new BorderLayout());
         this.breakSessionViewModel = breakSessionViewModel;
         this.breakSessionState = breakSessionState;
@@ -90,18 +91,19 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
                 if (remainingTime > 0) {
                     remainingTime -= Constants.SECONDS_TO_MILLIS;
                     updateTimerLabel();
-                } else {
+                }
+                else {
                     swingTimer.stop();
-                    LOGGER.info("Break time is over, switching to study session.");
+                    //LOGGER.info("Break time is over, switching to study session.");
 
-                    if (breakSessionController != null) {
-                        breakSessionController.switchToStudySessionView();
-                        breakSessionState.resetToDefaultBreakInterval();
-                        remainingTime = breakSessionState.getBreakInterval();
-                        updateTimerLabel();
-                    } else {
-                        LOGGER.severe("BreakSessionController is not initialized.");
-                    }
+//                    if (breakSessionController != null) {
+//                        breakSessionController.switchToStudySessionView();
+//                        breakSessionState.resetToDefaultBreakInterval();
+//                        remainingTime = breakSessionState.getBreakInterval();
+//                        updateTimerLabel();
+//                    } else {
+//                        LOGGER.severe("BreakSessionController is not initialized.");
+//                    }
 
                     // Reset buttons
                     startTimerButton.setEnabled(true);
@@ -185,10 +187,12 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         if (evt.getSource().equals(logOutSettings)) {
             if (logoutController != null) {
                 logoutController.execute("");
-            } else {
+            }
+            else {
                 LOGGER.severe("LogoutController is not initialized.");
             }
-        } else if (evt.getSource().equals(startTimerButton)) {
+        }
+        else if (evt.getSource().equals(startTimerButton)) {
             swingTimer.start();
             startTimerButton.setEnabled(false);  // Disable the start button while the timer is running
         }
@@ -218,5 +222,3 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         }
     }
 }
-
-
