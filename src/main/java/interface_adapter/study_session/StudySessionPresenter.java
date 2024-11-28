@@ -16,13 +16,16 @@ public class StudySessionPresenter implements StudySessionOutputBoundary {
     private final LoginViewModel loginViewModel;
     private final SetupSessionViewModel setupSessionViewModel;
     private final BreakSessionViewModel breakSessionViewModel;
+    private final StudySessionViewModel studySessionViewModel;
 
     public StudySessionPresenter(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel,
-            SetupSessionViewModel setupSessionViewModel, BreakSessionViewModel breakSessionViewModel) {
+            SetupSessionViewModel setupSessionViewModel, BreakSessionViewModel breakSessionViewModel,
+                                 StudySessionViewModel studySessionViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loginViewModel = loginViewModel;
         this.setupSessionViewModel = setupSessionViewModel;
         this.breakSessionViewModel = breakSessionViewModel;
+        this.studySessionViewModel = studySessionViewModel;
     }
 
     @Override
@@ -45,6 +48,14 @@ public class StudySessionPresenter implements StudySessionOutputBoundary {
         prepareLoginView();
         viewManagerModel.setState(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void stopStudyTimer() {
+        final StudySessionState studySessionState = studySessionViewModel.getState();
+        studySessionState.setTimerStopped();
+        studySessionViewModel.setState(studySessionState);
+        studySessionViewModel.firePropertyChanged();
     }
 
     /**

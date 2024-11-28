@@ -33,4 +33,11 @@ public class StudySessionController {
         studySessionInteractor.switchToBreakSessionView();
     }
 
+    /**
+     * Stops the timer for the study session.
+     */
+    public void stopStudyTimer() {
+        studySessionInteractor.stopStudyTimer();
+    }
+
 }

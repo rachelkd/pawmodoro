@@ -11,6 +11,7 @@ public class StudySessionState {
     private String password = "";
     private long workInterval = Constants.DEFAULT_WORK_DURATION_MS;
     private long breakInterval = Constants.DEFAULT_BREAK_DURATION_MS;
+    private boolean isSuccess = true;
 
     public String getUsername() {
         return username;
@@ -32,6 +33,10 @@ public class StudySessionState {
         return breakInterval;
     }
 
+    public boolean getIsSuccess() {
+        return isSuccess;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -48,8 +53,11 @@ public class StudySessionState {
         this.workInterval = workInterval;
     }
 
-    public void setBreakInterval(long breakInterval) {
-        this.breakInterval = breakInterval;
+    /**
+     * Sets isSuccess to false when the timer is stopped.
+     */
+    public void setTimerStopped() {
+        this.isSuccess = false;
     }
 
     /**
