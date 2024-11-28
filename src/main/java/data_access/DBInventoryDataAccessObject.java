@@ -227,7 +227,7 @@ public class DBInventoryDataAccessObject implements InventoryDataAccessInterface
 
                 for (int i = 0; i < foodItems.length(); i++) {
                     final JSONObject food = foodItems.getJSONObject(i);
-                    if (food.getString(FOOD_KEY).equals(foodId) && food.getInt(QUANTITY_KEY) > 0) {
+                    if (food.getString(FOOD_KEY).equalsIgnoreCase(foodId) && food.getInt(QUANTITY_KEY) > 0) {
                         exists = true;
                     }
                 }

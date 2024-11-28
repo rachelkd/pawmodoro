@@ -1,18 +1,16 @@
 package use_case.cat_management.change_cat_hunger;
 
-import entity.Cat;
-
 /**
  * Output Data for Change Cat Hunger Use Case.
  */
 public class ChangeCatHungerOutputData {
     private final String ownerId;
-    private final Cat cat;
+    private final String catName;
     private final int newHungerLevel;
 
-    public ChangeCatHungerOutputData(String ownerId, Cat cat, int newHungerLevel) {
+    public ChangeCatHungerOutputData(String ownerId, String catName, int newHungerLevel) {
         this.ownerId = ownerId;
-        this.cat = cat;
+        this.catName = catName;
         this.newHungerLevel = newHungerLevel;
     }
 
@@ -20,11 +18,11 @@ public class ChangeCatHungerOutputData {
         return ownerId;
     }
 
-    public Cat getCat() {
-        return cat;
-    }
-
     public int getNewHungerLevel() {
         return newHungerLevel;
+    }
+
+    public String getCatName() {
+        return catName;
     }
 }

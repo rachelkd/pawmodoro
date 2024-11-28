@@ -30,7 +30,6 @@ public class CatViewBuilder {
 
     /**
      * Creates a new cat view builder.
-     *
      * @param cardPanel the card panel
      * @param cardLayout the card layout
      * @param viewManagerModel the view manager model
@@ -53,15 +52,11 @@ public class CatViewBuilder {
                 catViewModelFactory.createAdoptionViewModel(),
                 catViewModelFactory.createRunawayCatViewModel(),
                 catViewModelFactory.createMaxCatsErrorViewModel(),
-                catViewModelFactory.createDisplayCatImageViewModel(),
-                catViewModelFactory.createDisplayCatStatsViewModel(),
-                catViewModelFactory.createGetCatFactViewModel(),
-                catViewModelFactory.createCatViewModel());
+                catViewModelFactory.createDisplayCatImageViewModel());
     }
 
     /**
      * Builds and returns the cat views and models.
-     *
      * @return the cat views and models
      */
     public CatViewsAndModels build() {

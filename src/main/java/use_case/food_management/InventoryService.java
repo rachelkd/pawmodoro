@@ -45,7 +45,7 @@ public final class InventoryService implements InventoryDataAccessInterface {
 
     @Override
     public boolean canUseItem(String ownerId, String foodId) {
-        return false;
+        return inventoryRepository.canUseItem(ownerId, foodId);
     }
 
     @Override

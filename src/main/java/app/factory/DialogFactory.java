@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
@@ -18,13 +19,16 @@ import view.InventoryView;
 public class DialogFactory {
     private final JPanel mainPanel;
     private JFrame mainFrame;
+    private DialogService dialogService;
 
     /**
      * Creates a new DialogFactory.
      * @param mainPanel the main panel of the application
+     * @param dialogService the dialog service
      */
-    public DialogFactory(JPanel mainPanel) {
+    public DialogFactory(JPanel mainPanel, DialogService dialogService) {
         this.mainPanel = mainPanel;
+        this.dialogService = dialogService;
     }
 
     /**
@@ -61,15 +65,16 @@ public class DialogFactory {
 
     /**
      * Creates a new DisplayCatStatsView dialog.
-     * @param viewModel the view model for the dialog
+     * @param displayCatStatsViewModel the view model for the dialog
+     * @param inventoryViewModel the view model for inventory dialog
      * @param getCatFactView the get cat fact view
      * @return the cat stats dialog
      */
-    public DisplayCatStatsView createCatStatsDialog(DisplayCatStatsViewModel viewModel, GetCatFactView getCatFactView) {
-        if (mainFrame == null) {
-            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
-        }
-        return new DisplayCatStatsView(getParentFrame(), viewModel, getCatFactView);
+    public DisplayCatStatsView createCatStatsDialog(DisplayCatStatsViewModel displayCatStatsViewModel,
+            InventoryViewModel inventoryViewModel,
+            GetCatFactView getCatFactView) {
+        return new DisplayCatStatsView(getParentFrame(), displayCatStatsViewModel,
+                inventoryViewModel, getCatFactView, dialogService);
     }
 
     /**

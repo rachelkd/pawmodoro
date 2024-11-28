@@ -1,7 +1,5 @@
 package app.factory;
 
-import javax.swing.JFrame;
-
 import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.break_session.BreakSessionState;
@@ -115,8 +113,7 @@ public class ViewFactory {
     /**
      * Creates a Study Session View.
      * @param studySessionViewModel the study session view model
-     * @param catViewModel the cat view model
-     * @param displayCatStatsViewModel the display cat stats view model
+     * @param dialogService the dialog service
      * @param catView the existing cat view instance
      * @return StudySessionView
      */
@@ -134,22 +131,25 @@ public class ViewFactory {
     public InventoryView createInventoryView(InventoryViewModel inventoryViewModel, DialogService dialogService) {
         // have the dialog run in the background so it listens for changes, but by default won't be visible
         dialogService.createInventoryDialog(inventoryViewModel);
-        return (InventoryView) dialogService.getInventoryDialog();
+        return dialogService.getInventoryDialog();
     }
 
     /**
      * Creates a Cat View with associated components.
      * @param catViewModel the cat view model
      * @param displayCatStatsViewModel the display cat stats view model
+     * @param inventoryViewModel the inventory view model
      * @param dialogService the dialog service
      * @param getCatFactView the get cat fact view
      * @return CatView
      */
     public CatView createCatView(CatViewModel catViewModel,
             DisplayCatStatsViewModel displayCatStatsViewModel,
+            InventoryViewModel inventoryViewModel,
             DialogService dialogService,
             GetCatFactView getCatFactView) {
-        return new CatView(catViewModel, displayCatStatsViewModel, dialogService, getCatFactView);
+        return new CatView(catViewModel, displayCatStatsViewModel, inventoryViewModel,
+                dialogService, getCatFactView);
     }
 
     /**
@@ -163,14 +163,20 @@ public class ViewFactory {
 
     /**
      * Creates a Display Cat Stats View.
-     * @param parent the parent frame
      * @param displayCatStatsViewModel the display cat stats view model
+     * @param inventoryViewModel the inventory view model
      * @param getCatFactView the get cat fact view
+     * @param dialogService the dialog service
      * @return DisplayCatStatsView
      */
-    public DisplayCatStatsView createDisplayCatStatsView(JFrame parent,
-            DisplayCatStatsViewModel displayCatStatsViewModel, GetCatFactView getCatFactView) {
-        return new DisplayCatStatsView(parent, displayCatStatsViewModel, getCatFactView);
+    public DisplayCatStatsView createDisplayCatStatsView(
+            DisplayCatStatsViewModel displayCatStatsViewModel,
+            InventoryViewModel inventoryViewModel,
+            GetCatFactView getCatFactView,
+            DialogService dialogService) {
+        // Create dialog in background like inventory
+        dialogService.createDisplayCatStatsDialog(displayCatStatsViewModel, inventoryViewModel, getCatFactView);
+        return dialogService.getDisplayCatStatsDialog();
     }
 
     /**

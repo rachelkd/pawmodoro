@@ -1,6 +1,7 @@
 package interface_adapter.change_cat_happiness;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.cat.CatState;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.runawaycat.RunawayCatState;
 import interface_adapter.runawaycat.RunawayCatViewModel;
@@ -25,7 +26,11 @@ public class ChangeCatHappinessPresenter implements ChangeCatHappinessOutputBoun
 
     @Override
     public void prepareSuccessView(ChangeCatHappinessOutputData changeCatHappinessOutputData) {
-        // TODO: Implement the method @chiually
+        final CatState catState = displayCatStatsViewModel.getState();
+        catState.setHappinessLevel(changeCatHappinessOutputData.getNewHappinessLevel());
+
+        displayCatStatsViewModel.setState(catState);
+        displayCatStatsViewModel.firePropertyChanged();
     }
 
     @Override

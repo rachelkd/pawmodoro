@@ -2,6 +2,7 @@ package app.factory.viewmodel;
 
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
+import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.get_cat_fact.GetCatFactViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
@@ -66,5 +67,9 @@ public class SessionViewModelFactory {
      */
     public BreakSessionViewModel createBreakSessionViewModel() {
         return new BreakSessionViewModel();
+    }
+
+    public DisplayCatStatsViewModel createDisplayCatStatsViewModel() {
+        return new DisplayCatStatsViewModel();
     }
 }
