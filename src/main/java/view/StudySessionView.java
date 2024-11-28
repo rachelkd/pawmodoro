@@ -211,6 +211,8 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         else if (evt.getSource().equals(stopTimerButton)) {
             // Stop the timer
             swingTimer.stop();
+            studySessionController.stopStudyTimer();
+
         }
     }
 

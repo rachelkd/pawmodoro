@@ -19,4 +19,9 @@ public interface StudySessionInputBoundary {
      * Executes the switch to break session view.
      */
     void switchToBreakSessionView();
+
+    /**
+     * stopStudyTimer
+     */
+    void stopStudyTimer();
 }

@@ -56,7 +56,8 @@ public class TimerUseCaseBuilder extends AbstractUseCaseBuilder {
                 getViews().getViewManagerModel(),
                 getViews().getSession().getViewModels().getLoginViewModel(),
                 getViews().getSession().getViewModels().getSetupSessionViewModel(),
-                getViews().getSession().getViewModels().getBreakSessionViewModel());
+                getViews().getSession().getViewModels().getBreakSessionViewModel(),
+                getViews().getSession().getViewModels().getStudySessionViewModel());
 
         final StudySessionInputBoundary studySessionInteractor = new StudySessionInteractor(studySessionOutputBoundary);
         final StudySessionController studySessionController = new StudySessionController(studySessionInteractor);
