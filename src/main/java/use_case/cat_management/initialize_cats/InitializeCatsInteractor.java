@@ -1,6 +1,6 @@
 package use_case.cat_management.initialize_cats;
 
-import java.util.Map;
+import java.util.Collection;
 
 import entity.Cat;
 import use_case.cat.CatDataAccessInterface;
@@ -17,8 +17,9 @@ public class InitializeCatsInteractor implements InitializeCatsInputBoundary {
 
     @Override
     public void execute(InitializeCatsInputData initializeCatsInputData) {
-        // Map<String, Cat> catMap = catDataAccessObject.getCatsByOwner(initializeCatsInputData.getOwnerUsername());
+        final Collection<Cat> cats = catDataAccessObject.getCatsByOwner(initializeCatsInputData.getOwnerUsername());
 
-        final InitializeCatsOutputData initializeCatsOutputData = new InitializeCatsOutputData();
+        final InitializeCatsOutputData initializeCatsOutputData = new InitializeCatsOutputData(cats);
+        initializeCatsPresenter.prepareSuccessView(initializeCatsOutputData);
     }
 }
