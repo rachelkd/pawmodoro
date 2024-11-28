@@ -17,6 +17,11 @@ public interface StudySessionOutputBoundary {
     void switchToLoginView();
 
     /**
+     * Notifies when stop button is pressed.
+     */
+    void stopStudyTimer();
+
+    /**
      * Prepares the login view.
      * Called when the login view needs to be prepared.
      */
@@ -27,4 +32,5 @@ public interface StudySessionOutputBoundary {
      * Called when the user goes on break after completing the work interval.
      */
     void switchToBreakSessionView();
+
 }

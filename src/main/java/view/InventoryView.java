@@ -111,6 +111,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
 
                 buildInventory(state.getOwnerId());
                 mainPanel.add(inventoryPanel, BorderLayout.CENTER);
+
                 inventoryPanel.revalidate();
                 inventoryPanel.repaint();
             });
@@ -119,11 +120,10 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         else if (evt.getPropertyName().equals("inventory_add")) {
             SwingUtilities.invokeLater(() -> {
                 final InventoryState state = (InventoryState) evt.getNewValue();
-                final AbstractFood food = state.getNewFoodItem();
+                addToInventory(state);
                 // update the user inventory
                 userInventory = state.getInventoryItems();
 
-                addFoodLabel(food);
                 inventoryPanel.revalidate();
                 inventoryPanel.repaint();
             });
@@ -182,13 +182,36 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
 
     void clickedSelectItemButton(String ownerId) {
         if (selectedLabel[0] != null) {
-            // TODO feeding cats all at once?
             final String selectedText = selectedLabel[0].getText();
             useItemController.execute(ownerId, selectedText);
-            // changeCatHungerController.execute("name", ownerId, selectedText);
+            changeCatHungerController.execute(inventoryViewModel.getState().getCurrentCatName(), ownerId, selectedText);
         }
         else {
             JOptionPane.showMessageDialog(null, "Please select an item first.");
+        }
+    }
+
+    void addToInventory(InventoryState state) {
+        final AbstractFood food = state.getNewFoodItem();
+        if (!userInventory.containsKey(food.getName())) {
+            addFoodLabel(food);
+        }
+        else {
+            final Component[] foodLabels = inventoryPanel.getComponents();
+            // update label
+            for (int i = 0; i < foodLabels.length; i++) {
+                final JPanel labelPanel = (JPanel) foodLabels[i];
+
+                final JLabel foodLabel = (JLabel) labelPanel.getComponent(0);
+
+                if (foodLabel.getText().equalsIgnoreCase(food.getName())) {
+                    final JLabel quantitylabel = (JLabel) labelPanel.getComponent(2);
+                    quantitylabel.setText(": " + food.getQuantity());
+                    foodLabel.revalidate();
+                    foodLabel.repaint();
+                    break;
+                }
+            }
         }
     }
 

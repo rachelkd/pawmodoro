@@ -21,6 +21,7 @@ import app.service.DialogService;
 import constants.Constants;
 import interface_adapter.cat.CatState;
 import interface_adapter.cat.CatViewModel;
+import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsController;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 
@@ -30,6 +31,7 @@ import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
  */
 public class CatView extends JPanel implements ActionListener, PropertyChangeListener {
     private final CatViewModel catViewModel;
+    private final InventoryViewModel inventoryViewModel;
     private final JLabel imageLabel;
     private final DialogService dialogService;
     private DisplayCatStatsController displayCatStatsController;
@@ -38,16 +40,17 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
 
     /**
      * Creates a new CatView.
-     *
      * @param catViewModel the view model for this cat view
      * @param displayCatStatsViewModel the view model for displaying cat stats
+     * @param inventoryViewModel the view model for the inventory
      * @param dialogService the service for showing dialogs
-     * @param getCatFactView the view for getting cat facts
+     * @param getCatFactView the view for displaying cat facts
      */
     public CatView(CatViewModel catViewModel, DisplayCatStatsViewModel displayCatStatsViewModel,
-            DialogService dialogService, GetCatFactView getCatFactView) {
+            InventoryViewModel inventoryViewModel, DialogService dialogService, GetCatFactView getCatFactView) {
         this.catViewModel = catViewModel;
         this.catViewModel.addPropertyChangeListener(this);
+        this.inventoryViewModel = inventoryViewModel;
         this.dialogService = dialogService;
         this.getCatFactView = getCatFactView;
         this.displayCatStatsViewModel = displayCatStatsViewModel;
@@ -99,7 +102,7 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
                 if (displayCatStatsController != null) {
                     final CatState state = catViewModel.getState();
                     displayCatStatsController.execute(state.getOwnerUsername(), state.getCatName());
-                    dialogService.showCatStatsDialog(displayCatStatsViewModel, getCatFactView);
+                    dialogService.showCatStatsDialog(displayCatStatsViewModel, inventoryViewModel, getCatFactView);
                 }
             }
         });
@@ -148,7 +151,6 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
 
     /**
      * Gets the view name.
-     *
      * @return the view name
      */
     public String getViewName() {

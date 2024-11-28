@@ -6,15 +6,22 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import app.factory.DialogFactory;
+import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
+import view.DisplayCatStatsView;
 import view.GetCatFactView;
+import view.InventoryView;
 
 /**
  * Service for showing dialogs.
  */
 public class DialogService {
-    private JDialog inventoryDialog;
+
+    private InventoryView inventoryDialog;
+    private DisplayCatStatsView displayCatStatsDialog;
+    private JDialog adoptionDialog;
+
     private final JPanel mainPanel;
     private final DialogFactory dialogFactory;
     private JFrame mainFrame;
@@ -25,7 +32,7 @@ public class DialogService {
      */
     public DialogService(JPanel mainPanel) {
         this.mainPanel = mainPanel;
-        this.dialogFactory = new DialogFactory(mainPanel);
+        this.dialogFactory = new DialogFactory(mainPanel, this);
     }
 
     /**
@@ -40,15 +47,28 @@ public class DialogService {
 
     /**
      * Shows the cat stats dialog.
-     * @param viewModel the view model for the dialog
+     * @param displayCatStatsViewModel the view model for the dialog
+     * @param inventoryViewModel the view model for the inventory dialog
      * @param getCatFactView the get cat fact view
      */
-    public void showCatStatsDialog(DisplayCatStatsViewModel viewModel, GetCatFactView getCatFactView) {
+    public void showCatStatsDialog(DisplayCatStatsViewModel displayCatStatsViewModel,
+            InventoryViewModel inventoryViewModel,
+            GetCatFactView getCatFactView) {
         if (mainFrame == null) {
             mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
         }
-        dialogFactory.createCatStatsDialog(viewModel, getCatFactView).setVisible(true);
 
+        // Create dialog if it doesn't exist
+        if (displayCatStatsDialog == null) {
+            displayCatStatsDialog = dialogFactory.createCatStatsDialog(
+                    displayCatStatsViewModel, inventoryViewModel, getCatFactView);
+        }
+
+        // Update the cat fact before showing
+        getCatFactView.fetchNewFact();
+
+        // Show the dialog
+        displayCatStatsDialog.setVisible(true);
     }
 
     /**
@@ -91,7 +111,87 @@ public class DialogService {
      * Gets the inventory dialog.
      * @return the inventory dialog
      */
-    public JDialog getInventoryDialog() {
+    public InventoryView getInventoryDialog() {
         return inventoryDialog;
+    }
+
+    /**
+     * Creates the display cat stats dialog.
+     * @param displayCatStatsViewModel the view model for the dialog
+     * @param inventoryViewModel the view model for the inventory dialog
+     * @param getCatFactView the get cat fact view
+     */
+    public void createDisplayCatStatsDialog(DisplayCatStatsViewModel displayCatStatsViewModel,
+            InventoryViewModel inventoryViewModel,
+            GetCatFactView getCatFactView) {
+        if (mainFrame == null) {
+            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+        }
+        if (displayCatStatsDialog == null) {
+            displayCatStatsDialog = dialogFactory.createCatStatsDialog(
+                    displayCatStatsViewModel, inventoryViewModel, getCatFactView);
+        }
+    }
+
+    /**
+     * Shows the display cat stats dialog.
+     */
+    public void showDisplayCatStatsDialog() {
+        if (displayCatStatsDialog != null) {
+            displayCatStatsDialog.setVisible(true);
+        }
+    }
+
+    /**
+     * Gets the display cat stats dialog.
+     * @return the display cat stats dialog
+     */
+    public DisplayCatStatsView getDisplayCatStatsDialog() {
+        return displayCatStatsDialog;
+    }
+
+    /**
+     * Creates the Adoption Dialog.
+     * @param viewModel the view model for the adoption dialog
+     */
+    public void createAdoptionDialog(AdoptionViewModel viewModel) {
+        if (mainFrame == null) {
+            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+        }
+        if (adoptionDialog == null) {
+            adoptionDialog = dialogFactory.createAdoptionDialog(viewModel);
+        }
+    }
+
+    /**
+     * Shows the adoption dialog.
+     * @param viewModel the view model for the adoption dialog
+     */
+    public void showAdoptionDialog(AdoptionViewModel viewModel) {
+        if (mainFrame == null) {
+            mainFrame = (JFrame) SwingUtilities.getWindowAncestor(mainPanel);
+        }
+        if (adoptionDialog == null) {
+            adoptionDialog = dialogFactory.createAdoptionDialog(viewModel);
+        }
+        adoptionDialog.setVisible(true);
+    }
+
+    /**
+     * Hides the adoption dialog.
+     */
+    public void hideAdoptionDialog() {
+        if (adoptionDialog != null && adoptionDialog.isVisible()) {
+            adoptionDialog.setVisible(false);
+        }
+    }
+
+    /**
+     * Gets the adoption dialog.
+     * @return the adoption dialog
+     */
+    public JDialog getAdoptionDialog() {
+        return adoptionDialog;
+
     }
 }

@@ -1,6 +1,7 @@
 package interface_adapter.change_cat_hunger;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.cat.CatState;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputBoundary;
 import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputData;
@@ -20,6 +21,10 @@ public class ChangeCatHungerPresenter implements ChangeCatHungerOutputBoundary {
 
     @Override
     public void prepareSuccessView(ChangeCatHungerOutputData changeCatHungerOutputData) {
-        // TODO: @chiually implement
+        final CatState catState = displayCatStatsViewModel.getState();
+        catState.setHungerLevel(changeCatHungerOutputData.getNewHungerLevel());
+
+        displayCatStatsViewModel.setState(catState);
+        displayCatStatsViewModel.firePropertyChanged();
     }
 }

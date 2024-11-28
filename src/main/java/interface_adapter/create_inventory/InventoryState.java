@@ -12,11 +12,13 @@ public class InventoryState {
     private String ownerId;
     private Map<String, AbstractFood> inventoryItems = new HashMap<>();
     private AbstractFood newFoodItem;
+    private String currentCatName;
 
     public InventoryState(InventoryState copy) {
         this.ownerId = copy.ownerId;
         this.inventoryItems = copy.inventoryItems;
         this.newFoodItem = copy.newFoodItem;
+        this.currentCatName = copy.currentCatName;
     }
 
     // default constructor
@@ -48,5 +50,13 @@ public class InventoryState {
 
     public void setNewFoodItem(AbstractFood newFoodItem) {
         this.newFoodItem = newFoodItem;
+    }
+
+    public String getCurrentCatName() {
+        return currentCatName;
+    }
+
+    public void setCurrentCatName(String currentCatName) {
+        this.currentCatName = currentCatName;
     }
 }

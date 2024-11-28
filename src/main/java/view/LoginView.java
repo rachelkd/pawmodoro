@@ -21,6 +21,7 @@ import javax.swing.event.DocumentListener;
 
 import constants.Constants;
 import interface_adapter.create_cat.CreateCatController;
+import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -42,6 +43,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     private LoginController loginController;
     private CreateCatController createCatController;
+    private CreateInventoryController createInventoryController;
 
     public LoginView(LoginViewModel loginViewModel) {
         this.loginViewModel = loginViewModel;
@@ -172,6 +174,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             loginController.execute(
                     currentState.getUsername(),
                     currentState.getPassword());
+            createInventoryController.execute(currentState.getUsername());
         }
         else if (evt.getSource().equals(backToSignUp)) {
             // Switch to the Sign Up View
@@ -201,5 +204,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     public void setCreateCatController(CreateCatController createCatController) {
         this.createCatController = createCatController;
+    }
+
+    public void setCreateInventoryController(CreateInventoryController createInventoryController) {
+        this.createInventoryController = createInventoryController;
     }
 }

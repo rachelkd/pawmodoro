@@ -22,6 +22,7 @@ import javax.swing.event.DocumentListener;
 
 import constants.Constants;
 import interface_adapter.create_cat.CreateCatController;
+import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
@@ -38,6 +39,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
     private SignupController signupController;
     private CreateCatController createCatController;
+    private CreateInventoryController createInventoryController;
 
     private JButton signUp;
     private JButton toLogin;
@@ -164,6 +166,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                         currentState.getUsername(),
                         currentState.getPassword(),
                         currentState.getRepeatPassword());
+                createInventoryController.execute(currentState.getUsername());
             }
         });
     }
@@ -274,5 +277,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     public void setCreateCatController(CreateCatController controller) {
         this.createCatController = controller;
+    }
+
+    public void setCreateInventoryController(CreateInventoryController controller) {
+        this.createInventoryController = controller;
     }
 }
