@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
+import app.service.DialogService;
 import constants.Constants;
+import interface_adapter.adoption.AdoptionState;
+import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.break_session.BreakSessionController;
 import interface_adapter.break_session.BreakSessionState;
 import interface_adapter.break_session.BreakSessionViewModel;
@@ -43,10 +47,17 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     private Timer swingTimer;
     private long remainingTime;
 
-    public BreakSessionView(BreakSessionViewModel breakSessionViewModel, BreakSessionState breakSessionState) {
+    private final AdoptionViewModel adoptionViewModel;
+    private final DialogService dialogService;
+
+    public BreakSessionView(BreakSessionViewModel breakSessionViewModel, BreakSessionState breakSessionState,
+                            AdoptionViewModel adoptionViewModel, DialogService dialogService) {
         this.setLayout(new BorderLayout());
         this.breakSessionViewModel = breakSessionViewModel;
         this.breakSessionState = breakSessionState;
+
+        this.adoptionViewModel = adoptionViewModel;
+        this.dialogService = dialogService;
 
         // Initialize remaining time with the break interval from the state
         breakSessionViewModel.addPropertyChangeListener(this);
@@ -61,13 +72,17 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         logOutSettings = createButton("Log Out");
         startTimerButton = createButton("Start Timer");
 
+        // Set preferred size to match buttons
+        Dimension buttonSize = new Dimension(150, 40);
+        startTimerButton.setPreferredSize(buttonSize);
+
         logOutSettings.addActionListener(this);
         startTimerButton.addActionListener(this);
 
         // Add components to main panel
         this.add(createTitlePanel(), BorderLayout.NORTH);
         this.add(createTimerPanel(), BorderLayout.CENTER);
-        this.add(createLogOutPanel(), BorderLayout.SOUTH);
+        this.add(createAdoptionAndLogOutPanel(buttonSize), BorderLayout.SOUTH);
 
         // Initialize the timer to decrement remaining time
         swingTimer = new Timer(Constants.SECONDS_TO_MILLIS, new ActionListener() {
@@ -79,10 +94,19 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
                 }
                 else {
                     swingTimer.stop();
-                        breakSessionController.switchToStudySessionView();
-                        breakSessionState.resetToDefaultBreakInterval();
-                        remainingTime = breakSessionState.getBreakInterval();
-                        updateTimerLabel();
+                    //LOGGER.info("Break time is over, switching to study session.");
+
+//                    if (breakSessionController != null) {
+//                        breakSessionController.switchToStudySessionView();
+//                        breakSessionState.resetToDefaultBreakInterval();
+//                        remainingTime = breakSessionState.getBreakInterval();
+//                        updateTimerLabel();
+//                    } else {
+//                        LOGGER.severe("BreakSessionController is not initialized.");
+//                    }
+
+                    // Reset buttons
+                    startTimerButton.setEnabled(true);
                 }
             }
         });
@@ -126,10 +150,28 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         return timerPanel;
     }
 
-    private JPanel createLogOutPanel() {
+    private JPanel createAdoptionAndLogOutPanel(Dimension buttonSize) {
+        final JPanel adoptionAndLogOutPanel = new JPanel(new BorderLayout());
+
+        // Create and add the adoption button in the center
+        final JButton adoptionButton = createButton(BreakSessionViewModel.ADOPTION_LABEL);
+        adoptionButton.setPreferredSize(buttonSize);  // Set size to match startTimerButton
+        adoptionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        adoptionButton.addActionListener(event -> {
+            dialogService.createAdoptionDialog(adoptionViewModel);
+            dialogService.showAdoptionDialog(adoptionViewModel);
+
+            final AdoptionState adoptionState = adoptionViewModel.getState();
+            adoptionViewModel.setState(adoptionState);
+        });
+        adoptionAndLogOutPanel.add(adoptionButton, BorderLayout.CENTER);
+
+        // Create and add the log out button in the right corner
         final JPanel logOutPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         logOutPanel.add(logOutSettings);
-        return logOutPanel;
+        adoptionAndLogOutPanel.add(logOutPanel, BorderLayout.EAST);
+
+        return adoptionAndLogOutPanel;
     }
 
     public void setBreakSessionController(BreakSessionController breakSessionController) {
@@ -143,10 +185,16 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     @Override
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(logOutSettings)) {
-            logoutController.execute("");
+            if (logoutController != null) {
+                logoutController.execute("");
+            }
+            else {
+                LOGGER.severe("LogoutController is not initialized.");
+            }
         }
         else if (evt.getSource().equals(startTimerButton)) {
             swingTimer.start();
+            startTimerButton.setEnabled(false);  // Disable the start button while the timer is running
         }
     }
 
@@ -170,7 +218,7 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
             final BreakSessionState newState = (BreakSessionState) evt.getNewValue();
             remainingTime = newState.getBreakInterval();
             updateTimerLabel();
+            startTimerButton.setEnabled(true); // Enable the start button when the state changes
         }
     }
 }
-

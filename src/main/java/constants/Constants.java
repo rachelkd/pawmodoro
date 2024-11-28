@@ -60,6 +60,7 @@ public final class Constants {
     // Signup, Login, Loggedin view model constants
     public static final int SPACING = 40;
     public static final int TITLE = 25;
+    public static final int INSET = 10;
 
     public static final int DISPLAY_CAT_REFRESH_BUTTON_WIDTH = 100;
     public static final int DISPLAY_CAT_REFRESH_BUTTON_HEIGHT = 30;

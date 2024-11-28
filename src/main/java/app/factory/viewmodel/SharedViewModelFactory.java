@@ -4,6 +4,7 @@ import interface_adapter.cat.CatViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.get_cat_fact.GetCatFactViewModel;
+import interface_adapter.adoption.AdoptionViewModel;
 
 /**
  * Factory for creating shared view models.
@@ -40,4 +41,6 @@ public class SharedViewModelFactory {
     public GetCatFactViewModel createGetCatFactViewModel() {
         return new GetCatFactViewModel();
     }
+
+    public AdoptionViewModel createAdoptionViewModel() { return new AdoptionViewModel();}
 }
