@@ -35,6 +35,7 @@ public class CreateCatPresenter implements CreateCatOutputBoundary {
         catViewModels.add(newCatViewModel);
 
         initializeCatsViewModel.getState().setCatViewModels(catViewModels);
+        initializeCatsViewModel.firePropertyChanged("initialize_cats");
     }
 
     @Override
