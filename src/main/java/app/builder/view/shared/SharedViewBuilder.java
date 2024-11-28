@@ -8,7 +8,11 @@ import app.factory.ViewFactory;
 import app.factory.viewmodel.SharedViewModelFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
-import view.*;
+import view.AdoptionView;
+import view.CatView;
+import view.DisplayCatStatsView;
+import view.GetCatFactView;
+import view.InventoryView;
 
 /**
  * Builder for shared views and view models.
@@ -25,6 +29,7 @@ public class SharedViewBuilder {
     private DisplayCatStatsView displayCatStatsView;
     private GetCatFactView getCatFactView;
     private InventoryView inventoryView;
+    private AdoptionView adoptionView;
     private CatContainerView catContainerView;
 
     /**
@@ -54,6 +59,7 @@ public class SharedViewBuilder {
                 sharedViewModelFactory.createInventoryViewModel(),
                 sharedViewModelFactory.createCatViewModel(),
                 sharedViewModelFactory.createGetCatFactViewModel(),
+                sharedViewModelFactory.createAdoptionViewModel(),
                 sharedViewModelFactory.createInitializeCatsViewModel());
     }
 
@@ -69,6 +75,11 @@ public class SharedViewBuilder {
                 .buildCatView()
                 .buildCatContainerView()
                 .createViewsAndModels();
+    }
+
+    private SharedViewBuilder buildAdoptionView() {
+        adoptionView = viewFactory.createAdoptionView(viewModels.getAdoptionViewModel(), dialogService);
+        return this;
     }
 
     /**
@@ -154,6 +165,7 @@ public class SharedViewBuilder {
                 displayCatStatsView,
                 getCatFactView,
                 inventoryView,
+                adoptionView,
                 catContainerView);
         return new SharedViewsAndModels(views, viewModels);
     }
