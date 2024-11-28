@@ -1,5 +1,6 @@
 package app.builder.view.shared;
 
+import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
@@ -13,6 +14,7 @@ public class SharedViewModels {
     private final InventoryViewModel inventoryViewModel;
     private final CatViewModel catViewModel;
     private final GetCatFactViewModel getCatFactViewModel;
+    private final AdoptionViewModel adoptionViewModel;
 
     /**
      * Creates a new SharedViewModels container.
@@ -20,16 +22,19 @@ public class SharedViewModels {
      * @param inventoryViewModel the inventory view model
      * @param catViewModel the cat view model
      * @param getCatFactViewModel the get cat fact view model
+     * @param adoptionViewModel the adoption view model
      */
     public SharedViewModels(
             DisplayCatStatsViewModel displayCatStatsViewModel,
             InventoryViewModel inventoryViewModel,
             CatViewModel catViewModel,
-            GetCatFactViewModel getCatFactViewModel) {
+            GetCatFactViewModel getCatFactViewModel,
+            AdoptionViewModel adoptionViewModel) {
         this.displayCatStatsViewModel = displayCatStatsViewModel;
         this.inventoryViewModel = inventoryViewModel;
         this.catViewModel = catViewModel;
         this.getCatFactViewModel = getCatFactViewModel;
+        this.adoptionViewModel = adoptionViewModel;
     }
 
     public DisplayCatStatsViewModel getDisplayCatStatsViewModel() {
@@ -46,5 +51,9 @@ public class SharedViewModels {
 
     public GetCatFactViewModel getGetCatFactViewModel() {
         return getCatFactViewModel;
+    }
+
+    public AdoptionViewModel getAdoptionViewModel() {
+        return adoptionViewModel;
     }
 }
