@@ -117,7 +117,6 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
                 final InventoryState state = (InventoryState) evt.getNewValue();
                 clearEmptyMessage(state.getOwnerId());
                 addToInventory(state);
-                System.out.println("why tho");
                 // update the user inventory
                 userInventory = state.getInventoryItems();
                 inventoryPanel.revalidate();
