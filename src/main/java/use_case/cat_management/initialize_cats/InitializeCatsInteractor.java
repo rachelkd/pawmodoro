@@ -17,7 +17,7 @@ public class InitializeCatsInteractor implements InitializeCatsInputBoundary {
 
     @Override
     public void execute(InitializeCatsInputData initializeCatsInputData) {
-        Map<String, Cat> catMap = catDataAccessObject.getCatsByOwner(initializeCatsInputData.getOwnerUsername());
+        // Map<String, Cat> catMap = catDataAccessObject.getCatsByOwner(initializeCatsInputData.getOwnerUsername());
 
         final InitializeCatsOutputData initializeCatsOutputData = new InitializeCatsOutputData();
     }
