@@ -1,5 +1,6 @@
 package interface_adapter.create_cat;
 
+import entity.Cat;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.initialize_cats.CatViewModelFactory;
@@ -34,7 +35,11 @@ public class CreateCatPresenter implements CreateCatOutputBoundary {
         final CatViewModel newCatViewModel = catViewModelFactory.create(createCatOutputData.getCat());
         catViewModels.add(newCatViewModel);
 
+        final Collection<Cat> cats = initializeCatsViewModel.getState().getCats();
+        cats.add(createCatOutputData.getCat());
+
         initializeCatsViewModel.getState().setCatViewModels(catViewModels);
+        initializeCatsViewModel.getState().setCats(cats);
         initializeCatsViewModel.firePropertyChanged("initialize_cats");
     }
 

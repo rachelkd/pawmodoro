@@ -1,5 +1,6 @@
 package interface_adapter.initialize_cats;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import entity.Cat;
@@ -17,7 +18,8 @@ public class InitializeCatsState {
 
     // default constructor
     public InitializeCatsState() {
-
+        this.cats = new ArrayList<>();
+        this.catViewModels = new ArrayList<>();
     }
 
     public Collection<Cat> getCats() {
