@@ -26,6 +26,10 @@ public final class Constants {
     public static final int TIMER_VERTICAL_SPACING = 20;
     public static final String TIME_FORMAT_PATTERN = "mm:ss";
 
+    // BreakSession and StudySession Constants
+    public static final int DEFAULT_BUTTON_SIZE_W = 150;
+    public static final int DEFAULT_BUTTON_SIZE_H = 40;
+
     // Cat Constants
     public static final int MAX_AMOUNT_OF_CATS = 4;
 
