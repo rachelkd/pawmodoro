@@ -51,11 +51,11 @@ This project was developed to help students stay focused and motivated while stu
 
 ## 👥 Team Members
 
--   [Allyssa Chiu (@chiually)](https://github.com/chiually) - Virtual Cat Care
--   [Rachel Deng (@rachelkd)](https://github.com/rachelkd) - Cat Interaction
--   [Jeha Park (@jehapark)](https://github.com/jehapark) - Music Integration
--   [Manahill Sajid (@manahillsajid)](https://github.com/manahillsajid) - Study Session Customization
--   [Jinny Yoo (@yhj050224)](https://github.com/yhj050224) - Timer Management
+-   [Allyssa Chiu (@chiually)](https://github.com/chiually)
+-   [Rachel Deng (@rachelkd)](https://github.com/rachelkd)
+-   [Jeha Park (@jehapark)](https://github.com/jehapark)
+-   [Manahill Sajid (@manahillsajid)](https://github.com/manahillsajid)
+-   [Jinny Yoo (@yhj050224)](https://github.com/yhj050224)
 
 ## 📚 Installation
 
@@ -69,7 +69,7 @@ Pawmodoro is a Java Swing application, so it requires a Java Runtime Environment
 Our project uses the following packages:
 
 #### Core Dependencies
-- **org.json:json** (v20240303) - JSON processing
+- **[JSON in Java](https://github.com/stleary/JSON-java)** (v20240303) - JSON processing
 - **[Okhttp](https://square.github.io/okhttp/)** (v4.12.0) - HTTP client
 - **[Jackson Core](https://github.com/FasterXML/jackson-core)** (v2.15.2) - JSON processing core
 - **[Jackson Databind](https://github.com/FasterXML/jackson-databind)** (v2.15.2) - JSON data binding
