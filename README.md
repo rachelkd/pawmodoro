@@ -4,11 +4,11 @@ A productivity app that combines the *pomodoro* technique with virtual cat care 
 
 ## Table of Contents
 - [Overview](#overview)
-- [Features](#features)
-- [Team Members](#team-members)
-- [Installation](#installation)
+- [Features](#-features)
+- [Team Members](#-team-members)
+- [Installation](#-installation)
 - [Usage Guide](#usage-guide)
-- [Contributing](#contributing)
+- [Contributing](#-contributing)
 - [Feedback](#feedback)
 - [License](#license)
 
@@ -24,7 +24,7 @@ This project was developed to help students stay focused and motivated while stu
 - 🎵 Integrated music player for focused studying
 - 📊 Track your progress and cat's well-being
 
-## Features
+## ✨ Features
 
 ### 1. Timer Management
 - Flexible study and break duration settings
@@ -49,7 +49,7 @@ This project was developed to help students stay focused and motivated while stu
 - Study session statistics
 - Level progression system
 
-## Team Members
+## 👥 Team Members
 
 -   [Allyssa Chiu (@chiually)](https://github.com/chiually) - Virtual Cat Care
 -   [Rachel Deng (@rachelkd)](https://github.com/rachelkd) - Cat Interaction
@@ -57,7 +57,7 @@ This project was developed to help students stay focused and motivated while stu
 -   [Manahill Sajid (@manahillsajid)](https://github.com/manahillsajid) - Study Session Customization
 -   [Jinny Yoo (@yhj050224)](https://github.com/yhj050224) - Timer Management
 
-## Installation
+## 📚 Installation
 
 Pawmodoro is a Java Swing application, so it requires a Java Runtime Environment on any operating system to run. This project uses Maven to manage dependencies. 
 
@@ -118,7 +118,7 @@ For any other issues, please check our [Issues page](https://github.com/rachelkd
    - Interact with your cat during breaks
    - Monitor happiness and hunger levels
 
-## Contributing
+## 🤝 Contributing
 
 We welcome contributions to Pawmodoro! Whether you’re fixing a bug, adding features, or improving documentation, follow the steps below.
 
