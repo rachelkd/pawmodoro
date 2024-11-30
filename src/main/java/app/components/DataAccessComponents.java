@@ -1,6 +1,5 @@
 package app.components;
 
-import data_access.AdoptionDataAccessObject;
 import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
@@ -16,26 +15,22 @@ public class DataAccessComponents {
     private final ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
     private final DBCatDataAccessObject catDataAccess;
     private final ApiCatFactDataAccessObject catFactDataAccess;
-    private final AdoptionDataAccessObject adoptionDataAccess;
 
     /**
      * Creates a new DataAccessComponents instance.
      * @param userDataAccess the user data access object
      * @param inventoryDataAccess the inventory data access object
-     * @param adoptionDataAccess the adoption data access object
      * @param displayCatImageDataAccess the display cat image data access object
      * @param catDataAccess the cat data access object
      * @param catFactDataAccess the cat fact data access object
      */
     public DataAccessComponents(DBUserDataAccessObject userDataAccess,
             InventoryService inventoryDataAccess,
-            AdoptionDataAccessObject adoptionDataAccess,
             ApiDisplayCatImageDataAccessObject displayCatImageDataAccess,
             DBCatDataAccessObject catDataAccess,
             ApiCatFactDataAccessObject catFactDataAccess) {
         this.userDataAccess = userDataAccess;
         this.inventoryDataAccess = inventoryDataAccess;
-        this.adoptionDataAccess = adoptionDataAccess;
         this.displayCatImageDataAccess = displayCatImageDataAccess;
         this.catDataAccess = catDataAccess;
         this.catFactDataAccess = catFactDataAccess;
@@ -47,10 +42,6 @@ public class DataAccessComponents {
 
     public InventoryService getInventoryDataAccess() {
         return inventoryDataAccess;
-    }
-
-    public AdoptionDataAccessObject getAdoptionDataAccess() {
-        return adoptionDataAccess;
     }
 
     public ApiDisplayCatImageDataAccessObject getDisplayCatImageDataAccess() {

@@ -52,7 +52,8 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
         final LoginOutputBoundary outputBoundary = new LoginPresenter(
                 getViews().getViewManagerModel(),
                 getViews().getSession().getViewModels().getStudySessionViewModel(),
-                getViews().getAuth().getViewModels().getLoginViewModel());
+                getViews().getAuth().getViewModels().getLoginViewModel(),
+                getViews().getCat().getViewModels().getAdoptionViewModel());
 
         final LoginInputBoundary interactor = new LoginInteractor(
                 getDataAccess().getUserDataAccess(),

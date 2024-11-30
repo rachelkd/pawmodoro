@@ -6,7 +6,6 @@ import entity.Cat;
  * The Adoption Interactor
  */
 public class AdoptionInteractor implements AdoptionInputBoundary {
-
     private final AdoptionOutputBoundary adoptionPresenter;
 
     public AdoptionInteractor(AdoptionOutputBoundary adoptionPresenter) {
@@ -16,7 +15,8 @@ public class AdoptionInteractor implements AdoptionInputBoundary {
     @Override
     public void execute(AdoptionInputData adoptionInputData) {
         final String catName = adoptionInputData.getCatName();
-        final AdoptionOutputData adoptionOutputData = new AdoptionOutputData(catName, false);
+        final String ownerName = adoptionInputData.getOwnerName();
+        final AdoptionOutputData adoptionOutputData = new AdoptionOutputData(catName, false, ownerName);
         adoptionPresenter.prepareSuccessView(adoptionOutputData);
     }
 
