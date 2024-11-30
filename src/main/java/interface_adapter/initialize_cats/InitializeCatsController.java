@@ -1,15 +1,15 @@
 package interface_adapter.initialize_cats;
 
+import use_case.cat_management.initialize_cats.InitializeCatsInputBoundary;
 import use_case.cat_management.initialize_cats.InitializeCatsInputData;
-import use_case.cat_management.initialize_cats.InitializeCatsInteractor;
 
 /**
  * Controller for the Initialize Cats Use Case.
  */
 public class InitializeCatsController {
-    private final InitializeCatsInteractor initializeCatsInteractor;
+    private final InitializeCatsInputBoundary initializeCatsInteractor;
 
-    public InitializeCatsController(InitializeCatsInteractor initializeCatsInteractor) {
+    public InitializeCatsController(InitializeCatsInputBoundary initializeCatsInteractor) {
         this.initializeCatsInteractor = initializeCatsInteractor;
     }
 

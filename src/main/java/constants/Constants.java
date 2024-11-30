@@ -105,6 +105,8 @@ public final class Constants {
     public static final String CANCEL = "Cancel";
     public static final String OK = "OK";
 
+    public static final String DEFAULT_CAT_NAME = "Pawmo";
+
     private Constants() {
         // Prevent instantiation
     }

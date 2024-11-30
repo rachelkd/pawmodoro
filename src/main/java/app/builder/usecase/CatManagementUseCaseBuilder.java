@@ -101,8 +101,7 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
     public CatManagementUseCaseBuilder buildCreateCatUseCase() {
         final CreateCatOutputBoundary outputBoundary = new CreateCatPresenter(getViews().getViewManagerModel(),
                 getViews().getCat().getViewModels().getMaxCatsErrorViewModel(),
-                getViews().getAuth().getViewModels().getLoginViewModel(),
-                getViews().getAuth().getViewModels().getSignupViewModel(),
+                getViews().getShared().getViewModels().getInitializeCatsViewModel(),
                 getViews().getCat().getViewModels().getAdoptionViewModel());
 
         final CreateCatInputBoundary interactor = new CreateCatInteractor(getDataAccess().getCatDataAccess(),

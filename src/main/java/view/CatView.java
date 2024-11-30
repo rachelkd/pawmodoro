@@ -101,6 +101,8 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
             public void mouseClicked(MouseEvent e) {
                 if (displayCatStatsController != null) {
                     final CatState state = catViewModel.getState();
+                    // TODO delete print statement
+                    System.out.println("cat clicked!");
                     displayCatStatsController.execute(state.getOwnerUsername(), state.getCatName());
                     dialogService.showCatStatsDialog(displayCatStatsViewModel, inventoryViewModel, getCatFactView);
                 }

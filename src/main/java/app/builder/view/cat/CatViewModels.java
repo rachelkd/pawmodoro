@@ -15,9 +15,9 @@ public class CatViewModels {
     private final DisplayCatImageViewModel displayCatImageViewModel;
 
     public CatViewModels(AdoptionViewModel adoptionViewModel,
-            RunawayCatViewModel runawayCatViewModel,
-            MaxCatsErrorViewModel maxCatsErrorViewModel,
-            DisplayCatImageViewModel displayCatImageViewModel) {
+                         RunawayCatViewModel runawayCatViewModel,
+                         MaxCatsErrorViewModel maxCatsErrorViewModel,
+                         DisplayCatImageViewModel displayCatImageViewModel) {
         this.adoptionViewModel = adoptionViewModel;
         this.runawayCatViewModel = runawayCatViewModel;
         this.maxCatsErrorViewModel = maxCatsErrorViewModel;
