@@ -93,23 +93,13 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
         imageLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("kms");
                 if (displayCatStatsController != null) {
                     final CatState state = catViewModel.getState();
+                    // TODO delete print statement
                     System.out.println("cat clicked!");
                     displayCatStatsController.execute(state.getOwnerUsername(), state.getCatName());
                     dialogService.showCatStatsDialog(displayCatStatsViewModel, inventoryViewModel, getCatFactView);
                 }
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                System.out.println("what");
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                System.out.println("the fuck");
             }
         });
     }

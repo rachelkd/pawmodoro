@@ -17,6 +17,14 @@ public class AdoptionState {
     }
 
     /**
+     * Sets the cat owner.
+     * @param owner owner's username
+     */
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    /**
      * Gets the cat name.
      * @return the cat name
      */

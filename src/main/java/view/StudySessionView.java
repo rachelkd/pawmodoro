@@ -1,8 +1,7 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -11,6 +10,8 @@ import javax.swing.*;
 import app.service.DialogService;
 import constants.Constants;
 import interface_adapter.add_to_inventory.AddToInventoryController;
+import interface_adapter.break_session.BreakSessionState;
+import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
 import interface_adapter.change_cat_hunger.ChangeCatHungerController;
 import interface_adapter.logout.LogoutController;
@@ -26,6 +27,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private BreakSessionView breakSessionView;
 
     private final StudySessionViewModel studySessionViewModel;
+    private final BreakSessionViewModel breakSessionViewModel;
 
     private LogoutController logoutController;
     private StudySessionController studySessionController;
@@ -46,12 +48,14 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private JPanel catsPanel;
 
     public StudySessionView(StudySessionViewModel studySessionViewModel,
+                            BreakSessionViewModel breakSessionViewModel,
                             DialogService dialogService,
                             CatContainerView catContainerView) {
 
         this.dialogService = dialogService;
         studySessionViewModel.addPropertyChangeListener(this);
         this.studySessionViewModel = studySessionViewModel;
+        this.breakSessionViewModel = breakSessionViewModel;
         this.catContainerView = catContainerView;
 
         this.catsPanel = new JPanel();
@@ -86,18 +90,22 @@ public class StudySessionView extends JPanel implements ActionListener, Property
                     updateTimerLabel();
                 }
                 else {
-                    final StudySessionState state = studySessionViewModel.getState();
+                    final StudySessionState studySessionState = studySessionViewModel.getState();
+                    final BreakSessionState breakSessionState = breakSessionViewModel.getState();
                     swingTimer.stop();
 
-                    final int workInterval = (int) state.getWorkInterval()
+                    final int workInterval = (int) studySessionState.getWorkInterval()
                             / Constants.SECONDS_TO_MILLIS
                             / Constants.MINUTES_TO_SECONDS;
-                    addToInventoryController.execute(state.getUsername(), workInterval);
+                    addToInventoryController.execute(studySessionState.getUsername(), workInterval);
+
+                    breakSessionState.setUsername(studySessionState.getUsername());
+                    breakSessionViewModel.setState(breakSessionState);
 
                     // Notify controller to switch the view
                     studySessionController.switchToBreakSessionView();
                     breakSessionView.showCatContainerView();
-                    state.resetToDefaultWorkInterval();
+                    studySessionState.resetToDefaultWorkInterval();
                     remainingTime = studySessionViewModel.getState().getWorkInterval();
                     updateTimerLabel();
                 }
@@ -196,6 +204,21 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         catsPanel.add(catContainerView, BorderLayout.CENTER);
         catsPanel.revalidate();
         catsPanel.repaint();
+    }
+
+    public void enableCatContainerMouseEvents() {
+        for (MouseListener listener : catContainerView.getMouseListeners()) {
+            catContainerView.removeMouseListener(listener);
+        }
+    }
+
+    public void disableCatContainerMouseEvents() {
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent event) {
+                event.consume();
+            }
+        });
     }
 
     public String getViewName() {

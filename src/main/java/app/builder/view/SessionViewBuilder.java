@@ -105,6 +105,7 @@ public class SessionViewBuilder {
     private SessionViewBuilder buildStudySessionView() {
         this.studySessionView = viewFactory.createStudySessionView(
                 viewModels.getStudySessionViewModel(),
+                viewModels.getBreakSessionViewModel(),
                 dialogService,
                 sharedViewsAndModels.getViews().getCatContainerView());
         cardPanel.add(studySessionView, studySessionView.getViewName());

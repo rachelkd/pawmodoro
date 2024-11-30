@@ -73,10 +73,10 @@ public class SharedViewBuilder {
                 .createViewsAndModels();
     }
 
-    private SharedViewBuilder buildAdoptionView() {
-        adoptionView = viewFactory.createAdoptionView(viewModels.getAdoptionViewModel(), dialogService);
-        return this;
-    }
+//    private SharedViewBuilder buildAdoptionView() {
+//        adoptionView = viewFactory.createAdoptionView(viewModels.getAdoptionViewModel(), dialogService);
+//        return this;
+//    }
 
     /**
      * Builds the get cat fact view.
