@@ -8,17 +8,7 @@ import entity.Cat;
 public interface AdoptionDataAccessInterface {
 
     /**
-     * Checks if the user already has a cat by this name.
-     *
-     * @param catName the given cat name
-     * @return true if user already has a cat with this name
+     * Returns the name of the owner
      */
-    boolean nameAlreadyExists(String catName);
-
-    /**
-     * Returns the name of the cat
-     */
-    String getCatName(Cat cat);
-
-
+    String getOwnerName();
 }
