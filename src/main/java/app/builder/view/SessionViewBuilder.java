@@ -70,9 +70,14 @@ public class SessionViewBuilder {
      * @return the session views and models
      */
     public SessionViewsAndModels build() {
-        this.buildSetupSessionView()
-                .buildStudySessionView()
-                .buildBreakSessionView();
+        this
+                .buildSetupSessionView()
+                .buildBreakSessionView()
+                .buildStudySessionView();
+        // build break session first so cat container show up in study session view first, not break session
+
+        breakSessionView.setStudySessionView(studySessionView);
+        studySessionView.setBreakSessionView(breakSessionView);
 
         final SessionViews views = new SessionViews(
                 setupSessionView,
@@ -101,7 +106,7 @@ public class SessionViewBuilder {
         this.studySessionView = viewFactory.createStudySessionView(
                 viewModels.getStudySessionViewModel(),
                 dialogService,
-                sharedViewsAndModels.getViews().getCatView());
+                sharedViewsAndModels.getViews().getCatContainerView());
         cardPanel.add(studySessionView, studySessionView.getViewName());
         return this;
     }

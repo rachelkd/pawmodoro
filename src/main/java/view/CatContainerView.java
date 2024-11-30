@@ -51,6 +51,7 @@ public class CatContainerView extends JPanel implements PropertyChangeListener {
             this.revalidate();
             this.repaint();
         });
+        System.out.println(this.isVisible());
     }
 
     private void setUp() {

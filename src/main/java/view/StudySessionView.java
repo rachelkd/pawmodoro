@@ -1,22 +1,12 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import app.service.DialogService;
 import constants.Constants;
@@ -32,8 +22,8 @@ import interface_adapter.study_session.StudySessionViewModel;
  * Views for Study sessions.
  */
 public class StudySessionView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final CatView catView;
-    // private final CatContainerView catContainerView;
+    private final CatContainerView catContainerView;
+    private BreakSessionView breakSessionView;
 
     private final StudySessionViewModel studySessionViewModel;
 
@@ -53,14 +43,18 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private long remainingTime = Constants.DEFAULT_WORK_DURATION_MS;
 
     private DialogService dialogService;
+    private JPanel catsPanel;
 
-    public StudySessionView(StudySessionViewModel studySessionViewModel, DialogService dialogService, CatView catView) {
+    public StudySessionView(StudySessionViewModel studySessionViewModel,
+                            DialogService dialogService,
+                            CatContainerView catContainerView) {
 
         this.dialogService = dialogService;
         studySessionViewModel.addPropertyChangeListener(this);
         this.studySessionViewModel = studySessionViewModel;
+        this.catContainerView = catContainerView;
 
-        this.catView = catView;
+        this.catsPanel = new JPanel();
 
         this.setLayout(new BorderLayout());
 
@@ -102,6 +96,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
                     // Notify controller to switch the view
                     studySessionController.switchToBreakSessionView();
+                    breakSessionView.showCatContainerView();
                     state.resetToDefaultWorkInterval();
                     remainingTime = studySessionViewModel.getState().getWorkInterval();
                     updateTimerLabel();
@@ -175,20 +170,32 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     }
 
     private JPanel createCatPanel() {
-        final JPanel catPanel = new JPanel();
-        catPanel.setLayout(new BorderLayout());
-        catPanel.setVisible(true);
-        catPanel.setOpaque(true);
+        catsPanel.setLayout(new BorderLayout());
+        catsPanel.setVisible(true);
+        catsPanel.setOpaque(true);
 
-        catView.setVisible(true);
-        catPanel.add(catView, BorderLayout.CENTER);
+        catContainerView.setVisible(true);
+        catContainerView.setOpaque(true);
+
+        catsPanel.add(catContainerView, BorderLayout.CENTER);
+
         SwingUtilities.invokeLater(() -> {
-            catView.setVisible(true);
-            catView.revalidate();
-            catView.repaint();
+            catContainerView.setVisible(true);
+            catContainerView.revalidate();
+            catContainerView.repaint();
         });
 
-        return catPanel;
+        catsPanel.revalidate();
+        catsPanel.repaint();
+
+        return catsPanel;
+    }
+
+    public void showCatContainerView() {
+        catsPanel.removeAll();
+        catsPanel.add(catContainerView, BorderLayout.CENTER);
+        catsPanel.revalidate();
+        catsPanel.repaint();
     }
 
     public String getViewName() {
@@ -213,6 +220,10 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     public void setAddToInventoryController(AddToInventoryController controller) {
         this.addToInventoryController = controller;
+    }
+
+    public void setBreakSessionView(BreakSessionView breakSessionView) {
+        this.breakSessionView = breakSessionView;
     }
 
     @Override

@@ -110,12 +110,12 @@ public class ViewFactory {
      * Creates a Study Session View.
      * @param studySessionViewModel the study session view model
      * @param dialogService the dialog service
-     * @param catView the existing cat view instance
+     * @param catContainerView the existing cat container view instance
      * @return StudySessionView
      */
     public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
-            DialogService dialogService, CatView catView) {
-        return new StudySessionView(studySessionViewModel, dialogService, catView);
+            DialogService dialogService, CatContainerView catContainerView) {
+        return new StudySessionView(studySessionViewModel, dialogService, catContainerView);
     }
 
     /**
@@ -195,6 +195,8 @@ public class ViewFactory {
      * Creates Break Session View.
      * @param breakSessionViewModel the break session view model
      * @param breakSessionState     the break session state
+     * @param adoptionViewModel the adoption view model
+     * @param dialogService the dialog service
      * @param catContainerView the cat container view
      * @return BreakSessionView
      */
@@ -203,6 +205,7 @@ public class ViewFactory {
                                                    AdoptionViewModel adoptionViewModel,
                                                    DialogService dialogService,
                                                    CatContainerView catContainerView) {
-        return new BreakSessionView(breakSessionViewModel, breakSessionState, adoptionViewModel, dialogService, catContainerView);
+        return new BreakSessionView(breakSessionViewModel,
+                breakSessionState, adoptionViewModel, dialogService, catContainerView);
     }
 }

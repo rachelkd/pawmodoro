@@ -166,7 +166,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                         currentState.getRepeatPassword());
                 createInventoryController.execute(currentState.getUsername());
                 // default cat user gets when they sign up
-                createCatController.execute("Tommy", currentState.getUsername());
+                createCatController.execute(Constants.DEFAULT_CAT_NAME, currentState.getUsername());
             }
         });
     }

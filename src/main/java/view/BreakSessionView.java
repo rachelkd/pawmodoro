@@ -38,8 +38,11 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     private long remainingTime;
 
     private CatContainerView catContainerView;
+    private StudySessionView studySessionView;
     private final AdoptionViewModel adoptionViewModel;
     private final DialogService dialogService;
+
+    private JPanel catsPanel;
 
     public BreakSessionView(BreakSessionViewModel breakSessionViewModel,
                             BreakSessionState breakSessionState,
@@ -54,6 +57,8 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
 
         this.adoptionViewModel = adoptionViewModel;
         this.dialogService = dialogService;
+
+        this.catsPanel = new JPanel(new BorderLayout());
 
         // Initialize remaining time with the break interval from the state
         breakSessionViewModel.addPropertyChangeListener(this);
@@ -81,7 +86,7 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         // Add components to main panel
         this.add(createTitlePanel(), BorderLayout.NORTH);
         this.add(createTimerPanel(), BorderLayout.CENTER);
-        bottomPanel.add(createCatsPanel());
+        bottomPanel.add(drawCatsPanel());
         bottomPanel.add(createAdoptionAndLogOutPanel(buttonSize));
         this.add(bottomPanel, BorderLayout.SOUTH);
 
@@ -96,6 +101,7 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
                 else {
                     swingTimer.stop();
                     breakSessionController.switchToStudySessionView();
+                    studySessionView.showCatContainerView();
                     breakSessionState.resetToDefaultBreakInterval();
                     remainingTime = breakSessionState.getBreakInterval();
                     updateTimerLabel();
@@ -169,12 +175,45 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         return adoptionAndLogOutPanel;
     }
 
+    private JPanel drawCatsPanel() {
+        // final JPanel catsPanel = new JPanel(new BorderLayout());
+        catsPanel.setVisible(true);
+        catsPanel.setOpaque(true);
+
+        catContainerView.setVisible(true);
+        catContainerView.setOpaque(true);
+
+        catsPanel.add(catContainerView, BorderLayout.CENTER);
+
+        SwingUtilities.invokeLater(() -> {
+            catContainerView.setVisible(true);
+            catContainerView.revalidate();
+            catContainerView.repaint();
+        });
+
+        catsPanel.revalidate();
+        catsPanel.repaint();
+
+        return catsPanel;
+    }
+
+    public void showCatContainerView() {
+        catsPanel.removeAll();
+        catsPanel.add(catContainerView, BorderLayout.CENTER);
+        catsPanel.revalidate();
+        catsPanel.repaint();
+    }
+
     public void setBreakSessionController(BreakSessionController breakSessionController) {
         this.breakSessionController = breakSessionController;
     }
 
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
+    }
+
+    public void setStudySessionView(StudySessionView studySessionView) {
+        this.studySessionView = studySessionView;
     }
 
     @Override
@@ -201,28 +240,6 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         final long minutes = timeInMillis / (Constants.SECONDS_TO_MILLIS * Constants.MINUTES_TO_SECONDS);
         final long seconds = (timeInMillis / Constants.SECONDS_TO_MILLIS) % Constants.MINUTES_TO_SECONDS;
         return String.format("%02d:%02d", minutes, seconds);
-    }
-
-    private JPanel createCatsPanel() {
-        final JPanel catsPanel = new JPanel(new BorderLayout());
-        catsPanel.setVisible(true);
-        catsPanel.setOpaque(true);
-
-        catContainerView.setVisible(true);
-        catContainerView.setOpaque(true);
-
-        catsPanel.add(catContainerView, BorderLayout.CENTER);
-
-        SwingUtilities.invokeLater(() -> {
-            catContainerView.setVisible(true);
-            catContainerView.revalidate();
-            catContainerView.repaint();
-        });
-
-        catsPanel.revalidate();
-        catsPanel.repaint();
-
-        return catsPanel;
     }
 
     public String getViewName() {
