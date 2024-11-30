@@ -153,6 +153,7 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
                             mainPanel.add(information, BorderLayout.CENTER);
                             mainPanel.add(finish, BorderLayout.SOUTH);
                             mainPanel.remove(adoptionCompletePanel);
+                            nameField.setText("");
                             dispose();
                         }
                     }

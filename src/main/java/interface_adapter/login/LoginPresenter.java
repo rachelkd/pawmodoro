@@ -40,7 +40,6 @@ public class LoginPresenter implements LoginOutputBoundary {
         final AdoptionState adoptionState = adoptionViewModel.getState();
         adoptionState.setOwner(response.getUsername());
         this.adoptionViewModel.setState(adoptionState);
-        this.adoptionViewModel.firePropertyChanged();
 
         switchToStudySessionView();
     }
