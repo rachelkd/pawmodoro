@@ -1,5 +1,6 @@
 package use_case.cat;
 
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,11 @@ class ChangeCatHungerInteractorTest {
             public void prepareSuccessView(ChangeCatHungerOutputData changeCatHungerOutputData) {
                 assertEquals(90, changeCatHungerOutputData.getNewHungerLevel());
             }
+
+            @Override
+            public void prepareFailView(String errorMessage) {
+                fail("Usecase unexpected.")
+            }
         };
 
         final ChangeCatHungerInputBoundary interactor = new ChangeCatHungerInteractor(catRepository, successPresenter);
@@ -54,6 +60,11 @@ class ChangeCatHungerInteractorTest {
             @Override
             public void prepareSuccessView(ChangeCatHungerOutputData changeCatHungerOutputData) {
                 assertEquals(90, changeCatHungerOutputData.getNewHungerLevel());
+            }
+
+            @Override
+            public void prepareFailView(String errorMessage) {
+                fail("Usecase unexpected");
             }
         };
 

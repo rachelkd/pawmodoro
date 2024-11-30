@@ -21,31 +21,36 @@ public class ChangeCatHungerInteractor implements ChangeCatHungerInputBoundary {
 
     @Override
     public void execute(ChangeCatHungerInputData changeCatHungerInputData) {
-        // get the cat, cat object should already exist dues to create cat use case
-        final Cat cat = catDataAccessObject.getCatByNameAndOwner(changeCatHungerInputData.getCatName(),
-                changeCatHungerInputData.getOwnerUsername());
-        int hungerChange = 0;
 
-        if (changeCatHungerInputData.getFoodName() != null) {
-            final FoodItemFactory foodItemFactory = new FoodItemFactory();
-            final AbstractFood food = foodItemFactory.create(changeCatHungerInputData.getFoodName());
-
-            hungerChange += food.getPoints();
-            cat.updateHungerLevel(hungerChange);
+        if ("".equalsIgnoreCase(changeCatHungerInputData.getCatName())) {
+            changeCatHungerPresenter.prepareFailView("You did not select a cat!");
         }
         else {
-            hungerChange -= hungerDecreaseCalculator(changeCatHungerInputData.getStudySessionLength());
-            cat.updateHungerLevel(hungerChange);
+            // get the cat, cat object should already exist dues to create cat use case
+            final Cat cat = catDataAccessObject.getCatByNameAndOwner(changeCatHungerInputData.getCatName(),
+                    changeCatHungerInputData.getOwnerUsername());
+            int hungerChange = 0;
+
+            if (changeCatHungerInputData.getFoodName() != null) {
+                final FoodItemFactory foodItemFactory = new FoodItemFactory();
+                final AbstractFood food = foodItemFactory.create(changeCatHungerInputData.getFoodName());
+
+                hungerChange += food.getPoints();
+                cat.updateHungerLevel(hungerChange);
+            }
+            else {
+                hungerChange -= hungerDecreaseCalculator(changeCatHungerInputData.getStudySessionLength());
+                cat.updateHungerLevel(hungerChange);
+            }
+
+            // update the database
+            catDataAccessObject.updateCat(cat);
+
+            final ChangeCatHungerOutputData changeCatHungerOutputData = new ChangeCatHungerOutputData(
+                    cat.getOwnerUsername(), cat.getName(),
+                    catDataAccessObject.getHungerLevel(cat.getName(), cat.getOwnerUsername()));
+            changeCatHungerPresenter.prepareSuccessView(changeCatHungerOutputData);
         }
-
-        // update the database
-        catDataAccessObject.updateCat(cat);
-
-        final ChangeCatHungerOutputData changeCatHungerOutputData = new ChangeCatHungerOutputData(
-                cat.getOwnerUsername(), cat.getName(),
-                catDataAccessObject.getHungerLevel(cat.getName(), cat.getOwnerUsername()));
-        changeCatHungerPresenter.prepareSuccessView(changeCatHungerOutputData);
-
     }
 
     int hungerDecreaseCalculator(int studySessionLength) {

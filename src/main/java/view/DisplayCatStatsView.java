@@ -203,6 +203,10 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
             final CatState state = (CatState) evt.getNewValue();
             this.updateFields(state);
         }
+        if ("null_cat_name".equals(evt.getPropertyName())) {
+            final CatState state = (CatState) evt.getNewValue();
+            JOptionPane.showMessageDialog(this, state.getError());
+        }
     }
 
     /**

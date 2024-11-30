@@ -10,4 +10,10 @@ public interface ChangeCatHungerOutputBoundary {
      * @param changeCatHungerOutputData output data
      */
     void prepareSuccessView(ChangeCatHungerOutputData changeCatHungerOutputData);
+
+    /**
+     * Sends error message to the Inventory View.
+     * @param errorMessage the error message
+     */
+    void prepareFailView(String errorMessage);
 }
