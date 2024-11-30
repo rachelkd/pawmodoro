@@ -9,8 +9,8 @@ public final class Constants {
     // Global constants
     public static final String FONT_FAMILY = Font.SANS_SERIF;
     // Timer constants
-    public static final int DEFAULT_WORK_MINUTES = 25;
-    public static final int DEFAULT_BREAK_MINUTES = 5;
+    public static final int DEFAULT_WORK_MINUTES = 1;
+    public static final int DEFAULT_BREAK_MINUTES = 1;
     public static final int MINUTES_TO_SECONDS = 60;
     public static final int SECONDS_TO_MILLIS = 1000;
     public static final long SECONDS_TO_MILLIS1 = 1000L;
@@ -76,9 +76,14 @@ public final class Constants {
     public static final int DISPLAY_CAT_STATS_MAX_WIDTH = 360;
     public static final int DISPLAY_CAT_STATS_HEIGHT = 360;
 
-    // Adoption view contstants
+    // Adoption view constants
     public static final int ADOPTION_VIEW_WIDTH = 360;
     public static final int ADOPTION_VIEW_HEIGHT = 360;
+
+    // Runaway cat view constants
+    public static final int RUNAWAYCAT_VIEW_WIDTH = 380;
+    public static final int RUNAWAYCAT_VIEW_HEIGHT = 380;
+
     // Cat sprite constants
     public static final int CAT_SPRITE_BASE_SIZE = 32;
     public static final int CAT_SPRITE_SCALE = 2;

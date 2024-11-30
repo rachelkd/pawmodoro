@@ -1,149 +1,143 @@
-# Pawmodoro
+# 🐱 Pawmodoro
 
-## Team Members
+A productivity app that combines the *pomodoro* technique with virtual cat care to make studying more engaging and rewarding.
 
--   [Allyssa Chiu (@chiually)](https://github.com/chiually)
--   [Rachel Deng (@rachelkd)](https://github.com/rachelkd)
--   [Jeha Park (@jehapark)](https://github.com/jehapark)
--   [Manahill Sajid (@manahillsajid)](https://github.com/manahillsajid)
--   [Jinny Yoo (@yhj050224)](https://github.com/yhj050224)
+## 📚 Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Team Members](#team-members)
+- [Installation](#installation)
+- [Usage Guide](#usage-guide)
+- [Contributing](#contributing)
+- [Feedback](#feedback)
+- [License](#license)
 
-## Instructions
+## 🎯 Overview
 
-1. Build the project with the provided `pom.xml` file.
-2. Set up the environment variables:
-    - `SUPABASE_DB_USER`
-    - `SUPABASE_DB_PASSWORD`
+Pawmodoro is a unique study companion that helps you maintain focus while caring for virtual cats. By completing study intervals, you earn rewards to feed and interact with your virtual cats, creating a fun and motivating study environment. 
 
-## User Stories and Use Cases
+This project was developed to help students stay focused and motivated while studying, but can be used for any task that requires focus and breaks.
 
-### Authentication (Team)
+### Why Pawmodoro?
+- 🕒 Customizable study and break intervals
+- 🐈 Virtual cat companions that respond to your study habits
+- 🎵 Integrated music player for focused studying
+- 📊 Track your progress and cat's well-being
 
-**User Story:** As a new user, I want to create a Pawmodoro account to increase my productivity while studying.
+## ✨ Features
 
-**Use Cases:**
+### 1. Timer Management
+- Flexible study and break duration settings
+- Visual progress tracking
 
--   Register new user (create username/password)
--   Login user
--   Logout user
--   Manage user profile
+### 2. Virtual Cat Care System
+- Feed and interact with virtual cats
+- Monitor cat happiness and hunger levels
+- Earn rewards through completed study sessions
+- Random cat facts
 
-### Timer Management (Assigned to: Jinny)
+### 3. Music Integration
+- Built-in music player
+- Volume control
+- Study-friendly music recommendations
 
-**User Story:** As a user, I want a timer displaying my progress that can be set to intervals of my choosing.
+### 4. Progress Tracking
+- Cat well-being metrics
 
-**Use Cases:**
 
--   Start/pause/resume timer
--   Set custom interval duration
--   Track interval progress
--   Notify user when interval completes
+### Features to Come
 
-### Study Session Customization (Assigned to: Manahill)
+- Study session statistics
+- Level progression system
 
-**User Story:** As a user, I want to be able to choose the length of my study and break sessions independently. That is, the amount of time I have for a break doesn’t depend on how much I study for, and vice versa.
+## 👥 Team Members
 
-**Use Cases:**
+-   [Allyssa Chiu (@chiually)](https://github.com/chiually) - Virtual Cat Care
+-   [Rachel Deng (@rachelkd)](https://github.com/rachelkd) - Cat Interaction
+-   [Jeha Park (@jehapark)](https://github.com/jehapark) - Music Integration
+-   [Manahill Sajid (@manahillsajid)](https://github.com/manahillsajid) - Study Session Customization
+-   [Jinny Yoo (@yhj050224)](https://github.com/yhj050224) - Timer Management
 
--   Customize study duration
--   Customize break duration
--   Save timer preferences
--   Switch between study/break modes
+## 🚀 Installation
 
-### Virtual Cat Care (Assigned to: Allyssa)
+Pawmodoro is a Java Swing application, so it requires a Java Runtime Environment on any operating system to run. This project uses Maven to manage dependencies. 
 
-**User Story:** As a user, I want to be able to feed a cat and manage its happiness based on my study performance. I want the system to decrease a cat’s happiness when I stop studying as a penalty.
+### Prerequisites
+- Java JDK 17 or higher
+- Maven 3.6 or higher
 
-**Use Cases:**
+### Dependencies
+Our project uses the following packages:
 
--   Feed cat after completed intervals
--   Track cat happiness
--   Apply happiness penalties
--   Handle cat status changes
+#### Core Dependencies
+- **org.json:json** (v20240303) - JSON processing
+- **[com.squareup.okhttp3:okhttp](https://square.github.io/okhttp/)** (v4.12.0) - HTTP client
+- **[com.fasterxml.jackson.core:jackson-core](https://github.com/FasterXML/jackson-core)** (v2.15.2) - JSON processing core
+- **[com.fasterxml.jackson.core:jackson-databind](https://github.com/FasterXML/jackson-databind)** (v2.15.2) - JSON data binding
+- **[org.postgresql:postgresql](https://github.com/pgjdbc/pgjdbc)** (v42.7.1) - PostgreSQL database connector
+  - Note that the JDBC driver was initially used for development, but replaced with a PostgreSQL REST API. You may still need to install the JDBC driver to build the project.
 
-### Cat Interaction (Assigned to: Rachel)
+#### Testing Dependencies
+- **[JUnit 5](https://junit.org/junit5/)** (v5.8.1) - Unit testing framework
 
-**User Stories:**
+### Environment Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/rachelkd/pawmodoro.git
+   cd pawmodoro
+   ```
 
-1. As a user, I want to interact with my virtual cat through clicks to hear meows and learn cat facts.
-2. As a user, I want to view my cat's statistics (hunger and happiness levels) when I click on the cat.
+2. Build the project:
+   ```bash
+   mvn clean install
+   ```
 
-**Use Cases:**
+3. Start studying in the Java Swing application!
 
--   Display cat animations
--   Show random cat facts
--   Display cat statistics
-    -   Show current happiness level
-    -   Show current hunger level
--   Update statistics display in real-time
+### Common Installation Issues
 
-### Music Integration (Assigned to: Jeha)
+#### Network Issues
 
-**User Story:** As a user, I want to be able to listen to music while completing a study interval.
+- An internet connection is required to download Maven dependencies and connect to the database
 
-**Use Cases:**
+For any other issues, please check our [Issues page](https://github.com/rachelkd/pawmodoro/issues) or open a new issue.
 
--   Play/pause music
--   Select playlists
--   Adjust volume
--   Track music preferences
+## 📖 Usage Guide
 
-## Entities
+1. **Getting Started**
+   - Create an account or log in
+   - Customize your study and break durations
+   - Select your first virtual cat companion
 
-### User
+2. **During Study Sessions**
+   - Start the timer
+   - Monitor your progress
+   - Complete intervals to earn rewards
 
--   `username`
--   `password`
--   `level`
--   `levelProgress`
--   `totalFocusTime`
--   `List<Cat> cats`
+3. **Cat Care**
+   - Feed your cat with earned rewards
+   - Interact with your cat during breaks
+   - Monitor happiness and hunger levels
 
-### Cat
+## 🤝 Contributing
 
--   `name`
--   `happiness` (0-100)
--   `hunger` (0-100)
+We welcome contributions! Please follow these steps:
 
-### Timer
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to your branch
+5. Open a Pull Request
 
--   `workDuration`
--   `shortBreakDuration`
--   `longBreakDuration`
--   `currentState` (enum: WORKING, SHORT_BREAK, LONG_BREAK, PAUSED)
--   `startTime`
--   `completedIntervals`
--   `cyclePosition` (0-3: tracks position in the work-break cycle)
+## 📣 Feedback
 
-### Food (Interface)
+We value your input! Please share your experience:
+- Open an [issue](https://github.com/rachelkd/pawmodoro/issues) on GitHub
+  - Report bugs or request features
 
-Methods:
+## 📄 License
 
--   `getHungerRestoration()`
--   `getHappinessBoost()`
--   `getName()`
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Implementations:
-
--   WetFood
--   DryFood
--   Milk
-
-### Statistics
-
--   `totalFocusMinutes`
--   `totalBreakMinutes`
--   `completedWorkIntervals`
--   `completedFullCycles`
--   `interruptedSessions`
--   `date`
--   `foodItemsUsed`
--   `previousCats` (tracks runaway cats)
-
-### MusicPlayer
-
--   `currentPlaylist`
--   `isPlaying`
--   `volume`
--   `currentTrack`
--   `spotifyAccessToken`
+---
+Made with ❤️ by the Pawmodoro Team

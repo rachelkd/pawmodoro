@@ -27,13 +27,13 @@ public class AdoptionPresenter implements AdoptionOutputBoundary {
     @Override
     public void prepareSuccessView(AdoptionOutputData response) {
         // On success, switch to the set up study session view
-        prepareSuccessViewCalled = true;
-        final SetupSessionState setupSessionState = setupSessionViewModel.getState();
-        this.setupSessionViewModel.setState(setupSessionState);
-        this.setupSessionViewModel.firePropertyChanged();
-
-        this.viewManagerModel.setState(setupSessionViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
+//        prepareSuccessViewCalled = true;
+//        final SetupSessionState setupSessionState = setupSessionViewModel.getState();
+//        this.setupSessionViewModel.setState(setupSessionState);
+//        this.setupSessionViewModel.firePropertyChanged();
+//
+//        this.viewManagerModel.setState(setupSessionViewModel.getViewName());
+//        this.viewManagerModel.firePropertyChanged();
     }
 
     @Override

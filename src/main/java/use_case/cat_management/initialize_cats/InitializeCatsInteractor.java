@@ -5,6 +5,9 @@ import java.util.Collection;
 import entity.Cat;
 import use_case.cat.CatDataAccessInterface;
 
+/**
+ * Initialize Cats Interactor
+ */
 public class InitializeCatsInteractor implements InitializeCatsInputBoundary {
     private final CatDataAccessInterface catDataAccessObject;
     private InitializeCatsOutputBoundary initializeCatsPresenter;

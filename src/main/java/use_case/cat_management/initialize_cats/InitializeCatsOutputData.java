@@ -4,6 +4,9 @@ import entity.Cat;
 
 import java.util.Collection;
 
+/**
+ * Output Data for the initialize cat use case.
+ */
 public class InitializeCatsOutputData {
     private final Collection<Cat> cats;
 

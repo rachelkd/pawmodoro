@@ -79,8 +79,7 @@ public class CatManagementViewBuilder {
      * @return this builder
      */
     private CatManagementViewBuilder buildRunawayCatView() {
-        runawayCatView = viewFactory.createRunawayCatView(catViewModels.getRunawayCatViewModel());
-        cardPanel.add(runawayCatView, runawayCatView.getViewName());
+        runawayCatView = viewFactory.createRunawayCatView(catViewModels.getRunawayCatViewModel(), dialogService);
         return this;
     }
 

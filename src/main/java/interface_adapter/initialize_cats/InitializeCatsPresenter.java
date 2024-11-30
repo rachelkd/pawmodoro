@@ -8,6 +8,9 @@ import interface_adapter.cat.CatViewModel;
 import use_case.cat_management.initialize_cats.InitializeCatsOutputBoundary;
 import use_case.cat_management.initialize_cats.InitializeCatsOutputData;
 
+/**
+ * Initialize Cats Use Case Presenter.
+ */
 public class InitializeCatsPresenter implements InitializeCatsOutputBoundary {
     private final InitializeCatsViewModel initializeCatsViewModel;
     private final CatViewModelFactory catViewModelFactory;

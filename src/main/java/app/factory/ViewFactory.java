@@ -71,10 +71,12 @@ public class ViewFactory {
     /**
      * Creates a Runaway Cat View.
      * @param runawayCatViewModel the runaway cat view model
+     * @param dialogService the dialog service for user interactions
      * @return RunawayCatView
      */
-    public RunawayCatView createRunawayCatView(RunawayCatViewModel runawayCatViewModel) {
-        return new RunawayCatView(runawayCatViewModel);
+    public RunawayCatView createRunawayCatView(RunawayCatViewModel runawayCatViewModel, DialogService dialogService) {
+        dialogService.createRunawayCatDialog(runawayCatViewModel);
+        return (RunawayCatView) dialogService.getRunawayCatDialog();
     }
 
     /**
