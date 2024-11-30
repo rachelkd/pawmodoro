@@ -2,23 +2,25 @@
 
 A productivity app that combines the *pomodoro* technique with virtual cat care to make studying more engaging and rewarding.
 
-## 📚 Table of Contents
+## Table of Contents
+
 - [Overview](#overview)
-- [Features](#features)
-- [Team Members](#team-members)
-- [Installation](#installation)
-- [Usage Guide](#usage-guide)
-- [Contributing](#contributing)
-- [Feedback](#feedback)
-- [License](#license)
+- [Features](#-features)
+- [Team Members](#-team-members)
+- [Installation](#-installation)
+- [Usage Guide](#-usage-guide)
+- [Contributing](#-contributing)
+- [Feedback](#-feedback)
+- [License](#-license)
 
-## 🎯 Overview
+## Overview
 
-Pawmodoro is a unique study companion that helps you maintain focus while caring for virtual cats. By completing study intervals, you earn rewards to feed and interact with your virtual cats, creating a fun and motivating study environment. 
+Pawmodoro is a unique study companion that helps you maintain focus while caring for virtual cats. By completing study intervals, you earn rewards to feed and interact with your virtual cats, creating a fun and motivating study environment.
 
 This project was developed to help students stay focused and motivated while studying, but can be used for any task that requires focus and breaks.
 
 ### Why Pawmodoro?
+
 - 🕒 Customizable study and break intervals
 - 🐈 Virtual cat companions that respond to your study habits
 - 🎵 Integrated music player for focused studying
@@ -27,23 +29,26 @@ This project was developed to help students stay focused and motivated while stu
 ## ✨ Features
 
 ### 1. Timer Management
+
 - Flexible study and break duration settings
 - Visual progress tracking
 
 ### 2. Virtual Cat Care System
+
 - Feed and interact with virtual cats
 - Monitor cat happiness and hunger levels
 - Earn rewards through completed study sessions
 - Random cat facts
 
 ### 3. Music Integration
+
 - Built-in music player
 - Volume control
 - Study-friendly music recommendations
 
 ### 4. Progress Tracking
-- Cat well-being metrics
 
+- Cat well-being metrics
 
 ### Features to Come
 
@@ -52,42 +57,49 @@ This project was developed to help students stay focused and motivated while stu
 
 ## 👥 Team Members
 
--   [Allyssa Chiu (@chiually)](https://github.com/chiually) - Virtual Cat Care
--   [Rachel Deng (@rachelkd)](https://github.com/rachelkd) - Cat Interaction
--   [Jeha Park (@jehapark)](https://github.com/jehapark) - Music Integration
--   [Manahill Sajid (@manahillsajid)](https://github.com/manahillsajid) - Study Session Customization
--   [Jinny Yoo (@yhj050224)](https://github.com/yhj050224) - Timer Management
+- [Allyssa Chiu (@chiually)](https://github.com/chiually)
+- [Rachel Deng (@rachelkd)](https://github.com/rachelkd)
+- [Jeha Park (@jehapark)](https://github.com/jehapark)
+- [Manahill Sajid (@manahillsajid)](https://github.com/manahillsajid)
+- [Jinny Yoo (@yhj050224)](https://github.com/yhj050224)
 
-## 🚀 Installation
+## 📚 Installation
 
-Pawmodoro is a Java Swing application, so it requires a Java Runtime Environment on any operating system to run. This project uses Maven to manage dependencies. 
+Pawmodoro is a Java Swing application, so it requires a Java Runtime Environment on any operating system to run. This project uses Maven to manage dependencies.
 
 ### Prerequisites
+
 - Java JDK 17 or higher
 - Maven 3.6 or higher
 
 ### Dependencies
+
 Our project uses the following packages:
 
 #### Core Dependencies
-- **org.json:json** (v20240303) - JSON processing
-- **[com.squareup.okhttp3:okhttp](https://square.github.io/okhttp/)** (v4.12.0) - HTTP client
-- **[com.fasterxml.jackson.core:jackson-core](https://github.com/FasterXML/jackson-core)** (v2.15.2) - JSON processing core
-- **[com.fasterxml.jackson.core:jackson-databind](https://github.com/FasterXML/jackson-databind)** (v2.15.2) - JSON data binding
-- **[org.postgresql:postgresql](https://github.com/pgjdbc/pgjdbc)** (v42.7.1) - PostgreSQL database connector
-  - Note that the JDBC driver was initially used for development, but replaced with a PostgreSQL REST API. You may still need to install the JDBC driver to build the project.
+
+- **[JSON in Java](https://github.com/stleary/JSON-java)** (v20240303) - JSON processing
+- **[Okhttp](https://square.github.io/okhttp/)** (v4.12.0) - HTTP client
+- **[Jackson Core](https://github.com/FasterXML/jackson-core)** (v2.15.2) - JSON processing core
+- **[Jackson Databind](https://github.com/FasterXML/jackson-databind)** (v2.15.2) - JSON data binding
+- **[PostgresJDBC](https://github.com/pgjdbc/pgjdbc)** (v42.7.1) - PostgreSQL database connector
+    - Note that the JDBC driver was initially used for development, but replaced with a PostgreSQL REST API. You may still need to install the JDBC driver to build the project.
 
 #### Testing Dependencies
+
 - **[JUnit 5](https://junit.org/junit5/)** (v5.8.1) - Unit testing framework
 
 ### Environment Setup
+
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/rachelkd/pawmodoro.git
    cd pawmodoro
    ```
 
 2. Build the project:
+
    ```bash
    mvn clean install
    ```
@@ -121,23 +133,57 @@ For any other issues, please check our [Issues page](https://github.com/rachelkd
 
 ## 🤝 Contributing
 
-We welcome contributions! Please follow these steps:
+We welcome contributions to Pawmodoro! Whether you’re fixing a bug, adding features, or improving documentation, follow the steps below.
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to your branch
-5. Open a Pull Request
+1. **How to Contribute**  
+   - Fork the repository on GitHub.  
+   - Create a feature branch for your changes.  
+   - Submit a pull request (PR) with a clear description of your changes.
 
-## 📣 Feedback
+2. **Instructions for Forking**  
+   - Go to the [Pawmodoro](https://github.com/rachelkd/pawmodoro) repository.  
+   - Click the "Fork" button at the top right.  
+   - Clone your forked repository to your local machine:
+
+     ```bash
+     git clone https://github.com/your-username/pawmodoro.git
+     cd pawmodoro
+     ```
+
+   - Create a new branch:
+
+     ```bash
+     git checkout -b feature/your-feature-name
+     ```
+
+3. **Guidelines for a Good Merge Request**  
+   - Write a clear and descriptive title and PR message.  
+   - Ensure the PR is focused on one feature or fix.  
+   - Include any relevant test cases or documentation updates.
+
+4. **Contribution Rules**  
+   - Contributions must align with project goals and scope.  
+   - Avoid submitting incomplete features unless marked as "work in progress (WIP)."  
+   - All code changes must include tests to verify functionality.
+
+5. **Closed Contributions**  
+   - If contributions are temporarily closed, this README will be updated.
+
+## 💬 Feedback
 
 We value your input! Please share your experience:
-- Open an [issue](https://github.com/rachelkd/pawmodoro/issues) on GitHub
-  - Report bugs or request features
+
+1. **How to Give Feedback**
+    - Open an [issue](https://github.com/rachelkd/pawmodoro/issues) on GitHub to submit bugs or feature requests.
+
+2. **Rules for Feedback**
+    - Be specific: Include details about the issue or suggestion (e.g., exact steps to reproduce a bug, photos, or videos).
+    - Be constructive: Focus on how to improve rather than just pointing out flaws.
+    - Avoid unrelated or offensive comments.
+
+3. **What to Expect When Submitting Feedback**
+    - Follow-up: If more details are needed, a team member may reach out to you.
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-Made with ❤️ by the Pawmodoro Team
