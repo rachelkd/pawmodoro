@@ -236,51 +236,31 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
         final JComboBox<String> catNames = new JComboBox<>();
         catNames.setModel(new DefaultComboBoxModel<>(catNamesList.toArray(new String[0])));
-        final JButton selectButton = new JButton("Select Cat");
+        final JLabel catLabel = new JLabel("Select Cat");
 
-        final JPanel catNamesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        final JPanel catNamesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         catNamesPanel.add(catNames);
-        catNamesPanel.add(selectButton);
-
-        // Prevent popup menu from disappearing or removing components
-        catNames.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
-            @Override
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent e) {
-                // Do nothing
-            }
-
-            @Override
-            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent e) {
-                // Prevent hiding by clearing focus paths
-                SwingUtilities.invokeLater(() -> MenuSelectionManager.defaultManager().clearSelectedPath());
-            }
-
-            @Override
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent e) {
-                // Do nothing
-            }
-        });
+        catNamesPanel.add(catLabel);
 
         catNames.addActionListener(event -> {
             final String selectedOption = (String) catNames.getSelectedItem();
-            selectButton.setText("Select Cat: " + selectedOption);
+            catLabel.setText("Selected Cat: " + selectedOption);
             // Update StudySessionState
             final StudySessionState studySessionState = studySessionViewModel.getState();
             studySessionState.setCatName(selectedOption);
             studySessionViewModel.setState(studySessionState);
-            catNamesPanel.revalidate();
-            catNamesPanel.repaint();
-
             if (catNamesList.contains(selectedOption)) {
                 catsPopupMenu.setVisible(false);
             }
         });
 
-        selectButton.addActionListener(event -> {
-            if (selectButton.getText().equals("Select Cat")) {
-                JOptionPane.showMessageDialog(null, "Select a Cat First!");
+        catLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!catLabel.getText().equals("Select Cat")) {
+                    catsPopupMenu.setVisible(false);
+                }
             }
-            catsPopupMenu.setVisible(false);
         });
 
         catNamesPanel.setOpaque(true);
@@ -366,7 +346,6 @@ public class StudySessionView extends JPanel implements ActionListener, Property
             // Stop the timer
             swingTimer.stop();
             studySessionController.stopStudyTimer();
-            // studySessionViewModel.getState().setIsSuccess(true);
 
         }
     }

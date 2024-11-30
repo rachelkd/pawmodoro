@@ -169,8 +169,6 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         if (selectedLabel[0] != null) {
             final String selectedText = selectedLabel[0].getText();
             useItemController.execute(ownerId, selectedText);
-            System.out.println("inventory view: " + ownerId);
-            System.out.println("cat name: " + inventoryViewModel.getState().getCurrentCatName());
             changeCatHungerController.execute(inventoryViewModel.getState().getCurrentCatName(), ownerId, selectedText);
         }
         else {
