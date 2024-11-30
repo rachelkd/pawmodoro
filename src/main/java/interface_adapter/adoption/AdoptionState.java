@@ -7,6 +7,7 @@ public class AdoptionState {
     private String catName = "";
     private String adoptionError = "";
     private String owner = "";
+    private boolean isSuccess = false;
 
     /**
      * Gets the owner object.
@@ -46,5 +47,20 @@ public class AdoptionState {
      */
     public String getAdoptionError() {
         return adoptionError;
+    }
+
+    /**
+     * Gets whether cat was successfully adopted.
+     */
+    public boolean getIsSuccess() {
+        return isSuccess;
+    }
+
+    /**
+     * Sets whether cat was successfully adopted.
+     * @param isSuccess
+     */
+    public void setIsSuccess(boolean isSuccess) {
+        this.isSuccess = isSuccess;
     }
 }
