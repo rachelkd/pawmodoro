@@ -47,6 +47,11 @@ public class ChangeCatHappinessInteractorTest {
             public void switchToRunawayCatView(String catName, String ownerUsername) {
                 fail("Use case switch to runaway cat view is unexpected.");
             }
+
+            @Override
+            public void prepareFailureView(String errorMessage) {
+                fail("Usecase unexpected");
+            }
         };
 
         final ChangeCatHappinessInputBoundary interactor =
@@ -72,6 +77,11 @@ public class ChangeCatHappinessInteractorTest {
             @Override
             public void switchToRunawayCatView(String catName, String ownerUsername) {
                 fail("Use case switch to runaway cat view is unexpected.");
+            }
+
+            @Override
+            public void prepareFailureView(String errorMessage) {
+                fail("Usecase unexpected");
             }
         };
 
@@ -100,6 +110,11 @@ public class ChangeCatHappinessInteractorTest {
                 // checks if cat is removed
                 assertFalse(catRepository.existsByNameAndOwner(catName, ownerUsername));
             }
+
+            @Override
+            public void prepareFailureView(String errorMessage) {
+                fail("Usecase unexpected");
+            }
         };
 
         final ChangeCatHappinessInputBoundary interactor =
@@ -107,4 +122,6 @@ public class ChangeCatHappinessInteractorTest {
         interactor.execute(inputData);
 
     }
+
+    // TODO add test for empty cat name
 }

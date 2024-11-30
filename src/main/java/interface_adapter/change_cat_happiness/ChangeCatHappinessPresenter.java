@@ -42,4 +42,9 @@ public class ChangeCatHappinessPresenter implements ChangeCatHappinessOutputBoun
         viewManagerModel.setState(runawayCatViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
+
+    @Override
+    public void prepareFailureView(String errorMessage) {
+
+    }
 }

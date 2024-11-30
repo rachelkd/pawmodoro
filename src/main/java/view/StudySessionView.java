@@ -115,6 +115,13 @@ public class StudySessionView extends JPanel implements ActionListener, Property
                             / Constants.SECONDS_TO_MILLIS
                             / Constants.MINUTES_TO_SECONDS;
                     addToInventoryController.execute(studySessionState.getUsername(), workInterval);
+                    changeCatHappinessController.execute(studySessionState.getCatName(),
+                            studySessionState.getUsername(),
+                            studySessionState.getIsSuccess(),
+                            workInterval);
+                    changeCatHungerController.execute(studySessionState.getCatName(),
+                            studySessionState.getUsername(),
+                            workInterval);
 
                     breakSessionState.setUsername(studySessionState.getUsername());
                     breakSessionViewModel.setState(breakSessionState);
@@ -352,6 +359,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         else if (evt.getSource().equals(startTimerButton)) {
             // Start the timer
             swingTimer.start();
+            studySessionViewModel.getState().setIsSuccess(true);
             catsPopupMenu.show(startTimerButton, 0, startTimerButton.getHeight());
         }
         else if (evt.getSource().equals(stopTimerButton)) {

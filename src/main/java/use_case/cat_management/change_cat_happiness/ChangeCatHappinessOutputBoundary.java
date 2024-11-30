@@ -18,4 +18,9 @@ public interface ChangeCatHappinessOutputBoundary {
      */
     void switchToRunawayCatView(String catName, String ownerUsername);
 
+    /**
+     * Prepares error message if you did not select a cat.
+     * @param errorMessage the error message
+     */
+    void prepareFailureView(String errorMessage);
 }

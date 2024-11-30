@@ -61,6 +61,10 @@ public class StudySessionState {
         this.isSuccess = false;
     }
 
+    public void setIsSuccess(boolean success) {
+        this.isSuccess = success;
+    }
+
     /**
      * Resets the work interval to the default value of 25 minutes.
      */

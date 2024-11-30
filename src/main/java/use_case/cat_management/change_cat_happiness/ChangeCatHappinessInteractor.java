@@ -24,6 +24,10 @@ public class ChangeCatHappinessInteractor implements ChangeCatHappinessInputBoun
                 changeCatHappinessInputData.getOwnerUsername());
         int newHappiness = 0;
 
+        if ("".equalsIgnoreCase(changeCatHappinessInputData.getCatName())) {
+            changeCatHappinessPresenter.prepareFailureView("You need to select a cat!");
+        }
+
         // decrease happiness when user does not complete study session
         if (!changeCatHappinessInputData.isCompletedStudySession()) {
             newHappiness -= calculateHappinessPoints(changeCatHappinessInputData.getStudySessionLength());
