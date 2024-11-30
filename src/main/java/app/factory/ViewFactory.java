@@ -14,7 +14,6 @@ import interface_adapter.get_cat_fact.GetCatFactViewModel;
 import interface_adapter.initialize_cats.CatViewFactory;
 import interface_adapter.initialize_cats.InitializeCatsViewModel;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupViewModel;
@@ -77,15 +76,6 @@ public class ViewFactory {
     public RunawayCatView createRunawayCatView(RunawayCatViewModel runawayCatViewModel, DialogService dialogService) {
         dialogService.createRunawayCatDialog(runawayCatViewModel);
         return (RunawayCatView) dialogService.getRunawayCatDialog();
-    }
-
-    /**
-     * Creates a Max Cats Error View.
-     * @param maxCatsErrorViewModel the max cats error view model
-     * @return MaxCatsErrorView
-     */
-    public MaxCatsErrorView createMaxCatsErrorView(MaxCatsErrorViewModel maxCatsErrorViewModel) {
-        return new MaxCatsErrorView(maxCatsErrorViewModel);
     }
 
     /**
