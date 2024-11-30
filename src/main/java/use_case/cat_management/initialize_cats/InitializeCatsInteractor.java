@@ -6,7 +6,7 @@ import entity.Cat;
 import use_case.cat.CatDataAccessInterface;
 
 /**
- * Initialize Cats Interactor
+ * Initialize Cats Interactor.
  */
 public class InitializeCatsInteractor implements InitializeCatsInputBoundary {
     private final CatDataAccessInterface catDataAccessObject;

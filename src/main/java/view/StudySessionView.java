@@ -199,6 +199,10 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         return catsPanel;
     }
 
+    /**
+     * Remove current contents of catsPanel
+     * and add the CatContainer view since CatContainer can only belong to one parent at a time.
+     */
     public void showCatContainerView() {
         catsPanel.removeAll();
         catsPanel.add(catContainerView, BorderLayout.CENTER);
@@ -206,12 +210,18 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         catsPanel.repaint();
     }
 
+    /**
+     * Turn on MouseListner for cats.
+     */
     public void enableCatContainerMouseEvents() {
         for (MouseListener listener : catContainerView.getMouseListeners()) {
             catContainerView.removeMouseListener(listener);
         }
     }
 
+    /**
+     * Turn off MouseListener for cats.
+     */
     public void disableCatContainerMouseEvents() {
         this.addMouseListener(new MouseAdapter() {
             @Override

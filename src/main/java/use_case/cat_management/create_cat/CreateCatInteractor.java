@@ -25,18 +25,15 @@ public class CreateCatInteractor implements CreateCatInputBoundary {
     @Override
     public void execute(CreateCatInputData createCatInputData) {
         boolean isSuccess = false;
-        // call this use case to create all of user's cats when they sign in
-        // TODO delete print statements
+
         // if user has the maximum number of cats
         if (catDataAccessObject.getNumberOfCatsByOwner(createCatInputData.getOwnerUsername())
                 >= Constants.MAX_AMOUNT_OF_CATS) {
-            System.out.println("u have: " + catDataAccessObject.getNumberOfCatsByOwner(createCatInputData.getOwnerUsername()));
             createCatPresenter.prepareFailView("Reached maximum amount of cats :(");
         }
         // if user has cat with that name
         else if (catDataAccessObject.existsByNameAndOwner(createCatInputData.getCatName(),
                 createCatInputData.getOwnerUsername())) {
-            System.out.println("cat exists already");
             createCatPresenter.prepareFailView("You already have cat with this name >:(");
         }
         else {

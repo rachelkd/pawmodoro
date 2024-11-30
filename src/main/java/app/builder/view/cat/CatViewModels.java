@@ -2,7 +2,6 @@ package app.builder.view.cat;
 
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.display_cat_image.DisplayCatImageViewModel;
-import interface_adapter.initialize_cats.InitializeCatsViewModel;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.runawaycat.RunawayCatViewModel;
 

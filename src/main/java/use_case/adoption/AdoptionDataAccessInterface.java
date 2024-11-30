@@ -1,9 +1,7 @@
 package use_case.adoption;
 
-import entity.Cat;
-
 /**
- * The interface of the DAO for the Adoption Use Case
+ * The interface of the DAO for the Adoption Use Case.
  */
 public interface AdoptionDataAccessInterface {
 

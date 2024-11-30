@@ -1,5 +1,13 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import app.service.DialogService;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
@@ -9,11 +17,9 @@ import interface_adapter.display_cat_stats.DisplayCatStatsViewModelFactory;
 import interface_adapter.initialize_cats.CatViewFactory;
 import interface_adapter.initialize_cats.InitializeCatsViewModel;
 
-import javax.swing.*;
-import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
+/**
+ * View holding all the cat images.
+ */
 public class CatContainerView extends JPanel implements PropertyChangeListener {
     private final InitializeCatsViewModel initializeCatsViewModel;
     private final InventoryViewModel inventoryViewModel;
@@ -51,7 +57,6 @@ public class CatContainerView extends JPanel implements PropertyChangeListener {
             this.revalidate();
             this.repaint();
         });
-        System.out.println(this.isVisible());
     }
 
     private void setUp() {

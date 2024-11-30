@@ -6,6 +6,9 @@ import java.util.Collection;
 import entity.Cat;
 import interface_adapter.cat.CatViewModel;
 
+/**
+ * The Initialize Cats State. Stores the users current cats.
+ */
 public class InitializeCatsState {
     private Collection<CatViewModel> catViewModels;
     private Collection<Cat> cats;

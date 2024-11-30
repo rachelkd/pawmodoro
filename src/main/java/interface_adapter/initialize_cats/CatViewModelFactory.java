@@ -4,8 +4,16 @@ import entity.Cat;
 import interface_adapter.cat.CatState;
 import interface_adapter.cat.CatViewModel;
 
+/**
+ * Factory for building CatViewModels.
+ */
 public class CatViewModelFactory {
 
+    /**
+     * Create a CatViewModel object for a cat.
+     * @param cat a cat object
+     * @return the CatViewModel for that cat
+     */
     public CatViewModel create(Cat cat) {
         final CatViewModel catViewModel = new CatViewModel();
         final CatState catState = catViewModel.getState();

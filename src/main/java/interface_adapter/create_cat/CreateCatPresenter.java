@@ -1,16 +1,17 @@
 package interface_adapter.create_cat;
 
+import java.util.Collection;
+
 import entity.Cat;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.adoption.AdoptionState;
+import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.initialize_cats.CatViewModelFactory;
 import interface_adapter.initialize_cats.InitializeCatsViewModel;
-import interface_adapter.adoption.AdoptionState;
 import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import use_case.cat_management.create_cat.CreateCatOutputBoundary;
 import use_case.cat_management.create_cat.CreateCatOutputData;
-
-import java.util.Collection;
 
 /**
  * Create Cat Use Case Presenter.

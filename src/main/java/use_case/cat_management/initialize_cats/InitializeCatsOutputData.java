@@ -1,8 +1,8 @@
 package use_case.cat_management.initialize_cats;
 
-import entity.Cat;
-
 import java.util.Collection;
+
+import entity.Cat;
 
 /**
  * Output Data for the initialize cat use case.
