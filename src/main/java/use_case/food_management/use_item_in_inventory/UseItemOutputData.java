@@ -10,11 +10,13 @@ import entity.AbstractFood;
 public class UseItemOutputData {
     private final boolean isSuccess;
     private Map<String, AbstractFood> newFoodItems;
+    private String ownerId;
 
-    public UseItemOutputData(boolean isSuccess, Map<String, AbstractFood> newFoodItems) {
+    public UseItemOutputData(boolean isSuccess, Map<String, AbstractFood> newFoodItems, String ownerId) {
 
         this.isSuccess = isSuccess;
         this.newFoodItems = newFoodItems;
+        this.ownerId = ownerId;
     }
 
     public boolean isSuccess() {
@@ -23,6 +25,10 @@ public class UseItemOutputData {
 
     public Map<String, AbstractFood> getNewFoodItems() {
         return newFoodItems;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
     }
 
 }

@@ -28,9 +28,8 @@ public class UseItemInteractor implements UseItemInputBoundary {
         // if you can use item
         if (inventoryDataAccessObject.canUseItem(useItemInputData.getOwnerId(), useItemInputData.getFoodName())) {
 
-            final int quantity = inventoryDataAccessObject.getInventory(useItemInputData.getOwnerId()).getItems()
-                    .get(useItemInputData.getFoodName()).getQuantity();
             final Inventory inventory = inventoryDataAccessObject.getInventory(useItemInputData.getOwnerId());
+            final int quantity = inventory.getItems().get(useItemInputData.getFoodName()).getQuantity();
 
             // if quantity greater than 1
             if (quantity > 1) {
@@ -56,8 +55,8 @@ public class UseItemInteractor implements UseItemInputBoundary {
             }
 
         }
-
-        final UseItemOutputData useItemOutputData = new UseItemOutputData(isSuccess, inventoryItems);
+        final UseItemOutputData useItemOutputData =
+                new UseItemOutputData(isSuccess, inventoryItems, useItemInputData.getOwnerId());
         useItemPresenter.prepareSuccessView(useItemOutputData);
     }
 }

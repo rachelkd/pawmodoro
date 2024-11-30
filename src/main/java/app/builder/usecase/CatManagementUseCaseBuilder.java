@@ -131,6 +131,7 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
         final ChangeCatHungerController controller = new ChangeCatHungerController(interactor);
 
         getViews().getShared().getViews().getInventoryView().setChangeCatHungerController(controller);
+        getViews().getSession().getViews().getStudySessionView().setChangeCatHungerController(controller);
         return this;
 
     }
