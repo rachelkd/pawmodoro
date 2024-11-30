@@ -53,7 +53,8 @@ public class AuthUseCaseBuilder extends AbstractUseCaseBuilder {
                 getViews().getViewManagerModel(),
                 getViews().getSession().getViewModels().getStudySessionViewModel(),
                 getViews().getAuth().getViewModels().getLoginViewModel(),
-                getViews().getCat().getViewModels().getRunawayCatViewModel());
+                getViews().getCat().getViewModels().getRunawayCatViewModel(),
+                getViews().getCat().getViewModels().getAdoptionViewModel());
 
         final LoginInputBoundary interactor = new LoginInteractor(
                 getDataAccess().getUserDataAccess(),

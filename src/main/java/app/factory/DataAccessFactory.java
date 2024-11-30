@@ -1,6 +1,5 @@
 package app.factory;
 
-import data_access.AdoptionDataAccessObject;
 import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
@@ -44,15 +43,6 @@ public class DataAccessFactory {
      */
     public InMemoryTimerDataAccessObject createTimerDataAccess() {
         return new InMemoryTimerDataAccessObject();
-    }
-
-    /**
-     * Creates a new adoption data access object.
-     *
-     * @return the adoption data access object
-     */
-    public AdoptionDataAccessObject createAdoptionDataAccess() {
-        return new AdoptionDataAccessObject();
     }
 
     /**

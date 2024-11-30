@@ -20,7 +20,9 @@ import javax.swing.Timer;
 
 import app.service.DialogService;
 import constants.Constants;
+import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
+import interface_adapter.change_cat_hunger.ChangeCatHungerController;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionState;
@@ -37,6 +39,8 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private LogoutController logoutController;
     private StudySessionController studySessionController;
     private ChangeCatHappinessController changeCatHappinessController;
+    private ChangeCatHungerController changeCatHungerController;
+    private AddToInventoryController addToInventoryController;
 
     private final JButton timerSettings;
     private final JButton logOutSettings;
@@ -87,10 +91,17 @@ public class StudySessionView extends JPanel implements ActionListener, Property
                     updateTimerLabel();
                 }
                 else {
+                    final StudySessionState state = studySessionViewModel.getState();
                     swingTimer.stop();
+
+                    final int workInterval = (int) state.getWorkInterval()
+                            / Constants.SECONDS_TO_MILLIS
+                            / Constants.MINUTES_TO_SECONDS;
+                    addToInventoryController.execute(state.getUsername(), workInterval);
+
                     // Notify controller to switch the view
                     studySessionController.switchToBreakSessionView();
-                    studySessionViewModel.getState().resetToDefaultWorkInterval();
+                    state.resetToDefaultWorkInterval();
                     remainingTime = studySessionViewModel.getState().getWorkInterval();
                     updateTimerLabel();
                 }
@@ -193,6 +204,14 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     public void setChangeCatHappinessController(ChangeCatHappinessController controller) {
         this.changeCatHappinessController = controller;
+    }
+
+    public void setChangeCatHungerController(ChangeCatHungerController controller) {
+        this.changeCatHungerController = controller;
+    }
+
+    public void setAddToInventoryController(AddToInventoryController controller) {
+        this.addToInventoryController = controller;
     }
 
     @Override

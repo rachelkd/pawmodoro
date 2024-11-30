@@ -97,10 +97,10 @@ public class InventoryExample {
         final AddToInventoryOutputBoundary addItemPresenter = new AddToInventoryPresenter(inventoryViewModel);
         final UseItemOutputBoundary useItemPresenter = new UseItemPresenter(inventoryViewModel);
 
-        final InventoryFactory inventoryFactory = new FoodInventoryFactory();
+        final FoodInventoryFactory inventoryFactory = new FoodInventoryFactory();
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
-        final DBInventoryDataAccessObject dbInventoryDataAccessObject = new DBInventoryDataAccessObject((FoodInventoryFactory) inventoryFactory, foodItemFactory);
+        final DBInventoryDataAccessObject dbInventoryDataAccessObject = new DBInventoryDataAccessObject(inventoryFactory, foodItemFactory);
         final InventoryDataAccessInterface dataAccessObject = InventoryService.getInstance(dbInventoryDataAccessObject);
 
         // add inventory
@@ -160,5 +160,6 @@ public class InventoryExample {
         inventory.setItems(inventoryItems);
         // inventoryRepository.save(inventory);
         dataAccessObject.save(inventory);
+        System.out.println(dataAccessObject.getInventory("chiually"));
     }
 }

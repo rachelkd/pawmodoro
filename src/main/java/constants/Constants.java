@@ -9,8 +9,8 @@ public final class Constants {
     // Global constants
     public static final String FONT_FAMILY = Font.SANS_SERIF;
     // Timer constants
-    public static final int DEFAULT_WORK_MINUTES = 25;
-    public static final int DEFAULT_BREAK_MINUTES = 5;
+    public static final int DEFAULT_WORK_MINUTES = 1;
+    public static final int DEFAULT_BREAK_MINUTES = 1;
     public static final int MINUTES_TO_SECONDS = 60;
     public static final int SECONDS_TO_MILLIS = 1000;
     public static final long SECONDS_TO_MILLIS1 = 1000L;
@@ -25,6 +25,10 @@ public final class Constants {
     public static final int TIMER_FONT_SIZE = 48;
     public static final int TIMER_VERTICAL_SPACING = 20;
     public static final String TIME_FORMAT_PATTERN = "mm:ss";
+
+    // BreakSession and StudySession Constants
+    public static final int DEFAULT_BUTTON_SIZE_W = 150;
+    public static final int DEFAULT_BUTTON_SIZE_H = 40;
 
     // Cat Constants
     public static final int MAX_AMOUNT_OF_CATS = 4;

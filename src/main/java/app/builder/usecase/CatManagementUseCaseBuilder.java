@@ -52,13 +52,11 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
      */
     public CatManagementUseCaseBuilder buildAdoptionUseCase() {
         final AdoptionOutputBoundary outputBoundary = new AdoptionPresenter(
-                getViews().getSession().getViewModels().getSetupSessionViewModel(),
-                getViews().getCat().getViewModels().getAdoptionViewModel(),
-                getViews().getViewManagerModel());
+                getViews().getCat().getViewModels().getAdoptionViewModel());
 
         final AdoptionInputBoundary interactor = new AdoptionInteractor(outputBoundary);
 
-        final AdoptionController controller = new AdoptionController(interactor);
+        final AdoptionController controller = new AdoptionController(interactor, getDataAccess().getUserDataAccess());
         getViews().getCat().getViews().getAdoptionView().setAdoptionController(controller);
         return this;
     }
@@ -104,7 +102,8 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
         final CreateCatOutputBoundary outputBoundary = new CreateCatPresenter(getViews().getViewManagerModel(),
                 getViews().getCat().getViewModels().getMaxCatsErrorViewModel(),
                 getViews().getAuth().getViewModels().getLoginViewModel(),
-                getViews().getAuth().getViewModels().getSignupViewModel());
+                getViews().getAuth().getViewModels().getSignupViewModel(),
+                getViews().getCat().getViewModels().getAdoptionViewModel());
 
         final CreateCatInputBoundary interactor = new CreateCatInteractor(getDataAccess().getCatDataAccess(),
                 outputBoundary);
@@ -131,6 +130,7 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
         final ChangeCatHungerController controller = new ChangeCatHungerController(interactor);
 
         getViews().getShared().getViews().getInventoryView().setChangeCatHungerController(controller);
+        getViews().getSession().getViews().getStudySessionView().setChangeCatHungerController(controller);
         return this;
 
     }
