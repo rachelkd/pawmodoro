@@ -11,6 +11,7 @@ public class StudySessionState {
     private String password = "";
     private long workInterval = Constants.DEFAULT_WORK_DURATION_MS;
     private long breakInterval = Constants.DEFAULT_BREAK_DURATION_MS;
+    private String catName = "";
     private boolean isSuccess = true;
 
     public String getUsername() {
@@ -65,5 +66,13 @@ public class StudySessionState {
      */
     public void resetToDefaultWorkInterval() {
         this.workInterval = Constants.DEFAULT_WORK_DURATION_MS;
+    }
+
+    public String getCatName() {
+        return catName;
+    }
+
+    public void setCatName(String catName) {
+        this.catName = catName;
     }
 }

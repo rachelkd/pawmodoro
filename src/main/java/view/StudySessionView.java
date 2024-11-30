@@ -4,16 +4,20 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.*;
 
 import app.service.DialogService;
 import constants.Constants;
+import entity.Cat;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.break_session.BreakSessionState;
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
 import interface_adapter.change_cat_hunger.ChangeCatHungerController;
+import interface_adapter.initialize_cats.InitializeCatsViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionState;
@@ -28,6 +32,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     private final StudySessionViewModel studySessionViewModel;
     private final BreakSessionViewModel breakSessionViewModel;
+    private final InitializeCatsViewModel initializeCatsViewModel;
 
     private LogoutController logoutController;
     private StudySessionController studySessionController;
@@ -46,9 +51,11 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     private DialogService dialogService;
     private JPanel catsPanel;
+    private JPopupMenu catsPopupMenu;
 
     public StudySessionView(StudySessionViewModel studySessionViewModel,
                             BreakSessionViewModel breakSessionViewModel,
+                            InitializeCatsViewModel initializeCatsViewModel,
                             DialogService dialogService,
                             CatContainerView catContainerView) {
 
@@ -56,9 +63,19 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         studySessionViewModel.addPropertyChangeListener(this);
         this.studySessionViewModel = studySessionViewModel;
         this.breakSessionViewModel = breakSessionViewModel;
+        this.initializeCatsViewModel = initializeCatsViewModel;
         this.catContainerView = catContainerView;
 
         this.catsPanel = new JPanel();
+        this.catsPopupMenu = new JPopupMenu() {
+            @Override
+            protected void firePopupMenuWillBecomeInvisible() {
+                // Override to prevent closing on focus loss
+                if (!isAncestorOf((Component) MenuSelectionManager.defaultManager().getSelectedPath()[0])) {
+                    super.firePopupMenuWillBecomeInvisible();
+                }
+            }
+        };
 
         this.setLayout(new BorderLayout());
 
@@ -199,6 +216,70 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         return catsPanel;
     }
 
+    private void createCatNames() {
+        catsPopupMenu.removeAll();
+        catsPopupMenu.setFocusable(false);
+
+        final Collection<String> catNamesList = new ArrayList<>();
+        for (Cat cat: initializeCatsViewModel.getState().getCats()) {
+            catNamesList.add(cat.getName());
+        }
+
+        final JComboBox<String> catNames = new JComboBox<>();
+        catNames.setModel(new DefaultComboBoxModel<>(catNamesList.toArray(new String[0])));
+        final JButton selectButton = new JButton("Select Cat");
+
+        final JPanel catNamesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        catNamesPanel.add(catNames);
+        catNamesPanel.add(selectButton);
+
+        // Prevent popup menu from disappearing or removing components
+        catNames.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            @Override
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent e) {
+                // Do nothing
+            }
+
+            @Override
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent e) {
+                // Prevent hiding by clearing focus paths
+                SwingUtilities.invokeLater(() -> MenuSelectionManager.defaultManager().clearSelectedPath());
+            }
+
+            @Override
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent e) {
+                // Do nothing
+            }
+        });
+
+        catNames.addActionListener(event -> {
+            final String selectedOption = (String) catNames.getSelectedItem();
+            selectButton.setText("Select Cat: " + selectedOption);
+            // Update StudySessionState
+            final StudySessionState studySessionState = studySessionViewModel.getState();
+            studySessionState.setCatName(selectedOption);
+            studySessionViewModel.setState(studySessionState);
+            catNamesPanel.revalidate();
+            catNamesPanel.repaint();
+
+            if (catNamesList.contains(selectedOption)) {
+                catsPopupMenu.setVisible(false);
+            }
+
+        });
+
+        selectButton.addActionListener(event -> {
+            if (selectButton.getText().equals("Select Cat")) {
+                JOptionPane.showMessageDialog(null, "Select a Cat First!");
+            }
+            catsPopupMenu.setVisible(false);
+        });
+
+        catNamesPanel.setOpaque(true);
+        catsPopupMenu.add(catNamesPanel);
+        catNames.setEnabled(true);
+    }
+
     /**
      * Remove current contents of catsPanel
      * and add the CatContainer view since CatContainer can only belong to one parent at a time.
@@ -271,6 +352,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         else if (evt.getSource().equals(startTimerButton)) {
             // Start the timer
             swingTimer.start();
+            catsPopupMenu.show(startTimerButton, 0, startTimerButton.getHeight());
         }
         else if (evt.getSource().equals(stopTimerButton)) {
             // Stop the timer
@@ -297,6 +379,9 @@ public class StudySessionView extends JPanel implements ActionListener, Property
             final StudySessionState newState = (StudySessionState) evt.getNewValue();
             remainingTime = newState.getWorkInterval();
             updateTimerLabel();
+        }
+        if ("initialize_cats".equals(evt.getPropertyName())) {
+            createCatNames();
         }
     }
 }
