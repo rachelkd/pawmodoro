@@ -10,11 +10,11 @@ import use_case.adoption.AdoptionInputData;
 public class AdoptionController {
 
     private final AdoptionInputBoundary adoptionUseCaseInteractor;
-    private final AdoptionDataAccessInterface userDataAccessInterface;
+    private final AdoptionDataAccessInterface userDataAccessObject;
 
-    public AdoptionController(AdoptionInputBoundary adoptionUseCaseInteractor, AdoptionDataAccessInterface userDataAccessInterface) {
+    public AdoptionController(AdoptionInputBoundary adoptionUseCaseInteractor, AdoptionDataAccessInterface userDataAccessObject) {
         this.adoptionUseCaseInteractor = adoptionUseCaseInteractor;
-        this.userDataAccessInterface = userDataAccessInterface;
+        this.userDataAccessObject = userDataAccessObject;
     }
 
     /**
@@ -22,7 +22,7 @@ public class AdoptionController {
      * @param catName the name of the adopted cat
      */
     public void execute(String catName) {
-        final AdoptionInputData adoptionInputData = new AdoptionInputData(catName, userDataAccessInterface.getOwnerName());
+        final AdoptionInputData adoptionInputData = new AdoptionInputData(catName, userDataAccessObject.getOwnerName());
 
         adoptionUseCaseInteractor.execute(adoptionInputData);
     }
