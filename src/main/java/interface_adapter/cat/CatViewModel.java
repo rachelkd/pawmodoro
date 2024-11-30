@@ -9,4 +9,5 @@ public class CatViewModel extends ViewModel<CatState> {
     public CatViewModel() {
         super("cat");
         setState(new CatState());
+    }
 }
