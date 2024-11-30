@@ -23,6 +23,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import constants.Constants;
+import data_access.DBUserDataAccessObject;
 import interface_adapter.adoption.AdoptionController;
 import interface_adapter.adoption.AdoptionState;
 import interface_adapter.adoption.AdoptionViewModel;
@@ -41,7 +42,6 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
     private final JButton confirmButton = new JButton(AdoptionViewModel.CONFIRM_BUTTON_LABEL);
     private final JButton cancelButton = new JButton(AdoptionViewModel.CANCEL_BUTTON_LABEL);
     private final JButton returnButton = new JButton(AdoptionViewModel.RETURN_LABEL);
-    private boolean adopted;
     private AdoptionController adoptionController;
     private CreateCatController createCatController;
 
@@ -89,7 +89,7 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
     }
 
     /**
-     * Creates the main panel for the view
+     * Creates the main panel for the view.
      * @return the panel
      */
     public JPanel createMainPanel() {
@@ -134,7 +134,6 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
                                     currentState.getOwner());
 
                             if (currentState.getIsSuccess()) {
-                                adopted = true;
                                 mainPanel.remove(information);
                                 mainPanel.remove(finish);
                                 mainPanel.add(adoptionCompletePanel, BorderLayout.CENTER);
@@ -153,6 +152,9 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(returnButton)) {
+                            mainPanel.add(information, BorderLayout.CENTER);
+                            mainPanel.add(finish, BorderLayout.SOUTH);
+                            mainPanel.remove(adoptionCompletePanel);
                             dispose();
                         }
                     }
@@ -161,7 +163,6 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
         cancelButton.addActionListener(event -> this.setVisible(false));
         return mainPanel;
     }
-
 
     @Override
     public void actionPerformed(ActionEvent evt) {

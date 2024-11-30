@@ -2,7 +2,6 @@ package app.builder;
 
 import app.components.DataAccessComponents;
 import app.factory.DataAccessFactory;
-import data_access.AdoptionDataAccessObject;
 import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
@@ -15,8 +14,6 @@ import use_case.food_management.InventoryService;
 public class DataAccessBuilder {
     private final DataAccessFactory factory;
     private DBUserDataAccessObject userDataAccess;
-    private InventoryService inventoryDataAccess;
-    private AdoptionDataAccessObject adoptionDataAccess;
     private ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
     private DBCatDataAccessObject catDataAccess;
     private ApiCatFactDataAccessObject catFactDataAccess;
@@ -32,7 +29,6 @@ public class DataAccessBuilder {
     public DataAccessComponents build() {
         buildUserDataAccess()
                 .buildInventoryDataAccess()
-                .buildAdoptionDataAccess()
                 .buildDisplayCatImageDataAccess()
                 .buildCatDataAccess()
                 .buildCatFactDataAccess();
@@ -40,7 +36,6 @@ public class DataAccessBuilder {
         return new DataAccessComponents(
                 userDataAccess,
                 inventoryDataAccess,
-                adoptionDataAccess,
                 displayCatImageDataAccess,
                 catDataAccess,
                 catFactDataAccess);
@@ -65,14 +60,6 @@ public class DataAccessBuilder {
         return this;
     }
 
-    /**
-     * Builds the adoption data access.
-     * @return this builder
-     */
-    private DataAccessBuilder buildAdoptionDataAccess() {
-        this.adoptionDataAccess = factory.createAdoptionDataAccess();
-        return this;
-    }
 
     /**
      * Builds the display cat image data access.
