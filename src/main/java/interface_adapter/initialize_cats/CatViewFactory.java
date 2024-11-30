@@ -14,6 +14,9 @@ public class CatViewFactory {
                                  InventoryViewModel inventoryViewModel,
                                  DialogService dialogService,
                                  GetCatFactView getCatFactView) {
-        return new CatView(catViewModel, displayCatStatsViewModel, inventoryViewModel, dialogService, getCatFactView);
+        // need to set controller
+        CatView catView =
+                new CatView(catViewModel, displayCatStatsViewModel, inventoryViewModel, dialogService, getCatFactView);
+        return catView;
     }
 }

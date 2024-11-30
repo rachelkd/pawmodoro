@@ -46,6 +46,7 @@ public class CatDisplayUseCaseBuilder extends AbstractUseCaseBuilder {
 
     /**
      * Builds the Initialize Cat use case.
+     * @return this builder
      */
     public CatDisplayUseCaseBuilder buildInitializeCatsUsecase() {
         final CatViewModelFactory catViewModelFactory = new CatViewModelFactory();

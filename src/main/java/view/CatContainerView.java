@@ -3,6 +3,7 @@ package view;
 import app.service.DialogService;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
+import interface_adapter.display_cat_stats.DisplayCatStatsController;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModelFactory;
 import interface_adapter.initialize_cats.CatViewFactory;
@@ -23,6 +24,8 @@ public class CatContainerView extends JPanel implements PropertyChangeListener {
     private final DisplayCatStatsViewModelFactory displayCatStatsViewModelFactory;
     private final JPanel catsPanel;
 
+    private DisplayCatStatsController displayCatStatsController;
+
     public CatContainerView(InitializeCatsViewModel initializeCatsViewModel,
                             InventoryViewModel inventoryViewModel,
                             DialogService dialogService,
@@ -40,11 +43,10 @@ public class CatContainerView extends JPanel implements PropertyChangeListener {
         initializeCatsViewModel.addPropertyChangeListener(this);
 
         setUp();
-        // updateCatViews();
+        updateCatViews();
 
         SwingUtilities.invokeLater(() -> {
             this.setOpaque(true);
-            this.setEnabled(true);
             this.setVisible(true);
             this.revalidate();
             this.repaint();
@@ -69,8 +71,11 @@ public class CatContainerView extends JPanel implements PropertyChangeListener {
                     dialogService,
                     getCatFactView);
 
+            catView.setDisplayCatStatsController(displayCatStatsController);
+
             catsPanel.add(catView);
         }
+
         catsPanel.setOpaque(true);
         catsPanel.setVisible(true);
         catsPanel.revalidate();
@@ -82,6 +87,10 @@ public class CatContainerView extends JPanel implements PropertyChangeListener {
         if (evt.getPropertyName().equals("initialize_cats")) {
             updateCatViews();
         }
+    }
+
+    public void setDisplayCatStatsController(DisplayCatStatsController displayCatStatsController) {
+        this.displayCatStatsController = displayCatStatsController;
     }
 
     public String getViewName() {
