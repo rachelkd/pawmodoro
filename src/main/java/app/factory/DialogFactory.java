@@ -8,10 +8,12 @@ import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
+import interface_adapter.runawaycat.RunawayCatViewModel;
 import view.AdoptionView;
 import view.DisplayCatStatsView;
 import view.GetCatFactView;
 import view.InventoryView;
+import view.RunawayCatView;
 
 /**
  * Factory for creating dialog views.
@@ -85,4 +87,14 @@ public class DialogFactory {
     public AdoptionView createAdoptionDialog(AdoptionViewModel viewModel) {
         return new AdoptionView(getParentFrame(), viewModel);
     }
+
+    /**
+     * Creats a new RunawayCatView dialog.
+     * @param viewModel the view model for the dialog
+     * @return the runaway cat view dialog
+     */
+    public RunawayCatView createRunawayCatDialog(RunawayCatViewModel viewModel) {
+        return new RunawayCatView(getParentFrame(), viewModel);
+    }
+
 }
