@@ -12,7 +12,8 @@ public class AdoptionController {
     private final AdoptionInputBoundary adoptionUseCaseInteractor;
     private final AdoptionDataAccessInterface userDataAccessObject;
 
-    public AdoptionController(AdoptionInputBoundary adoptionUseCaseInteractor, AdoptionDataAccessInterface userDataAccessObject) {
+    public AdoptionController(AdoptionInputBoundary adoptionUseCaseInteractor,
+                              AdoptionDataAccessInterface userDataAccessObject) {
         this.adoptionUseCaseInteractor = adoptionUseCaseInteractor;
         this.userDataAccessObject = userDataAccessObject;
     }

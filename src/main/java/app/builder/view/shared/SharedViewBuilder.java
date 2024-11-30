@@ -8,11 +8,7 @@ import app.factory.ViewFactory;
 import app.factory.viewmodel.SharedViewModelFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
-import view.AdoptionView;
-import view.CatView;
-import view.DisplayCatStatsView;
-import view.GetCatFactView;
-import view.InventoryView;
+import view.*;
 
 /**
  * Builder for shared views and view models.
@@ -30,6 +26,7 @@ public class SharedViewBuilder {
     private GetCatFactView getCatFactView;
     private InventoryView inventoryView;
     private AdoptionView adoptionView;
+    private CatContainerView catContainerView;
 
     /**
      * Creates a new shared view builder.
@@ -58,7 +55,8 @@ public class SharedViewBuilder {
                 sharedViewModelFactory.createInventoryViewModel(),
                 sharedViewModelFactory.createCatViewModel(),
                 sharedViewModelFactory.createGetCatFactViewModel(),
-                sharedViewModelFactory.createAdoptionViewModel());
+                sharedViewModelFactory.createAdoptionViewModel(),
+                sharedViewModelFactory.createInitializeCatsViewModel());
     }
 
     /**
@@ -71,13 +69,14 @@ public class SharedViewBuilder {
                 .buildDisplayCatStatsView()
                 .buildInventoryView()
                 .buildCatView()
+                .buildCatContainerView()
                 .createViewsAndModels();
     }
 
-    private SharedViewBuilder buildAdoptionView() {
-        adoptionView = viewFactory.createAdoptionView(viewModels.getAdoptionViewModel(), dialogService);
-        return this;
-    }
+//    private SharedViewBuilder buildAdoptionView() {
+//        adoptionView = viewFactory.createAdoptionView(viewModels.getAdoptionViewModel(), dialogService);
+//        return this;
+//    }
 
     /**
      * Builds the get cat fact view.
@@ -136,6 +135,23 @@ public class SharedViewBuilder {
     }
 
     /**
+     * Builds the CatContainer View.
+     * @return the CatContainerView
+     * @throws IllegalStateException if GetCAtFactView hasn't been built
+     */
+    private SharedViewBuilder buildCatContainerView() {
+        if (getCatFactView == null) {
+            throw new IllegalStateException("GetCatFactView must be built before DisplayCatStatsView");
+        }
+        catContainerView = viewFactory.createCatContainerView(viewModels.getInitializeCatsViewModel(),
+                viewModels.getInventoryViewModel(),
+                dialogService,
+                getCatFactView);
+        cardPanel.add(catContainerView, catContainerView.getViewName());
+        return this;
+    }
+
+    /**
      * Creates and returns the views and models container.
      * @return the shared views and models
      */
@@ -145,7 +161,8 @@ public class SharedViewBuilder {
                 displayCatStatsView,
                 getCatFactView,
                 inventoryView,
-                adoptionView);
+                adoptionView,
+                catContainerView);
         return new SharedViewsAndModels(views, viewModels);
     }
 }

@@ -1,23 +1,13 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Logger;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import app.service.DialogService;
 import constants.Constants;
@@ -47,17 +37,28 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     private Timer swingTimer;
     private long remainingTime;
 
+    private CatContainerView catContainerView;
+    private StudySessionView studySessionView;
     private final AdoptionViewModel adoptionViewModel;
     private final DialogService dialogService;
 
-    public BreakSessionView(BreakSessionViewModel breakSessionViewModel, BreakSessionState breakSessionState,
-                            AdoptionViewModel adoptionViewModel, DialogService dialogService) {
+    private JPanel catsPanel;
+
+    public BreakSessionView(BreakSessionViewModel breakSessionViewModel,
+                            BreakSessionState breakSessionState,
+                            AdoptionViewModel adoptionViewModel,
+                            DialogService dialogService,
+                            CatContainerView catContainerView) {
+
         this.setLayout(new BorderLayout());
         this.breakSessionViewModel = breakSessionViewModel;
         this.breakSessionState = breakSessionState;
+        this.catContainerView = catContainerView;
 
         this.adoptionViewModel = adoptionViewModel;
         this.dialogService = dialogService;
+
+        this.catsPanel = new JPanel(new BorderLayout());
 
         // Initialize remaining time with the break interval from the state
         breakSessionViewModel.addPropertyChangeListener(this);
@@ -79,10 +80,15 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         logOutSettings.addActionListener(this);
         startTimerButton.addActionListener(this);
 
+        final JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+
         // Add components to main panel
         this.add(createTitlePanel(), BorderLayout.NORTH);
         this.add(createTimerPanel(), BorderLayout.CENTER);
-        this.add(createAdoptionAndLogOutPanel(buttonSize), BorderLayout.SOUTH);
+        bottomPanel.add(drawCatsPanel());
+        bottomPanel.add(createAdoptionAndLogOutPanel(buttonSize));
+        this.add(bottomPanel, BorderLayout.SOUTH);
 
         // Initialize the timer to decrement remaining time
         swingTimer = new Timer(Constants.SECONDS_TO_MILLIS, new ActionListener() {
@@ -95,6 +101,7 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
                 else {
                     swingTimer.stop();
                     breakSessionController.switchToStudySessionView();
+                    studySessionView.showCatContainerView();
                     breakSessionState.resetToDefaultBreakInterval();
                     remainingTime = breakSessionState.getBreakInterval();
                     updateTimerLabel();
@@ -168,12 +175,45 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         return adoptionAndLogOutPanel;
     }
 
+    private JPanel drawCatsPanel() {
+        // final JPanel catsPanel = new JPanel(new BorderLayout());
+        catsPanel.setVisible(true);
+        catsPanel.setOpaque(true);
+
+        catContainerView.setVisible(true);
+        catContainerView.setOpaque(true);
+
+        catsPanel.add(catContainerView, BorderLayout.CENTER);
+
+        SwingUtilities.invokeLater(() -> {
+            catContainerView.setVisible(true);
+            catContainerView.revalidate();
+            catContainerView.repaint();
+        });
+
+        catsPanel.revalidate();
+        catsPanel.repaint();
+
+        return catsPanel;
+    }
+
+    public void showCatContainerView() {
+        catsPanel.removeAll();
+        catsPanel.add(catContainerView, BorderLayout.CENTER);
+        catsPanel.revalidate();
+        catsPanel.repaint();
+    }
+
     public void setBreakSessionController(BreakSessionController breakSessionController) {
         this.breakSessionController = breakSessionController;
     }
 
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
+    }
+
+    public void setStudySessionView(StudySessionView studySessionView) {
+        this.studySessionView = studySessionView;
     }
 
     @Override

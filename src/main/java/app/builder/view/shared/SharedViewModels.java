@@ -5,6 +5,7 @@ import interface_adapter.cat.CatViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.get_cat_fact.GetCatFactViewModel;
+import interface_adapter.initialize_cats.InitializeCatsViewModel;
 
 /**
  * Container for view models that are shared across multiple views.
@@ -14,6 +15,7 @@ public class SharedViewModels {
     private final InventoryViewModel inventoryViewModel;
     private final CatViewModel catViewModel;
     private final GetCatFactViewModel getCatFactViewModel;
+    private final InitializeCatsViewModel initializeCatsViewModel;
     private final AdoptionViewModel adoptionViewModel;
 
     /**
@@ -23,18 +25,21 @@ public class SharedViewModels {
      * @param catViewModel the cat view model
      * @param getCatFactViewModel the get cat fact view model
      * @param adoptionViewModel the adoption view model
+     * @param initializeCatsViewModel the initialize cat view model
      */
     public SharedViewModels(
             DisplayCatStatsViewModel displayCatStatsViewModel,
             InventoryViewModel inventoryViewModel,
             CatViewModel catViewModel,
             GetCatFactViewModel getCatFactViewModel,
-            AdoptionViewModel adoptionViewModel) {
+            AdoptionViewModel adoptionViewModel,
+            InitializeCatsViewModel initializeCatsViewModel) {
         this.displayCatStatsViewModel = displayCatStatsViewModel;
         this.inventoryViewModel = inventoryViewModel;
         this.catViewModel = catViewModel;
         this.getCatFactViewModel = getCatFactViewModel;
         this.adoptionViewModel = adoptionViewModel;
+        this.initializeCatsViewModel = initializeCatsViewModel;
     }
 
     public DisplayCatStatsViewModel getDisplayCatStatsViewModel() {
@@ -55,5 +60,9 @@ public class SharedViewModels {
 
     public AdoptionViewModel getAdoptionViewModel() {
         return adoptionViewModel;
+    }
+
+    public InitializeCatsViewModel getInitializeCatsViewModel() {
+        return initializeCatsViewModel;
     }
 }

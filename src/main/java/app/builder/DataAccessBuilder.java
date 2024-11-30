@@ -61,7 +61,6 @@ public class DataAccessBuilder {
         return this;
     }
 
-
     /**
      * Builds the display cat image data access.
      * @return this builder
