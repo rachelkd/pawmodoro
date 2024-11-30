@@ -66,9 +66,6 @@ public final class Constants {
     public static final int TITLE = 25;
     public static final int INSET = 10;
 
-    public static final int DISPLAY_CAT_REFRESH_BUTTON_WIDTH = 100;
-    public static final int DISPLAY_CAT_REFRESH_BUTTON_HEIGHT = 30;
-
     // Display cat stats view constants
     public static final int DISPLAY_CAT_STATS_PADDING = 10;
     public static final int DISPLAY_CAT_STATS_FONT_SIZE = 16;

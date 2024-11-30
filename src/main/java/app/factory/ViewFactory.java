@@ -2,7 +2,6 @@ package app.factory;
 
 import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
-import interface_adapter.break_session.BreakSessionState;
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.LoggedInViewModel;
@@ -184,11 +183,15 @@ public class ViewFactory {
     /**
      * Creates Break Session View.
      * @param breakSessionViewModel the break session view model
-     * @param breakSessionState the break session state
+     * @param adoptionViewModel the adoption view model
+     * @param dialogService the dialog service
+     * @param displayCatImageView the display cat image view
      * @return BreakSessionView
      */
     public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel,
-                                                   BreakSessionState breakSessionState, AdoptionViewModel adoptionViewModel, DialogService dialogService) {
-        return new BreakSessionView(breakSessionViewModel, breakSessionState, adoptionViewModel, dialogService);
+            AdoptionViewModel adoptionViewModel,
+            DialogService dialogService,
+            DisplayCatImageView displayCatImageView) {
+        return new BreakSessionView(breakSessionViewModel, adoptionViewModel, dialogService, displayCatImageView);
     }
 }

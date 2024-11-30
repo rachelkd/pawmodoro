@@ -36,7 +36,6 @@ public class AppBuilder {
 
     /**
      * Builds and returns the application frame.
-     *
      * @return the configured application frame
      */
     public JFrame build() {
@@ -60,7 +59,6 @@ public class AppBuilder {
 
     /**
      * Initializes all components of the application.
-     *
      * @return this builder
      */
     public AppBuilder initialize() {

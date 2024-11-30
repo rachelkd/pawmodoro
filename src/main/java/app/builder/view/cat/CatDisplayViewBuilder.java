@@ -61,7 +61,7 @@ public class CatDisplayViewBuilder {
     private CatDisplayViewBuilder buildDisplayCatImageView() {
         displayCatImageView = viewFactory.createDisplayCatImageView(
                 catViewModels.getDisplayCatImageViewModel());
-        cardPanel.add(displayCatImageView, displayCatImageView.getViewName());
+        // Don't add to card panel; view will be injected into BreakSessionView
         return this;
     }
 

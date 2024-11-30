@@ -1,10 +1,10 @@
 package app.builder.view.shared;
 
+import view.AdoptionView;
 import view.CatView;
 import view.DisplayCatStatsView;
 import view.GetCatFactView;
 import view.InventoryView;
-import view.AdoptionView;
 
 /**
  * Container for views that are shared across multiple views.
@@ -52,5 +52,7 @@ public class SharedViews {
         return inventoryView;
     }
 
-    public AdoptionView getAdoptionView() { return adoptionView; }
+    public AdoptionView getAdoptionView() {
+        return adoptionView;
+    }
 }

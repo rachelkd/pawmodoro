@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
+import app.builder.view.cat.CatViewsAndModels;
 import app.builder.view.session.SessionViewModels;
 import app.builder.view.session.SessionViews;
 import app.builder.view.session.SessionViewsAndModels;
@@ -13,8 +14,6 @@ import app.factory.viewmodel.SessionViewModelFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
 import view.BreakSessionView;
-import view.GetCatFactView;
-import view.InventoryView;
 import view.SetupSessionView;
 import view.StudySessionView;
 
@@ -36,6 +35,7 @@ public class SessionViewBuilder {
     private BreakSessionView breakSessionView;
     private SetupSessionView setupSessionView;
     private StudySessionView studySessionView;
+    private CatViewsAndModels catViewsAndModels;
 
     /**
      * Creates a new session view builder.
@@ -45,13 +45,15 @@ public class SessionViewBuilder {
      * @param viewFactory the view factory
      * @param dialogService the dialog service
      * @param sharedViewsAndModels the shared views and models
+     * @param catViewsAndModels the cat views and models
      */
     public SessionViewBuilder(JPanel cardPanel,
             CardLayout cardLayout,
             ViewManagerModel viewManagerModel,
             ViewFactory viewFactory,
             DialogService dialogService,
-            SharedViewsAndModels sharedViewsAndModels) {
+            SharedViewsAndModels sharedViewsAndModels,
+            CatViewsAndModels catViewsAndModels) {
         this.cardPanel = cardPanel;
         this.cardLayout = cardLayout;
         this.viewManagerModel = viewManagerModel;
@@ -65,6 +67,7 @@ public class SessionViewBuilder {
                 sessionViewModelFactory.createLoginViewModel());
         this.dialogService = dialogService;
         this.sharedViewsAndModels = sharedViewsAndModels;
+        this.catViewsAndModels = catViewsAndModels;
     }
 
     /**
@@ -115,9 +118,9 @@ public class SessionViewBuilder {
     private SessionViewBuilder buildBreakSessionView() {
         this.breakSessionView = viewFactory.createBreakSessionView(
                 viewModels.getBreakSessionViewModel(),
-                viewModels.getBreakSessionViewModel().getState(),
                 sharedViewsAndModels.getViewModels().getAdoptionViewModel(),
-                dialogService);
+                dialogService,
+                catViewsAndModels.getViews().getDisplayCatImageView());
         cardPanel.add(breakSessionView, breakSessionView.getViewName());
         return this;
     }

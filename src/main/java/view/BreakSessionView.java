@@ -49,42 +49,60 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
 
     private final AdoptionViewModel adoptionViewModel;
     private final DialogService dialogService;
+    private final DisplayCatImageView displayCatImageView;
 
-    public BreakSessionView(BreakSessionViewModel breakSessionViewModel, BreakSessionState breakSessionState,
-                            AdoptionViewModel adoptionViewModel, DialogService dialogService) {
+    public BreakSessionView(BreakSessionViewModel breakSessionViewModel,
+            AdoptionViewModel adoptionViewModel,
+            DialogService dialogService,
+            DisplayCatImageView displayCatImageView) {
         this.setLayout(new BorderLayout());
         this.breakSessionViewModel = breakSessionViewModel;
-        this.breakSessionState = breakSessionState;
-
+        this.breakSessionState = breakSessionViewModel.getState();
         this.adoptionViewModel = adoptionViewModel;
         this.dialogService = dialogService;
+        this.displayCatImageView = displayCatImageView;
 
-        // Initialize remaining time with the break interval from the state
         breakSessionViewModel.addPropertyChangeListener(this);
         this.remainingTime = breakSessionState.getBreakInterval();
-
-        // Timer label to display the countdown timer
+        // Initialize timer label
         timerLabel = new JLabel(formatTime(remainingTime), SwingConstants.CENTER);
         timerLabel.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TIMER_FONT_SIZE));
         timerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Create buttons
+        // Create and setup buttons
         logOutSettings = createButton("Log Out");
         startTimerButton = createButton("Start Timer");
 
-        // Set preferred size to match buttons
         final Dimension buttonSize = new Dimension(Constants.DEFAULT_BUTTON_SIZE_W, Constants.DEFAULT_BUTTON_SIZE_H);
         startTimerButton.setPreferredSize(buttonSize);
 
         logOutSettings.addActionListener(this);
         startTimerButton.addActionListener(this);
 
-        // Add components to main panel
-        this.add(createTitlePanel(), BorderLayout.NORTH);
-        this.add(createTimerPanel(), BorderLayout.CENTER);
-        this.add(createAdoptionAndLogOutPanel(buttonSize), BorderLayout.SOUTH);
+        setupMainPanel();
+        initializeTimer();
 
-        // Initialize the timer to decrement remaining time
+        // Make sure this panel is visible and properly laid out
+        finalizeSetup();
+    }
+
+    private void setupMainPanel() {
+        this.add(createTitlePanel(), BorderLayout.NORTH);
+        final JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        mainPanel.add(createTimerPanel());
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        mainPanel.add(createAdoptionAndLogOutPanel(
+                new Dimension(Constants.DEFAULT_BUTTON_SIZE_W, Constants.DEFAULT_BUTTON_SIZE_H)));
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        mainPanel.add(createCatImagePanel());
+
+        this.add(mainPanel, BorderLayout.CENTER);
+    }
+
+    private void initializeTimer() {
         swingTimer = new Timer(Constants.SECONDS_TO_MILLIS, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,18 +116,15 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
                     breakSessionState.resetToDefaultBreakInterval();
                     remainingTime = breakSessionState.getBreakInterval();
                     updateTimerLabel();
-
-                    // Reset buttons
                     startTimerButton.setEnabled(true);
                 }
             }
         });
+    }
 
-        // Make sure this panel is visible
+    private void finalizeSetup() {
         this.setVisible(true);
         this.setOpaque(true);
-
-        // Force layout update
         this.revalidate();
         this.repaint();
     }
@@ -166,6 +181,13 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         adoptionAndLogOutPanel.add(logOutPanel, BorderLayout.EAST);
 
         return adoptionAndLogOutPanel;
+    }
+
+    private JPanel createCatImagePanel() {
+        final JPanel catImagePanel = new JPanel(new BorderLayout());
+        catImagePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        catImagePanel.add(displayCatImageView, BorderLayout.CENTER);
+        return catImagePanel;
     }
 
     public void setBreakSessionController(BreakSessionController breakSessionController) {
