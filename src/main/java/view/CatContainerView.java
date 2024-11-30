@@ -41,6 +41,14 @@ public class CatContainerView extends JPanel implements PropertyChangeListener {
 
         setUp();
         // updateCatViews();
+
+        SwingUtilities.invokeLater(() -> {
+            this.setOpaque(true);
+            this.setEnabled(true);
+            this.setVisible(true);
+            this.revalidate();
+            this.repaint();
+        });
     }
 
     private void setUp() {
@@ -60,6 +68,7 @@ public class CatContainerView extends JPanel implements PropertyChangeListener {
                     inventoryViewModel,
                     dialogService,
                     getCatFactView);
+
             catsPanel.add(catView);
         }
         catsPanel.revalidate();

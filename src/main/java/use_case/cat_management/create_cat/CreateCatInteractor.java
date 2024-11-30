@@ -1,5 +1,7 @@
 package use_case.cat_management.create_cat;
 
+import java.util.Random;
+
 import constants.Constants;
 import entity.Cat;
 import entity.CatFactory;
@@ -11,6 +13,8 @@ import use_case.cat.CatDataAccessInterface;
 public class CreateCatInteractor implements CreateCatInputBoundary {
     private final CatDataAccessInterface catDataAccessObject;
     private final CreateCatOutputBoundary createCatPresenter;
+    private final Random random = new Random();
+    private String[] catArray = {"cat-1.png", "cat-2.png", "cat-3.png", "cat-4.png", "cat-5.png"};
 
     public CreateCatInteractor(CatDataAccessInterface catDataAccessObject,
                                CreateCatOutputBoundary createCatPresenter) {
@@ -37,9 +41,11 @@ public class CreateCatInteractor implements CreateCatInputBoundary {
             createCatPresenter.prepareFailView("You already have cat with this name >:(");
         }
         else {
+            final int randomInt = random.nextInt(catArray.length);
             final CatFactory catFactory = new CatFactory();
             final Cat cat = catFactory.create(createCatInputData.getCatName(), createCatInputData.getOwnerUsername(),
-                    100, 100, "cat-1.png");
+                    100, 100, catArray[randomInt]);
+
             cat.setCatObjectCreated(true);
             catDataAccessObject.saveCat(cat);
 

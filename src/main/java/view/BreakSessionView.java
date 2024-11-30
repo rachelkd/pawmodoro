@@ -212,6 +212,8 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         catsPanel.add(catContainerView, BorderLayout.CENTER);
 
         SwingUtilities.invokeLater(() -> {
+            catContainerView.setOpaque(true);
+            catContainerView.setEnabled(true);
             catContainerView.setVisible(true);
             catContainerView.revalidate();
             catContainerView.repaint();

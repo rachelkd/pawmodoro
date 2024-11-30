@@ -85,6 +85,7 @@ public class CatView extends JPanel implements ActionListener, PropertyChangeLis
 
         // Make sure we're visible after everything is set up
         SwingUtilities.invokeLater(() -> {
+            this.setEnabled(true);
             this.setVisible(true);
             this.revalidate();
             this.repaint();
