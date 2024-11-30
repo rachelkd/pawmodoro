@@ -101,16 +101,16 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
                                     currentState.getCatName(),
                                     currentState.getOwner());
 
-//                           if (catDataAccessObject.existsByNameAndOwner(currentState.getCatName(), currentState.getOwner())) {
-//                                mainPanel.remove(information);
-//                                mainPanel.remove(finish);
-//                                mainPanel.add(adoptionCompletePanel, BorderLayout.CENTER);
-//
-//                                mainPanel.revalidate();
-//                                mainPanel.repaint();
-//                           } else {
-//                                dispose();
-//                           }
+                            if (currentState.getIsSuccess()) {
+                                mainPanel.remove(information);
+                                mainPanel.remove(finish);
+                                mainPanel.add(adoptionCompletePanel, BorderLayout.CENTER);
+
+                                mainPanel.revalidate();
+                                mainPanel.repaint();
+                           } else {
+                                dispose();
+                           }
 
                         }
                     }
