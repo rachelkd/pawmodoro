@@ -1,9 +1,7 @@
 package use_case.adoption;
 
-import entity.Cat;
-
 /**
- * The Adoption Interactor
+ * The Adoption Interactor.
  */
 public class AdoptionInteractor implements AdoptionInputBoundary {
     private final AdoptionOutputBoundary adoptionPresenter;
