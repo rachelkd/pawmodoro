@@ -27,7 +27,6 @@ import interface_adapter.adoption.AdoptionController;
 import interface_adapter.adoption.AdoptionState;
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.create_cat.CreateCatController;
-import use_case.cat.CatDataAccessInterface;
 
 /**
  * The view for the Adopting a cat use case.
@@ -49,7 +48,6 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
     private final JPanel finish;
     private final JPanel adoptionPanel;
     private final JPanel adoptionCompletePanel;
-    private final CatDataAccessInterface catDataAccessObject;
 
     /**
      * Creates a new AdoptionView.
@@ -57,12 +55,11 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
      * @param parent the application
      * @param adoptionViewModel the view model for the adoption use case
      */
-    public AdoptionView(JFrame parent, AdoptionViewModel adoptionViewModel, CatDataAccessInterface catDataAccessObject) {
+    public AdoptionView(JFrame parent, AdoptionViewModel adoptionViewModel) {
         super(parent, AdoptionViewModel.TITLE_LABEL, true);
         this.adoptionViewModel = adoptionViewModel;
         this.adoptionViewModel.addPropertyChangeListener(this);
 
-        this.catDataAccessObject = catDataAccessObject;
 
         this.mainPanel = new JPanel();
         mainPanel.setPreferredSize(new Dimension(Constants.ADOPTION_VIEW_WIDTH, Constants.ADOPTION_VIEW_HEIGHT));
@@ -104,16 +101,16 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
                                     currentState.getCatName(),
                                     currentState.getOwner());
 
-                           if (catDataAccessObject.existsByNameAndOwner(currentState.getCatName(), currentState.getOwner())) {
-                                mainPanel.remove(information);
-                                mainPanel.remove(finish);
-                                mainPanel.add(adoptionCompletePanel, BorderLayout.CENTER);
-
-                                mainPanel.revalidate();
-                                mainPanel.repaint();
-                           } else {
-                                dispose();
-                           }
+//                           if (catDataAccessObject.existsByNameAndOwner(currentState.getCatName(), currentState.getOwner())) {
+//                                mainPanel.remove(information);
+//                                mainPanel.remove(finish);
+//                                mainPanel.add(adoptionCompletePanel, BorderLayout.CENTER);
+//
+//                                mainPanel.revalidate();
+//                                mainPanel.repaint();
+//                           } else {
+//                                dispose();
+//                           }
 
                         }
                     }
