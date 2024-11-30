@@ -71,6 +71,8 @@ public class CatContainerView extends JPanel implements PropertyChangeListener {
 
             catsPanel.add(catView);
         }
+        catsPanel.setOpaque(true);
+        catsPanel.setVisible(true);
         catsPanel.revalidate();
         catsPanel.repaint();
     }
