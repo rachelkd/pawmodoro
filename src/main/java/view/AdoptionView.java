@@ -41,13 +41,9 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
     private final JButton confirmButton = new JButton(AdoptionViewModel.CONFIRM_BUTTON_LABEL);
     private final JButton cancelButton = new JButton(AdoptionViewModel.CANCEL_BUTTON_LABEL);
     private final JButton returnButton = new JButton(AdoptionViewModel.RETURN_LABEL);
+    private boolean adopted;
     private AdoptionController adoptionController;
     private CreateCatController createCatController;
-    private final JPanel mainPanel;
-    private final JPanel information;
-    private final JPanel finish;
-    private final JPanel adoptionPanel;
-    private final JPanel adoptionCompletePanel;
 
     /**
      * Creates a new AdoptionView.
@@ -60,16 +56,52 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
         this.adoptionViewModel = adoptionViewModel;
         this.adoptionViewModel.addPropertyChangeListener(this);
 
+        final JPanel mainPanel = createMainPanel();
 
-        this.mainPanel = new JPanel();
+        this.add(mainPanel);
+        this.pack();
+        this.setLocationRelativeTo(parent);
+
+        nameField.getDocument().addDocumentListener(new DocumentListener() {
+            private void documentListenerHelper() {
+                final AdoptionState currentState = adoptionViewModel.getState();
+                currentState.setCatName(new String(nameField.getText()));
+                adoptionViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
+
+        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
+    }
+
+    /**
+     * Creates the main panel for the view
+     * @return the panel
+     */
+    public JPanel createMainPanel() {
+        final JPanel mainPanel = new JPanel();
         mainPanel.setPreferredSize(new Dimension(Constants.ADOPTION_VIEW_WIDTH, Constants.ADOPTION_VIEW_HEIGHT));
         mainPanel.setLayout(new BorderLayout());
         final Border border = BorderFactory.createLineBorder(Color.black);
         mainPanel.setBorder(border);
 
-        this.information = new JPanel();
-        this.finish = new JPanel();
-        this.adoptionCompletePanel = new JPanel();
+        final JPanel information = new JPanel();
+        final JPanel finish = new JPanel();
+        final JPanel adoptionCompletePanel = new JPanel();
 
         final JLabel title = new JLabel(AdoptionViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -102,16 +134,17 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
                                     currentState.getOwner());
 
                             if (currentState.getIsSuccess()) {
+                                adopted = true;
                                 mainPanel.remove(information);
                                 mainPanel.remove(finish);
                                 mainPanel.add(adoptionCompletePanel, BorderLayout.CENTER);
 
                                 mainPanel.revalidate();
                                 mainPanel.repaint();
-                           } else {
+                            }
+                            else {
                                 dispose();
-                           }
-
+                            }
                         }
                     }
                 });
@@ -126,37 +159,9 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
                 }
         );
         cancelButton.addActionListener(event -> this.setVisible(false));
-
-        this.add(mainPanel);
-        this.pack();
-        this.setLocationRelativeTo(parent);
-        this.adoptionPanel = new JPanel();
-
-        nameField.getDocument().addDocumentListener(new DocumentListener() {
-            private void documentListenerHelper() {
-                final AdoptionState currentState = adoptionViewModel.getState();
-                currentState.setCatName(new String(nameField.getText()));
-                adoptionViewModel.setState(currentState);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-        });
-
-        this.add(Box.createRigidArea(new Dimension(Constants.SPACING, Constants.SPACING)));
+        return mainPanel;
     }
+
 
     @Override
     public void actionPerformed(ActionEvent evt) {
