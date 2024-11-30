@@ -23,7 +23,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import constants.Constants;
-import data_access.DBUserDataAccessObject;
 import interface_adapter.adoption.AdoptionController;
 import interface_adapter.adoption.AdoptionState;
 import interface_adapter.adoption.AdoptionViewModel;
@@ -65,7 +64,7 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
         nameField.getDocument().addDocumentListener(new DocumentListener() {
             private void documentListenerHelper() {
                 final AdoptionState currentState = adoptionViewModel.getState();
-                currentState.setCatName(new String(nameField.getText()));
+                currentState.setCatName(nameField.getText());
                 adoptionViewModel.setState(currentState);
             }
 
@@ -130,8 +129,7 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
                                     currentState.getOwner());
 
                             adoptionController.execute(
-                                    currentState.getCatName(),
-                                    currentState.getOwner());
+                                    currentState.getCatName());
 
                             if (currentState.getIsSuccess()) {
                                 mainPanel.remove(information);

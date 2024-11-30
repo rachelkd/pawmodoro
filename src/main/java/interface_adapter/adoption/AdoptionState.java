@@ -10,11 +10,19 @@ public class AdoptionState {
     private boolean isSuccess = false;
 
     /**
-     * Gets the owner object.
+     * Gets the owner name.
      * @return the owner
      */
     public String getOwner() {
         return owner;
+    }
+
+    /**
+     * Sets the owner's name
+     * @param name the name of the owner
+     */
+    public void setOwner(String name) {
+        this.owner = name;
     }
 
     /**

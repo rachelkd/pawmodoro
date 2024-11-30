@@ -171,6 +171,11 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
         }
     }
 
+    @Override
+    public String getOwnerName() {
+        return currentUsername;
+    }
+
     /**
      * Exception for database/network issues.
      */

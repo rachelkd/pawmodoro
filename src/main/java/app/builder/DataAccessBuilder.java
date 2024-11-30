@@ -14,6 +14,7 @@ import use_case.food_management.InventoryService;
 public class DataAccessBuilder {
     private final DataAccessFactory factory;
     private DBUserDataAccessObject userDataAccess;
+    private InventoryService inventoryDataAccess;
     private ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
     private DBCatDataAccessObject catDataAccess;
     private ApiCatFactDataAccessObject catFactDataAccess;

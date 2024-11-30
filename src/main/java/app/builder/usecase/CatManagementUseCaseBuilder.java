@@ -52,13 +52,11 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
      */
     public CatManagementUseCaseBuilder buildAdoptionUseCase() {
         final AdoptionOutputBoundary outputBoundary = new AdoptionPresenter(
-                getViews().getSession().getViewModels().getSetupSessionViewModel(),
-                getViews().getCat().getViewModels().getAdoptionViewModel(),
-                getViews().getViewManagerModel());
+                getViews().getCat().getViewModels().getAdoptionViewModel());
 
-        final AdoptionInputBoundary interactor = new AdoptionInteractor(outputBoundary, getDataAccess().getUserDataAccess());
+        final AdoptionInputBoundary interactor = new AdoptionInteractor(outputBoundary);
 
-        final AdoptionController controller = new AdoptionController(interactor);
+        final AdoptionController controller = new AdoptionController(interactor, getDataAccess().getUserDataAccess());
         getViews().getCat().getViews().getAdoptionView().setAdoptionController(controller);
         return this;
     }
