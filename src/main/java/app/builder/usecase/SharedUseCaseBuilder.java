@@ -56,6 +56,7 @@ public class SharedUseCaseBuilder extends AbstractUseCaseBuilder {
 
         final DisplayCatStatsController controller = new DisplayCatStatsController(interactor);
         getViews().getShared().getViews().getCatView().setDisplayCatStatsController(controller);
+        getViews().getShared().getViews().getCatContainerView().setDisplayCatStatsController(controller);
         return this;
     }
 

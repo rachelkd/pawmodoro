@@ -14,7 +14,7 @@ public final class InventoryService implements InventoryDataAccessInterface {
     private static InventoryService instance;
     private final DBInventoryDataAccessObject inventoryRepository;
     private Inventory inventory;
-
+    // TODO make inventory a map of ownerid to inventory object so multiple users can sign in
     private InventoryService(DBInventoryDataAccessObject inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
     }

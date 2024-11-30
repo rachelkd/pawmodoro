@@ -23,6 +23,7 @@ import constants.Constants;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.create_cat.CreateCatController;
 import interface_adapter.create_inventory.CreateInventoryController;
+import interface_adapter.initialize_cats.InitializeCatsController;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -46,6 +47,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private CreateCatController createCatController;
     private CreateInventoryController createInventoryController;
     private AddToInventoryController addToInventoryController;
+    private InitializeCatsController initializeCatsController;
 
     public LoginView(LoginViewModel loginViewModel) {
         this.loginViewModel = loginViewModel;
@@ -176,6 +178,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             loginController.execute(
                     currentState.getUsername(),
                     currentState.getPassword());
+            initializeCatsController.execute(currentState.getUsername());
             createInventoryController.execute(currentState.getUsername());
             // TODO get rid of following code, currently for testing purposes
             // addToInventoryController.execute(currentState.getUsername(), 0);
@@ -216,5 +219,9 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     public void setAddToInventoryController(AddToInventoryController addToInventoryController) {
         this.addToInventoryController = addToInventoryController;
+    }
+
+    public void setInitializeCatsController(InitializeCatsController initializeCatsController) {
+        this.initializeCatsController = initializeCatsController;
     }
 }

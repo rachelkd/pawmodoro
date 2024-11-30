@@ -9,8 +9,8 @@ import entity.AbstractFood;
  */
 public class UseItemOutputData {
     private final boolean isSuccess;
-    private Map<String, AbstractFood> newFoodItems;
-    private String ownerId;
+    private final Map<String, AbstractFood> newFoodItems;
+    private final String ownerId;
 
     public UseItemOutputData(boolean isSuccess, Map<String, AbstractFood> newFoodItems, String ownerId) {
 

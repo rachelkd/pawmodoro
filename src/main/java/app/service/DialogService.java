@@ -13,7 +13,6 @@ import interface_adapter.runawaycat.RunawayCatViewModel;
 import view.DisplayCatStatsView;
 import view.GetCatFactView;
 import view.InventoryView;
-import view.RunawayCatView;
 
 /**
  * Service for showing dialogs.
