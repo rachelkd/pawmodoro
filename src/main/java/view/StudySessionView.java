@@ -132,6 +132,8 @@ public class StudySessionView extends JPanel implements ActionListener, Property
                     studySessionState.resetToDefaultWorkInterval();
                     remainingTime = studySessionViewModel.getState().getWorkInterval();
                     updateTimerLabel();
+                    // reset whether study session was successful
+                    studySessionViewModel.getState().setIsSuccess(true);
                 }
             }
         });
@@ -272,7 +274,6 @@ public class StudySessionView extends JPanel implements ActionListener, Property
             if (catNamesList.contains(selectedOption)) {
                 catsPopupMenu.setVisible(false);
             }
-
         });
 
         selectButton.addActionListener(event -> {
@@ -359,13 +360,13 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         else if (evt.getSource().equals(startTimerButton)) {
             // Start the timer
             swingTimer.start();
-            studySessionViewModel.getState().setIsSuccess(true);
             catsPopupMenu.show(startTimerButton, 0, startTimerButton.getHeight());
         }
         else if (evt.getSource().equals(stopTimerButton)) {
             // Stop the timer
             swingTimer.stop();
             studySessionController.stopStudyTimer();
+            // studySessionViewModel.getState().setIsSuccess(true);
 
         }
     }
@@ -390,6 +391,10 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         }
         if ("initialize_cats".equals(evt.getPropertyName())) {
             createCatNames();
+        }
+        if ("null_cat_name".equals(evt.getPropertyName())) {
+            final StudySessionState newState = (StudySessionState) evt.getNewValue();
+            JOptionPane.showMessageDialog(null, newState.getCatError());
         }
     }
 }

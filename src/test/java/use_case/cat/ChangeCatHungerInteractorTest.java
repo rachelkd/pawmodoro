@@ -37,7 +37,7 @@ class ChangeCatHungerInteractorTest {
 
             @Override
             public void prepareFailView(String errorMessage) {
-                fail("Usecase unexpected.")
+                fail("Usecase unexpected.");
             }
         };
 
@@ -71,4 +71,5 @@ class ChangeCatHungerInteractorTest {
         final ChangeCatHungerInputBoundary interactor = new ChangeCatHungerInteractor(catRepository, successPresenter);
         interactor.execute(inputData);
     }
+    // TODO test error
 }

@@ -12,6 +12,7 @@ public class StudySessionState {
     private long workInterval = Constants.DEFAULT_WORK_DURATION_MS;
     private long breakInterval = Constants.DEFAULT_BREAK_DURATION_MS;
     private String catName = "";
+    private String catError;
     private boolean isSuccess = true;
 
     public String getUsername() {
@@ -78,5 +79,13 @@ public class StudySessionState {
 
     public void setCatName(String catName) {
         this.catName = catName;
+    }
+
+    public String getCatError() {
+        return catError;
+    }
+
+    public void setCatError(String catError) {
+        this.catError = catError;
     }
 }

@@ -5,6 +5,7 @@ import interface_adapter.cat.CatState;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.runawaycat.RunawayCatState;
 import interface_adapter.runawaycat.RunawayCatViewModel;
+import interface_adapter.study_session.StudySessionViewModel;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputBoundary;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputData;
 
@@ -13,13 +14,16 @@ import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputData
  */
 public class ChangeCatHappinessPresenter implements ChangeCatHappinessOutputBoundary {
     private final ViewManagerModel viewManagerModel;
+    private final StudySessionViewModel studySessionViewModel;
     private final DisplayCatStatsViewModel displayCatStatsViewModel;
     private final RunawayCatViewModel runawayCatViewModel;
 
     public ChangeCatHappinessPresenter(ViewManagerModel viewManagerModel,
+                                       StudySessionViewModel studySessionViewModel,
                                        DisplayCatStatsViewModel displayCatStatsViewModel,
                                        RunawayCatViewModel runawayCatView) {
         this.viewManagerModel = viewManagerModel;
+        this.studySessionViewModel = studySessionViewModel;
         this.displayCatStatsViewModel = displayCatStatsViewModel;
         this.runawayCatViewModel = runawayCatView;
     }
@@ -45,6 +49,7 @@ public class ChangeCatHappinessPresenter implements ChangeCatHappinessOutputBoun
 
     @Override
     public void prepareFailureView(String errorMessage) {
-
+        studySessionViewModel.getState().setCatError(errorMessage);
+        studySessionViewModel.firePropertyChanged("null_cat_name");
     }
 }
