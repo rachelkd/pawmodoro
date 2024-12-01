@@ -204,13 +204,16 @@ public class ViewFactory {
      * @param breakSessionViewModel the break session view model
      * @param adoptionViewModel the adoption view model
      * @param dialogService the dialog service
+     * @param displayCatImageView the display cat image view
      * @param catContainerView the cat container view
      * @return BreakSessionView
      */
     public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel,
             AdoptionViewModel adoptionViewModel,
             DialogService dialogService,
-            CatContainerView catContainerView) {
-        return new BreakSessionView(breakSessionViewModel, adoptionViewModel, dialogService, catContainerView);
+            CatContainerView catContainerView,
+            DisplayCatImageView displayCatImageView) {
+        return new BreakSessionView(breakSessionViewModel, adoptionViewModel, dialogService,
+                displayCatImageView, catContainerView);
     }
 }

@@ -52,18 +52,21 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     private StudySessionView studySessionView;
     private final AdoptionViewModel adoptionViewModel;
     private final DialogService dialogService;
+    private DisplayCatImageView displayCatImageView;
 
     private JPanel catsPanel;
 
     public BreakSessionView(BreakSessionViewModel breakSessionViewModel,
             AdoptionViewModel adoptionViewModel,
             DialogService dialogService,
+            DisplayCatImageView displayCatImageView,
             CatContainerView catContainerView) {
 
-        this.setLayout(new BorderLayout());
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.breakSessionViewModel = breakSessionViewModel;
         this.breakSessionState = breakSessionViewModel.getState();
         this.catContainerView = catContainerView;
+        this.displayCatImageView = displayCatImageView;
 
         this.adoptionViewModel = adoptionViewModel;
         this.dialogService = dialogService;
@@ -94,11 +97,13 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
 
         // Add components to main panel
-        this.add(createTitlePanel(), BorderLayout.NORTH);
-        this.add(createTimerPanel(), BorderLayout.CENTER);
+        add(createTitlePanel());
+        add(createTimerPanel());
+
         bottomPanel.add(drawCatsPanel());
+        addDisplayCatImageView();
         bottomPanel.add(createAdoptionAndLogOutPanel(buttonSize));
-        this.add(bottomPanel, BorderLayout.SOUTH);
+        add(bottomPanel);
 
         // Initialize the timer to decrement remaining time
         swingTimer = new Timer(Constants.SECONDS_TO_MILLIS, new ActionListener() {
@@ -204,6 +209,21 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         catsPanel.repaint();
 
         return catsPanel;
+    }
+
+    /**
+     * Helper method to add the DisplayCatImageView to the panel.
+     */
+    private void addDisplayCatImageView() {
+        displayCatImageView.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(displayCatImageView);
+        add(Box.createVerticalStrut(10)); // Add some spacing between components
+    }
+
+    private void addCatContainerView(AdoptionViewModel adoptionViewModel) {
+        catContainerView.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(catContainerView);
+        add(Box.createVerticalStrut(10)); // Add some spacing between components
     }
 
     /**
