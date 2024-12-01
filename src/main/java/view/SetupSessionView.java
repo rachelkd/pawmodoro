@@ -27,63 +27,72 @@ public class SetupSessionView extends JPanel implements ActionListener {
     private String[] breakChoices = {"1 min", "5 mins", "10 mins"};
     private final JComboBox<String> studytime = new JComboBox<String>(studyChoices);
     private final JComboBox<String> breaktime = new JComboBox<String>(breakChoices);
-    private final JButton returnButton;
+    private JButton returnButton;
 
     private SetupSessionController setupSessionController;
 
     public SetupSessionView(SetupSessionViewModel setupSessionViewModel) {
         this.setupSessionViewModel = setupSessionViewModel;
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        initializeTitle();
+        initializeInstructions();
+        initializeStudyPanel();
+        initializeBreakPanel();
+        initializeButtons();
+
+        addBreakTimeListener();
+        addStudyTimeListener();
+    }
+
+    private void initializeTitle() {
         final JLabel title = new JLabel(SetupSessionViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.SETUP_SESSION_TITLE_FONT_SIZE));
+        this.add(title);
+    }
 
+    private void initializeInstructions() {
+        final JLabel instructions = new JLabel(SetupSessionViewModel.INSTRUCTIONS_LABEL);
+        instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
+        instructions.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.SETUP_SESSION_NORMAL_FONT_SIZE));
+        this.add(instructions, BorderLayout.NORTH);
+    }
+
+    private void initializeStudyPanel() {
         final JPanel studyPanel = new JPanel();
         final JLabel studyLabel = new JLabel(SetupSessionViewModel.STUDY_LABEL);
         studyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         studyLabel.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.SETUP_SESSION_NORMAL_FONT_SIZE));
         studyPanel.add(studyLabel);
         studyPanel.add(studytime);
+        this.add(studyPanel);
+    }
 
+    private void initializeBreakPanel() {
         final JPanel breakPanel = new JPanel();
         final JLabel breakLabel = new JLabel(SetupSessionViewModel.BREAK_LABEL);
         breakLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         breakLabel.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.SETUP_SESSION_NORMAL_FONT_SIZE));
         breakPanel.add(breakLabel);
         breakPanel.add(breaktime);
+        this.add(breakPanel);
+    }
 
+    private void initializeButtons() {
         final JPanel buttons = new JPanel();
         returnButton = new JButton(SetupSessionViewModel.RETURN_BUTTON_LABEL);
+        returnButton.addActionListener(this::handleReturnButton);
         buttons.add(returnButton);
-
-        final JLabel instructions = new JLabel(SetupSessionViewModel.INSTRUCTIONS_LABEL);
-        instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
-        instructions.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.SETUP_SESSION_NORMAL_FONT_SIZE));
-
-        returnButton.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-
-                        final SetupSessionState currentState = setupSessionViewModel.getState();
-
-                        setupSessionController.execute(
-                                currentState.getStudyTime(),
-                                currentState.getBreakTime());
-
-                        setupSessionController.switchToStudyView();
-                    }
-                });
-
-        addBreakTimeListener();
-        addStudyTimeListener();
-
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        this.add(title);
-        this.add(instructions, BorderLayout.NORTH);
-        this.add(studyPanel);
-        this.add(breakPanel);
         this.add(buttons, BorderLayout.SOUTH);
+    }
+
+    private void handleReturnButton(ActionEvent evt) {
+        final SetupSessionState currentState = setupSessionViewModel.getState();
+        setupSessionController.execute(
+                currentState.getStudyTime(),
+                currentState.getBreakTime());
+        setupSessionController.switchToStudyView();
     }
 
     @Override
