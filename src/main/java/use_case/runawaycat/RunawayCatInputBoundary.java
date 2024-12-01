@@ -12,8 +12,4 @@ public interface RunawayCatInputBoundary {
      */
     void execute(RunawayCatInputData runawayCatInputData);
 
-    /**
-     * Executes the switch to Break Session view.
-     */
-    void switchToBreakView();
 }

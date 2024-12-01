@@ -8,23 +8,16 @@ import use_case.runawaycat.RunawayCatInputData;
  */
 public class RunawayCatController {
     private final RunawayCatViewModel runawayCatViewModel;
-    private final RunawayCatInputBoundary runawayCatInputBoundary;
+    private final RunawayCatInputBoundary runawayCatInteractor;
 
     public RunawayCatController(RunawayCatViewModel runawayCatViewModel,
-            RunawayCatInputBoundary runawayCatInputBoundary) {
+            RunawayCatInputBoundary runawayCatInteractor) {
         this.runawayCatViewModel = runawayCatViewModel;
-        this.runawayCatInputBoundary = runawayCatInputBoundary;
+        this.runawayCatInteractor = runawayCatInteractor;
     }
 
-    /**
-     * Switches to the break session view.
-     */
-    public void switchToBreakView() {
-        // To be implemented
-    }
-
-    void execute(String catname, String ownerUsername) {
-        final RunawayCatInputData runawayCatInputData = new RunawayCatInputData(catname, ownerUsername);
-        runawayCatInputBoundary.execute(runawayCatInputData);
+    public void execute(String catName, String ownerUsername) {
+        final RunawayCatInputData runawayCatInputData = new RunawayCatInputData(catName, ownerUsername);
+        runawayCatInteractor.execute(runawayCatInputData);
     }
 }
