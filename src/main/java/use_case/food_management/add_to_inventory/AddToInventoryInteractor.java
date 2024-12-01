@@ -37,12 +37,15 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
                     .getItems().get(foodName);
 
             foodItems.put(foodName, prevQuantity + 1);
+            inventory.setItems(foodItems);
 
             // since food object mutable
             inventoryDataAccessObject.updateInventory(inventory);
         } // item not in inventory
         else {
             foodItems.put(foodName, 1);
+            inventory.setItems(foodItems);
+
             inventoryDataAccessObject.updateInventory(inventory);
         }
 
@@ -51,5 +54,4 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
                         inventoryDataAccessObject.getInventoryItems(addToInventoryInputData.getOwnerId()));
         addToInventoryPresenter.prepareSuccessView(addToInventoryOutputData);
     }
-
 }

@@ -2,21 +2,19 @@ package use_case.food_management.use_item_in_inventory;
 
 import java.util.Map;
 
-import entity.AbstractFood;
-
 /**
  * Output Data for the Use Item Use Case.
  */
 public class UseItemOutputData {
-    private final Map<String, AbstractFood> newFoodItems;
+    private final Map<String, Integer> newFoodItems;
     private final String ownerId;
 
-    public UseItemOutputData(Map<String, AbstractFood> newFoodItems, String ownerId) {
+    public UseItemOutputData(Map<String, Integer> newFoodItems, String ownerId) {
         this.newFoodItems = newFoodItems;
         this.ownerId = ownerId;
     }
 
-    public Map<String, AbstractFood> getNewFoodItems() {
+    public Map<String, Integer> getNewFoodItems() {
         return newFoodItems;
     }
 

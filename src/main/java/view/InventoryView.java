@@ -47,7 +47,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
     private AddToInventoryController addToInventoryController;
     private UseItemController useItemController;
     private ChangeCatHungerController changeCatHungerController;
-    private Map<String, AbstractFood> userInventory;
+    private Map<String, Integer> userInventory;
     private final JPanel mainPanel;
     private final JPanel inventoryPanel;
     private final JPanel buttonPanel;
@@ -140,8 +140,8 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         if (!userInventory.isEmpty()) {
             inventoryPanel.setLayout(new BoxLayout(inventoryPanel, BoxLayout.Y_AXIS));
 
-            for (AbstractFood food : userInventory.values()) {
-                addFoodLabel(food);
+            for (Map.Entry<String, Integer> entry : userInventory.entrySet()) {
+                addFoodLabel(entry.getKey(), entry.getValue());
             }
             addCloseButton();
             addSelectItemButton(ownerId);
