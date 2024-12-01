@@ -11,7 +11,6 @@ import entity.CatFactory;
 import entity.CatImageFactory;
 import entity.CommonUserFactory;
 import entity.FoodInventoryFactory;
-import entity.FoodItemFactory;
 
 /**
  * Factory for creating data access objects.
@@ -76,6 +75,6 @@ public class DataAccessFactory {
      * @return the inventory data access object
      */
     public DBInventoryDataAccessObject createInventoryAccessFactory() {
-        return new DBInventoryDataAccessObject(new FoodInventoryFactory(), new FoodItemFactory());
+        return new DBInventoryDataAccessObject(new FoodInventoryFactory());
     }
 }

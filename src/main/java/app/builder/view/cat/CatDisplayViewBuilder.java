@@ -61,7 +61,6 @@ public class CatDisplayViewBuilder {
     private CatDisplayViewBuilder buildDisplayCatImageView() {
         displayCatImageView = viewFactory.createDisplayCatImageView(
                 catViewModels.getDisplayCatImageViewModel());
-        cardPanel.add(displayCatImageView, displayCatImageView.getViewName());
         return this;
     }
 

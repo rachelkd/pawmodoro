@@ -26,7 +26,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-import entity.AbstractFood;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.change_cat_hunger.ChangeCatHungerController;
 import interface_adapter.create_inventory.CreateInventoryController;
@@ -47,7 +46,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
     private AddToInventoryController addToInventoryController;
     private UseItemController useItemController;
     private ChangeCatHungerController changeCatHungerController;
-    private Map<String, AbstractFood> userInventory;
+    private Map<String, Integer> userInventory;
     private final JPanel mainPanel;
     private final JPanel inventoryPanel;
     private final JPanel buttonPanel;
@@ -140,8 +139,8 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         if (!userInventory.isEmpty()) {
             inventoryPanel.setLayout(new BoxLayout(inventoryPanel, BoxLayout.Y_AXIS));
 
-            for (AbstractFood food : userInventory.values()) {
-                addFoodLabel(food);
+            for (Map.Entry<String, Integer> entry : userInventory.entrySet()) {
+                addFoodLabel(entry.getKey(), entry.getValue());
             }
             addCloseButton();
             addSelectItemButton(ownerId);
@@ -197,9 +196,10 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
     }
 
     void addToInventory(InventoryState state) {
-        final AbstractFood food = state.getNewFoodItem();
-        if (!userInventory.containsKey(food.getName())) {
-            addFoodLabel(food);
+        final String foodName = state.getCurrentFoodName();
+        final Integer quantity = state.getInventoryItems().get(foodName);
+        if (!userInventory.containsKey(foodName)) {
+            addFoodLabel(foodName, quantity);
         }
         else {
             final Component[] foodLabels = inventoryPanel.getComponents();
@@ -209,9 +209,9 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
 
                 final JLabel foodLabel = (JLabel) labelPanel.getComponent(0);
 
-                if (foodLabel.getText().equalsIgnoreCase(food.getName())) {
+                if (foodLabel.getText().equalsIgnoreCase(foodName)) {
                     final JLabel quantitylabel = (JLabel) labelPanel.getComponent(2);
-                    quantitylabel.setText(": " + food.getQuantity());
+                    quantitylabel.setText(": " + quantity);
                     foodLabel.revalidate();
                     foodLabel.repaint();
                     break;
@@ -220,15 +220,15 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         }
     }
 
-    void addFoodLabel(AbstractFood food) {
+    void addFoodLabel(String foodName, Integer quantity) {
         // panel to put food and quantity labels side by side
         final JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         // Define a border to indicate label selection
         final Border selectedBorder = BorderFactory.createLineBorder(Color.BLUE, 2);
 
-        final JLabel foodLabel = new JLabel(food.getName());
-        final JLabel quantityLabel = new JLabel(": " + food.getQuantity());
+        final JLabel foodLabel = new JLabel(foodName);
+        final JLabel quantityLabel = new JLabel(": " + quantity);
         foodLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

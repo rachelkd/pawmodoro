@@ -6,6 +6,7 @@ import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import use_case.studysession.StudySessionOutputBoundary;
+import use_case.studysession.StudySessionOutputData;
 
 /**
  * Presenter for the study session use case.
@@ -51,7 +52,7 @@ public class StudySessionPresenter implements StudySessionOutputBoundary {
     }
 
     @Override
-    public void stopStudyTimer() {
+    public void stopStudyTimer(StudySessionOutputData studySessionOutputData) {
         final StudySessionState studySessionState = studySessionViewModel.getState();
         studySessionState.setTimerStopped();
         studySessionViewModel.setState(studySessionState);

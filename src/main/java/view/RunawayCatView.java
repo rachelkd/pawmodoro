@@ -1,6 +1,8 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -13,8 +15,6 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-
 import javax.swing.border.Border;
 
 import constants.Constants;
@@ -43,7 +43,7 @@ public class RunawayCatView extends JDialog implements ActionListener, PropertyC
     private final JPanel title;
 
     /**
-     * Creates a new RunawayCatView
+     * Creates a new RunawayCatView.
      * @param parent the application
      * @param runawayCatViewModel the view model for the runaway cat use case
      */

@@ -18,8 +18,9 @@ public interface StudySessionOutputBoundary {
 
     /**
      * Notifies when stop button is pressed.
+     * @param studySessionOutputData the outputdata for studySession.
      */
-    void stopStudyTimer();
+    void stopStudyTimer(StudySessionOutputData studySessionOutputData);
 
     /**
      * Prepares the login view.

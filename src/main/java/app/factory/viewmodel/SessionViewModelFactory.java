@@ -2,9 +2,9 @@ package app.factory.viewmodel;
 
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
-import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
 import interface_adapter.get_cat_fact.GetCatFactViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.music_control.MusicControlViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
@@ -69,4 +69,11 @@ public class SessionViewModelFactory {
         return new BreakSessionViewModel();
     }
 
+    /**
+     * Creates a new music control view model.
+     * @return the music control view model
+     */
+    public MusicControlViewModel createMusicControlViewModel() {
+        return new MusicControlViewModel();
+    }
 }

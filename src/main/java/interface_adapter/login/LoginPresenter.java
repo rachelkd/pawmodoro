@@ -1,10 +1,10 @@
 package interface_adapter.login;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.runawaycat.RunawayCatState;
-import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.adoption.AdoptionState;
 import interface_adapter.adoption.AdoptionViewModel;
+import interface_adapter.runawaycat.RunawayCatState;
+import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.study_session.StudySessionState;
 import interface_adapter.study_session.StudySessionViewModel;
 import use_case.login.LoginOutputBoundary;

@@ -10,6 +10,7 @@ import data_access.InMemoryCatDataAccessObject;
 import entity.Cat;
 import entity.CatFactory;
 import entity.DefaultHungerCalculator;
+import entity.FoodFactory;
 import entity.FoodItemFactory;
 import entity.HungerCalculator;
 import use_case.cat_management.change_cat_hunger.ChangeCatHungerInputBoundary;
@@ -20,7 +21,7 @@ import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputData;
 
 class ChangeCatHungerInteractorTest {
     private CatFactory catFactory;
-    private FoodItemFactory foodItemFactory;
+    private FoodFactory foodItemFactory;
     private InMemoryCatDataAccessObject catRepository;
     private HungerCalculator hungerCalculator;
 

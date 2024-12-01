@@ -7,11 +7,11 @@ import javax.swing.JPanel;
 import app.builder.view.AuthViewBuilder;
 import app.builder.view.CatViewBuilder;
 import app.builder.view.SessionViewBuilder;
+import app.builder.view.SharedViewBuilder;
 import app.builder.view.Views;
 import app.builder.view.auth.AuthViewsAndModels;
 import app.builder.view.cat.CatViewsAndModels;
 import app.builder.view.session.SessionViewsAndModels;
-import app.builder.view.shared.SharedViewBuilder;
 import app.builder.view.shared.SharedViewsAndModels;
 import app.factory.ViewFactory;
 import app.service.DialogService;
@@ -89,7 +89,7 @@ public class ViewBuilder {
     private ViewBuilder buildSessionViews() {
         final SessionViewBuilder sessionViewBuilder =
                 new SessionViewBuilder(cardPanel, cardLayout, viewManagerModel, viewFactory,
-                        dialogService, sharedViewsAndModels);
+                        dialogService, sharedViewsAndModels, catViewsAndModels);
         this.sessionViewsAndModels = sessionViewBuilder.build();
         return this;
     }

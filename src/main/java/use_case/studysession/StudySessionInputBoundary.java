@@ -21,7 +21,14 @@ public interface StudySessionInputBoundary {
     void switchToBreakSessionView();
 
     /**
-     * stopStudyTimer
+     * Handles the passing of Inputdata.
+     * @param studySessionInputData the seteupSessionInputdata
      */
-    void stopStudyTimer();
+    void handle(StudySessionInputData studySessionInputData);
+
+    /**
+     * StopStudyTimer.
+     * @param studySessionInputData for appropriate input.
+     */
+    void stopStudyTimer(StudySessionInputData studySessionInputData);
 }

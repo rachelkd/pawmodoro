@@ -26,6 +26,10 @@ public final class Constants {
     public static final int TIMER_VERTICAL_SPACING = 20;
     public static final String TIME_FORMAT_PATTERN = "mm:ss";
 
+    // UI Constants
+    public static final int COMPONENT_VERTICAL_SPACING = 10;
+    public static final int POPUP_FONT_SIZE = 14;
+
     // BreakSession and StudySession Constants
     public static final int DEFAULT_BUTTON_SIZE_W = 150;
     public static final int DEFAULT_BUTTON_SIZE_H = 40;
@@ -76,7 +80,7 @@ public final class Constants {
     public static final int DISPLAY_CAT_STATS_MAX_WIDTH = 360;
     public static final int DISPLAY_CAT_STATS_HEIGHT = 360;
 
-    //Set up study session view constants
+    // Set up study session view constants
     public static final int SETUP_SESSION_NORMAL_FONT_SIZE = 16;
     public static final int SETUP_SESSION_TITLE_FONT_SIZE = 20;
     // Adoption view constants
@@ -98,6 +102,9 @@ public final class Constants {
     public static final String CAT_FACT_LOADING = "Loading cat fact...";
     public static final String CAT_FACT_ERROR_PREFIX = "Error: ";
     public static final int CAT_FACT_FONT_SIZE = 14;
+
+    // Music Player constants
+    public static final int DEFAULT_VOLUME = 50;
 
     // Common UI strings
     public static final String LOADING = "Loading...";

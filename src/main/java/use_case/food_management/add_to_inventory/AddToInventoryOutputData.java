@@ -2,19 +2,17 @@ package use_case.food_management.add_to_inventory;
 
 import java.util.Map;
 
-import entity.AbstractFood;
-
 /**
  * Output Data for the Add To Inventory Use Case.
  */
 public class AddToInventoryOutputData {
     private final String ownerId;
-    private final AbstractFood food;
-    private final Map<String, AbstractFood> foodItems;
+    private final String foodName;
+    private final Map<String, Integer> foodItems;
 
-    public AddToInventoryOutputData(String ownerId, AbstractFood food, Map<String, AbstractFood> foodItems) {
+    public AddToInventoryOutputData(String ownerId, String foodName, Map<String, Integer> foodItems) {
         this.ownerId = ownerId;
-        this.food = food;
+        this.foodName = foodName;
         this.foodItems = foodItems;
     }
 
@@ -22,11 +20,11 @@ public class AddToInventoryOutputData {
         return ownerId;
     }
 
-    public AbstractFood getFood() {
-        return food;
+    public String getFoodName() {
+        return foodName;
     }
 
-    public Map<String, AbstractFood> getFoodItems() {
+    public Map<String, Integer> getFoodItems() {
         return foodItems;
     }
 }

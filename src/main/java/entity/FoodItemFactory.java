@@ -1,11 +1,11 @@
 package entity;
 
-import use_case.food_management.FoodMappingService;
+import use_case.food_management.add_to_inventory.FoodMappingService;
 
 /**
  * Factory for building Abstract FoodItem objects.
  */
-public class FoodItemFactory {
+public class FoodItemFactory implements FoodFactory {
     // 4 food options
     private static final String MILK = "Milk";
     private static final String CHEESE = "Cheese";
@@ -14,20 +14,12 @@ public class FoodItemFactory {
 
     private final FoodMappingService foodMappingService = new FoodMappingService();
 
-    /**
-     * Creates a new food item based on food name.
-     * @param name the name of the food item
-     * @return returns a new food item
-     */
+    @Override
     public AbstractFood create(String name) {
         return getFoodItem(name);
     }
 
-    /**
-     * Creates a new food item based on study session length.
-     * @param studySessionLength length of the study session
-     * @return returns a new food item
-     */
+    @Override
     public AbstractFood create(int studySessionLength) {
         return getFoodItem(foodMappingService.getFoodName(studySessionLength));
     }

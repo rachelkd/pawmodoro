@@ -2,7 +2,6 @@ package use_case.food_management.create_inventory;
 
 import java.util.Map;
 
-import entity.AbstractFood;
 import entity.Inventory;
 import entity.InventoryFactory;
 import use_case.food_management.InventoryDataAccessInterface;
@@ -30,7 +29,7 @@ public class CreateInventoryInteractor implements CreateInventoryInputBoundary {
 
         // if inventory in memory
         if (inventoryDataAccessObject.existsByOwnerId(createInventoryInputData.getOwnerId())) {
-            final Map<String, AbstractFood> items = inventoryDataAccessObject.getInventoryItems(
+            final Map<String, Integer> items = inventoryDataAccessObject.getInventoryItems(
                     createInventoryInputData.getOwnerId());
             inventory.setItems(items);
         }
