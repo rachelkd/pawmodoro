@@ -1,9 +1,12 @@
-package app.builder.view.shared;
+package app.builder.view;
 
 import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
+import app.builder.view.shared.SharedViewModels;
+import app.builder.view.shared.SharedViews;
+import app.builder.view.shared.SharedViewsAndModels;
 import app.factory.ViewFactory;
 import app.factory.viewmodel.SharedViewModelFactory;
 import app.service.DialogService;
@@ -75,13 +78,14 @@ public class SharedViewBuilder {
                 .buildInventoryView()
                 .buildCatView()
                 .buildCatContainerView()
+                .buildAdoptionView()
                 .createViewsAndModels();
     }
 
-//    private SharedViewBuilder buildAdoptionView() {
-//        adoptionView = viewFactory.createAdoptionView(viewModels.getAdoptionViewModel(), dialogService);
-//        return this;
-//    }
+    private SharedViewBuilder buildAdoptionView() {
+        adoptionView = viewFactory.createAdoptionView(viewModels.getAdoptionViewModel(), dialogService);
+        return this;
+    }
 
     /**
      * Builds the get cat fact view.

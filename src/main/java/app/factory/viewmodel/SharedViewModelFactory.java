@@ -43,6 +43,10 @@ public class SharedViewModelFactory {
         return new GetCatFactViewModel();
     }
 
+    /**
+     * Creates a new adoption view model.
+     * @return the adoption view model
+     */
     public AdoptionViewModel createAdoptionViewModel() {
         return new AdoptionViewModel();
     }

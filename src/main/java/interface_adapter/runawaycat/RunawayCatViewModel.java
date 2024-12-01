@@ -2,6 +2,9 @@ package interface_adapter.runawaycat;
 
 import interface_adapter.ViewModel;
 
+/**
+ * The view model for the runaway cat use case.
+ */
 public class RunawayCatViewModel extends ViewModel<RunawayCatState> {
 
     public static final String REMINDER_LABEL = "Remember to monitor your cats' health and happiness!";
@@ -12,4 +15,4 @@ public class RunawayCatViewModel extends ViewModel<RunawayCatState> {
         super("runaway cat");
         setState(new RunawayCatState());
     }
-} 
+}
