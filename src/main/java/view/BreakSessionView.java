@@ -56,14 +56,13 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     private JPanel catsPanel;
 
     public BreakSessionView(BreakSessionViewModel breakSessionViewModel,
-            BreakSessionState breakSessionState,
             AdoptionViewModel adoptionViewModel,
             DialogService dialogService,
             CatContainerView catContainerView) {
 
         this.setLayout(new BorderLayout());
         this.breakSessionViewModel = breakSessionViewModel;
-        this.breakSessionState = breakSessionState;
+        this.breakSessionState = breakSessionViewModel.getState();
         this.catContainerView = catContainerView;
 
         this.adoptionViewModel = adoptionViewModel;
@@ -187,7 +186,6 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     }
 
     private JPanel drawCatsPanel() {
-        // final JPanel catsPanel = new JPanel(new BorderLayout());
         catsPanel.setVisible(true);
         catsPanel.setOpaque(true);
 
