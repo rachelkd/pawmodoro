@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.*;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 import app.service.DialogService;
 import constants.Constants;
@@ -67,15 +69,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         this.catContainerView = catContainerView;
 
         this.catsPanel = new JPanel();
-        this.catsPopupMenu = new JPopupMenu() {
-            @Override
-            protected void firePopupMenuWillBecomeInvisible() {
-                // Override to prevent closing on focus loss
-                if (!isAncestorOf((Component) MenuSelectionManager.defaultManager().getSelectedPath()[0])) {
-                    super.firePopupMenuWillBecomeInvisible();
-                }
-            }
-        };
+        this.catsPopupMenu = new JPopupMenu();
 
         this.setLayout(new BorderLayout());
 
@@ -225,22 +219,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         return catsPanel;
     }
 
-    private void createCatNames() {
-        catsPopupMenu.removeAll();
-        catsPopupMenu.setFocusable(false);
-
-        final Collection<String> catNamesList = new ArrayList<>();
-        for (Cat cat: initializeCatsViewModel.getState().getCats()) {
-            catNamesList.add(cat.getName());
-        }
-
-        final JComboBox<String> catNames = new JComboBox<>();
-        catNames.setModel(new DefaultComboBoxModel<>(catNamesList.toArray(new String[0])));
-        final JLabel catLabel = new JLabel("Select Cat");
-
-        final JPanel catNamesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        catNamesPanel.add(catNames);
-        catNamesPanel.add(catLabel);
+    private void createPopUpListners(Collection<String> catNamesList, JComboBox catNames, JLabel catLabel) {
 
         catNames.addActionListener(event -> {
             final String selectedOption = (String) catNames.getSelectedItem();
@@ -262,10 +241,28 @@ public class StudySessionView extends JPanel implements ActionListener, Property
                 }
             }
         });
+    }
 
-        catNamesPanel.setOpaque(true);
-        catsPopupMenu.add(catNamesPanel);
-        catNames.setEnabled(true);
+    private void createCatNames() {
+        catsPopupMenu.removeAll();
+
+        final Collection<String> catNamesList = new ArrayList<>();
+        for (Cat cat: initializeCatsViewModel.getState().getCats()) {
+            catNamesList.add(cat.getName());
+        }
+
+        for (String catName: catNamesList) {
+            final JMenuItem option = new JMenuItem(catName);
+            catsPopupMenu.add(option);
+            option.addActionListener(event -> {
+                final String selectedOption = (String) option.getText();
+
+                // Update StudySessionState
+                final StudySessionState studySessionState = studySessionViewModel.getState();
+                studySessionState.setCatName(selectedOption);
+                studySessionViewModel.setState(studySessionState);
+            });
+        }
     }
 
     /**
@@ -341,6 +338,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
             // Start the timer
             swingTimer.start();
             catsPopupMenu.show(startTimerButton, 0, startTimerButton.getHeight());
+            catsPopupMenu.setVisible(true);
         }
         else if (evt.getSource().equals(stopTimerButton)) {
             // Stop the timer
