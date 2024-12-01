@@ -57,7 +57,9 @@ public class SharedViews {
         return inventoryView;
     }
 
-    public AdoptionView getAdoptionView() { return adoptionView; }
+    public AdoptionView getAdoptionView() {
+        return adoptionView;
+    }
 
     public CatContainerView getCatContainerView() {
         return catContainerView;

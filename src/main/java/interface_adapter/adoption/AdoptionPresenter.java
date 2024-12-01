@@ -1,8 +1,5 @@
 package interface_adapter.adoption;
 
-import interface_adapter.ViewManagerModel;
-import interface_adapter.setupsession.SetupSessionState;
-import interface_adapter.setupsession.SetupSessionViewModel;
 import use_case.adoption.AdoptionOutputBoundary;
 import use_case.adoption.AdoptionOutputData;
 
@@ -11,7 +8,6 @@ import use_case.adoption.AdoptionOutputData;
  */
 public class AdoptionPresenter implements AdoptionOutputBoundary {
     private final AdoptionViewModel adoptionViewModel;
-
 
     public AdoptionPresenter(AdoptionViewModel adoptionViewModel) {
         this.adoptionViewModel = adoptionViewModel;

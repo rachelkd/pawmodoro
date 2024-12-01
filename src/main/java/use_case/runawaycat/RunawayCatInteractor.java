@@ -3,7 +3,7 @@ package use_case.runawaycat;
 import use_case.cat.CatDataAccessInterface;
 
 /**
- * The Runaway Cat Interactor
+ * The Runaway Cat Interactor.
  */
 
 public class RunawayCatInteractor implements RunawayCatInputBoundary {
