@@ -6,7 +6,8 @@ package use_case.adoption;
 public interface AdoptionDataAccessInterface {
 
     /**
-     * Returns the name of the owner
+     * Returns the name of the owner.
+     * @return the owner's name
      */
     String getOwnerName();
 }

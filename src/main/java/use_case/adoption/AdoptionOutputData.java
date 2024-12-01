@@ -1,7 +1,7 @@
 package use_case.adoption;
 
 /**
- * Output data for the adoption use case
+ * Output data for the adoption use case.
  */
 public class AdoptionOutputData {
     private final String catName;
@@ -22,5 +22,7 @@ public class AdoptionOutputData {
         return useCaseFailed;
     }
 
-    public String getOwnerName() { return ownerName; }
+    public String getOwnerName() {
+        return ownerName;
+    }
 }
