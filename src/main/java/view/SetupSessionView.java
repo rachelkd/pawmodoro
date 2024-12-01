@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import constants.Constants;
 import interface_adapter.setupsession.SetupSessionController;
 import interface_adapter.setupsession.SetupSessionState;
 import interface_adapter.setupsession.SetupSessionViewModel;
@@ -33,18 +34,29 @@ public class SetupSessionView extends JPanel implements ActionListener {
 
         final JLabel title = new JLabel(SetupSessionViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.SETUP_SESSION_TITLE_FONT_SIZE));
 
         final JPanel studyPanel = new JPanel();
-        studyPanel.add(new JLabel(SetupSessionViewModel.STUDY_LABEL));
+        JLabel studyLabel = new JLabel(SetupSessionViewModel.STUDY_LABEL);
+        studyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        studyLabel.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.SETUP_SESSION_NORMAL_FONT_SIZE));
+        studyPanel.add(studyLabel);
         studyPanel.add(studytime);
 
-        final JPanel breakPanel = new JPanel();
-        breakPanel.add(new JLabel(SetupSessionViewModel.BREAK_LABEL));
+        final JPanel breakPanel = new JPanel();;
+        JLabel breakLabel = new JLabel(SetupSessionViewModel.BREAK_LABEL);
+        breakLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        breakLabel.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.SETUP_SESSION_NORMAL_FONT_SIZE));
+        breakPanel.add(breakLabel);
         breakPanel.add(breaktime);
 
         final JPanel buttons = new JPanel();
         returnButton = new JButton(SetupSessionViewModel.RETURN_BUTTON_LABEL);
         buttons.add(returnButton);
+
+        final JLabel instructions = new JLabel(SetupSessionViewModel.INSTRUCTIONS_LABEL);
+        instructions.setAlignmentX(Component.CENTER_ALIGNMENT);
+        instructions.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.SETUP_SESSION_NORMAL_FONT_SIZE));
 
         returnButton.addActionListener(
                 new ActionListener() {
@@ -66,10 +78,10 @@ public class SetupSessionView extends JPanel implements ActionListener {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
-        this.add(new JLabel(SetupSessionViewModel.INSTRUCTIONS_LABEL));
+        this.add(instructions, BorderLayout.NORTH);
         this.add(studyPanel);
         this.add(breakPanel);
-        this.add(buttons);
+        this.add(buttons, BorderLayout.SOUTH);
     }
 
     @Override
