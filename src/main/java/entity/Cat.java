@@ -21,7 +21,6 @@ public class Cat {
     private int happinessLevel;
     private Position position;
     private final String imageFileName;
-    private boolean catObjectCreated;
 
     /**
      * Creates a new Cat with the specified name and owner.
@@ -129,13 +128,5 @@ public class Cat {
 
     public String getImageFileName() {
         return imageFileName;
-    }
-
-    public boolean isCatObjectCreated() {
-        return catObjectCreated;
-    }
-
-    public void setCatObjectCreated(boolean catObjectCreated) {
-        this.catObjectCreated = catObjectCreated;
     }
 }
