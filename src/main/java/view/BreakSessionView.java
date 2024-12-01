@@ -217,13 +217,7 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     private void addDisplayCatImageView() {
         displayCatImageView.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(displayCatImageView);
-        add(Box.createVerticalStrut(10)); // Add some spacing between components
-    }
-
-    private void addCatContainerView(AdoptionViewModel adoptionViewModel) {
-        catContainerView.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(catContainerView);
-        add(Box.createVerticalStrut(10)); // Add some spacing between components
+        add(Box.createVerticalStrut(Constants.COMPONENT_VERTICAL_SPACING));
     }
 
     /**
