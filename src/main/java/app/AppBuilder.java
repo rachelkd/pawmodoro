@@ -23,8 +23,8 @@ public class AppBuilder {
     private final CardLayout cardLayout = new CardLayout();
     private final JPanel cardPanel = new JPanel(cardLayout);
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
-    private final ViewFactory viewFactory = new ViewFactory();
     private final DialogService dialogService = new DialogService(cardPanel);
+    private final ViewFactory viewFactory = new ViewFactory(dialogService);
     private final ViewManager viewManager;
 
     private Views views;
@@ -68,7 +68,7 @@ public class AppBuilder {
         this.dataAccess = new DataAccessBuilder().build();
 
         // Build views
-        this.views = new ViewBuilder(cardPanel, cardLayout, viewManagerModel, viewFactory, dialogService).build();
+        this.views = new ViewBuilder(cardPanel, cardLayout, viewManagerModel).build();
 
         // Build use cases
         new UseCaseBuilder(views, dataAccess).build();

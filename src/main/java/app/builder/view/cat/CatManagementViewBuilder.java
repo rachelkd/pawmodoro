@@ -66,7 +66,7 @@ public class CatManagementViewBuilder {
      * @return this builder
      */
     private CatManagementViewBuilder buildAdoptionView() {
-        adoptionView = viewFactory.createAdoptionView(catViewModels.getAdoptionViewModel(), dialogService);
+        adoptionView = viewFactory.createAdoptionView(catViewModels.getAdoptionViewModel());
         return this;
     }
 
@@ -76,7 +76,7 @@ public class CatManagementViewBuilder {
      * @return this builder
      */
     private CatManagementViewBuilder buildRunawayCatView() {
-        runawayCatView = viewFactory.createRunawayCatView(catViewModels.getRunawayCatViewModel(), dialogService);
+        runawayCatView = viewFactory.createRunawayCatView(catViewModels.getRunawayCatViewModel());
         return this;
     }
 

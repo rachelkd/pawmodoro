@@ -117,9 +117,7 @@ public class SharedViewBuilder {
      * @return this builder
      */
     private SharedViewBuilder buildInventoryView() {
-        inventoryView = viewFactory.createInventoryView(
-                viewModels.getInventoryViewModel(),
-                dialogService);
+        inventoryView = viewFactory.createInventoryView(viewModels.getInventoryViewModel());
         return this;
     }
 

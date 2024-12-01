@@ -37,16 +37,13 @@ public class ViewBuilder {
      * @param cardPanel the card panel
      * @param cardLayout the card layout
      * @param viewManagerModel the view manager model
-     * @param viewFactory the view factory
-     * @param dialogService the dialog service
      */
-    public ViewBuilder(JPanel cardPanel, CardLayout cardLayout, ViewManagerModel viewManagerModel,
-            ViewFactory viewFactory, DialogService dialogService) {
+    public ViewBuilder(JPanel cardPanel, CardLayout cardLayout, ViewManagerModel viewManagerModel) {
         this.cardPanel = cardPanel;
         this.cardLayout = cardLayout;
         this.viewManagerModel = viewManagerModel;
-        this.viewFactory = viewFactory;
-        this.dialogService = dialogService;
+        this.dialogService = new DialogService(cardPanel);
+        this.viewFactory = new ViewFactory(dialogService);
     }
 
     /**
