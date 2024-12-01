@@ -1,6 +1,8 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,8 +22,8 @@ import interface_adapter.setupsession.SetupSessionViewModel;
  */
 public class SetupSessionView extends JPanel implements ActionListener {
     private final SetupSessionViewModel setupSessionViewModel;
-    private String[] studyChoices = {"1 min", "10 mins", "15 mins", "20 mins", "25 mins", "30 mins", "35 mins", "40 mins",
-        "45 mins", "50 mins", "55 mins", "60 mins"};
+    private String[] studyChoices = {"1 min", "10 mins", "15 mins", "20 mins", "25 mins", "30 mins",
+        "35 mins", "40 mins", "45 mins", "50 mins", "55 mins", "60 mins"};
     private String[] breakChoices = {"1 min", "5 mins", "10 mins"};
     private final JComboBox<String> studytime = new JComboBox<String>(studyChoices);
     private final JComboBox<String> breaktime = new JComboBox<String>(breakChoices);
@@ -37,14 +39,14 @@ public class SetupSessionView extends JPanel implements ActionListener {
         title.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.SETUP_SESSION_TITLE_FONT_SIZE));
 
         final JPanel studyPanel = new JPanel();
-        JLabel studyLabel = new JLabel(SetupSessionViewModel.STUDY_LABEL);
+        final JLabel studyLabel = new JLabel(SetupSessionViewModel.STUDY_LABEL);
         studyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         studyLabel.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.SETUP_SESSION_NORMAL_FONT_SIZE));
         studyPanel.add(studyLabel);
         studyPanel.add(studytime);
 
-        final JPanel breakPanel = new JPanel();;
-        JLabel breakLabel = new JLabel(SetupSessionViewModel.BREAK_LABEL);
+        final JPanel breakPanel = new JPanel();
+        final JLabel breakLabel = new JLabel(SetupSessionViewModel.BREAK_LABEL);
         breakLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         breakLabel.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.SETUP_SESSION_NORMAL_FONT_SIZE));
         breakPanel.add(breakLabel);
