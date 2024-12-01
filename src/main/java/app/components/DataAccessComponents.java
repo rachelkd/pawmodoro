@@ -2,18 +2,18 @@ package app.components;
 
 import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
-import data_access.DBCatDataAccessObject;
-import data_access.DBInventoryDataAccessObject;
-import data_access.DBUserDataAccessObject;
+import data_access.DbCatDataAccessObject;
+import data_access.DbInventoryDataAccessObject;
+import data_access.DbUserDataAccessObject;
 
 /**
  * Holds all data access components for the application.
  */
 public class DataAccessComponents {
-    private final DBUserDataAccessObject userDataAccess;
-    private final DBInventoryDataAccessObject inventoryDataAccess;
+    private final DbUserDataAccessObject userDataAccess;
+    private final DbInventoryDataAccessObject inventoryDataAccess;
     private final ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
-    private final DBCatDataAccessObject catDataAccess;
+    private final DbCatDataAccessObject catDataAccess;
     private final ApiCatFactDataAccessObject catFactDataAccess;
 
     /**
@@ -24,10 +24,10 @@ public class DataAccessComponents {
      * @param catDataAccess the cat data access object
      * @param catFactDataAccess the cat fact data access object
      */
-    public DataAccessComponents(DBUserDataAccessObject userDataAccess,
-            DBInventoryDataAccessObject inventoryDataAccess,
+    public DataAccessComponents(DbUserDataAccessObject userDataAccess,
+            DbInventoryDataAccessObject inventoryDataAccess,
             ApiDisplayCatImageDataAccessObject displayCatImageDataAccess,
-            DBCatDataAccessObject catDataAccess,
+            DbCatDataAccessObject catDataAccess,
             ApiCatFactDataAccessObject catFactDataAccess) {
         this.userDataAccess = userDataAccess;
         this.inventoryDataAccess = inventoryDataAccess;
@@ -36,11 +36,11 @@ public class DataAccessComponents {
         this.catFactDataAccess = catFactDataAccess;
     }
 
-    public DBUserDataAccessObject getUserDataAccess() {
+    public DbUserDataAccessObject getUserDataAccess() {
         return userDataAccess;
     }
 
-    public DBInventoryDataAccessObject getInventoryDataAccess() {
+    public DbInventoryDataAccessObject getInventoryDataAccess() {
         return inventoryDataAccess;
     }
 
@@ -48,7 +48,7 @@ public class DataAccessComponents {
         return displayCatImageDataAccess;
     }
 
-    public DBCatDataAccessObject getCatDataAccess() {
+    public DbCatDataAccessObject getCatDataAccess() {
         return catDataAccess;
     }
 

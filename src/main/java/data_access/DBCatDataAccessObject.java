@@ -17,11 +17,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import use_case.cat.CatDataAccessInterface;
+
 /**
  * Database implementation of CatDataAccessInterface using Supabase.
  */
-
-public class DBCatDataAccessObject implements CatDataAccessInterface {
+public class DbCatDataAccessObject implements CatDataAccessInterface {
     private static final String API_KEY_HEADER = "apikey";
     private static final String AUTH_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
@@ -48,10 +48,9 @@ public class DBCatDataAccessObject implements CatDataAccessInterface {
 
     /**
      * Creates a new DBCatDataAccessObject.
-     *
      * @param catFactory the factory to create Cat entities
      */
-    public DBCatDataAccessObject(CatFactory catFactory) {
+    public DbCatDataAccessObject(CatFactory catFactory) {
         this.catFactory = catFactory;
     }
 
