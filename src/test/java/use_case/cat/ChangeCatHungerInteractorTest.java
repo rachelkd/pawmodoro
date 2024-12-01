@@ -1,5 +1,6 @@
 package use_case.cat;
 
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,11 @@ class ChangeCatHungerInteractorTest {
             public void prepareSuccessView(ChangeCatHungerOutputData changeCatHungerOutputData) {
                 assertEquals(90, changeCatHungerOutputData.getNewHungerLevel());
             }
+
+            @Override
+            public void prepareFailView(String errorMessage) {
+                fail("Usecase unexpected.");
+            }
         };
 
         final ChangeCatHungerInputBoundary interactor = new ChangeCatHungerInteractor(catRepository, successPresenter);
@@ -55,9 +61,36 @@ class ChangeCatHungerInteractorTest {
             public void prepareSuccessView(ChangeCatHungerOutputData changeCatHungerOutputData) {
                 assertEquals(90, changeCatHungerOutputData.getNewHungerLevel());
             }
+
+            @Override
+            public void prepareFailView(String errorMessage) {
+                fail("Usecase unexpected");
+            }
         };
 
         final ChangeCatHungerInputBoundary interactor = new ChangeCatHungerInteractor(catRepository, successPresenter);
+        interactor.execute(inputData);
+    }
+
+    @Test
+    void failChangeCatHungerTest() {
+        final ChangeCatHungerInputData inputData =
+                new ChangeCatHungerInputData("", "<3", 20);
+        final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
+
+        final ChangeCatHungerOutputBoundary failurePresenter = new ChangeCatHungerOutputBoundary() {
+
+            @Override
+            public void prepareSuccessView(ChangeCatHungerOutputData changeCatHungerOutputData) {
+                fail("Usecase unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String errorMessage) {
+                assertEquals("You did not select a cat!", errorMessage);
+            }
+        };
+        final ChangeCatHungerInputBoundary interactor = new ChangeCatHungerInteractor(catRepository, failurePresenter);
         interactor.execute(inputData);
     }
 }

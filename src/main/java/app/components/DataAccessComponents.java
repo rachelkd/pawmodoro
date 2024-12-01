@@ -3,15 +3,15 @@ package app.components;
 import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
+import data_access.DBInventoryDataAccessObject;
 import data_access.DBUserDataAccessObject;
-import use_case.food_management.InventoryService;
 
 /**
  * Holds all data access components for the application.
  */
 public class DataAccessComponents {
     private final DBUserDataAccessObject userDataAccess;
-    private final InventoryService inventoryDataAccess;
+    private final DBInventoryDataAccessObject inventoryDataAccess;
     private final ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
     private final DBCatDataAccessObject catDataAccess;
     private final ApiCatFactDataAccessObject catFactDataAccess;
@@ -25,7 +25,7 @@ public class DataAccessComponents {
      * @param catFactDataAccess the cat fact data access object
      */
     public DataAccessComponents(DBUserDataAccessObject userDataAccess,
-            InventoryService inventoryDataAccess,
+            DBInventoryDataAccessObject inventoryDataAccess,
             ApiDisplayCatImageDataAccessObject displayCatImageDataAccess,
             DBCatDataAccessObject catDataAccess,
             ApiCatFactDataAccessObject catFactDataAccess) {
@@ -40,7 +40,7 @@ public class DataAccessComponents {
         return userDataAccess;
     }
 
-    public InventoryService getInventoryDataAccess() {
+    public DBInventoryDataAccessObject getInventoryDataAccess() {
         return inventoryDataAccess;
     }
 

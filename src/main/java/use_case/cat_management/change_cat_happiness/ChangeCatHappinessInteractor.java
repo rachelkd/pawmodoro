@@ -19,35 +19,40 @@ public class ChangeCatHappinessInteractor implements ChangeCatHappinessInputBoun
 
     @Override
     public void execute(ChangeCatHappinessInputData changeCatHappinessInputData) {
-        // get the cat, cat should already exist
-        final Cat cat = catDataAccessObject.getCatByNameAndOwner(changeCatHappinessInputData.getCatName(),
-                changeCatHappinessInputData.getOwnerUsername());
-        int newHappiness = 0;
 
-        // decrease happiness when user does not complete study session
-        if (!changeCatHappinessInputData.isCompletedStudySession()) {
-            newHappiness -= calculateHappinessPoints(changeCatHappinessInputData.getStudySessionLength());
-        }
-        // increase happiness when complete study session
-        else {
-            newHappiness += calculateHappinessPoints(changeCatHappinessInputData.getStudySessionLength());
-        }
-        cat.updateHappinessLevel(newHappiness);
-        catDataAccessObject.updateCat(cat);
-
-        if (cat.getHappinessLevel() <= 0) {
-            catDataAccessObject.removeCat(cat.getName(), cat.getOwnerUsername());
-            changeCatHappinessPresenter.switchToRunawayCatView(cat.getName(), cat.getOwnerUsername());
+        if ("".equalsIgnoreCase(changeCatHappinessInputData.getCatName())) {
+            changeCatHappinessPresenter.prepareFailureView("You didn't to select a cat!");
         }
         else {
+            // get the cat, cat should already exist
+            final Cat cat = catDataAccessObject.getCatByNameAndOwner(changeCatHappinessInputData.getCatName(),
+                    changeCatHappinessInputData.getOwnerUsername());
+            int newHappiness = 0;
 
-            final ChangeCatHappinessOutputData changeCatHappinessOutputData = new ChangeCatHappinessOutputData(
-                    cat.getOwnerUsername(), cat.getName(),
-                    catDataAccessObject.getHappinessLevel(cat.getName(), cat.getOwnerUsername()));
+            // decrease happiness when user does not complete study session
+            if (!changeCatHappinessInputData.isCompletedStudySession()) {
+                newHappiness -= calculateHappinessPoints(changeCatHappinessInputData.getStudySessionLength());
+            }
+            // increase happiness when complete study session
+            else {
+                newHappiness += calculateHappinessPoints(changeCatHappinessInputData.getStudySessionLength());
+            }
+            cat.updateHappinessLevel(newHappiness);
+            catDataAccessObject.updateCat(cat);
 
-            changeCatHappinessPresenter.prepareSuccessView(changeCatHappinessOutputData);
+            if (cat.getHappinessLevel() <= 0) {
+                catDataAccessObject.removeCat(cat.getName(), cat.getOwnerUsername());
+                changeCatHappinessPresenter.switchToRunawayCatView(cat.getName(), cat.getOwnerUsername());
+            }
+            else {
+
+                final ChangeCatHappinessOutputData changeCatHappinessOutputData = new ChangeCatHappinessOutputData(
+                        cat.getOwnerUsername(), cat.getName(),
+                        catDataAccessObject.getHappinessLevel(cat.getName(), cat.getOwnerUsername()));
+
+                changeCatHappinessPresenter.prepareSuccessView(changeCatHappinessOutputData);
+            }
         }
-
     }
 
     int calculateHappinessPoints(int studySessionLength) {

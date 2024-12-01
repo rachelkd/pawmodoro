@@ -90,7 +90,7 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         addNameSection(mainPanel);
         addStatsSection(mainPanel);
         addCatFactSection(mainPanel);
-        addInventoryButton(mainPanel, initialState);
+        addInventoryButton(mainPanel);
         addCloseButton(mainPanel);
 
         return mainPanel;
@@ -147,18 +147,18 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         mainPanel.add(closeButton);
     }
 
-    private void addInventoryButton(JPanel mainPanel, CatState initialState) {
+    private void addInventoryButton(JPanel mainPanel) {
         final JButton inventoryButton = new JButton(DisplayCatStatsViewModel.INVENTORY_BUTTON_LABEL);
         inventoryButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         inventoryButton.addActionListener(event -> {
+            final CatState catState = displayCatStatsViewModel.getState();
             dialogService.createInventoryDialog(inventoryViewModel);
             dialogService.showInventoryDialog(inventoryViewModel);
-            // pass data to the inventory dialog
+            // pass info to inventoryviewmodel
             final InventoryState inventoryState = inventoryViewModel.getState();
-            inventoryState.setCurrentCatName(initialState.getCatName());
-            inventoryState.setOwnerId(initialState.getOwnerUsername());
-
+            inventoryState.setCurrentCatName(catState.getCatName());
+            inventoryState.setOwnerId(catState.getOwnerUsername());
             inventoryViewModel.setState(inventoryState);
         });
         mainPanel.add(inventoryButton);
@@ -202,6 +202,10 @@ public class DisplayCatStatsView extends JDialog implements ActionListener, Prop
         if ("state".equals(evt.getPropertyName())) {
             final CatState state = (CatState) evt.getNewValue();
             this.updateFields(state);
+        }
+        if ("null_cat_name".equals(evt.getPropertyName())) {
+            final CatState state = (CatState) evt.getNewValue();
+            JOptionPane.showMessageDialog(this, state.getError());
         }
     }
 

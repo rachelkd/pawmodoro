@@ -89,7 +89,8 @@ public class RunawayCatView extends JDialog implements ActionListener, PropertyC
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == confirm) {
-            runawayCatController.switchToBreakView();
+            final RunawayCatState currentState = runawayCatViewModel.getState();
+            runawayCatController.execute(currentState.getCatName(), currentState.getOwnerName());
         }
     }
 

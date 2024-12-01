@@ -1,19 +1,40 @@
 package view;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Collection;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import app.service.DialogService;
 import constants.Constants;
+import entity.Cat;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.break_session.BreakSessionState;
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
 import interface_adapter.change_cat_hunger.ChangeCatHungerController;
+import interface_adapter.initialize_cats.InitializeCatsViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionState;
@@ -28,6 +49,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     private final StudySessionViewModel studySessionViewModel;
     private final BreakSessionViewModel breakSessionViewModel;
+    private final InitializeCatsViewModel initializeCatsViewModel;
 
     private LogoutController logoutController;
     private StudySessionController studySessionController;
@@ -46,9 +68,11 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     private DialogService dialogService;
     private JPanel catsPanel;
+    private JPopupMenu catsPopupMenu;
 
     public StudySessionView(StudySessionViewModel studySessionViewModel,
                             BreakSessionViewModel breakSessionViewModel,
+                            InitializeCatsViewModel initializeCatsViewModel,
                             DialogService dialogService,
                             CatContainerView catContainerView) {
 
@@ -56,9 +80,11 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         studySessionViewModel.addPropertyChangeListener(this);
         this.studySessionViewModel = studySessionViewModel;
         this.breakSessionViewModel = breakSessionViewModel;
+        this.initializeCatsViewModel = initializeCatsViewModel;
         this.catContainerView = catContainerView;
 
         this.catsPanel = new JPanel();
+        this.catsPopupMenu = new JPopupMenu();
 
         this.setLayout(new BorderLayout());
 
@@ -98,6 +124,13 @@ public class StudySessionView extends JPanel implements ActionListener, Property
                             / Constants.SECONDS_TO_MILLIS
                             / Constants.MINUTES_TO_SECONDS;
                     addToInventoryController.execute(studySessionState.getUsername(), workInterval);
+                    changeCatHappinessController.execute(studySessionState.getCatName(),
+                            studySessionState.getUsername(),
+                            studySessionState.getIsSuccess(),
+                            workInterval);
+                    changeCatHungerController.execute(studySessionState.getCatName(),
+                            studySessionState.getUsername(),
+                            workInterval);
 
                     breakSessionState.setUsername(studySessionState.getUsername());
                     breakSessionViewModel.setState(breakSessionState);
@@ -108,6 +141,8 @@ public class StudySessionView extends JPanel implements ActionListener, Property
                     studySessionState.resetToDefaultWorkInterval();
                     remainingTime = studySessionViewModel.getState().getWorkInterval();
                     updateTimerLabel();
+                    // reset whether study session was successful
+                    studySessionViewModel.getState().setIsSuccess(true);
                 }
             }
         });
@@ -199,6 +234,28 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         return catsPanel;
     }
 
+    private void createCatNames() {
+        catsPopupMenu.removeAll();
+
+        final Collection<String> catNamesList = new ArrayList<>();
+        for (Cat cat: initializeCatsViewModel.getState().getCats()) {
+            catNamesList.add(cat.getName());
+        }
+
+        for (String catName: catNamesList) {
+            final JMenuItem option = new JMenuItem(catName);
+            catsPopupMenu.add(option);
+            option.addActionListener(event -> {
+                final String selectedOption = (String) option.getText();
+
+                // Update StudySessionState
+                final StudySessionState studySessionState = studySessionViewModel.getState();
+                studySessionState.setCatName(selectedOption);
+                studySessionViewModel.setState(studySessionState);
+            });
+        }
+    }
+
     /**
      * Remove current contents of catsPanel
      * and add the CatContainer view since CatContainer can only belong to one parent at a time.
@@ -271,6 +328,8 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         else if (evt.getSource().equals(startTimerButton)) {
             // Start the timer
             swingTimer.start();
+            catsPopupMenu.show(startTimerButton, 0, startTimerButton.getHeight());
+            catsPopupMenu.setVisible(true);
         }
         else if (evt.getSource().equals(stopTimerButton)) {
             // Stop the timer
@@ -297,6 +356,13 @@ public class StudySessionView extends JPanel implements ActionListener, Property
             final StudySessionState newState = (StudySessionState) evt.getNewValue();
             remainingTime = newState.getWorkInterval();
             updateTimerLabel();
+        }
+        if ("initialize_cats".equals(evt.getPropertyName())) {
+            createCatNames();
+        }
+        if ("null_cat_name".equals(evt.getPropertyName())) {
+            final StudySessionState newState = (StudySessionState) evt.getNewValue();
+            JOptionPane.showMessageDialog(null, newState.getCatError());
         }
     }
 }

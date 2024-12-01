@@ -29,6 +29,7 @@ public class CreateCatInteractor implements CreateCatInputBoundary {
         // if user has the maximum number of cats
         if (catDataAccessObject.getNumberOfCatsByOwner(createCatInputData.getOwnerUsername())
                 >= Constants.MAX_AMOUNT_OF_CATS) {
+
             createCatPresenter.prepareFailView("You cannot adopt right now! You have reached the maximum " +
                     "amount of cats :(");
         }

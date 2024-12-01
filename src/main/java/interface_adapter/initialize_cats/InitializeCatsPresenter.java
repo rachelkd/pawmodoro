@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import entity.Cat;
 import interface_adapter.cat.CatViewModel;
+import interface_adapter.study_session.StudySessionViewModel;
 import use_case.cat_management.initialize_cats.InitializeCatsOutputBoundary;
 import use_case.cat_management.initialize_cats.InitializeCatsOutputData;
 
@@ -14,10 +15,13 @@ import use_case.cat_management.initialize_cats.InitializeCatsOutputData;
 public class InitializeCatsPresenter implements InitializeCatsOutputBoundary {
     private final InitializeCatsViewModel initializeCatsViewModel;
     private final CatViewModelFactory catViewModelFactory;
+    private final StudySessionViewModel studySessionViewModel;
 
     public InitializeCatsPresenter(InitializeCatsViewModel initializeCatsViewModel,
+                                   StudySessionViewModel studySessionViewModel,
                                    CatViewModelFactory catViewModelFactory) {
         this.initializeCatsViewModel = initializeCatsViewModel;
+        this.studySessionViewModel = studySessionViewModel;
         this.catViewModelFactory = catViewModelFactory;
     }
 
@@ -29,6 +33,8 @@ public class InitializeCatsPresenter implements InitializeCatsOutputBoundary {
             catViewModels.add(catViewModelFactory.create(cat));
         }
         initializeCatsViewModel.getState().setCatViewModels(catViewModels);
+        initializeCatsViewModel.getState().setCats(initializeCatsOutputData.getCats());
         initializeCatsViewModel.firePropertyChanged("initialize_cats");
+        studySessionViewModel.firePropertyChanged("initialize_cats");
     }
 }

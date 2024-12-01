@@ -5,8 +5,8 @@ import app.factory.DataAccessFactory;
 import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
+import data_access.DBInventoryDataAccessObject;
 import data_access.DBUserDataAccessObject;
-import use_case.food_management.InventoryService;
 
 /**
  * Builder for data access components.
@@ -14,7 +14,7 @@ import use_case.food_management.InventoryService;
 public class DataAccessBuilder {
     private final DataAccessFactory factory;
     private DBUserDataAccessObject userDataAccess;
-    private InventoryService inventoryDataAccess;
+    private DBInventoryDataAccessObject inventoryDataAccess;
     private ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
     private DBCatDataAccessObject catDataAccess;
     private ApiCatFactDataAccessObject catFactDataAccess;
