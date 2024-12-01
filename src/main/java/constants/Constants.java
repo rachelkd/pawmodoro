@@ -107,6 +107,9 @@ public final class Constants {
 
     public static final String DEFAULT_CAT_NAME = "Pawmo";
 
+    // Adoption label
+    public static final String ADOPTION_LABEL = "Adopt a new cat!";
+
     private Constants() {
         // Prevent instantiation
     }

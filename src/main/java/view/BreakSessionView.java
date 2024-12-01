@@ -56,10 +56,10 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     private JPanel catsPanel;
 
     public BreakSessionView(BreakSessionViewModel breakSessionViewModel,
-                            BreakSessionState breakSessionState,
-                            AdoptionViewModel adoptionViewModel,
-                            DialogService dialogService,
-                            CatContainerView catContainerView) {
+            BreakSessionState breakSessionState,
+            AdoptionViewModel adoptionViewModel,
+            DialogService dialogService,
+            CatContainerView catContainerView) {
 
         this.setLayout(new BorderLayout());
         this.breakSessionViewModel = breakSessionViewModel;
@@ -166,7 +166,7 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         final JPanel adoptionAndLogOutPanel = new JPanel(new BorderLayout());
 
         // Create and add the adoption button in the center
-        final JButton adoptionButton = createButton(BreakSessionViewModel.ADOPTION_LABEL);
+        final JButton adoptionButton = createButton(Constants.ADOPTION_LABEL);
         adoptionButton.setPreferredSize(buttonSize);
         adoptionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         adoptionButton.addActionListener(event -> {
