@@ -36,6 +36,8 @@ import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
 import interface_adapter.change_cat_hunger.ChangeCatHungerController;
 import interface_adapter.initialize_cats.InitializeCatsViewModel;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.music_control.MusicControlController;
+import interface_adapter.music_control.MusicControlViewModel;
 import interface_adapter.study_session.StudySessionController;
 import interface_adapter.study_session.StudySessionState;
 import interface_adapter.study_session.StudySessionViewModel;
@@ -50,17 +52,20 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private final StudySessionViewModel studySessionViewModel;
     private final BreakSessionViewModel breakSessionViewModel;
     private final InitializeCatsViewModel initializeCatsViewModel;
+    private final MusicControlViewModel musicControlViewModel;
 
     private LogoutController logoutController;
     private StudySessionController studySessionController;
     private ChangeCatHappinessController changeCatHappinessController;
     private ChangeCatHungerController changeCatHungerController;
     private AddToInventoryController addToInventoryController;
+    private MusicControlController musicControlController;
 
     private final JButton timerSettings;
     private final JButton logOutSettings;
     private final JButton startTimerButton;
     private final JButton stopTimerButton;
+    private final JButton playPauseButton;
 
     private final JLabel timerLabel;
     private final Timer swingTimer;
@@ -74,11 +79,13 @@ public class StudySessionView extends JPanel implements ActionListener, Property
                             BreakSessionViewModel breakSessionViewModel,
                             InitializeCatsViewModel initializeCatsViewModel,
                             DialogService dialogService,
-                            CatContainerView catContainerView) {
+                            CatContainerView catContainerView,
+                            MusicControlViewModel musicControlViewModel) {
 
         this.dialogService = dialogService;
         studySessionViewModel.addPropertyChangeListener(this);
         this.studySessionViewModel = studySessionViewModel;
+        this.musicControlViewModel = musicControlViewModel;
         this.breakSessionViewModel = breakSessionViewModel;
         this.initializeCatsViewModel = initializeCatsViewModel;
         this.catContainerView = catContainerView;
@@ -95,11 +102,13 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
         timerSettings = createButton("Timer Settings");
         logOutSettings = createButton("Log Out");
+        playPauseButton = createButton("Play Ambient Noise");
         startTimerButton = createButton("Start Timer");
         stopTimerButton = createButton("Stop Timer");
 
         timerSettings.addActionListener(this);
         logOutSettings.addActionListener(this);
+        playPauseButton.addActionListener(this);
         startTimerButton.addActionListener(this);
         stopTimerButton.addActionListener(this);
 
@@ -174,10 +183,14 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         final JPanel leftButtons = new JPanel(new FlowLayout(FlowLayout.LEFT));
         leftButtons.add(timerSettings);
 
+        final JPanel centerButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        centerButtons.add(playPauseButton);
+
         final JPanel rightButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightButtons.add(logOutSettings);
 
         buttonsPanel.add(leftButtons, BorderLayout.WEST);
+        buttonsPanel.add(centerButtons, BorderLayout.CENTER);
         buttonsPanel.add(rightButtons, BorderLayout.EAST);
 
         return buttonsPanel;
@@ -307,6 +320,10 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         this.changeCatHappinessController = controller;
     }
 
+    public void setMusicControlController(MusicControlController musicControlController) {
+        this.musicControlController = musicControlController;
+    }
+
     public void setChangeCatHungerController(ChangeCatHungerController controller) {
         this.changeCatHungerController = controller;
     }
@@ -341,6 +358,16 @@ public class StudySessionView extends JPanel implements ActionListener, Property
             studySessionController.stopStudyTimer((int) studySessionState.getWorkInterval(),
                     false);
 
+        }
+        else if (evt.getSource().equals(playPauseButton)) {
+            // Toggle playback
+            musicControlController.togglePlayback();
+            // Update button text based on the new state
+            String buttonText = "Play Ambient Noise";
+            if (musicControlViewModel.getState().isPlaying()) {
+                buttonText = "Pause Ambient Noise";
+            }
+            playPauseButton.setText(buttonText);
         }
     }
 

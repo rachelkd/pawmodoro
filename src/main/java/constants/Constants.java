@@ -101,6 +101,9 @@ public final class Constants {
     public static final String CAT_FACT_ERROR_PREFIX = "Error: ";
     public static final int CAT_FACT_FONT_SIZE = 14;
 
+    // Music Player constants
+    public static final int DEFAULT_VOLUME = 50;
+
     // Common UI strings
     public static final String LOADING = "Loading...";
     public static final String NO_IMAGE_AVAILABLE = "No Image Available";
