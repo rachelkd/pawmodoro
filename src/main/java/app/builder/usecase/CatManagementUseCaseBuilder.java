@@ -2,7 +2,12 @@ package app.builder.usecase;
 
 import app.builder.view.Views;
 import app.components.DataAccessComponents;
-import entity.*;
+import entity.CatFactory;
+import entity.DefaultHappinessCalculator;
+import entity.DefaultHungerCalculator;
+import entity.FoodItemFactory;
+import entity.HappinessCalculator;
+import entity.HungerCalculator;
 import interface_adapter.adoption.AdoptionController;
 import interface_adapter.adoption.AdoptionPresenter;
 import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
@@ -41,6 +46,7 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
     private final HappinessCalculator happinessCalculator;
     private final HungerCalculator hungerCalculator;
     private final FoodItemFactory foodItemFactory;
+    private final CatFactory catFactory;
 
     /**
      * Creates a new cat management use case builder.
@@ -52,6 +58,7 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
         this.happinessCalculator = new DefaultHappinessCalculator();
         this.hungerCalculator = new DefaultHungerCalculator();
         this.foodItemFactory = new FoodItemFactory();
+        this.catFactory = new CatFactory();
     }
 
     /**
@@ -113,7 +120,7 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
                 getViews().getCat().getViewModels().getAdoptionViewModel());
 
         final CreateCatInputBoundary interactor = new CreateCatInteractor(getDataAccess().getCatDataAccess(),
-                outputBoundary);
+                outputBoundary, catFactory);
         final CreateCatController controller = new CreateCatController(interactor);
         // views are lowkey guesses for where these uses cases will be needed, can be added to or removed as needed
         getViews().getAuth().getViews().getSignupView().setCreateCatController(controller);

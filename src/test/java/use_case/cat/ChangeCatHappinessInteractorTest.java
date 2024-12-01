@@ -19,13 +19,14 @@ import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputBoun
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputData;
 
 class ChangeCatHappinessInteractorTest {
+    private CatFactory catFactory;
     private Cat cat;
     private InMemoryCatDataAccessObject catRepository;
     private HappinessCalculator happinessCalculator;
 
     @BeforeEach
     void setUp() {
-        final CatFactory catFactory = new CatFactory();
+        this.catFactory = new CatFactory();
         this.happinessCalculator = new DefaultHappinessCalculator();
         this.catRepository = new InMemoryCatDataAccessObject();
         cat = catFactory.create("Billy", "<3");

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import data_access.InMemoryCatDataAccessObject;
@@ -16,6 +17,12 @@ import use_case.cat_management.create_cat.CreateCatOutputBoundary;
 import use_case.cat_management.create_cat.CreateCatOutputData;
 
 class CreateCatInteractorTest {
+    private CatFactory catFactory;
+
+    @BeforeEach
+    void setUp() {
+        this.catFactory = new CatFactory();
+    }
 
     @Test
     void successCreateCatTest() {
@@ -36,7 +43,7 @@ class CreateCatInteractorTest {
             }
         };
 
-        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, successPresenter);
+        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, successPresenter, catFactory);
         interactor.execute(inputData);
     }
 
@@ -44,7 +51,6 @@ class CreateCatInteractorTest {
     void failureSameCatNameTest() {
         final CreateCatInputData inputData = new CreateCatInputData("Billy", "<3");
         final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
-        final CatFactory catFactory = new CatFactory();
         final Cat existingCat = catFactory.create("Billy", "<3");
         existingCat.setCatObjectCreated(true);
         catRepository.saveCat(existingCat);
@@ -62,7 +68,7 @@ class CreateCatInteractorTest {
             }
         };
 
-        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, failurePresenter);
+        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, failurePresenter, catFactory);
         interactor.execute(inputData);
     }
 
@@ -70,7 +76,6 @@ class CreateCatInteractorTest {
     void failureMaxCatsTest() {
         final CreateCatInputData inputData = new CreateCatInputData("Billy", "<3");
         final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
-        final CatFactory catFactory = new CatFactory();
         final String[] catNames = {"a", "b", "c", "d", "e"};
 
         for (String name: catNames) {
@@ -93,7 +98,7 @@ class CreateCatInteractorTest {
             }
         };
 
-        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, failurePresenter);
+        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, failurePresenter, catFactory);
         interactor.execute(inputData);
     }
 }
