@@ -2,6 +2,12 @@ package app.builder.usecase;
 
 import app.builder.view.Views;
 import app.components.DataAccessComponents;
+import entity.CatFactory;
+import entity.DefaultHappinessCalculator;
+import entity.DefaultHungerCalculator;
+import entity.FoodItemFactory;
+import entity.HappinessCalculator;
+import entity.HungerCalculator;
 import interface_adapter.adoption.AdoptionController;
 import interface_adapter.adoption.AdoptionPresenter;
 import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
@@ -32,6 +38,11 @@ import use_case.runawaycat.RunawayCatOutputBoundary;
  * Builder for cat management-related use cases.
  */
 public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
+    private final HappinessCalculator happinessCalculator;
+    private final HungerCalculator hungerCalculator;
+    private final FoodItemFactory foodItemFactory;
+    private final CatFactory catFactory;
+
     /**
      * Creates a new cat management use case builder.
      * @param views the views
@@ -39,6 +50,10 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
      */
     public CatManagementUseCaseBuilder(Views views, DataAccessComponents dataAccess) {
         super(views, dataAccess);
+        this.happinessCalculator = new DefaultHappinessCalculator();
+        this.hungerCalculator = new DefaultHungerCalculator();
+        this.foodItemFactory = new FoodItemFactory();
+        this.catFactory = new CatFactory();
     }
 
     /**
@@ -84,7 +99,7 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
                 getViews().getCat().getViewModels().getAdoptionViewModel());
 
         final CreateCatInputBoundary interactor = new CreateCatInteractor(getDataAccess().getCatDataAccess(),
-                outputBoundary);
+                outputBoundary, catFactory);
         final CreateCatController controller = new CreateCatController(interactor);
         // views are lowkey guesses for where these uses cases will be needed, can be added to or removed as needed
         getViews().getAuth().getViews().getSignupView().setCreateCatController(controller);
@@ -104,7 +119,8 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
                         getViews().getShared().getViewModels().getDisplayCatStatsViewModel());
 
         final ChangeCatHungerInputBoundary interactor =
-                new ChangeCatHungerInteractor(getDataAccess().getCatDataAccess(), outputBoundary);
+                new ChangeCatHungerInteractor(getDataAccess().getCatDataAccess(), outputBoundary,
+                        hungerCalculator, foodItemFactory);
         final ChangeCatHungerController controller = new ChangeCatHungerController(interactor);
 
         getViews().getShared().getViews().getInventoryView().setChangeCatHungerController(controller);
@@ -125,7 +141,7 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
                         getViews().getCat().getViewModels().getRunawayCatViewModel());
 
         final ChangeCatHappinessInputBoundary interactor = new ChangeCatHappinessInteractor(
-                getDataAccess().getCatDataAccess(), outputBoundary);
+                getDataAccess().getCatDataAccess(), outputBoundary, happinessCalculator);
         final ChangeCatHappinessController controller = new ChangeCatHappinessController(interactor);
 
         getViews().getSession().getViews().getStudySessionView().setChangeCatHappinessController(controller);

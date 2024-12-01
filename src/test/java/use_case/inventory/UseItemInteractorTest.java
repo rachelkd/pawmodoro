@@ -1,5 +1,7 @@
 package use_case.inventory;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
@@ -25,17 +27,17 @@ class UseItemInteractorTest {
 
     @Test
     void successUseLastItemTest() {
-        final UseItemInputData inputData = new UseItemInputData("chiually", "milk");
+        final UseItemInputData inputData = new UseItemInputData("chiually", "Milk");
         final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
 
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
         final Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFood foodItem = foodItemFactory.create("milk");
+        final AbstractFood foodItem = foodItemFactory.create("Milk");
         foodItem.setQuantity(1);
         final Map<String, AbstractFood> inventoryItems = inventory.getItems();
-        inventoryItems.put("milk", foodItem);
+        inventoryItems.put("Milk", foodItem);
         inventory.setItems(inventoryItems);
         inventoryRepository.save(inventory);
 
@@ -43,7 +45,7 @@ class UseItemInteractorTest {
 
             @Override
             public void prepareSuccessView(UseItemOutputData useInventoryOutputData) {
-                assertTrue(useInventoryOutputData.isSuccess());
+                assertFalse(useInventoryOutputData.getNewFoodItems().containsKey("Milk"));
             }
         };
         final UseItemInputBoundary interactor = new UseItemInteractor(inventoryRepository, successPresenter);
@@ -52,17 +54,17 @@ class UseItemInteractorTest {
 
     @Test
     void successUseOneOfMultipleItemTest() {
-        final UseItemInputData inputData = new UseItemInputData("chiually", "milk");
+        final UseItemInputData inputData = new UseItemInputData("chiually", "Milk");
         final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
 
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
         final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
         final Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFood foodItem = foodItemFactory.create("milk");
+        final AbstractFood foodItem = foodItemFactory.create("Milk");
         foodItem.setQuantity(2);
         final Map<String, AbstractFood> inventoryItems = inventory.getItems();
-        inventoryItems.put("milk", foodItem);
+        inventoryItems.put("Milk", foodItem);
         inventory.setItems(inventoryItems);
         inventoryRepository.save(inventory);
 
@@ -70,7 +72,8 @@ class UseItemInteractorTest {
 
             @Override
             public void prepareSuccessView(UseItemOutputData useInventoryOutputData) {
-                assertTrue(useInventoryOutputData.isSuccess());
+                assertTrue(useInventoryOutputData.getNewFoodItems().containsKey("Milk"));
+                assertEquals(1, useInventoryOutputData.getNewFoodItems().get("Milk").getQuantity());
             }
         };
         final UseItemInputBoundary interactor = new UseItemInteractor(inventoryRepository, successPresenter);

@@ -17,6 +17,7 @@ public class BreakSessionInteractor implements BreakSessionInputBoundary {
 
     @Override
     public void logout() {
+        breakSessionPresenter.prepareLoginView();
         breakSessionPresenter.switchToLoginView();
     }
 }

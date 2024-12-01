@@ -1,13 +1,24 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.logging.Logger;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import app.service.DialogService;
 import constants.Constants;
@@ -45,10 +56,10 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     private JPanel catsPanel;
 
     public BreakSessionView(BreakSessionViewModel breakSessionViewModel,
-                            BreakSessionState breakSessionState,
-                            AdoptionViewModel adoptionViewModel,
-                            DialogService dialogService,
-                            CatContainerView catContainerView) {
+            BreakSessionState breakSessionState,
+            AdoptionViewModel adoptionViewModel,
+            DialogService dialogService,
+            CatContainerView catContainerView) {
 
         this.setLayout(new BorderLayout());
         this.breakSessionViewModel = breakSessionViewModel;
@@ -155,7 +166,7 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         final JPanel adoptionAndLogOutPanel = new JPanel(new BorderLayout());
 
         // Create and add the adoption button in the center
-        final JButton adoptionButton = createButton(BreakSessionViewModel.ADOPTION_LABEL);
+        final JButton adoptionButton = createButton(Constants.ADOPTION_LABEL);
         adoptionButton.setPreferredSize(buttonSize);
         adoptionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         adoptionButton.addActionListener(event -> {

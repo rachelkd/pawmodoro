@@ -180,11 +180,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     currentState.getPassword());
             initializeCatsController.execute(currentState.getUsername());
             createInventoryController.execute(currentState.getUsername());
-            // TODO get rid of following code, currently for testing purposes
-            // addToInventoryController.execute(currentState.getUsername(), 0);
         }
         else if (evt.getSource().equals(backToSignUp)) {
-            // Switch to the Sign Up View
             loginController.switchToSignUpView();
         }
     }
