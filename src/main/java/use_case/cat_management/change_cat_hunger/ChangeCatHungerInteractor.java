@@ -2,7 +2,7 @@ package use_case.cat_management.change_cat_hunger;
 
 import entity.AbstractFood;
 import entity.Cat;
-import entity.FoodItemFactory;
+import entity.FoodFactory;
 import entity.HungerCalculator;
 import use_case.cat.CatDataAccessInterface;
 
@@ -13,12 +13,12 @@ public class ChangeCatHungerInteractor implements ChangeCatHungerInputBoundary {
     private final CatDataAccessInterface catDataAccessObject;
     private final ChangeCatHungerOutputBoundary changeCatHungerPresenter;
     private final HungerCalculator hungerCalculator;
-    private final FoodItemFactory foodItemFactory;
+    private final FoodFactory foodItemFactory;
 
     public ChangeCatHungerInteractor(CatDataAccessInterface catDataAccessObject,
                                      ChangeCatHungerOutputBoundary changeCatHungerPresenter,
                                      HungerCalculator hungerCalculator,
-                                     FoodItemFactory foodItemFactory) {
+                                     FoodFactory foodItemFactory) {
         this.catDataAccessObject = catDataAccessObject;
         this.changeCatHungerPresenter = changeCatHungerPresenter;
         this.hungerCalculator = hungerCalculator;

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import data_access.InMemoryInventoryDataAccessObject;
 import entity.AbstractFood;
+import entity.FoodFactory;
 import entity.FoodInventoryFactory;
 import entity.FoodItemFactory;
 import entity.Inventory;
@@ -30,7 +31,7 @@ class AddToInventoryInteractorTest {
         final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
 
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
-        final FoodItemFactory foodItemFactory = new FoodItemFactory();
+        final FoodFactory foodItemFactory = new FoodItemFactory();
         // create inventory for testing
         final Inventory inventory = inventoryFactory.create("chiually");
         inventoryRepository.save(inventory);
@@ -55,7 +56,7 @@ class AddToInventoryInteractorTest {
         final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
         final AddToInventoryInputData inputData = new AddToInventoryInputData("chiually", 10);
         final InventoryFactory inventoryFactory = new FoodInventoryFactory();
-        final FoodItemFactory foodItemFactory = new FoodItemFactory();
+        final FoodFactory foodItemFactory = new FoodItemFactory();
 
         // create inventory for user
         final Inventory inventory = inventoryFactory.create("chiually");

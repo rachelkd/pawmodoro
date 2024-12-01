@@ -6,10 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import data_access.InMemoryInventoryDataAccessObject;
 import entity.AbstractFood;
+import entity.FoodFactory;
 import entity.FoodInventoryFactory;
 import entity.FoodItemFactory;
 import entity.Inventory;
@@ -24,17 +26,23 @@ import use_case.food_management.use_item_in_inventory.UseItemOutputData;
  * Testing the Use Item Interactor.
  */
 class UseItemInteractorTest {
+    private FoodFactory foodFactory;
+    private InventoryFactory inventoryFactory;
+    private InMemoryInventoryDataAccessObject inventoryRepository;
+
+    @BeforeEach
+    void setUp() {
+        this.foodFactory = new FoodItemFactory();
+        this.inventoryFactory = new FoodInventoryFactory();
+        this.inventoryRepository = new InMemoryInventoryDataAccessObject();
+    }
 
     @Test
     void successUseLastItemTest() {
         final UseItemInputData inputData = new UseItemInputData("chiually", "Milk");
-        final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
-
-        final InventoryFactory inventoryFactory = new FoodInventoryFactory();
-        final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
         final Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFood foodItem = foodItemFactory.create("Milk");
+        final AbstractFood foodItem = foodFactory.create("Milk");
         foodItem.setQuantity(1);
         final Map<String, AbstractFood> inventoryItems = inventory.getItems();
         inventoryItems.put("Milk", foodItem);
@@ -55,13 +63,9 @@ class UseItemInteractorTest {
     @Test
     void successUseOneOfMultipleItemTest() {
         final UseItemInputData inputData = new UseItemInputData("chiually", "Milk");
-        final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
-
-        final InventoryFactory inventoryFactory = new FoodInventoryFactory();
-        final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
         final Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFood foodItem = foodItemFactory.create("Milk");
+        final AbstractFood foodItem = foodFactory.create("Milk");
         foodItem.setQuantity(2);
         final Map<String, AbstractFood> inventoryItems = inventory.getItems();
         inventoryItems.put("Milk", foodItem);

@@ -2,6 +2,7 @@ package app.builder.usecase;
 
 import app.builder.view.Views;
 import app.components.DataAccessComponents;
+import entity.FoodFactory;
 import entity.FoodInventoryFactory;
 import entity.FoodItemFactory;
 import entity.InventoryFactory;
@@ -35,7 +36,7 @@ import use_case.get_cat_fact.GetCatFactOutputBoundary;
  * Builder for shared use cases.
  */
 public class SharedUseCaseBuilder extends AbstractUseCaseBuilder {
-    private FoodItemFactory foodItemFactory;
+    private FoodFactory foodItemFactory;
     private InventoryFactory inventoryFactory;
 
     public SharedUseCaseBuilder(Views views, DataAccessComponents dataAccess) {
