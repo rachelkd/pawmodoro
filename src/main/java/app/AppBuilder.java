@@ -60,9 +60,9 @@ public class AppBuilder {
         application.pack();
 
         // Calculate and set to 60% of screen dimensions
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = (int) (screenSize.getWidth() * 0.6);
-        int height = (int) (screenSize.getHeight() * 0.6);
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final int width = (int) (screenSize.getWidth() * 0.6);
+        final int height = (int) (screenSize.getHeight() * 0.6);
         application.setMinimumSize(new Dimension(width, height));
         application.setPreferredSize(new Dimension(width, height));
         application.setSize(width, height);
