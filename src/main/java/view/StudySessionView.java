@@ -219,30 +219,6 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         return catsPanel;
     }
 
-    private void createPopUpListners(Collection<String> catNamesList, JComboBox catNames, JLabel catLabel) {
-
-        catNames.addActionListener(event -> {
-            final String selectedOption = (String) catNames.getSelectedItem();
-            catLabel.setText("Selected Cat: " + selectedOption);
-            // Update StudySessionState
-            final StudySessionState studySessionState = studySessionViewModel.getState();
-            studySessionState.setCatName(selectedOption);
-            studySessionViewModel.setState(studySessionState);
-            if (catNamesList.contains(selectedOption)) {
-                catsPopupMenu.setVisible(false);
-            }
-        });
-
-        catLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (!catLabel.getText().equals("Select Cat")) {
-                    catsPopupMenu.setVisible(false);
-                }
-            }
-        });
-    }
-
     private void createCatNames() {
         catsPopupMenu.removeAll();
 
