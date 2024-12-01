@@ -45,7 +45,6 @@ public class CreateCatInteractor implements CreateCatInputBoundary {
             final Cat cat = catFactory.create(createCatInputData.getCatName(), createCatInputData.getOwnerUsername(),
                     100, 100, catArray[randomInt]);
 
-            cat.setCatObjectCreated(true);
             catDataAccessObject.saveCat(cat);
 
             isSuccess = catDataAccessObject.existsByNameAndOwner(createCatInputData.getCatName(),

@@ -30,7 +30,6 @@ class ChangeCatHappinessInteractorTest {
         this.happinessCalculator = new DefaultHappinessCalculator();
         this.catRepository = new InMemoryCatDataAccessObject();
         cat = catFactory.create("Billy", "<3");
-        cat.setCatObjectCreated(true);
     }
 
     @Test

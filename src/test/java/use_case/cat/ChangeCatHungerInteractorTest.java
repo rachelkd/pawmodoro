@@ -35,7 +35,6 @@ class ChangeCatHungerInteractorTest {
     @Test
     void successIncreaseCatHungerTest() {
         final Cat cat = catFactory.create("Billy", "<3");
-        cat.setCatObjectCreated(true);
 
         final ChangeCatHungerInputData inputData = new ChangeCatHungerInputData(cat.getName(),
                 cat.getOwnerUsername(), "tuna");
@@ -63,7 +62,6 @@ class ChangeCatHungerInteractorTest {
     @Test
     void successDecreaseCatHungerTest() {
         final Cat cat = catFactory.create("Billy", "<3");
-        cat.setCatObjectCreated(true);
 
         final ChangeCatHungerInputData inputData = new ChangeCatHungerInputData(cat.getName(),
                 cat.getOwnerUsername(), 20);

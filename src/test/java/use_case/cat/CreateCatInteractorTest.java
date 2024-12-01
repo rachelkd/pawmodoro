@@ -34,7 +34,6 @@ class CreateCatInteractorTest {
             public void prepareSuccessView(CreateCatOutputData createCatOutputData) {
                 assertTrue(createCatOutputData.isSuccess());
                 assertEquals("Billy", createCatOutputData.getCatName());
-                assertTrue(createCatOutputData.getCat().isCatObjectCreated());
             }
 
             @Override
@@ -52,7 +51,6 @@ class CreateCatInteractorTest {
         final CreateCatInputData inputData = new CreateCatInputData("Billy", "<3");
         final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
         final Cat existingCat = catFactory.create("Billy", "<3");
-        existingCat.setCatObjectCreated(true);
         catRepository.saveCat(existingCat);
 
         final CreateCatOutputBoundary failurePresenter = new CreateCatOutputBoundary() {
@@ -80,7 +78,6 @@ class CreateCatInteractorTest {
 
         for (String name: catNames) {
             final Cat cat = catFactory.create(name, "<3");
-            cat.setCatObjectCreated(true);
             catRepository.saveCat(cat);
         }
 
