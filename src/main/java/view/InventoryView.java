@@ -26,7 +26,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-import entity.AbstractFood;
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.change_cat_hunger.ChangeCatHungerController;
 import interface_adapter.create_inventory.CreateInventoryController;

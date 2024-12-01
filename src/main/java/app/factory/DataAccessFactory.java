@@ -11,7 +11,6 @@ import entity.CatFactory;
 import entity.CatImageFactory;
 import entity.CommonUserFactory;
 import entity.FoodInventoryFactory;
-import entity.FoodItemFactory;
 
 /**
  * Factory for creating data access objects.

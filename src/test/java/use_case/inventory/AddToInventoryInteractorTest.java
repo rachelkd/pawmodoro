@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
 
-import entity.FoodInventoryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import data_access.InMemoryInventoryDataAccessObject;
+import entity.FoodInventoryFactory;
 import entity.Inventory;
 import entity.InventoryFactory;
 import use_case.food_management.add_to_inventory.AddToInventoryInputBoundary;
