@@ -20,7 +20,8 @@ public class AddToInventoryPresenter implements AddToInventoryOutputBoundary {
         // do nothing for now
         final InventoryState inventoryState = inventoryViewModel.getState();
         inventoryState.setOwnerId(outputData.getOwnerId());
-        inventoryState.setNewFoodItem(outputData.getFood());
+        inventoryState.setCurrentFoodName(outputData.getFoodName());
+        inventoryState.setInventoryItems(outputData.getFoodItems());
         inventoryViewModel.firePropertyChanged("inventory_add");
     }
 }

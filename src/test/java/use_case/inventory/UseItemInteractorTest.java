@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import data_access.InMemoryInventoryDataAccessObject;
-import entity.AbstractFood;
 import entity.FoodFactory;
 import entity.FoodInventoryFactory;
 import entity.FoodItemFactory;
@@ -42,10 +41,9 @@ class UseItemInteractorTest {
         final UseItemInputData inputData = new UseItemInputData("chiually", "Milk");
 
         final Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFood foodItem = foodFactory.create("Milk");
-        foodItem.setQuantity(1);
-        final Map<String, AbstractFood> inventoryItems = inventory.getItems();
-        inventoryItems.put("Milk", foodItem);
+
+        final Map<String, Integer> inventoryItems = inventory.getItems();
+        inventoryItems.put("Milk", 1);
         inventory.setItems(inventoryItems);
         inventoryRepository.save(inventory);
 
@@ -65,10 +63,8 @@ class UseItemInteractorTest {
         final UseItemInputData inputData = new UseItemInputData("chiually", "Milk");
 
         final Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFood foodItem = foodFactory.create("Milk");
-        foodItem.setQuantity(2);
-        final Map<String, AbstractFood> inventoryItems = inventory.getItems();
-        inventoryItems.put("Milk", foodItem);
+        final Map<String, Integer> inventoryItems = inventory.getItems();
+        inventoryItems.put("Milk", 2);
         inventory.setItems(inventoryItems);
         inventoryRepository.save(inventory);
 
@@ -77,7 +73,7 @@ class UseItemInteractorTest {
             @Override
             public void prepareSuccessView(UseItemOutputData useInventoryOutputData) {
                 assertTrue(useInventoryOutputData.getNewFoodItems().containsKey("Milk"));
-                assertEquals(1, useInventoryOutputData.getNewFoodItems().get("Milk").getQuantity());
+                assertEquals(1, useInventoryOutputData.getNewFoodItems().get("Milk"));
             }
         };
         final UseItemInputBoundary interactor = new UseItemInteractor(inventoryRepository, successPresenter);

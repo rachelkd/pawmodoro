@@ -2,17 +2,15 @@ package use_case.food_management.create_inventory;
 
 import java.util.Map;
 
-import entity.AbstractFood;
-
 /**
  * Output Data for Create Inventory Use Case.
  */
 public class CreateInventoryOutputData {
     private final String ownerId;
     private final boolean success;
-    private final Map<String, AbstractFood> inventoryItems;
+    private final Map<String, Integer> inventoryItems;
 
-    public CreateInventoryOutputData(String ownerId, boolean success, Map<String, AbstractFood> inventoryItems) {
+    public CreateInventoryOutputData(String ownerId, boolean success, Map<String, Integer> inventoryItems) {
         this.ownerId = ownerId;
         this.success = success;
         this.inventoryItems = inventoryItems;
@@ -30,7 +28,7 @@ public class CreateInventoryOutputData {
      * Return the inventory created.
      * @return inventory of items as map
      */
-    public Map<String, AbstractFood> getInventoryItems() {
+    public Map<String, Integer> getInventoryItems() {
         return inventoryItems;
     }
 

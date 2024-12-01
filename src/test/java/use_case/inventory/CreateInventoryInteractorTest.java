@@ -9,10 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import data_access.InMemoryInventoryDataAccessObject;
-import entity.AbstractFood;
-import entity.FoodFactory;
 import entity.FoodInventoryFactory;
-import entity.FoodItemFactory;
 import entity.Inventory;
 import entity.InventoryFactory;
 import use_case.food_management.create_inventory.CreateInventoryInputBoundary;
@@ -26,11 +23,9 @@ import use_case.food_management.create_inventory.CreateInventoryOutputData;
  */
 class CreateInventoryInteractorTest {
     private InventoryFactory inventoryFactory;
-    private FoodFactory foodItemFactory;
 
     @BeforeEach
     void setUp() {
-        this.foodItemFactory = new FoodItemFactory();
         this.inventoryFactory = new FoodInventoryFactory();
     }
 
@@ -58,10 +53,8 @@ class CreateInventoryInteractorTest {
         final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
 
         final Inventory inventory = inventoryFactory.create("chiually");
-        final AbstractFood foodItem = foodItemFactory.create("milk");
-        foodItem.setQuantity(2);
-        final Map<String, AbstractFood> inventoryItems = inventory.getItems();
-        inventoryItems.put("milk", foodItem);
+        final Map<String, Integer> inventoryItems = inventory.getItems();
+        inventoryItems.put("milk", 2);
         inventory.setItems(inventoryItems);
         inventoryRepository.save(inventory);
 
@@ -72,7 +65,7 @@ class CreateInventoryInteractorTest {
 
                 assertTrue(inventory.isSuccess());
                 assertTrue(inventory.getInventoryItems().containsKey("milk"));
-                assertEquals(2, inventory.getInventoryItems().get("milk").getQuantity());
+                assertEquals(2, inventory.getInventoryItems().get("milk"));
             }
         };
 

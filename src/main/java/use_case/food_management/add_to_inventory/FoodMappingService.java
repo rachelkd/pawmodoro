@@ -1,4 +1,4 @@
-package use_case.food_management;
+package use_case.food_management.add_to_inventory;
 
 import constants.Constants;
 

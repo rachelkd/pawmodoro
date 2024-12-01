@@ -2,10 +2,7 @@ package use_case.food_management.add_to_inventory;
 
 import java.util.Map;
 
-import entity.AbstractFood;
-import entity.FoodFactory;
 import entity.Inventory;
-import use_case.food_management.FoodMappingService;
 import use_case.food_management.InventoryDataAccessInterface;
 
 /**
@@ -14,62 +11,47 @@ import use_case.food_management.InventoryDataAccessInterface;
 public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
     private final InventoryDataAccessInterface inventoryDataAccessObject;
     private final AddToInventoryOutputBoundary addToInventoryPresenter;
-    private final FoodFactory foodFactory;
     private final FoodMappingService foodMappingService;
 
     public AddToInventoryInteractor(InventoryDataAccessInterface inventoryDataAccessObject,
-                                    AddToInventoryOutputBoundary addToInventoryOutputBoundary,
-                                    FoodFactory foodFactory) {
+                                    AddToInventoryOutputBoundary addToInventoryOutputBoundary) {
         // repository of inventories
         this.inventoryDataAccessObject = inventoryDataAccessObject;
         this.addToInventoryPresenter = addToInventoryOutputBoundary;
-        this.foodFactory = foodFactory;
         this.foodMappingService = new FoodMappingService();
     }
 
     @Override
     public void execute(AddToInventoryInputData addToInventoryInputData) {
         // assume existing inventory
-        final AbstractFood foodItem;
+        final String foodName = foodMappingService.getFoodName(addToInventoryInputData.getStudySessionLength());
+        final Inventory inventory = inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId());
+        final Map<String, Integer> foodItems = inventoryDataAccessObject
+                .getInventoryItems(addToInventoryInputData.getOwnerId());
 
         // item in inventory already
-        if (inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                .getItems()
-                .containsKey(foodMappingService.getFoodName(addToInventoryInputData.getStudySessionLength()))) {
-
-            final String foodName = foodMappingService.getFoodName(addToInventoryInputData.getStudySessionLength());
+        if (inventory.getItems().containsKey(foodName)) {
 
             final int prevQuantity = inventoryDataAccessObject
                     .getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().get(foodName).getQuantity();
+                    .getItems().get(foodName);
 
-            final Inventory inventory = inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId());
-            foodItem = inventory.getItems().get(foodName);
-            foodItem.setQuantity(prevQuantity + 1);
+            foodItems.put(foodName, prevQuantity + 1);
+            inventory.setItems(foodItems);
+
             // since food object mutable
             inventoryDataAccessObject.updateInventory(inventory);
         } // item not in inventory
         else {
-            foodItem = foodFactory.create(addToInventoryInputData.getStudySessionLength());
-            foodItem.setQuantity(1);
-
-            final Map<String, AbstractFood> newInventoryItems = inventoryDataAccessObject
-                    .getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems();
-
-            newInventoryItems.put(foodItem.getName(), foodItem);
-
-            final Inventory inventory = inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId());
-
-            inventory.setItems(newInventoryItems);
+            foodItems.put(foodName, 1);
+            inventory.setItems(foodItems);
 
             inventoryDataAccessObject.updateInventory(inventory);
         }
 
         final AddToInventoryOutputData addToInventoryOutputData =
-                new AddToInventoryOutputData(addToInventoryInputData.getOwnerId(), foodItem,
+                new AddToInventoryOutputData(addToInventoryInputData.getOwnerId(), foodName,
                         inventoryDataAccessObject.getInventoryItems(addToInventoryInputData.getOwnerId()));
         addToInventoryPresenter.prepareSuccessView(addToInventoryOutputData);
     }
-
 }

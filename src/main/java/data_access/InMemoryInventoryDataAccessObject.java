@@ -3,8 +3,6 @@ package data_access;
 import java.util.HashMap;
 import java.util.Map;
 
-import entity.AbstractFood;
-import entity.FoodInventory;
 import entity.Inventory;
 import use_case.food_management.InventoryDataAccessInterface;
 
@@ -27,21 +25,13 @@ public class InMemoryInventoryDataAccessObject implements InventoryDataAccessInt
     }
 
     @Override
-    public Map<String, AbstractFood> getInventoryItems(String ownerId) {
+    public Map<String, Integer> getInventoryItems(String ownerId) {
         return new HashMap<>(inventoryStorage.get(ownerId).getItems());
     }
 
     @Override
     public Inventory getInventory(String ownerId) {
-        // for testing purposes return a deep copy
-        final Inventory inventory = inventoryStorage.get(ownerId);
-        final Inventory copyInventory = new FoodInventory(inventory.getOwnerId());
-
-        // for loop through items?
-
-        copyInventory.setItems(inventory.getItems());
-
-        return copyInventory;
+        return inventoryStorage.get(ownerId);
     }
 
     @Override
