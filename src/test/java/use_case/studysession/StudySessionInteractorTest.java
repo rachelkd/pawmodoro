@@ -1,16 +1,109 @@
 package use_case.studysession;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 class StudySessionInteractorTest {
 
-    private static class TestStudySessionPresenter implements StudySessionOutputBoundary {
-        boolean switchToSetupSessionViewCalled = false;
-        boolean switchToLoginViewCalled = false;
-        boolean switchToBreakSessionViewCalled = false;
-        boolean stopStudyTimerCalled = false;
-        boolean prepareLoginViewCalled = false;
+    @Test
+    void successSwitchToBreakSessionViewTest() {
+        final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
+        final StudySessionInteractor interactor = new StudySessionInteractor(testPresenter);
+
+        interactor.switchToBreakSessionView();
+
+        assertTrue(testPresenter.getSwitchToBreakSessionViewCalled(),
+                "switchToBreakSessionView should have been called on the presenter");
+    }
+
+    @Test
+    void successSwitchToSetupSessionViewTest() {
+        final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
+        final StudySessionInteractor interactor = new StudySessionInteractor(testPresenter);
+
+        interactor.switchToSetupSessionView();
+
+        assertTrue(testPresenter.getSwitchToSetupSessionViewCalled(),
+                "switchToSetupSessionView should have been called on the presenter");
+    }
+
+    @Test
+    void successLogoutTest() {
+        final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
+        final StudySessionInteractor interactor = new StudySessionInteractor(testPresenter);
+
+        interactor.logout();
+
+        assertTrue(testPresenter.getSwitchToLoginViewCalled(),
+                "switchToLoginView should have been called on the presenter");
+        assertTrue(testPresenter.getPrepareLoginViewCalled(),
+                "prepareLoginView should have been called on the presenter after logout");
+    }
+
+    @Test
+    void successStopStudyTimerTest() {
+        final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
+        final StudySessionInteractor interactor = new StudySessionInteractor(testPresenter);
+
+        interactor.stopStudyTimer();
+
+        assertTrue(testPresenter.getStopStudyTimerCalled(),
+                "stopStudyTimer should have been called on the presenter");
+    }
+
+    @Test
+    void switchToBreakSessionViewFailsIfNotCalledTest() {
+        final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
+
+        assertFalse(testPresenter.getSwitchToBreakSessionViewCalled(),
+                "switchToBreakSessionView should not have been called initially");
+    }
+
+    @Test
+    void switchToSetupSessionViewFailsIfNotCalledTest() {
+        final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
+
+        assertFalse(testPresenter.getSwitchToSetupSessionViewCalled(),
+                "switchToSetupSessionView should not have been called initially");
+    }
+
+    @Test
+    void switchToLoginViewFailsIfNotCalledTest() {
+        final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
+
+        assertFalse(testPresenter.getSwitchToLoginViewCalled(),
+                "switchToLoginView should not have been called initially");
+    }
+
+    @Test
+    void prepareLoginViewFailsIfNotCalledTest() {
+        final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
+
+        assertFalse(testPresenter.getPrepareLoginViewCalled(),
+                "prepareLoginView should not have been called initially");
+    }
+
+    @Test
+    void stopStudyTimerFailsIfNotCalledTest() {
+        final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
+
+        assertFalse(testPresenter.getStopStudyTimerCalled(),
+                "stopStudyTimer should not have been called initially");
+    }
+
+    private static final class TestStudySessionPresenter implements StudySessionOutputBoundary {
+        private boolean switchToBreakSessionViewCalled;
+        private boolean switchToSetupSessionViewCalled;
+        private boolean switchToLoginViewCalled;
+        private boolean stopStudyTimerCalled;
+        private boolean prepareLoginViewCalled;
+
+        @Override
+        public void switchToBreakSessionView() {
+            switchToBreakSessionViewCalled = true;
+        }
 
         @Override
         public void switchToSetupSessionView() {
@@ -23,11 +116,6 @@ class StudySessionInteractorTest {
         }
 
         @Override
-        public void switchToBreakSessionView() {
-            switchToBreakSessionViewCalled = true;
-        }
-
-        @Override
         public void stopStudyTimer() {
             stopStudyTimerCalled = true;
         }
@@ -36,75 +124,25 @@ class StudySessionInteractorTest {
         public void prepareLoginView() {
             prepareLoginViewCalled = true;
         }
-    }
 
-    @Test
-    void successSwitchToSetupSessionViewTest() {
-        TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
-        StudySessionInteractor interactor = new StudySessionInteractor(testPresenter);
+        public boolean getSwitchToBreakSessionViewCalled() {
+            return switchToBreakSessionViewCalled;
+        }
 
-        interactor.switchToSetupSessionView();
+        public boolean getSwitchToSetupSessionViewCalled() {
+            return switchToSetupSessionViewCalled;
+        }
 
-        assertTrue(testPresenter.switchToSetupSessionViewCalled,
-                "switchToSetupSessionView should have been called on the presenter");
-    }
+        public boolean getSwitchToLoginViewCalled() {
+            return switchToLoginViewCalled;
+        }
 
-    @Test
-    void successLogoutTest() {
-        TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
-        StudySessionInteractor interactor = new StudySessionInteractor(testPresenter);
-        interactor.logout();
-        assertTrue(testPresenter.switchToLoginViewCalled,
-                "switchToLoginView should have been called on the presenter");
-        assertTrue(testPresenter.prepareLoginViewCalled,
-                "prepareLoginView should have been called on the presenter after logout");
-    }
+        public boolean getStopStudyTimerCalled() {
+            return stopStudyTimerCalled;
+        }
 
-    @Test
-    void successSwitchToBreakSessionViewTest() {
-        TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
-        StudySessionInteractor interactor = new StudySessionInteractor(testPresenter);
-        interactor.switchToBreakSessionView();
-        assertTrue(testPresenter.switchToBreakSessionViewCalled,
-                "switchToBreakSessionView should have been called on the presenter");
-    }
-
-    @Test
-    void successStopStudyTimerTest() {
-        TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
-        StudySessionInteractor interactor = new StudySessionInteractor(testPresenter);
-        interactor.stopStudyTimer();
-        assertTrue(testPresenter.stopStudyTimerCalled,
-                "stopStudyTimer should have been called on the presenter");
-    }
-
-    @Test
-    void switchToSetupSessionViewFailsIfNotCalledTest() {
-        TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
-        assertFalse(testPresenter.switchToSetupSessionViewCalled,
-                "switchToSetupSessionView should not have been called initially");
-    }
-
-    @Test
-    void switchToLoginViewFailsIfNotCalledTest() {
-        TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
-        assertFalse(testPresenter.switchToLoginViewCalled,
-                "switchToLoginView should not have been called initially");
-    }
-
-    @Test
-    void switchToBreakSessionViewFailsIfNotCalledTest() {
-        TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
-        assertFalse(testPresenter.switchToBreakSessionViewCalled,
-                "switchToBreakSessionView should not have been called initially");
-    }
-
-    @Test
-    void stopStudyTimerFailsIfNotCalledTest() {
-        TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
-        assertFalse(testPresenter.stopStudyTimerCalled,
-                "stopStudyTimer should not have been called initially");
+        public boolean getPrepareLoginViewCalled() {
+            return prepareLoginViewCalled;
+        }
     }
 }
-
-
