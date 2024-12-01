@@ -2,6 +2,7 @@ package app.builder.usecase;
 
 import app.builder.view.Views;
 import app.components.DataAccessComponents;
+import entity.*;
 import interface_adapter.adoption.AdoptionController;
 import interface_adapter.adoption.AdoptionPresenter;
 import interface_adapter.change_cat_happiness.ChangeCatHappinessController;
@@ -37,6 +38,10 @@ import use_case.runawaycat.RunawayCatOutputBoundary;
  * Builder for cat management-related use cases.
  */
 public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
+    private final HappinessCalculator happinessCalculator;
+    private final HungerCalculator hungerCalculator;
+    private final FoodItemFactory foodItemFactory;
+
     /**
      * Creates a new cat management use case builder.
      * @param views the views
@@ -44,6 +49,9 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
      */
     public CatManagementUseCaseBuilder(Views views, DataAccessComponents dataAccess) {
         super(views, dataAccess);
+        this.happinessCalculator = new DefaultHappinessCalculator();
+        this.hungerCalculator = new DefaultHungerCalculator();
+        this.foodItemFactory = new FoodItemFactory();
     }
 
     /**
@@ -125,7 +133,8 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
                         getViews().getShared().getViewModels().getDisplayCatStatsViewModel());
 
         final ChangeCatHungerInputBoundary interactor =
-                new ChangeCatHungerInteractor(getDataAccess().getCatDataAccess(), outputBoundary);
+                new ChangeCatHungerInteractor(getDataAccess().getCatDataAccess(), outputBoundary,
+                        hungerCalculator, foodItemFactory);
         final ChangeCatHungerController controller = new ChangeCatHungerController(interactor);
 
         getViews().getShared().getViews().getInventoryView().setChangeCatHungerController(controller);
@@ -146,7 +155,7 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
                         getViews().getCat().getViewModels().getRunawayCatViewModel());
 
         final ChangeCatHappinessInputBoundary interactor = new ChangeCatHappinessInteractor(
-                getDataAccess().getCatDataAccess(), outputBoundary);
+                getDataAccess().getCatDataAccess(), outputBoundary, happinessCalculator);
         final ChangeCatHappinessController controller = new ChangeCatHappinessController(interactor);
 
         getViews().getSession().getViews().getStudySessionView().setChangeCatHappinessController(controller);

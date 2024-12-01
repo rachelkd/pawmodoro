@@ -10,20 +10,23 @@ import org.junit.jupiter.api.Test;
 import data_access.InMemoryCatDataAccessObject;
 import entity.Cat;
 import entity.CatFactory;
+import entity.DefaultHappinessCalculator;
+import entity.HappinessCalculator;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessInputBoundary;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessInputData;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessInteractor;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputBoundary;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputData;
 
-public class ChangeCatHappinessInteractorTest {
-    private CatFactory catFactory;
+class ChangeCatHappinessInteractorTest {
     private Cat cat;
     private InMemoryCatDataAccessObject catRepository;
+    private HappinessCalculator happinessCalculator;
 
     @BeforeEach
     void setUp() {
-        this.catFactory = new CatFactory();
+        final CatFactory catFactory = new CatFactory();
+        this.happinessCalculator = new DefaultHappinessCalculator();
         this.catRepository = new InMemoryCatDataAccessObject();
         cat = catFactory.create("Billy", "<3");
         cat.setCatObjectCreated(true);
@@ -55,7 +58,7 @@ public class ChangeCatHappinessInteractorTest {
         };
 
         final ChangeCatHappinessInputBoundary interactor =
-                new ChangeCatHappinessInteractor(catRepository, successPresenter);
+                new ChangeCatHappinessInteractor(catRepository, successPresenter, happinessCalculator);
         interactor.execute(inputData);
 
     }
@@ -86,7 +89,7 @@ public class ChangeCatHappinessInteractorTest {
         };
 
         final ChangeCatHappinessInputBoundary interactor =
-                new ChangeCatHappinessInteractor(catRepository, successPresenter);
+                new ChangeCatHappinessInteractor(catRepository, successPresenter, happinessCalculator);
         interactor.execute(inputData);
     }
 
@@ -118,7 +121,7 @@ public class ChangeCatHappinessInteractorTest {
         };
 
         final ChangeCatHappinessInputBoundary interactor =
-                new ChangeCatHappinessInteractor(catRepository, runawayCatPresenter);
+                new ChangeCatHappinessInteractor(catRepository, runawayCatPresenter, happinessCalculator);
         interactor.execute(inputData);
 
     }
@@ -145,7 +148,7 @@ public class ChangeCatHappinessInteractorTest {
             }
         };
         final ChangeCatHappinessInputBoundary interactor =
-                new ChangeCatHappinessInteractor(catRepository, failurePresenter);
+                new ChangeCatHappinessInteractor(catRepository, failurePresenter, happinessCalculator);
         interactor.execute(inputData);
     }
 }
