@@ -54,7 +54,6 @@ public class DbInventoryDataAccessObject implements InventoryDataAccessInterface
 
     /**
      * Saves the inventory to the database.
-     * 
      * @param inventory The inventory to save
      * @throws UnsupportedOperationException currently not implemented
      */
@@ -167,7 +166,6 @@ public class DbInventoryDataAccessObject implements InventoryDataAccessInterface
 
     /**
      * Retrieves the inventory from the database.
-     * 
      * @return The retrieved inventory
      * @throws UnsupportedOperationException currently not implemented
      */

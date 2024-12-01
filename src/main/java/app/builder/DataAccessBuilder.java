@@ -4,7 +4,7 @@ import app.components.DataAccessComponents;
 import app.factory.DataAccessFactory;
 import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
-import data_access.DBCatDataAccessObject;
+import data_access.DbCatDataAccessObject;
 import data_access.DbInventoryDataAccessObject;
 import data_access.DbUserDataAccessObject;
 
@@ -16,7 +16,7 @@ public class DataAccessBuilder {
     private DbUserDataAccessObject userDataAccess;
     private DbInventoryDataAccessObject inventoryDataAccess;
     private ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
-    private DBCatDataAccessObject catDataAccess;
+    private DbCatDataAccessObject catDataAccess;
     private ApiCatFactDataAccessObject catFactDataAccess;
 
     public DataAccessBuilder() {

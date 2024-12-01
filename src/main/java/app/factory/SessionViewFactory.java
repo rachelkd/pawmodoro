@@ -37,16 +37,16 @@ public class SessionViewFactory {
      * @return StudySessionView
      */
     public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
-                                                  BreakSessionViewModel breakSessionViewModel,
-                                                  InitializeCatsViewModel initializeCatsViewModel,
-                                                  DialogService dialogService, 
-                                                  CatContainerView catContainerView,
-                                                  MusicControlViewModel musicControlViewModel) {
+            BreakSessionViewModel breakSessionViewModel,
+            InitializeCatsViewModel initializeCatsViewModel,
+            DialogService dialogService,
+            CatContainerView catContainerView,
+            MusicControlViewModel musicControlViewModel) {
         return new StudySessionView(studySessionViewModel, breakSessionViewModel,
                 initializeCatsViewModel, dialogService, catContainerView, musicControlViewModel);
     }
 
-    /** 
+    /**
      * Creates a Break Session View.
      * @param breakSessionViewModel the break session view model
      * @param adoptionViewModel the adoption view model
@@ -56,10 +56,11 @@ public class SessionViewFactory {
      * @return BreakSessionView
      */
     public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel,
-                                                    AdoptionViewModel adoptionViewModel,
-                                                    DialogService dialogService,
-                                                    DisplayCatImageView displayCatImageView,
-                                                    CatContainerView catContainerView) {
-        return new BreakSessionView(breakSessionViewModel, adoptionViewModel, dialogService, displayCatImageView, catContainerView);
+            AdoptionViewModel adoptionViewModel,
+            DialogService dialogService,
+            DisplayCatImageView displayCatImageView,
+            CatContainerView catContainerView) {
+        return new BreakSessionView(breakSessionViewModel, adoptionViewModel, dialogService, displayCatImageView,
+                catContainerView);
     }
 }

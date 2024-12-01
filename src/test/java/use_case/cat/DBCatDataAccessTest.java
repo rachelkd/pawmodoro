@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import config.SupabaseConfig;
-import data_access.DBCatDataAccessObject;
+import data_access.DbCatDataAccessObject;
 import entity.Cat;
 import entity.CatFactory;
 import entity.exceptions.NoCatsFoundException;
@@ -33,7 +33,7 @@ class DBCatDataAccessTest {
 
     @BeforeEach
     void setUp() {
-        catRepository = new DBCatDataAccessObject(factory);
+        catRepository = new DbCatDataAccessObject(factory);
         cleanupTestData();
     }
 

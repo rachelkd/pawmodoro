@@ -2,7 +2,7 @@ package app.components;
 
 import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
-import data_access.DBCatDataAccessObject;
+import data_access.DbCatDataAccessObject;
 import data_access.DbInventoryDataAccessObject;
 import data_access.DbUserDataAccessObject;
 
@@ -13,7 +13,7 @@ public class DataAccessComponents {
     private final DbUserDataAccessObject userDataAccess;
     private final DbInventoryDataAccessObject inventoryDataAccess;
     private final ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
-    private final DBCatDataAccessObject catDataAccess;
+    private final DbCatDataAccessObject catDataAccess;
     private final ApiCatFactDataAccessObject catFactDataAccess;
 
     /**
@@ -25,10 +25,10 @@ public class DataAccessComponents {
      * @param catFactDataAccess the cat fact data access object
      */
     public DataAccessComponents(DbUserDataAccessObject userDataAccess,
-                                DbInventoryDataAccessObject inventoryDataAccess,
-                                ApiDisplayCatImageDataAccessObject displayCatImageDataAccess,
-                                DBCatDataAccessObject catDataAccess,
-                                ApiCatFactDataAccessObject catFactDataAccess) {
+            DbInventoryDataAccessObject inventoryDataAccess,
+            ApiDisplayCatImageDataAccessObject displayCatImageDataAccess,
+            DbCatDataAccessObject catDataAccess,
+            ApiCatFactDataAccessObject catFactDataAccess) {
         this.userDataAccess = userDataAccess;
         this.inventoryDataAccess = inventoryDataAccess;
         this.displayCatImageDataAccess = displayCatImageDataAccess;
@@ -48,7 +48,7 @@ public class DataAccessComponents {
         return displayCatImageDataAccess;
     }
 
-    public DBCatDataAccessObject getCatDataAccess() {
+    public DbCatDataAccessObject getCatDataAccess() {
         return catDataAccess;
     }
 

@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import config.SupabaseConfig;
-import data_access.DBInventoryDataAccessObject;
+import data_access.DbInventoryDataAccessObject;
 import entity.FoodInventoryFactory;
 import entity.Inventory;
 import entity.InventoryFactory;
@@ -23,7 +23,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import use_case.food_management.InventoryDataAccessInterface;
 
-class DBInventoryDataAccessTest {
+class DbInventoryDataAccessTest {
     private static InventoryFactory inventoryFactory;
     private static final OkHttpClient CLIENT = new OkHttpClient().newBuilder().build();
     private InventoryDataAccessInterface inventoryRepository;
@@ -35,7 +35,7 @@ class DBInventoryDataAccessTest {
 
     @BeforeEach
     void setUp() {
-        inventoryRepository = new DBInventoryDataAccessObject(inventoryFactory);
+        inventoryRepository = new DbInventoryDataAccessObject(inventoryFactory);
         cleanupTestData();
     }
 
