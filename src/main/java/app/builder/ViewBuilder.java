@@ -92,7 +92,7 @@ public class ViewBuilder {
     private ViewBuilder buildSessionViews() {
         final SessionViewBuilder sessionViewBuilder =
                 new SessionViewBuilder(cardPanel, cardLayout, viewManagerModel, viewFactory,
-                        dialogService, sharedViewsAndModels);
+                        dialogService, sharedViewsAndModels, catViewsAndModels);
         this.sessionViewsAndModels = sessionViewBuilder.build();
         return this;
     }

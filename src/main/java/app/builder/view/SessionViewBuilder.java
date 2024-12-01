@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
+import app.builder.view.cat.CatViewsAndModels;
 import app.builder.view.session.SessionViewModels;
 import app.builder.view.session.SessionViews;
 import app.builder.view.session.SessionViewsAndModels;
@@ -29,6 +30,7 @@ public class SessionViewBuilder {
     private final DialogService dialogService;
 
     private final SharedViewsAndModels sharedViewsAndModels;
+    private final CatViewsAndModels catViewsAndModels;
 
     // Views
     private BreakSessionView breakSessionView;
@@ -43,13 +45,15 @@ public class SessionViewBuilder {
      * @param viewFactory the view factory
      * @param dialogService the dialog service
      * @param sharedViewsAndModels the shared views and models
+     * @param catViewsAndModels the cat views and models
      */
     public SessionViewBuilder(JPanel cardPanel,
             CardLayout cardLayout,
             ViewManagerModel viewManagerModel,
             ViewFactory viewFactory,
             DialogService dialogService,
-            SharedViewsAndModels sharedViewsAndModels) {
+            SharedViewsAndModels sharedViewsAndModels,
+            CatViewsAndModels catViewsAndModels) {
         this.cardPanel = cardPanel;
         this.cardLayout = cardLayout;
         this.viewManagerModel = viewManagerModel;
@@ -64,6 +68,7 @@ public class SessionViewBuilder {
                 sessionViewModelFactory.createLoginViewModel());
         this.dialogService = dialogService;
         this.sharedViewsAndModels = sharedViewsAndModels;
+        this.catViewsAndModels = catViewsAndModels;
     }
 
     /**
@@ -122,10 +127,10 @@ public class SessionViewBuilder {
     private SessionViewBuilder buildBreakSessionView() {
         this.breakSessionView = viewFactory.createBreakSessionView(
                 viewModels.getBreakSessionViewModel(),
-                viewModels.getBreakSessionViewModel().getState(),
                 sharedViewsAndModels.getViewModels().getAdoptionViewModel(),
                 dialogService,
-                sharedViewsAndModels.getViews().getCatContainerView());
+                sharedViewsAndModels.getViews().getCatContainerView(),
+                catViewsAndModels.getViews().getDisplayCatImageView());
         cardPanel.add(breakSessionView, breakSessionView.getViewName());
         return this;
     }

@@ -2,7 +2,6 @@ package app.factory;
 
 import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
-import interface_adapter.break_session.BreakSessionState;
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.LoggedInViewModel;
@@ -121,11 +120,11 @@ public class ViewFactory {
      * @return StudySessionView
      */
     public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
-                                                   BreakSessionViewModel breakSessionViewModel,
-                                                   InitializeCatsViewModel initializeCatsViewModel,
-                                                   DialogService dialogService,
-                                                   CatContainerView catContainerView,
-                                                   MusicControlViewModel musicControlViewModel) {
+            BreakSessionViewModel breakSessionViewModel,
+            InitializeCatsViewModel initializeCatsViewModel,
+            DialogService dialogService,
+            CatContainerView catContainerView,
+            MusicControlViewModel musicControlViewModel) {
         return new StudySessionView(studySessionViewModel, breakSessionViewModel,
                 initializeCatsViewModel, dialogService, catContainerView, musicControlViewModel);
     }
@@ -169,9 +168,9 @@ public class ViewFactory {
      * @return CatContainer View
      */
     public CatContainerView createCatContainerView(InitializeCatsViewModel initializeCatsViewModel,
-                                                   InventoryViewModel inventoryViewModel,
-                                                   DialogService dialogService,
-                                                   GetCatFactView getCatFactView) {
+            InventoryViewModel inventoryViewModel,
+            DialogService dialogService,
+            GetCatFactView getCatFactView) {
         return new CatContainerView(initializeCatsViewModel, inventoryViewModel, dialogService, getCatFactView,
                 catViewModelFactory, displayCatStatsViewModelFactory);
     }
@@ -206,18 +205,18 @@ public class ViewFactory {
     /**
      * Creates Break Session View.
      * @param breakSessionViewModel the break session view model
-     * @param breakSessionState     the break session state
      * @param adoptionViewModel the adoption view model
      * @param dialogService the dialog service
+     * @param displayCatImageView the display cat image view
      * @param catContainerView the cat container view
      * @return BreakSessionView
      */
     public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel,
-                                                   BreakSessionState breakSessionState,
-                                                   AdoptionViewModel adoptionViewModel,
-                                                   DialogService dialogService,
-                                                   CatContainerView catContainerView) {
-        return new BreakSessionView(breakSessionViewModel,
-                breakSessionState, adoptionViewModel, dialogService, catContainerView);
+            AdoptionViewModel adoptionViewModel,
+            DialogService dialogService,
+            CatContainerView catContainerView,
+            DisplayCatImageView displayCatImageView) {
+        return new BreakSessionView(breakSessionViewModel, adoptionViewModel, dialogService,
+                displayCatImageView, catContainerView);
     }
 }
