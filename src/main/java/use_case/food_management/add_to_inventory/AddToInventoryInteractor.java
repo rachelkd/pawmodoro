@@ -30,7 +30,6 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
     @Override
     public void execute(AddToInventoryInputData addToInventoryInputData) {
         // assume existing inventory
-        final boolean isSuccess;
         final AbstractFood foodItem;
 
         // item in inventory already
@@ -49,12 +48,6 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
             foodItem.setQuantity(prevQuantity + 1);
             // since food object mutable
             inventoryDataAccessObject.updateInventory(inventory);
-
-            isSuccess = inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().containsKey(foodName) && inventoryDataAccessObject
-                    .getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().get(foodName).getQuantity() == prevQuantity + 1;
-
         } // item not in inventory
         else {
             foodItem = foodFactory.create(addToInventoryInputData.getStudySessionLength());
@@ -71,17 +64,12 @@ public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
             inventory.setItems(newInventoryItems);
 
             inventoryDataAccessObject.updateInventory(inventory);
-
-            isSuccess = inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().containsKey(foodItem.getName())
-                    && inventoryDataAccessObject.getInventory(addToInventoryInputData.getOwnerId())
-                    .getItems().get(foodItem.getName()).getQuantity() == 1;
         }
 
         final AddToInventoryOutputData addToInventoryOutputData =
-                new AddToInventoryOutputData(isSuccess, addToInventoryInputData.getOwnerId(), foodItem);
+                new AddToInventoryOutputData(addToInventoryInputData.getOwnerId(), foodItem,
+                        inventoryDataAccessObject.getInventoryItems(addToInventoryInputData.getOwnerId()));
         addToInventoryPresenter.prepareSuccessView(addToInventoryOutputData);
-
     }
 
 }

@@ -27,4 +27,10 @@ public class ChangeCatHungerPresenter implements ChangeCatHungerOutputBoundary {
         displayCatStatsViewModel.setState(catState);
         displayCatStatsViewModel.firePropertyChanged();
     }
+
+    @Override
+    public void prepareFailView(String errorMessage) {
+        displayCatStatsViewModel.getState().setError(errorMessage);
+        displayCatStatsViewModel.firePropertyChanged("null_cat_name");
+    }
 }

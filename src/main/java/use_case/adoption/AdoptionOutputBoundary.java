@@ -1,11 +1,11 @@
 package use_case.adoption;
 
 /**
- * The output boundary for the Adoption Use Case
+ * The output boundary for the Adoption Use Case.
  */
 public interface AdoptionOutputBoundary {
     /**
-     * Prepares the success view for the Adoption Use Case
+     * Prepares the success view for the Adoption Use Case.
      *
      * @param outputData the output data
      */

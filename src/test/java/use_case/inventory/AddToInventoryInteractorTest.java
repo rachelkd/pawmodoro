@@ -1,5 +1,6 @@
 package use_case.inventory;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
@@ -36,9 +37,10 @@ class AddToInventoryInteractorTest {
 
         final AddToInventoryOutputBoundary successPresenter = new AddToInventoryOutputBoundary() {
             @Override
-            public void prepareSuccessView(AddToInventoryOutputData inventory) {
+            public void prepareSuccessView(AddToInventoryOutputData outputData) {
                 // check that output data contains username and food id
-                assertTrue(inventory.isSuccess());
+                assertTrue(outputData.getFoodItems().containsKey("Milk"));
+                assertEquals(1, outputData.getFood().getQuantity());
             }
         };
 
@@ -59,15 +61,16 @@ class AddToInventoryInteractorTest {
         final Inventory inventory = inventoryFactory.create("chiually");
         // add same food item
         final Map<String, AbstractFood> inventoryItems = inventory.getItems();
-        inventoryItems.put("milk", foodItemFactory.create("milk"));
+        inventoryItems.put("Milk", foodItemFactory.create("Milk"));
         inventory.setItems(inventoryItems);
         inventoryRepository.save(inventory);
 
         final AddToInventoryOutputBoundary successPresenter = new AddToInventoryOutputBoundary() {
 
             @Override
-            public void prepareSuccessView(AddToInventoryOutputData inventory) {
-                assertTrue(inventory.isSuccess());
+            public void prepareSuccessView(AddToInventoryOutputData outputData) {
+                assertTrue(outputData.getFoodItems().containsKey("Milk"));
+                assertEquals(2, outputData.getFood().getQuantity());
             }
         };
         final AddToInventoryInputBoundary interactor = new AddToInventoryInteractor(inventoryRepository,

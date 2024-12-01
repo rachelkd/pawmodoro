@@ -10,9 +10,5 @@ public interface RunawayCatOutputBoundary {
      */
     void prepareSuccessView();
 
-    /**
-     * To return to the break session use case
-     */
-    void switchToBreakView();
 
 }

@@ -76,11 +76,6 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         mainPanel.add(title, BorderLayout.NORTH);
 
         this.buttonPanel = new JPanel();
-
-        final JButton closeButton = new JButton("Close Inventory");
-        closeButton.addActionListener(event -> this.setVisible(false));
-        buttonPanel.add(closeButton);
-
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         this.add(mainPanel);
@@ -109,7 +104,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
                 final InventoryState state = (InventoryState) evt.getNewValue();
                 userInventory = state.getInventoryItems();
 
-                buildInventory(state.getOwnerId());
+                refreshInventory(state.getOwnerId());
                 mainPanel.add(inventoryPanel, BorderLayout.CENTER);
 
                 inventoryPanel.revalidate();
@@ -141,22 +136,6 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         }
     }
 
-    public void setCreateInventoryController(CreateInventoryController createInventoryController) {
-        this.createInventoryController = createInventoryController;
-    }
-
-    public void setAddToInventoryController(AddToInventoryController addToInventoryController) {
-        this.addToInventoryController = addToInventoryController;
-    }
-
-    public void setUseItemController(UseItemController useItemController) {
-        this.useItemController = useItemController;
-    }
-
-    public void setChangeCatHungerController(ChangeCatHungerController changeCatHungerController) {
-        this.changeCatHungerController = changeCatHungerController;
-    }
-
     void buildInventory(String ownerId) {
         if (!userInventory.isEmpty()) {
             inventoryPanel.setLayout(new BoxLayout(inventoryPanel, BoxLayout.Y_AXIS));
@@ -164,6 +143,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
             for (AbstractFood food : userInventory.values()) {
                 addFoodLabel(food);
             }
+            addCloseButton();
             addSelectItemButton(ownerId);
 
         }
@@ -173,6 +153,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
             final JLabel items = new JLabel(InventoryViewModel.EMPTY_INVENTORY_LABEL);
             items.setAlignmentX(Component.CENTER_ALIGNMENT);
             inventoryPanel.add(items);
+            addCloseButton();
         }
     }
 
@@ -188,12 +169,17 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         if (selectedLabel[0] != null) {
             final String selectedText = selectedLabel[0].getText();
             useItemController.execute(ownerId, selectedText);
-            // TODO uncomment once cats initializer works
-            // changeCatHungerController.execute(inventoryViewModel.getState().getCurrentCatName(), ownerId, selectedText);
+            changeCatHungerController.execute(inventoryViewModel.getState().getCurrentCatName(), ownerId, selectedText);
         }
         else {
             JOptionPane.showMessageDialog(null, "Please select an item first.");
         }
+    }
+
+    void addCloseButton() {
+        final JButton closeButton = new JButton("Close Inventory");
+        closeButton.addActionListener(event -> this.setVisible(false));
+        buttonPanel.add(closeButton);
     }
 
     void clearEmptyMessage(String ownerId) {
@@ -264,12 +250,28 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
 
     void refreshInventory(String ownerId) {
         inventoryPanel.removeAll();
-        buttonPanel.remove(1);
+        buttonPanel.removeAll();
 
         buildInventory(ownerId);
     }
 
     public String getViewName() {
         return inventoryViewModel.getViewName();
+    }
+
+    public void setCreateInventoryController(CreateInventoryController createInventoryController) {
+        this.createInventoryController = createInventoryController;
+    }
+
+    public void setAddToInventoryController(AddToInventoryController addToInventoryController) {
+        this.addToInventoryController = addToInventoryController;
+    }
+
+    public void setUseItemController(UseItemController useItemController) {
+        this.useItemController = useItemController;
+    }
+
+    public void setChangeCatHungerController(ChangeCatHungerController changeCatHungerController) {
+        this.changeCatHungerController = changeCatHungerController;
     }
 }

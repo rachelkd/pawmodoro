@@ -36,10 +36,12 @@ import use_case.get_cat_fact.GetCatFactOutputBoundary;
  */
 public class SharedUseCaseBuilder extends AbstractUseCaseBuilder {
     private FoodItemFactory foodItemFactory;
+    private InventoryFactory inventoryFactory;
 
     public SharedUseCaseBuilder(Views views, DataAccessComponents dataAccess) {
         super(views, dataAccess);
         this.foodItemFactory = new FoodItemFactory();
+        this.inventoryFactory = new FoodInventoryFactory();
     }
 
     /**
@@ -56,6 +58,7 @@ public class SharedUseCaseBuilder extends AbstractUseCaseBuilder {
 
         final DisplayCatStatsController controller = new DisplayCatStatsController(interactor);
         getViews().getShared().getViews().getCatView().setDisplayCatStatsController(controller);
+        getViews().getShared().getViews().getCatContainerView().setDisplayCatStatsController(controller);
         return this;
     }
 
@@ -77,11 +80,10 @@ public class SharedUseCaseBuilder extends AbstractUseCaseBuilder {
     }
 
     /**
-     * Builds the create inventory use case.
+     * Builds the createinventory use case.
      * @return this builder
      */
     public SharedUseCaseBuilder buildCreateInventoryUseCase() {
-        final InventoryFactory inventoryFactory = new FoodInventoryFactory();
         final CreateInventoryOutputBoundary presenter = new CreateInventoryPresenter(
                 getViews().getShared().getViewModels().getInventoryViewModel());
 

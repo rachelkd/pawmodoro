@@ -9,7 +9,7 @@ import use_case.food_management.use_item_in_inventory.UseItemOutputData;
  * Use Item Use Case Presenter.
  */
 public class UseItemPresenter implements UseItemOutputBoundary {
-    private InventoryViewModel inventoryViewModel;
+    private final InventoryViewModel inventoryViewModel;
 
     public UseItemPresenter(InventoryViewModel inventoryViewModel) {
         this.inventoryViewModel = inventoryViewModel;

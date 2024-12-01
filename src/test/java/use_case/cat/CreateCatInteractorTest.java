@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import data_access.InMemoryCatDataAccessObject;
@@ -16,6 +17,12 @@ import use_case.cat_management.create_cat.CreateCatOutputBoundary;
 import use_case.cat_management.create_cat.CreateCatOutputData;
 
 class CreateCatInteractorTest {
+    private CatFactory catFactory;
+
+    @BeforeEach
+    void setUp() {
+        this.catFactory = new CatFactory();
+    }
 
     @Test
     void successCreateCatTest() {
@@ -27,7 +34,6 @@ class CreateCatInteractorTest {
             public void prepareSuccessView(CreateCatOutputData createCatOutputData) {
                 assertTrue(createCatOutputData.isSuccess());
                 assertEquals("Billy", createCatOutputData.getCatName());
-                assertTrue(createCatOutputData.getCat().isCatObjectCreated());
             }
 
             @Override
@@ -36,7 +42,7 @@ class CreateCatInteractorTest {
             }
         };
 
-        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, successPresenter);
+        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, successPresenter, catFactory);
         interactor.execute(inputData);
     }
 
@@ -44,9 +50,7 @@ class CreateCatInteractorTest {
     void failureSameCatNameTest() {
         final CreateCatInputData inputData = new CreateCatInputData("Billy", "<3");
         final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
-        final CatFactory catFactory = new CatFactory();
         final Cat existingCat = catFactory.create("Billy", "<3");
-        existingCat.setCatObjectCreated(true);
         catRepository.saveCat(existingCat);
 
         final CreateCatOutputBoundary failurePresenter = new CreateCatOutputBoundary() {
@@ -62,7 +66,7 @@ class CreateCatInteractorTest {
             }
         };
 
-        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, failurePresenter);
+        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, failurePresenter, catFactory);
         interactor.execute(inputData);
     }
 
@@ -70,12 +74,10 @@ class CreateCatInteractorTest {
     void failureMaxCatsTest() {
         final CreateCatInputData inputData = new CreateCatInputData("Billy", "<3");
         final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
-        final CatFactory catFactory = new CatFactory();
         final String[] catNames = {"a", "b", "c", "d", "e"};
 
         for (String name: catNames) {
             final Cat cat = catFactory.create(name, "<3");
-            cat.setCatObjectCreated(true);
             catRepository.saveCat(cat);
         }
 
@@ -93,7 +95,7 @@ class CreateCatInteractorTest {
             }
         };
 
-        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, failurePresenter);
+        final CreateCatInputBoundary interactor = new CreateCatInteractor(catRepository, failurePresenter, catFactory);
         interactor.execute(inputData);
     }
 }

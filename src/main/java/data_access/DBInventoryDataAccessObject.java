@@ -9,9 +9,9 @@ import org.json.JSONObject;
 
 import config.SupabaseConfig;
 import entity.AbstractFood;
-import entity.FoodInventoryFactory;
 import entity.FoodItemFactory;
 import entity.Inventory;
+import entity.InventoryFactory;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -44,7 +44,7 @@ public class DBInventoryDataAccessObject implements InventoryDataAccessInterface
     private final OkHttpClient client = new OkHttpClient().newBuilder().build();
     private final String apiUrl = SupabaseConfig.getUrl();
     private final String apiKey = SupabaseConfig.getAnonKey();
-    private final FoodInventoryFactory foodInventoryFactory;
+    private final InventoryFactory foodInventoryFactory;
     private final FoodItemFactory foodItemFactory;
 
     /**
@@ -52,7 +52,7 @@ public class DBInventoryDataAccessObject implements InventoryDataAccessInterface
      * @param foodInventoryFactory factory for creating inventories
      * @param foodItemFactory factory for creating food items
      */
-    public DBInventoryDataAccessObject(FoodInventoryFactory foodInventoryFactory, FoodItemFactory foodItemFactory) {
+    public DBInventoryDataAccessObject(InventoryFactory foodInventoryFactory, FoodItemFactory foodItemFactory) {
         this.foodInventoryFactory = foodInventoryFactory;
         this.foodItemFactory = foodItemFactory;
     }

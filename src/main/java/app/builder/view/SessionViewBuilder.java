@@ -13,8 +13,6 @@ import app.factory.viewmodel.SessionViewModelFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
 import view.BreakSessionView;
-import view.GetCatFactView;
-import view.InventoryView;
 import view.SetupSessionView;
 import view.StudySessionView;
 
@@ -72,9 +70,14 @@ public class SessionViewBuilder {
      * @return the session views and models
      */
     public SessionViewsAndModels build() {
-        this.buildSetupSessionView()
-                .buildStudySessionView()
-                .buildBreakSessionView();
+        this
+                .buildSetupSessionView()
+                .buildBreakSessionView()
+                .buildStudySessionView();
+        // build break session first so cat container show up in study session view first, not break session
+
+        breakSessionView.setStudySessionView(studySessionView);
+        studySessionView.setBreakSessionView(breakSessionView);
 
         final SessionViews views = new SessionViews(
                 setupSessionView,
@@ -102,8 +105,10 @@ public class SessionViewBuilder {
     private SessionViewBuilder buildStudySessionView() {
         this.studySessionView = viewFactory.createStudySessionView(
                 viewModels.getStudySessionViewModel(),
+                viewModels.getBreakSessionViewModel(),
+                sharedViewsAndModels.getViewModels().getInitializeCatsViewModel(),
                 dialogService,
-                sharedViewsAndModels.getViews().getCatView());
+                sharedViewsAndModels.getViews().getCatContainerView());
         cardPanel.add(studySessionView, studySessionView.getViewName());
         return this;
     }
@@ -117,7 +122,8 @@ public class SessionViewBuilder {
                 viewModels.getBreakSessionViewModel(),
                 viewModels.getBreakSessionViewModel().getState(),
                 sharedViewsAndModels.getViewModels().getAdoptionViewModel(),
-                dialogService);
+                dialogService,
+                sharedViewsAndModels.getViews().getCatContainerView());
         cardPanel.add(breakSessionView, breakSessionView.getViewName());
         return this;
     }
