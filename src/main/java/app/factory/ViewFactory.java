@@ -28,7 +28,6 @@ import view.GetCatFactView;
 import view.InventoryView;
 import view.LoggedInView;
 import view.LoginView;
-import view.MaxCatsErrorView;
 import view.RunawayCatView;
 import view.SetupSessionView;
 import view.SignupView;

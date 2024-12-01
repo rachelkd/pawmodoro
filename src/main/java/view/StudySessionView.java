@@ -84,7 +84,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         this.catContainerView = catContainerView;
 
         this.catsPanel = new JPanel();
-        this.catsPopupMenu = new JPopupMenu();
+        this.catsPopupMenu = new JPopupMenu("Select Cat");
 
         this.setLayout(new BorderLayout());
 
@@ -236,6 +236,9 @@ public class StudySessionView extends JPanel implements ActionListener, Property
 
     private void createCatNames() {
         catsPopupMenu.removeAll();
+        final JLabel label = new JLabel("Select a Cat");
+        label.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.POPUP_FONT_SIZE));
+        catsPopupMenu.add(label);
 
         final Collection<String> catNamesList = new ArrayList<>();
         for (Cat cat: initializeCatsViewModel.getState().getCats()) {
