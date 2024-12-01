@@ -337,7 +337,9 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         else if (evt.getSource().equals(stopTimerButton)) {
             // Stop the timer
             swingTimer.stop();
-            studySessionController.stopStudyTimer();
+            final StudySessionState studySessionState = studySessionViewModel.getState();
+            studySessionController.stopStudyTimer((int) studySessionState.getWorkInterval(),
+                    false);
 
         }
     }

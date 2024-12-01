@@ -1,7 +1,6 @@
 package use_case.studysession;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +13,7 @@ class StudySessionInteractorTest {
 
         interactor.switchToBreakSessionView();
 
-        assertTrue(testPresenter.getSwitchToBreakSessionViewCalled(),
+        assertTrue(testPresenter.wasSwitchToBreakSessionViewCalled(),
                 "switchToBreakSessionView should have been called on the presenter");
     }
 
@@ -25,7 +24,7 @@ class StudySessionInteractorTest {
 
         interactor.switchToSetupSessionView();
 
-        assertTrue(testPresenter.getSwitchToSetupSessionViewCalled(),
+        assertTrue(testPresenter.wasSwitchToSetupSessionViewCalled(),
                 "switchToSetupSessionView should have been called on the presenter");
     }
 
@@ -36,9 +35,9 @@ class StudySessionInteractorTest {
 
         interactor.logout();
 
-        assertTrue(testPresenter.getSwitchToLoginViewCalled(),
+        assertTrue(testPresenter.wasSwitchToLoginViewCalled(),
                 "switchToLoginView should have been called on the presenter");
-        assertTrue(testPresenter.getPrepareLoginViewCalled(),
+        assertTrue(testPresenter.wasPrepareLoginViewCalled(),
                 "prepareLoginView should have been called on the presenter after logout");
     }
 
@@ -47,17 +46,48 @@ class StudySessionInteractorTest {
         final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
         final StudySessionInteractor interactor = new StudySessionInteractor(testPresenter);
 
-        interactor.stopStudyTimer();
+        int interval = 25;
+        boolean isRunning = false;
+        StudySessionInputData inputData = new StudySessionInputData(interval, isRunning);
 
-        assertTrue(testPresenter.getStopStudyTimerCalled(),
+        interactor.stopStudyTimer(inputData);
+
+        assertTrue(testPresenter.wasStopStudyTimerCalled(),
                 "stopStudyTimer should have been called on the presenter");
+
+        assertEquals(interval, testPresenter.getLastStudySessionOutputData().getCurrentWorkInterval(),
+                "The interval passed to the presenter should match the input interval");
+
+        assertFalse(testPresenter.getLastStudySessionOutputData().isTimerRunning(),
+                "isStudySessionSuccess should be false because the timer was stopped manually");
+    }
+
+    @Test
+    void successHandleTest() {
+        final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
+        final StudySessionInteractor interactor = new StudySessionInteractor(testPresenter);
+
+        int interval = 20; // 20 minutes
+        boolean isRunning = true; // Timer successfully completed
+        StudySessionInputData inputData = new StudySessionInputData(interval, isRunning);
+
+        interactor.handle(inputData);
+
+        assertTrue(testPresenter.wasStopStudyTimerCalled(),
+                "stopStudyTimer should have been called through the handle method");
+
+        assertEquals(interval, testPresenter.getLastStudySessionOutputData().getCurrentWorkInterval(),
+                "The interval passed to the presenter should match the input interval");
+
+        assertTrue(testPresenter.getLastStudySessionOutputData().isTimerRunning(),
+                "isStudySessionSuccess should be true because the timer finished successfully");
     }
 
     @Test
     void switchToBreakSessionViewFailsIfNotCalledTest() {
         final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
 
-        assertFalse(testPresenter.getSwitchToBreakSessionViewCalled(),
+        assertFalse(testPresenter.wasSwitchToBreakSessionViewCalled(),
                 "switchToBreakSessionView should not have been called initially");
     }
 
@@ -65,7 +95,7 @@ class StudySessionInteractorTest {
     void switchToSetupSessionViewFailsIfNotCalledTest() {
         final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
 
-        assertFalse(testPresenter.getSwitchToSetupSessionViewCalled(),
+        assertFalse(testPresenter.wasSwitchToSetupSessionViewCalled(),
                 "switchToSetupSessionView should not have been called initially");
     }
 
@@ -73,7 +103,7 @@ class StudySessionInteractorTest {
     void switchToLoginViewFailsIfNotCalledTest() {
         final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
 
-        assertFalse(testPresenter.getSwitchToLoginViewCalled(),
+        assertFalse(testPresenter.wasSwitchToLoginViewCalled(),
                 "switchToLoginView should not have been called initially");
     }
 
@@ -81,7 +111,7 @@ class StudySessionInteractorTest {
     void prepareLoginViewFailsIfNotCalledTest() {
         final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
 
-        assertFalse(testPresenter.getPrepareLoginViewCalled(),
+        assertFalse(testPresenter.wasPrepareLoginViewCalled(),
                 "prepareLoginView should not have been called initially");
     }
 
@@ -89,7 +119,7 @@ class StudySessionInteractorTest {
     void stopStudyTimerFailsIfNotCalledTest() {
         final TestStudySessionPresenter testPresenter = new TestStudySessionPresenter();
 
-        assertFalse(testPresenter.getStopStudyTimerCalled(),
+        assertFalse(testPresenter.wasStopStudyTimerCalled(),
                 "stopStudyTimer should not have been called initially");
     }
 
@@ -99,6 +129,7 @@ class StudySessionInteractorTest {
         private boolean switchToLoginViewCalled;
         private boolean stopStudyTimerCalled;
         private boolean prepareLoginViewCalled;
+        private StudySessionOutputData lastStudySessionOutputData;
 
         @Override
         public void switchToBreakSessionView() {
@@ -116,8 +147,9 @@ class StudySessionInteractorTest {
         }
 
         @Override
-        public void stopStudyTimer() {
+        public void stopStudyTimer(StudySessionOutputData studySessionOutputData) {
             stopStudyTimerCalled = true;
+            lastStudySessionOutputData = studySessionOutputData;
         }
 
         @Override
@@ -125,24 +157,30 @@ class StudySessionInteractorTest {
             prepareLoginViewCalled = true;
         }
 
-        public boolean getSwitchToBreakSessionViewCalled() {
+        public boolean wasSwitchToBreakSessionViewCalled() {
             return switchToBreakSessionViewCalled;
         }
 
-        public boolean getSwitchToSetupSessionViewCalled() {
+        public boolean wasSwitchToSetupSessionViewCalled() {
             return switchToSetupSessionViewCalled;
         }
 
-        public boolean getSwitchToLoginViewCalled() {
+        public boolean wasSwitchToLoginViewCalled() {
             return switchToLoginViewCalled;
         }
 
-        public boolean getStopStudyTimerCalled() {
+        public boolean wasStopStudyTimerCalled() {
             return stopStudyTimerCalled;
         }
 
-        public boolean getPrepareLoginViewCalled() {
+        public boolean wasPrepareLoginViewCalled() {
             return prepareLoginViewCalled;
+        }
+
+        public StudySessionOutputData getLastStudySessionOutputData() {
+            return lastStudySessionOutputData;
         }
     }
 }
+
+
