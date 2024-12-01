@@ -46,7 +46,7 @@ class AddToInventoryInteractorTest {
         };
 
         final AddToInventoryInputBoundary interactor = new AddToInventoryInteractor(inventoryRepository,
-                successPresenter, foodItemFactory);
+                successPresenter);
         interactor.execute(inputData);
 
     }
@@ -75,7 +75,7 @@ class AddToInventoryInteractorTest {
             }
         };
         final AddToInventoryInputBoundary interactor = new AddToInventoryInteractor(inventoryRepository,
-                successPresenter, foodItemFactory);
+                successPresenter);
         interactor.execute(inputData);
     }
 }

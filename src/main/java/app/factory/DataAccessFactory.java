@@ -76,6 +76,6 @@ public class DataAccessFactory {
      * @return the inventory data access object
      */
     public DBInventoryDataAccessObject createInventoryAccessFactory() {
-        return new DBInventoryDataAccessObject(new FoodInventoryFactory(), new FoodItemFactory());
+        return new DBInventoryDataAccessObject(new FoodInventoryFactory());
     }
 }

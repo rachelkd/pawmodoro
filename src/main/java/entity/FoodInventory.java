@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public class FoodInventory implements Inventory {
     private final String ownerId;
-    private Map<String, AbstractFood> items;
+    private Map<String, Integer> items;
 
     public FoodInventory(String ownerId) {
         this.ownerId = ownerId;
@@ -21,13 +21,13 @@ public class FoodInventory implements Inventory {
      * @return an unmodifiable view of the items map
      */
     @Override
-    public Map<String, AbstractFood> getItems() {
+    public Map<String, Integer> getItems() {
         // return items to pass tests, see if better way
         return new HashMap<>(items);
     }
 
     @Override
-    public void setItems(Map<String, AbstractFood> items) {
+    public void setItems(Map<String, Integer> items) {
         this.items = new HashMap<>(items);
     }
 

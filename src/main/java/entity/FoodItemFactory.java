@@ -1,6 +1,6 @@
 package entity;
 
-import use_case.food_management.FoodMappingService;
+import use_case.food_management.add_to_inventory.FoodMappingService;
 
 /**
  * Factory for building Abstract FoodItem objects.

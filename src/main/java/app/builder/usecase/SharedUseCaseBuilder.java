@@ -112,8 +112,7 @@ public class SharedUseCaseBuilder extends AbstractUseCaseBuilder {
 
         final AddToInventoryInputBoundary interactor = new AddToInventoryInteractor(
                 getDataAccess().getInventoryDataAccess(),
-                outputBoundary,
-                foodItemFactory);
+                outputBoundary);
 
         final AddToInventoryController controller = new AddToInventoryController(interactor);
         getViews().getShared().getViews().getInventoryView().setAddToInventoryController(controller);

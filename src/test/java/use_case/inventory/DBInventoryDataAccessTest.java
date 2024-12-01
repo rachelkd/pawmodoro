@@ -40,7 +40,7 @@ class DBInventoryDataAccessTest {
 
     @BeforeEach
     void setUp() {
-        inventoryRepository = new DBInventoryDataAccessObject(inventoryFactory, foodItemFactory);
+        inventoryRepository = new DBInventoryDataAccessObject(inventoryFactory);
         cleanupTestData();
     }
 
