@@ -8,7 +8,6 @@ import app.factory.ViewFactory;
 import app.service.DialogService;
 import interface_adapter.ViewManagerModel;
 import view.AdoptionView;
-import view.MaxCatsErrorView;
 import view.RunawayCatView;
 
 /**
@@ -24,7 +23,6 @@ public class CatManagementViewBuilder {
 
     private AdoptionView adoptionView;
     private RunawayCatView runawayCatView;
-    private MaxCatsErrorView maxCatsErrorView;
 
     /**
      * Creates a new cat management view builder.
@@ -59,8 +57,7 @@ public class CatManagementViewBuilder {
     public CatManagementViewBuilder build() {
         return this
                 .buildAdoptionView()
-                .buildRunawayCatView()
-                .buildMaxCatsErrorView();
+                .buildRunawayCatView();
     }
 
     /**
@@ -83,17 +80,6 @@ public class CatManagementViewBuilder {
         return this;
     }
 
-    /**
-     * Builds the max cats error view.
-     *
-     * @return this builder
-     */
-    private CatManagementViewBuilder buildMaxCatsErrorView() {
-        maxCatsErrorView = viewFactory.createMaxCatsErrorView(catViewModels.getMaxCatsErrorViewModel());
-        cardPanel.add(maxCatsErrorView, maxCatsErrorView.getViewName());
-        return this;
-    }
-
     public AdoptionView getAdoptionView() {
         return adoptionView;
     }
@@ -102,7 +88,4 @@ public class CatManagementViewBuilder {
         return runawayCatView;
     }
 
-    public MaxCatsErrorView getMaxCatsErrorView() {
-        return maxCatsErrorView;
-    }
 }

@@ -51,7 +51,6 @@ public class CatViewBuilder {
         this.catViewModels = new CatViewModels(
                 catViewModelFactory.createAdoptionViewModel(),
                 catViewModelFactory.createRunawayCatViewModel(),
-                catViewModelFactory.createMaxCatsErrorViewModel(),
                 catViewModelFactory.createDisplayCatImageViewModel());
     }
 

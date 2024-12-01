@@ -9,7 +9,6 @@ import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.initialize_cats.CatViewModelFactory;
 import interface_adapter.initialize_cats.InitializeCatsViewModel;
-import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import use_case.cat_management.create_cat.CreateCatOutputBoundary;
 import use_case.cat_management.create_cat.CreateCatOutputData;
 
@@ -18,16 +17,13 @@ import use_case.cat_management.create_cat.CreateCatOutputData;
  */
 public class CreateCatPresenter implements CreateCatOutputBoundary {
     private ViewManagerModel viewManagerModel;
-    private MaxCatsErrorViewModel maxCatsErrorViewModel;
     private InitializeCatsViewModel initializeCatsViewModel;
     private AdoptionViewModel adoptionViewModel;
 
     public CreateCatPresenter(ViewManagerModel viewManagerModel,
-                              MaxCatsErrorViewModel maxCatsErrorView,
                               InitializeCatsViewModel initializeCatsViewModel,
                               AdoptionViewModel adoptionViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.maxCatsErrorViewModel = maxCatsErrorView;
         this.initializeCatsViewModel = initializeCatsViewModel;
         this.adoptionViewModel = adoptionViewModel;
     }
