@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import entity.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import config.SupabaseConfig;
+import entity.AbstractFood;
+import entity.FoodFactory;
+import entity.Inventory;
+import entity.InventoryFactory;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
