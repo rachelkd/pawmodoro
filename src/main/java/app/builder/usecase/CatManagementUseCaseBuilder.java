@@ -16,8 +16,6 @@ import interface_adapter.change_cat_hunger.ChangeCatHungerController;
 import interface_adapter.change_cat_hunger.ChangeCatHungerPresenter;
 import interface_adapter.create_cat.CreateCatController;
 import interface_adapter.create_cat.CreateCatPresenter;
-import interface_adapter.maxcatserror.MaxCatsErrorController;
-import interface_adapter.maxcatserror.MaxCatsErrorPresenter;
 import interface_adapter.runawaycat.RunawayCatController;
 import interface_adapter.runawaycat.RunawayCatPresenter;
 import use_case.adoption.AdoptionInputBoundary;
@@ -32,9 +30,6 @@ import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputBoundary;
 import use_case.cat_management.create_cat.CreateCatInputBoundary;
 import use_case.cat_management.create_cat.CreateCatInteractor;
 import use_case.cat_management.create_cat.CreateCatOutputBoundary;
-import use_case.maxcatserror.MaxCatsErrorInputBoundary;
-import use_case.maxcatserror.MaxCatsErrorInteractor;
-import use_case.maxcatserror.MaxCatsErrorOutputBoundary;
 import use_case.runawaycat.RunawayCatInputBoundary;
 import use_case.runawaycat.RunawayCatInteractor;
 import use_case.runawaycat.RunawayCatOutputBoundary;
@@ -77,21 +72,6 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
     }
 
     /**
-     * Builds the max cats error use case.
-     * @return this builder
-     */
-    public CatManagementUseCaseBuilder buildMaxCatsErrorUseCase() {
-        final MaxCatsErrorOutputBoundary outputBoundary = new MaxCatsErrorPresenter(
-                getViews().getViewManagerModel(),
-                getViews().getCat().getViewModels().getMaxCatsErrorViewModel());
-
-        final MaxCatsErrorInputBoundary interactor = new MaxCatsErrorInteractor(outputBoundary);
-        final MaxCatsErrorController controller = new MaxCatsErrorController(interactor);
-        getViews().getCat().getViews().getMaxCatsErrorView().setMaxCatsController(controller);
-        return this;
-    }
-
-    /**
      * Builds the runaway cat use case.
      * @return this builder
      */
@@ -115,7 +95,6 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
      */
     public CatManagementUseCaseBuilder buildCreateCatUseCase() {
         final CreateCatOutputBoundary outputBoundary = new CreateCatPresenter(getViews().getViewManagerModel(),
-                getViews().getCat().getViewModels().getMaxCatsErrorViewModel(),
                 getViews().getShared().getViewModels().getInitializeCatsViewModel(),
                 getViews().getCat().getViewModels().getAdoptionViewModel());
 
@@ -176,7 +155,6 @@ public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
     public CatManagementUseCaseBuilder build() {
         return this
                 .buildAdoptionUseCase()
-                .buildMaxCatsErrorUseCase()
                 .buildRunawayCatUseCase()
                 .buildCreateCatUseCase()
                 .buildChangeCatHungerUseCase()

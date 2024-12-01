@@ -7,7 +7,7 @@ public class AdoptionState {
     private String catName = "";
     private String adoptionError = "";
     private String owner = "";
-    private boolean isSuccess = false;
+    private boolean isSuccess;
 
     /**
      * Gets the owner name.
@@ -18,7 +18,7 @@ public class AdoptionState {
     }
 
     /**
-     * Sets the owner's name
+     * Sets the owner's name.
      * @param name the name of the owner
      */
     public void setOwner(String name) {
@@ -59,6 +59,7 @@ public class AdoptionState {
 
     /**
      * Gets whether cat was successfully adopted.
+     * @return if the adoption was a success
      */
     public boolean getIsSuccess() {
         return isSuccess;
@@ -66,7 +67,7 @@ public class AdoptionState {
 
     /**
      * Sets whether cat was successfully adopted.
-     * @param isSuccess
+     * @param isSuccess if the adoption was a success
      */
     public void setIsSuccess(boolean isSuccess) {
         this.isSuccess = isSuccess;
