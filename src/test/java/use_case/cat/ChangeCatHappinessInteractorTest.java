@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import interface_adapter.change_cat_happiness.ChangeCatHappinessPresenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,8 @@ import use_case.cat_management.change_cat_happiness.ChangeCatHappinessInputData;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessInteractor;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputBoundary;
 import use_case.cat_management.change_cat_happiness.ChangeCatHappinessOutputData;
+import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputBoundary;
+import use_case.cat_management.change_cat_hunger.ChangeCatHungerOutputData;
 
 public class ChangeCatHappinessInteractorTest {
     private CatFactory catFactory;
@@ -123,5 +126,29 @@ public class ChangeCatHappinessInteractorTest {
 
     }
 
-    // TODO add test for empty cat name
+    @Test
+    void failureChangeCatHappinessTest() {
+        final ChangeCatHappinessInputData inputData = new ChangeCatHappinessInputData("",
+                cat.getOwnerUsername(), false, 60);
+
+        final ChangeCatHappinessOutputBoundary failurePresenter = new ChangeCatHappinessOutputBoundary() {
+            @Override
+            public void prepareSuccessView(ChangeCatHappinessOutputData changeCatHappinessOutputData) {
+                fail("Usecase unexpected");
+            }
+
+            @Override
+            public void switchToRunawayCatView(String catName, String ownerUsername) {
+                fail("Usecase unexpected");
+            }
+
+            @Override
+            public void prepareFailureView(String errorMessage) {
+                assertEquals("You didn't to select a cat!", errorMessage);
+            }
+        };
+        final ChangeCatHappinessInputBoundary interactor =
+                new ChangeCatHappinessInteractor(catRepository, failurePresenter);
+        interactor.execute(inputData);
+    }
 }
