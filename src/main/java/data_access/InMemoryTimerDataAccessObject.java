@@ -6,30 +6,21 @@ import java.util.concurrent.TimeUnit;
 
 import constants.Constants;
 import entity.Timer;
-import entity.TimerFactory;
 import use_case.timer.TimerSettingsDataAccessInterface;
 import use_case.timer.TimerStatusDataAccessInterface;
-import use_case.timer.display_timer.DisplayTimerDataAccessInterface;
 
 /**
  * In-memory implementation of timer data access.
  */
 public class InMemoryTimerDataAccessObject
-        implements DisplayTimerDataAccessInterface, TimerSettingsDataAccessInterface, TimerStatusDataAccessInterface {
+        implements TimerSettingsDataAccessInterface, TimerStatusDataAccessInterface {
 
     // Default durations
-    private static final long DEFAULT_WORK_DURATION = TimeUnit.MINUTES.toMillis(25);
-    private static final long DEFAULT_SHORT_BREAK_DURATION = TimeUnit.MINUTES.toMillis(5);
+    private static final long DEFAULT_WORK_DURATION = TimeUnit.MINUTES.toMillis(Constants.DEFAULT_WORK_MINUTES);
+    private static final long DEFAULT_SHORT_BREAK_DURATION = TimeUnit.MINUTES.toMillis(Constants.DEFAULT_BREAK_MINUTES);
     private static final long DEFAULT_LONG_BREAK_DURATION = TimeUnit.MINUTES.toMillis(15);
 
     private final Map<String, Timer> timers = new HashMap<>();
-    private final TimerFactory timerFactory = new TimerFactory();
-
-    @Override
-    public Timer getTimer(String username) {
-        return timers.computeIfAbsent(username,
-                user -> timerFactory.create());
-    }
 
     @Override
     public void save(String username, Timer timer) {

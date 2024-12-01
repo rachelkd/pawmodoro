@@ -27,8 +27,6 @@ public class TimerUseCaseBuilder extends AbstractUseCaseBuilder {
         super(views, dataAccess);
     }
 
-    // TODO: Move this into SessionsUseCaseBuilder?
-
     /**
      * Builds the setup session use case.
      *
