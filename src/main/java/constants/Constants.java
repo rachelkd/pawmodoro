@@ -76,6 +76,9 @@ public final class Constants {
     public static final int DISPLAY_CAT_STATS_MAX_WIDTH = 360;
     public static final int DISPLAY_CAT_STATS_HEIGHT = 360;
 
+    //Set up study session view constants
+    public static final int SETUP_SESSION_NORMAL_FONT_SIZE = 16;
+    public static final int SETUP_SESSION_TITLE_FONT_SIZE = 20;
     // Adoption view constants
     public static final int ADOPTION_VIEW_WIDTH = 360;
     public static final int ADOPTION_VIEW_HEIGHT = 360;
