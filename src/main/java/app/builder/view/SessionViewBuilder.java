@@ -63,6 +63,7 @@ public class SessionViewBuilder {
                 sessionViewModelFactory.createSetupSessionViewModel(),
                 sessionViewModelFactory.createTimerViewModel(),
                 sessionViewModelFactory.createStudySessionViewModel(),
+                sessionViewModelFactory.createMusicControlViewModel(),
                 sessionViewModelFactory.createBreakSessionViewModel(),
                 sessionViewModelFactory.createLoginViewModel());
         this.dialogService = dialogService;
@@ -113,7 +114,8 @@ public class SessionViewBuilder {
                 viewModels.getBreakSessionViewModel(),
                 sharedViewsAndModels.getViewModels().getInitializeCatsViewModel(),
                 dialogService,
-                sharedViewsAndModels.getViews().getCatContainerView());
+                sharedViewsAndModels.getViews().getCatContainerView(),
+                viewModels.getMusicControlViewModel());
         cardPanel.add(studySessionView, studySessionView.getViewName());
         return this;
     }

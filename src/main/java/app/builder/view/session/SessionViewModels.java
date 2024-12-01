@@ -2,6 +2,7 @@ package app.builder.view.session;
 
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.music_control.MusicControlViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
@@ -15,15 +16,18 @@ public class SessionViewModels {
     private final TimerViewModel timerViewModel;
     private final StudySessionViewModel studySessionViewModel;
     private final BreakSessionViewModel breakSessionViewModel;
+    private final MusicControlViewModel musicControlViewModel;
 
     public SessionViewModels(SetupSessionViewModel setupSessionViewModel,
-            TimerViewModel timerViewModel, StudySessionViewModel studySessionViewModel,
-            BreakSessionViewModel breakSessionViewModel, LoginViewModel loginViewModel) {
+                             TimerViewModel timerViewModel, StudySessionViewModel studySessionViewModel,
+                             MusicControlViewModel musicControlViewModel, BreakSessionViewModel breakSessionViewModel,
+                             LoginViewModel loginViewModel) {
         this.setupSessionViewModel = setupSessionViewModel;
         this.timerViewModel = timerViewModel;
         this.studySessionViewModel = studySessionViewModel;
         this.breakSessionViewModel = breakSessionViewModel;
         this.loginViewModel = loginViewModel;
+        this.musicControlViewModel = musicControlViewModel;
     }
 
     public SetupSessionViewModel getSetupSessionViewModel() {
@@ -45,4 +49,9 @@ public class SessionViewModels {
     public BreakSessionViewModel getBreakSessionViewModel() {
         return breakSessionViewModel;
     }
+
+    public MusicControlViewModel getMusicControlViewModel() {
+        return musicControlViewModel;
+    }
+
 }

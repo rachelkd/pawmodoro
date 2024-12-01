@@ -8,8 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import config.SupabaseConfig;
-import entity.AbstractFood;
-import entity.FoodItemFactory;
 import entity.Inventory;
 import entity.InventoryFactory;
 import okhttp3.MediaType;
@@ -45,16 +43,13 @@ public class DBInventoryDataAccessObject implements InventoryDataAccessInterface
     private final String apiUrl = SupabaseConfig.getUrl();
     private final String apiKey = SupabaseConfig.getAnonKey();
     private final InventoryFactory foodInventoryFactory;
-    private final FoodItemFactory foodItemFactory;
 
     /**
      * Creates new DBInventoryDAO.
      * @param foodInventoryFactory factory for creating inventories
-     * @param foodItemFactory factory for creating food items
      */
-    public DBInventoryDataAccessObject(InventoryFactory foodInventoryFactory, FoodItemFactory foodItemFactory) {
+    public DBInventoryDataAccessObject(InventoryFactory foodInventoryFactory) {
         this.foodInventoryFactory = foodInventoryFactory;
-        this.foodItemFactory = foodItemFactory;
     }
 
     /**
@@ -96,28 +91,26 @@ public class DBInventoryDataAccessObject implements InventoryDataAccessInterface
 
     JSONArray getJsonArray(Inventory inventory) {
         final JSONArray jsonArray = new JSONArray();
-        final Map<String, AbstractFood> inventoryMap = inventory.getItems();
+        final Map<String, Integer> inventoryMap = inventory.getItems();
 
-        for (Map.Entry<String, AbstractFood> entry : inventoryMap.entrySet()) {
+        for (Map.Entry<String, Integer> entry : inventoryMap.entrySet()) {
             final JSONObject jsonObject = new JSONObject();
             jsonObject.put(FOOD_KEY, entry.getKey());
-            jsonObject.put(QUANTITY_KEY, entry.getValue().getQuantity());
+            jsonObject.put(QUANTITY_KEY, entry.getValue());
             jsonArray.put(jsonObject);
         }
         return jsonArray;
     }
 
-    Map<String, AbstractFood> getHashMap(JSONArray jsonArray) {
-        final Map<String, AbstractFood> hashMap = new HashMap<String, AbstractFood>();
+    Map<String, Integer> getHashMap(JSONArray jsonArray) {
+        final Map<String, Integer> hashMap = new HashMap<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
             final JSONObject jsonObject = jsonArray.getJSONObject(i);
             final String key = jsonObject.getString(FOOD_KEY);
-            final int quantity = jsonObject.getInt(QUANTITY_KEY);
+            final Integer quantity = jsonObject.getInt(QUANTITY_KEY);
 
-            final AbstractFood foodObject = foodItemFactory.create(key);
-            foodObject.setQuantity(quantity);
-            hashMap.put(key, foodObject);
+            hashMap.put(key, quantity);
         }
         return hashMap;
     }
@@ -145,8 +138,8 @@ public class DBInventoryDataAccessObject implements InventoryDataAccessInterface
     }
 
     @Override
-    public Map<String, AbstractFood> getInventoryItems(String ownerId) {
-        Map<String, AbstractFood> result = null;
+    public Map<String, Integer> getInventoryItems(String ownerId) {
+        Map<String, Integer> result = null;
 
         final Request request = new Request.Builder()
                 .url(apiUrl + INVENTORIES_ENDPOINT + OWNER_QUERY + ownerId)

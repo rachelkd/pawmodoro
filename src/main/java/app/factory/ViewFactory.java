@@ -13,6 +13,7 @@ import interface_adapter.get_cat_fact.GetCatFactViewModel;
 import interface_adapter.initialize_cats.CatViewFactory;
 import interface_adapter.initialize_cats.InitializeCatsViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.music_control.MusicControlViewModel;
 import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupViewModel;
@@ -115,15 +116,17 @@ public class ViewFactory {
      * @param initializeCatsViewModel the initialize cat view model
      * @param dialogService the dialog service
      * @param catContainerView the existing cat container view instance
+     * @param musicControlViewModel the music control view model
      * @return StudySessionView
      */
     public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
             BreakSessionViewModel breakSessionViewModel,
             InitializeCatsViewModel initializeCatsViewModel,
             DialogService dialogService,
-            CatContainerView catContainerView) {
+            CatContainerView catContainerView,
+            MusicControlViewModel musicControlViewModel) {
         return new StudySessionView(studySessionViewModel, breakSessionViewModel,
-                initializeCatsViewModel, dialogService, catContainerView);
+                initializeCatsViewModel, dialogService, catContainerView, musicControlViewModel);
     }
 
     /**

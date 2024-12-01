@@ -2,7 +2,6 @@ package use_case.food_management;
 
 import java.util.Map;
 
-import entity.AbstractFood;
 import entity.Inventory;
 
 /**
@@ -33,9 +32,9 @@ public interface InventoryDataAccessInterface {
     /**
      * Return the user's items as map.
      * @param ownerId the owner's id
-     * @return a map of food ids to food objects
+     * @return a map of food to quantity
      */
-    Map<String, AbstractFood> getInventoryItems(String ownerId);
+    Map<String, Integer> getInventoryItems(String ownerId);
 
     /**
      * Updates inventory in the repository. Returns true if updated.

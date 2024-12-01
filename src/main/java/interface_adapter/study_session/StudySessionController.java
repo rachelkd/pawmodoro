@@ -1,6 +1,7 @@
 package interface_adapter.study_session;
 
 import use_case.studysession.StudySessionInputBoundary;
+import use_case.studysession.StudySessionInputData;
 
 /**
  * Controller for Study Session use case.
@@ -35,9 +36,12 @@ public class StudySessionController {
 
     /**
      * Stops the timer for the study session.
+     * @param studySession the current interval of study session.
+     * @param isSuccess whether if user succeeded the pomodoro.
      */
-    public void stopStudyTimer() {
-        studySessionInteractor.stopStudyTimer();
+    public void stopStudyTimer(int studySession, boolean isSuccess) {
+        final StudySessionInputData studySessionInputData = new StudySessionInputData(studySession, isSuccess);
+        studySessionInteractor.handle(studySessionInputData);
     }
 
 }

@@ -26,8 +26,12 @@ public final class Constants {
     public static final int TIMER_VERTICAL_SPACING = 20;
     public static final String TIME_FORMAT_PATTERN = "mm:ss";
 
+<<<<<<< HEAD
     // UI Constants
     public static final int COMPONENT_VERTICAL_SPACING = 10;
+=======
+    public static final int POPUP_FONT_SIZE = 14;
+>>>>>>> origin/main
 
     // BreakSession and StudySession Constants
     public static final int DEFAULT_BUTTON_SIZE_W = 150;
@@ -101,6 +105,9 @@ public final class Constants {
     public static final String CAT_FACT_LOADING = "Loading cat fact...";
     public static final String CAT_FACT_ERROR_PREFIX = "Error: ";
     public static final int CAT_FACT_FONT_SIZE = 14;
+
+    // Music Player constants
+    public static final int DEFAULT_VOLUME = 50;
 
     // Common UI strings
     public static final String LOADING = "Loading...";

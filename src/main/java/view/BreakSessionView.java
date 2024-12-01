@@ -253,6 +253,7 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(logOutSettings)) {
             if (logoutController != null) {
+                studySessionView.showCatContainerView();
                 logoutController.execute("");
             }
             else {
