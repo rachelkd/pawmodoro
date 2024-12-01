@@ -197,6 +197,9 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         return catsPanel;
     }
 
+    /**
+     * Switch the cat container view to this view.
+     */
     public void showCatContainerView() {
         catsPanel.removeAll();
         catsPanel.add(catContainerView, BorderLayout.CENTER);

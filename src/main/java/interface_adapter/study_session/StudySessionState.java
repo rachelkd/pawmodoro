@@ -11,6 +11,8 @@ public class StudySessionState {
     private String password = "";
     private long workInterval = Constants.DEFAULT_WORK_DURATION_MS;
     private long breakInterval = Constants.DEFAULT_BREAK_DURATION_MS;
+    private String catName = "";
+    private String catError;
     private boolean isSuccess = true;
 
     public String getUsername() {
@@ -60,10 +62,30 @@ public class StudySessionState {
         this.isSuccess = false;
     }
 
+    public void setIsSuccess(boolean success) {
+        this.isSuccess = success;
+    }
+
     /**
      * Resets the work interval to the default value of 25 minutes.
      */
     public void resetToDefaultWorkInterval() {
         this.workInterval = Constants.DEFAULT_WORK_DURATION_MS;
+    }
+
+    public String getCatName() {
+        return catName;
+    }
+
+    public void setCatName(String catName) {
+        this.catName = catName;
+    }
+
+    public String getCatError() {
+        return catError;
+    }
+
+    public void setCatError(String catError) {
+        this.catError = catError;
     }
 }

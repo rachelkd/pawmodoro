@@ -54,6 +54,9 @@ public class CreateCatPresenter implements CreateCatOutputBoundary {
 
     @Override
     public void prepareFailView(String errorMessage) {
-
+        final AdoptionState adoptionState = adoptionViewModel.getState();
+        adoptionState.setAdoptionError(errorMessage);
+        adoptionViewModel.setState(adoptionState);
+        adoptionViewModel.firePropertyChanged();
     }
 }

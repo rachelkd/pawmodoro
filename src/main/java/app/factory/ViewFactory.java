@@ -19,7 +19,21 @@ import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
-import view.*;
+import view.AdoptionView;
+import view.BreakSessionView;
+import view.CatContainerView;
+import view.CatView;
+import view.DisplayCatImageView;
+import view.DisplayCatStatsView;
+import view.GetCatFactView;
+import view.InventoryView;
+import view.LoggedInView;
+import view.LoginView;
+import view.MaxCatsErrorView;
+import view.RunawayCatView;
+import view.SetupSessionView;
+import view.SignupView;
+import view.StudySessionView;
 
 /**
  * The ViewFactory class.
@@ -110,15 +124,18 @@ public class ViewFactory {
      * Creates a Study Session View.
      * @param studySessionViewModel the study session view model
      * @param breakSessionViewModel the break session view model
+     * @param initializeCatsViewModel the initialize cat view model
      * @param dialogService the dialog service
      * @param catContainerView the existing cat container view instance
      * @return StudySessionView
      */
     public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
                                                    BreakSessionViewModel breakSessionViewModel,
+                                                   InitializeCatsViewModel initializeCatsViewModel,
                                                    DialogService dialogService,
                                                    CatContainerView catContainerView) {
-        return new StudySessionView(studySessionViewModel, breakSessionViewModel, dialogService, catContainerView);
+        return new StudySessionView(studySessionViewModel, breakSessionViewModel,
+                initializeCatsViewModel, dialogService, catContainerView);
     }
 
     /**

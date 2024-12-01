@@ -169,8 +169,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         if (selectedLabel[0] != null) {
             final String selectedText = selectedLabel[0].getText();
             useItemController.execute(ownerId, selectedText);
-            // TODO uncomment once cats initializer works
-            // changeCatHungerController.execute(inventoryViewModel.getState().getCurrentCatName(), ownerId, selectedText);
+            changeCatHungerController.execute(inventoryViewModel.getState().getCurrentCatName(), ownerId, selectedText);
         }
         else {
             JOptionPane.showMessageDialog(null, "Please select an item first.");

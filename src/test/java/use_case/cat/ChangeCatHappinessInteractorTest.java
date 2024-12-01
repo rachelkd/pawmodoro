@@ -47,6 +47,11 @@ public class ChangeCatHappinessInteractorTest {
             public void switchToRunawayCatView(String catName, String ownerUsername) {
                 fail("Use case switch to runaway cat view is unexpected.");
             }
+
+            @Override
+            public void prepareFailureView(String errorMessage) {
+                fail("Usecase unexpected");
+            }
         };
 
         final ChangeCatHappinessInputBoundary interactor =
@@ -72,6 +77,11 @@ public class ChangeCatHappinessInteractorTest {
             @Override
             public void switchToRunawayCatView(String catName, String ownerUsername) {
                 fail("Use case switch to runaway cat view is unexpected.");
+            }
+
+            @Override
+            public void prepareFailureView(String errorMessage) {
+                fail("Usecase unexpected");
             }
         };
 
@@ -100,11 +110,42 @@ public class ChangeCatHappinessInteractorTest {
                 // checks if cat is removed
                 assertFalse(catRepository.existsByNameAndOwner(catName, ownerUsername));
             }
+
+            @Override
+            public void prepareFailureView(String errorMessage) {
+                fail("Usecase unexpected");
+            }
         };
 
         final ChangeCatHappinessInputBoundary interactor =
                 new ChangeCatHappinessInteractor(catRepository, runawayCatPresenter);
         interactor.execute(inputData);
 
+    }
+
+    @Test
+    void failureChangeCatHappinessTest() {
+        final ChangeCatHappinessInputData inputData = new ChangeCatHappinessInputData("",
+                cat.getOwnerUsername(), false, 60);
+
+        final ChangeCatHappinessOutputBoundary failurePresenter = new ChangeCatHappinessOutputBoundary() {
+            @Override
+            public void prepareSuccessView(ChangeCatHappinessOutputData changeCatHappinessOutputData) {
+                fail("Usecase unexpected");
+            }
+
+            @Override
+            public void switchToRunawayCatView(String catName, String ownerUsername) {
+                fail("Usecase unexpected");
+            }
+
+            @Override
+            public void prepareFailureView(String errorMessage) {
+                assertEquals("You didn't to select a cat!", errorMessage);
+            }
+        };
+        final ChangeCatHappinessInputBoundary interactor =
+                new ChangeCatHappinessInteractor(catRepository, failurePresenter);
+        interactor.execute(inputData);
     }
 }

@@ -1,11 +1,11 @@
 package app.builder.view.shared;
 
+import view.AdoptionView;
+import view.CatContainerView;
 import view.CatView;
 import view.DisplayCatStatsView;
 import view.GetCatFactView;
 import view.InventoryView;
-import view.AdoptionView;
-import view.CatContainerView;
 
 /**
  * Container for views that are shared across multiple views.
@@ -25,6 +25,7 @@ public class SharedViews {
      * @param getCatFactView the get cat fact view
      * @param inventoryView the inventory view
      * @param adoptionView the adoption view
+     * @param catContainerView the cat container view
      */
     public SharedViews(CatView catView,
             DisplayCatStatsView displayCatStatsView,
