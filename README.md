@@ -1,149 +1,189 @@
-# Pawmodoro
+# 🐱 Pawmodoro
 
-## Team Members
+A productivity app that combines the *pomodoro* technique with virtual cat care to make studying more engaging and rewarding.
 
--   [Allyssa Chiu (@chiually)](https://github.com/chiually)
--   [Rachel Deng (@rachelkd)](https://github.com/rachelkd)
--   [Jeha Park (@jehapark)](https://github.com/jehapark)
--   [Manahill Sajid (@manahillsajid)](https://github.com/manahillsajid)
--   [Jinny Yoo (@yhj050224)](https://github.com/yhj050224)
+## Table of Contents
 
-## Instructions
+- [Overview](#overview)
+- [Features](#-features)
+- [Team Members](#-team-members)
+- [Installation](#-installation)
+- [Usage Guide](#-usage-guide)
+- [Contributing](#-contributing)
+- [Feedback](#-feedback)
+- [License](#-license)
 
-1. Build the project with the provided `pom.xml` file.
-2. Set up the environment variables:
-    - `SUPABASE_DB_USER`
-    - `SUPABASE_DB_PASSWORD`
+## Overview
 
-## User Stories and Use Cases
+Pawmodoro is a unique study companion that helps you maintain focus while caring for virtual cats. By completing study intervals, you earn rewards to feed and interact with your virtual cats, creating a fun and motivating study environment.
 
-### Authentication (Team)
+This project was developed to help students stay focused and motivated while studying, but can be used for any task that requires focus and breaks.
 
-**User Story:** As a new user, I want to create a Pawmodoro account to increase my productivity while studying.
+### Why Pawmodoro?
 
-**Use Cases:**
+- 🕒 Customizable study and break intervals
+- 🐈 Virtual cat companions that respond to your study habits
+- 🎵 Integrated music player for focused studying
+- 📊 Track your progress and cat's well-being
 
--   Register new user (create username/password)
--   Login user
--   Logout user
--   Manage user profile
+## ✨ Features
 
-### Timer Management (Assigned to: Jinny)
+### 1. Timer Management
 
-**User Story:** As a user, I want a timer displaying my progress that can be set to intervals of my choosing.
+- Flexible study and break duration settings
+- Visual progress tracking
 
-**Use Cases:**
+### 2. Virtual Cat Care System
 
--   Start/pause/resume timer
--   Set custom interval duration
--   Track interval progress
--   Notify user when interval completes
+- Feed and interact with virtual cats
+- Monitor cat happiness and hunger levels
+- Earn rewards through completed study sessions
+- Random cat facts
 
-### Study Session Customization (Assigned to: Manahill)
+### 3. Music Integration
 
-**User Story:** As a user, I want to be able to choose the length of my study and break sessions independently. That is, the amount of time I have for a break doesn’t depend on how much I study for, and vice versa.
+- Built-in music player
+- Volume control
+- Study-friendly music recommendations
 
-**Use Cases:**
+### 4. Progress Tracking
 
--   Customize study duration
--   Customize break duration
--   Save timer preferences
--   Switch between study/break modes
+- Cat well-being metrics
 
-### Virtual Cat Care (Assigned to: Allyssa)
+### Features to Come
 
-**User Story:** As a user, I want to be able to feed a cat and manage its happiness based on my study performance. I want the system to decrease a cat’s happiness when I stop studying as a penalty.
+- Study session statistics
+- Level progression system
 
-**Use Cases:**
+## 👥 Team Members
 
--   Feed cat after completed intervals
--   Track cat happiness
--   Apply happiness penalties
--   Handle cat status changes
+- [Allyssa Chiu (@chiually)](https://github.com/chiually)
+- [Rachel Deng (@rachelkd)](https://github.com/rachelkd)
+- [Jeha Park (@jehapark)](https://github.com/jehapark)
+- [Manahill Sajid (@manahillsajid)](https://github.com/manahillsajid)
+- [Jinny Yoo (@yhj050224)](https://github.com/yhj050224)
 
-### Cat Interaction (Assigned to: Rachel)
+## 📚 Installation
 
-**User Stories:**
+Pawmodoro is a Java Swing application, so it requires a Java Runtime Environment on any operating system to run. This project uses Maven to manage dependencies.
 
-1. As a user, I want to interact with my virtual cat through clicks to hear meows and learn cat facts.
-2. As a user, I want to view my cat's statistics (hunger and happiness levels) when I click on the cat.
+### Prerequisites
 
-**Use Cases:**
+- Java JDK 17 or higher
+- Maven 3.6 or higher
 
--   Display cat animations
--   Show random cat facts
--   Display cat statistics
-    -   Show current happiness level
-    -   Show current hunger level
--   Update statistics display in real-time
+### Dependencies
 
-### Music Integration (Assigned to: Jeha)
+Our project uses the following packages:
 
-**User Story:** As a user, I want to be able to listen to music while completing a study interval.
+#### Core Dependencies
 
-**Use Cases:**
+- **[JSON in Java](https://github.com/stleary/JSON-java)** (v20240303) - JSON processing
+- **[Okhttp](https://square.github.io/okhttp/)** (v4.12.0) - HTTP client
+- **[Jackson Core](https://github.com/FasterXML/jackson-core)** (v2.15.2) - JSON processing core
+- **[Jackson Databind](https://github.com/FasterXML/jackson-databind)** (v2.15.2) - JSON data binding
+- **[PostgresJDBC](https://github.com/pgjdbc/pgjdbc)** (v42.7.1) - PostgreSQL database connector
+    - Note that the JDBC driver was initially used for development, but replaced with a PostgreSQL REST API. You may still need to install the JDBC driver to build the project.
 
--   Play/pause music
--   Select playlists
--   Adjust volume
--   Track music preferences
+#### Testing Dependencies
 
-## Entities
+- **[JUnit 5](https://junit.org/junit5/)** (v5.8.1) - Unit testing framework
 
-### User
+### Environment Setup
 
--   `username`
--   `password`
--   `level`
--   `levelProgress`
--   `totalFocusTime`
--   `List<Cat> cats`
+1. Clone the repository:
 
-### Cat
+   ```bash
+   git clone https://github.com/rachelkd/pawmodoro.git
+   cd pawmodoro
+   ```
 
--   `name`
--   `happiness` (0-100)
--   `hunger` (0-100)
+2. Build the project:
 
-### Timer
+   ```bash
+   mvn clean install
+   ```
 
--   `workDuration`
--   `shortBreakDuration`
--   `longBreakDuration`
--   `currentState` (enum: WORKING, SHORT_BREAK, LONG_BREAK, PAUSED)
--   `startTime`
--   `completedIntervals`
--   `cyclePosition` (0-3: tracks position in the work-break cycle)
+3. Start studying in the Java Swing application!
 
-### Food (Interface)
+### Common Installation Issues
 
-Methods:
+#### Network Issues
 
--   `getHungerRestoration()`
--   `getHappinessBoost()`
--   `getName()`
+- An internet connection is required to download Maven dependencies and connect to the database
 
-Implementations:
+For any other issues, please check our [Issues page](https://github.com/rachelkd/pawmodoro/issues) or open a new issue.
 
--   WetFood
--   DryFood
--   Milk
+## 📖 Usage Guide
 
-### Statistics
+1. **Getting Started**
+   - Create an account or log in
+   - Customize your study and break durations
+   - Select your first virtual cat companion
 
--   `totalFocusMinutes`
--   `totalBreakMinutes`
--   `completedWorkIntervals`
--   `completedFullCycles`
--   `interruptedSessions`
--   `date`
--   `foodItemsUsed`
--   `previousCats` (tracks runaway cats)
+2. **During Study Sessions**
+   - Start the timer
+   - Monitor your progress
+   - Complete intervals to earn rewards
 
-### MusicPlayer
+3. **Cat Care**
+   - Feed your cat with earned rewards
+   - Interact with your cat during breaks
+   - Monitor happiness and hunger levels
 
--   `currentPlaylist`
--   `isPlaying`
--   `volume`
--   `currentTrack`
--   `spotifyAccessToken`
+## 🤝 Contributing
+
+We welcome contributions to Pawmodoro! Whether you’re fixing a bug, adding features, or improving documentation, follow the steps below.
+
+1. **How to Contribute**  
+   - Fork the repository on GitHub.  
+   - Create a feature branch for your changes.  
+   - Submit a pull request (PR) with a clear description of your changes.
+
+2. **Instructions for Forking**  
+   - Go to the [Pawmodoro](https://github.com/rachelkd/pawmodoro) repository.  
+   - Click the "Fork" button at the top right.  
+   - Clone your forked repository to your local machine:
+
+     ```bash
+     git clone https://github.com/your-username/pawmodoro.git
+     cd pawmodoro
+     ```
+
+   - Create a new branch:
+
+     ```bash
+     git checkout -b feature/your-feature-name
+     ```
+
+3. **Guidelines for a Good Merge Request**  
+   - Write a clear and descriptive title and PR message.  
+   - Ensure the PR is focused on one feature or fix.  
+   - Include any relevant test cases or documentation updates.
+
+4. **Contribution Rules**  
+   - Contributions must align with project goals and scope.  
+   - Avoid submitting incomplete features unless marked as "work in progress (WIP)."  
+   - All code changes must include tests to verify functionality.
+
+5. **Closed Contributions**  
+   - If contributions are temporarily closed, this README will be updated.
+
+## 💬 Feedback
+
+We value your input! Please share your experience:
+
+1. **How to Give Feedback**
+    - Open an [issue](https://github.com/rachelkd/pawmodoro/issues) on GitHub to submit bugs or feature requests.
+
+2. **Rules for Feedback**
+    - Be specific: Include details about the issue or suggestion (e.g., exact steps to reproduce a bug, photos, or videos).
+    - Be constructive: Focus on how to improve rather than just pointing out flaws.
+    - Avoid unrelated or offensive comments.
+
+3. **What to Expect When Submitting Feedback**
+    - Follow-up: If more details are needed, a team member may reach out to you.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

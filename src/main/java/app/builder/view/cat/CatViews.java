@@ -2,7 +2,6 @@ package app.builder.view.cat;
 
 import view.AdoptionView;
 import view.DisplayCatImageView;
-import view.MaxCatsErrorView;
 import view.RunawayCatView;
 
 /**
@@ -12,7 +11,6 @@ public class CatViews {
     // Management-related views
     private final AdoptionView adoptionView;
     private final RunawayCatView runawayCatView;
-    private final MaxCatsErrorView maxCatsErrorView;
 
     // Display-related views
     private final DisplayCatImageView displayCatImageView;
@@ -26,7 +24,6 @@ public class CatViews {
         // Management views
         this.adoptionView = managementBuilder.getAdoptionView();
         this.runawayCatView = managementBuilder.getRunawayCatView();
-        this.maxCatsErrorView = managementBuilder.getMaxCatsErrorView();
 
         // Display views
         this.displayCatImageView = displayBuilder.getDisplayCatImageView();
@@ -39,10 +36,6 @@ public class CatViews {
 
     public RunawayCatView getRunawayCatView() {
         return runawayCatView;
-    }
-
-    public MaxCatsErrorView getMaxCatsErrorView() {
-        return maxCatsErrorView;
     }
 
     public DisplayCatImageView getDisplayCatImageView() {

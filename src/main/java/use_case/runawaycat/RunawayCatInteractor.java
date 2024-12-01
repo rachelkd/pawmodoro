@@ -22,8 +22,4 @@ public class RunawayCatInteractor implements RunawayCatInputBoundary {
         runawayPresenter.prepareSuccessView();
     }
 
-    @Override
-    public void switchToBreakView() {
-        runawayPresenter.switchToBreakView();
-    }
 }

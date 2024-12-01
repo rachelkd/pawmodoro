@@ -37,6 +37,7 @@ public class CreateInventoryInteractor implements CreateInventoryInputBoundary {
 
         inventoryDataAccessObject.save(inventory);
 
+        // ensure inventory was successfully added to the repository
         final boolean isSuccess = inventoryDataAccessObject.existsByOwnerId(inventory.getOwnerId())
                 && inventory.getItems().equals(inventoryDataAccessObject.getInventoryItems(inventory
                 .getOwnerId()));

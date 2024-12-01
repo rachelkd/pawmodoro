@@ -2,7 +2,6 @@ package app.factory.viewmodel;
 
 import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.display_cat_image.DisplayCatImageViewModel;
-import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.runawaycat.RunawayCatViewModel;
 
 /**
@@ -23,14 +22,6 @@ public class CatViewModelFactory {
      */
     public RunawayCatViewModel createRunawayCatViewModel() {
         return new RunawayCatViewModel();
-    }
-
-    /**
-     * Creates a new max cats error view model.
-     * @return the max cats error view model
-     */
-    public MaxCatsErrorViewModel createMaxCatsErrorViewModel() {
-        return new MaxCatsErrorViewModel();
     }
 
     /**

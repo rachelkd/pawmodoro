@@ -76,11 +76,6 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         mainPanel.add(title, BorderLayout.NORTH);
 
         this.buttonPanel = new JPanel();
-
-        final JButton closeButton = new JButton("Close Inventory");
-        closeButton.addActionListener(event -> this.setVisible(false));
-        buttonPanel.add(closeButton);
-
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         this.add(mainPanel);
@@ -109,21 +104,21 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
                 final InventoryState state = (InventoryState) evt.getNewValue();
                 userInventory = state.getInventoryItems();
 
-                buildInventory(state.getOwnerId());
+                refreshInventory(state.getOwnerId());
                 mainPanel.add(inventoryPanel, BorderLayout.CENTER);
 
                 inventoryPanel.revalidate();
                 inventoryPanel.repaint();
             });
 
-        } // add to inventory when complete study session so this use case doesn't need to be here
+        }
         else if (evt.getPropertyName().equals("inventory_add")) {
             SwingUtilities.invokeLater(() -> {
                 final InventoryState state = (InventoryState) evt.getNewValue();
+                clearEmptyMessage(state.getOwnerId());
                 addToInventory(state);
                 // update the user inventory
                 userInventory = state.getInventoryItems();
-
                 inventoryPanel.revalidate();
                 inventoryPanel.repaint();
             });
@@ -141,22 +136,6 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         }
     }
 
-    public void setCreateInventoryController(CreateInventoryController createInventoryController) {
-        this.createInventoryController = createInventoryController;
-    }
-
-    public void setAddToInventoryController(AddToInventoryController addToInventoryController) {
-        this.addToInventoryController = addToInventoryController;
-    }
-
-    public void setUseItemController(UseItemController useItemController) {
-        this.useItemController = useItemController;
-    }
-
-    public void setChangeCatHungerController(ChangeCatHungerController changeCatHungerController) {
-        this.changeCatHungerController = changeCatHungerController;
-    }
-
     void buildInventory(String ownerId) {
         if (!userInventory.isEmpty()) {
             inventoryPanel.setLayout(new BoxLayout(inventoryPanel, BoxLayout.Y_AXIS));
@@ -164,12 +143,9 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
             for (AbstractFood food : userInventory.values()) {
                 addFoodLabel(food);
             }
+            addCloseButton();
+            addSelectItemButton(ownerId);
 
-            final JButton selectItemButton = new JButton("Use Selected Item");
-            buttonPanel.add(selectItemButton, BorderLayout.SOUTH);
-            selectItemButton.addActionListener(event -> {
-                clickedSelectItemButton(ownerId);
-            });
         }
         else {
             // user does not have an existing inventory or their inventory is empty
@@ -177,7 +153,16 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
             final JLabel items = new JLabel(InventoryViewModel.EMPTY_INVENTORY_LABEL);
             items.setAlignmentX(Component.CENTER_ALIGNMENT);
             inventoryPanel.add(items);
+            addCloseButton();
         }
+    }
+
+    void addSelectItemButton(String ownerId) {
+        final JButton selectItemButton = new JButton("Use Selected Item");
+        buttonPanel.add(selectItemButton, BorderLayout.SOUTH);
+        selectItemButton.addActionListener(event -> {
+            clickedSelectItemButton(ownerId);
+        });
     }
 
     void clickedSelectItemButton(String ownerId) {
@@ -188,6 +173,26 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         }
         else {
             JOptionPane.showMessageDialog(null, "Please select an item first.");
+        }
+    }
+
+    void addCloseButton() {
+        final JButton closeButton = new JButton("Close Inventory");
+        closeButton.addActionListener(event -> this.setVisible(false));
+        buttonPanel.add(closeButton);
+    }
+
+    void clearEmptyMessage(String ownerId) {
+        if (inventoryPanel.getComponent(0) instanceof JLabel) {
+            final JLabel firstLabel = (JLabel) inventoryPanel.getComponent(0);
+            if (InventoryViewModel.EMPTY_INVENTORY_LABEL.equals(firstLabel.getText())) {
+
+                inventoryPanel.remove(firstLabel);
+                addSelectItemButton(ownerId);
+
+                inventoryPanel.revalidate();
+                inventoryPanel.repaint();
+            }
         }
     }
 
@@ -245,12 +250,28 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
 
     void refreshInventory(String ownerId) {
         inventoryPanel.removeAll();
-        buttonPanel.remove(1);
+        buttonPanel.removeAll();
 
         buildInventory(ownerId);
     }
 
     public String getViewName() {
         return inventoryViewModel.getViewName();
+    }
+
+    public void setCreateInventoryController(CreateInventoryController createInventoryController) {
+        this.createInventoryController = createInventoryController;
+    }
+
+    public void setAddToInventoryController(AddToInventoryController addToInventoryController) {
+        this.addToInventoryController = addToInventoryController;
+    }
+
+    public void setUseItemController(UseItemController useItemController) {
+        this.useItemController = useItemController;
+    }
+
+    public void setChangeCatHungerController(ChangeCatHungerController changeCatHungerController) {
+        this.changeCatHungerController = changeCatHungerController;
     }
 }

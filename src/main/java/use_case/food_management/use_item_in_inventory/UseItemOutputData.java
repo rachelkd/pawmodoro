@@ -8,21 +8,20 @@ import entity.AbstractFood;
  * Output Data for the Use Item Use Case.
  */
 public class UseItemOutputData {
-    private final boolean isSuccess;
-    private Map<String, AbstractFood> newFoodItems;
+    private final Map<String, AbstractFood> newFoodItems;
+    private final String ownerId;
 
-    public UseItemOutputData(boolean isSuccess, Map<String, AbstractFood> newFoodItems) {
-
-        this.isSuccess = isSuccess;
+    public UseItemOutputData(Map<String, AbstractFood> newFoodItems, String ownerId) {
         this.newFoodItems = newFoodItems;
-    }
-
-    public boolean isSuccess() {
-        return isSuccess;
+        this.ownerId = ownerId;
     }
 
     public Map<String, AbstractFood> getNewFoodItems() {
         return newFoodItems;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
     }
 
 }

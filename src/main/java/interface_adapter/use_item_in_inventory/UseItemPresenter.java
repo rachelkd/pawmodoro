@@ -9,7 +9,7 @@ import use_case.food_management.use_item_in_inventory.UseItemOutputData;
  * Use Item Use Case Presenter.
  */
 public class UseItemPresenter implements UseItemOutputBoundary {
-    private InventoryViewModel inventoryViewModel;
+    private final InventoryViewModel inventoryViewModel;
 
     public UseItemPresenter(InventoryViewModel inventoryViewModel) {
         this.inventoryViewModel = inventoryViewModel;
@@ -19,6 +19,7 @@ public class UseItemPresenter implements UseItemOutputBoundary {
     public void prepareSuccessView(UseItemOutputData useInventoryOutputData) {
         final InventoryState inventoryState = inventoryViewModel.getState();
         inventoryState.setInventoryItems(useInventoryOutputData.getNewFoodItems());
+        inventoryState.setOwnerId(useInventoryOutputData.getOwnerId());
         inventoryViewModel.firePropertyChanged("inventory_item_used");
     }
 }

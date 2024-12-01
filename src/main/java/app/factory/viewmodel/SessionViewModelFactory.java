@@ -72,19 +72,9 @@ public class SessionViewModelFactory {
 
     /**
      * Creates a new music control view model.
-     *
      * @return the music control view model
      */
     public MusicControlViewModel createMusicControlViewModel() {
         return new MusicControlViewModel();
-    }
-
-    /**
-     * Creates a new cat stats view model.
-     *
-     * @return the cat stats view model
-     */
-    public DisplayCatStatsViewModel createDisplayCatStatsViewModel() {
-        return new DisplayCatStatsViewModel();
     }
 }

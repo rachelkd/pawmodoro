@@ -2,12 +2,11 @@ package app.builder;
 
 import app.components.DataAccessComponents;
 import app.factory.DataAccessFactory;
-import data_access.AdoptionDataAccessObject;
 import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
+import data_access.DBInventoryDataAccessObject;
 import data_access.DBUserDataAccessObject;
-import use_case.food_management.InventoryService;
 
 /**
  * Builder for data access components.
@@ -15,8 +14,7 @@ import use_case.food_management.InventoryService;
 public class DataAccessBuilder {
     private final DataAccessFactory factory;
     private DBUserDataAccessObject userDataAccess;
-    private InventoryService inventoryDataAccess;
-    private AdoptionDataAccessObject adoptionDataAccess;
+    private DBInventoryDataAccessObject inventoryDataAccess;
     private ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
     private DBCatDataAccessObject catDataAccess;
     private ApiCatFactDataAccessObject catFactDataAccess;
@@ -32,7 +30,6 @@ public class DataAccessBuilder {
     public DataAccessComponents build() {
         buildUserDataAccess()
                 .buildInventoryDataAccess()
-                .buildAdoptionDataAccess()
                 .buildDisplayCatImageDataAccess()
                 .buildCatDataAccess()
                 .buildCatFactDataAccess();
@@ -40,7 +37,6 @@ public class DataAccessBuilder {
         return new DataAccessComponents(
                 userDataAccess,
                 inventoryDataAccess,
-                adoptionDataAccess,
                 displayCatImageDataAccess,
                 catDataAccess,
                 catFactDataAccess);
@@ -62,15 +58,6 @@ public class DataAccessBuilder {
      */
     private DataAccessBuilder buildInventoryDataAccess() {
         this.inventoryDataAccess = factory.createInventoryAccessFactory();
-        return this;
-    }
-
-    /**
-     * Builds the adoption data access.
-     * @return this builder
-     */
-    private DataAccessBuilder buildAdoptionDataAccess() {
-        this.adoptionDataAccess = factory.createAdoptionDataAccess();
         return this;
     }
 

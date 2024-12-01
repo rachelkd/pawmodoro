@@ -9,8 +9,8 @@ public final class Constants {
     // Global constants
     public static final String FONT_FAMILY = Font.SANS_SERIF;
     // Timer constants
-    public static final int DEFAULT_WORK_MINUTES = 25;
-    public static final int DEFAULT_BREAK_MINUTES = 5;
+    public static final int DEFAULT_WORK_MINUTES = 1;
+    public static final int DEFAULT_BREAK_MINUTES = 1;
     public static final int MINUTES_TO_SECONDS = 60;
     public static final int SECONDS_TO_MILLIS = 1000;
     public static final long SECONDS_TO_MILLIS1 = 1000L;
@@ -25,6 +25,10 @@ public final class Constants {
     public static final int TIMER_FONT_SIZE = 48;
     public static final int TIMER_VERTICAL_SPACING = 20;
     public static final String TIME_FORMAT_PATTERN = "mm:ss";
+
+    // BreakSession and StudySession Constants
+    public static final int DEFAULT_BUTTON_SIZE_W = 150;
+    public static final int DEFAULT_BUTTON_SIZE_H = 40;
 
     // Cat Constants
     public static final int MAX_AMOUNT_OF_CATS = 4;
@@ -60,6 +64,7 @@ public final class Constants {
     // Signup, Login, Loggedin view model constants
     public static final int SPACING = 40;
     public static final int TITLE = 25;
+    public static final int INSET = 10;
 
     public static final int DISPLAY_CAT_REFRESH_BUTTON_WIDTH = 100;
     public static final int DISPLAY_CAT_REFRESH_BUTTON_HEIGHT = 30;
@@ -71,9 +76,17 @@ public final class Constants {
     public static final int DISPLAY_CAT_STATS_MAX_WIDTH = 360;
     public static final int DISPLAY_CAT_STATS_HEIGHT = 360;
 
-    // Adoption view contstants
+    //Set up study session view constants
+    public static final int SETUP_SESSION_NORMAL_FONT_SIZE = 16;
+    public static final int SETUP_SESSION_TITLE_FONT_SIZE = 20;
+    // Adoption view constants
     public static final int ADOPTION_VIEW_WIDTH = 360;
     public static final int ADOPTION_VIEW_HEIGHT = 360;
+
+    // Runaway cat view constants
+    public static final int RUNAWAYCAT_VIEW_WIDTH = 380;
+    public static final int RUNAWAYCAT_VIEW_HEIGHT = 380;
+
     // Cat sprite constants
     public static final int CAT_SPRITE_BASE_SIZE = 32;
     public static final int CAT_SPRITE_SCALE = 2;
@@ -94,6 +107,11 @@ public final class Constants {
     public static final String SUCCESS = "Success";
     public static final String CANCEL = "Cancel";
     public static final String OK = "OK";
+
+    public static final String DEFAULT_CAT_NAME = "Pawmo";
+
+    // Adoption label
+    public static final String ADOPTION_LABEL = "Adopt a new cat!";
 
     private Constants() {
         // Prevent instantiation

@@ -19,9 +19,4 @@ public class RunawayCatPresenter implements RunawayCatOutputBoundary {
     public void prepareSuccessView() {
         // Go back to previous view
     }
-
-    @Override
-    public void switchToBreakView() {
-        // return to break view
-    }
 }

@@ -9,9 +9,11 @@ import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_image.DisplayCatImageViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
+import interface_adapter.display_cat_stats.DisplayCatStatsViewModelFactory;
 import interface_adapter.get_cat_fact.GetCatFactViewModel;
+import interface_adapter.initialize_cats.CatViewFactory;
+import interface_adapter.initialize_cats.InitializeCatsViewModel;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.maxcatserror.MaxCatsErrorViewModel;
 import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupViewModel;
@@ -19,6 +21,7 @@ import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.music_control.MusicControlViewModel;
 import view.AdoptionView;
 import view.BreakSessionView;
+import view.CatContainerView;
 import view.CatView;
 import view.DisplayCatImageView;
 import view.DisplayCatStatsView;
@@ -26,7 +29,6 @@ import view.GetCatFactView;
 import view.InventoryView;
 import view.LoggedInView;
 import view.LoginView;
-import view.MaxCatsErrorView;
 import view.RunawayCatView;
 import view.SetupSessionView;
 import view.SignupView;
@@ -37,6 +39,10 @@ import view.StudySessionView;
  * Responsible for creating various view components in the application.
  */
 public class ViewFactory {
+    private final CatViewFactory catViewModelFactory = new CatViewFactory();
+    private final DisplayCatStatsViewModelFactory displayCatStatsViewModelFactory =
+            new DisplayCatStatsViewModelFactory();
+
     /**
      * Creates a Login View.
      * @param loginViewModel the login view model
@@ -78,19 +84,12 @@ public class ViewFactory {
     /**
      * Creates a Runaway Cat View.
      * @param runawayCatViewModel the runaway cat view model
+     * @param dialogService the dialog service for user interactions
      * @return RunawayCatView
      */
-    public RunawayCatView createRunawayCatView(RunawayCatViewModel runawayCatViewModel) {
-        return new RunawayCatView(runawayCatViewModel);
-    }
-
-    /**
-     * Creates a Max Cats Error View.
-     * @param maxCatsErrorViewModel the max cats error view model
-     * @return MaxCatsErrorView
-     */
-    public MaxCatsErrorView createMaxCatsErrorView(MaxCatsErrorViewModel maxCatsErrorViewModel) {
-        return new MaxCatsErrorView(maxCatsErrorViewModel);
+    public RunawayCatView createRunawayCatView(RunawayCatViewModel runawayCatViewModel, DialogService dialogService) {
+        dialogService.createRunawayCatDialog(runawayCatViewModel);
+        return (RunawayCatView) dialogService.getRunawayCatDialog();
     }
 
     /**
@@ -114,14 +113,21 @@ public class ViewFactory {
     /**
      * Creates a Study Session View.
      * @param studySessionViewModel the study session view model
+     * @param breakSessionViewModel the break session view model
+     * @param initializeCatsViewModel the initialize cat view model
      * @param dialogService the dialog service
-     * @param catView the existing cat view instance
+     * @param catContainerView the existing cat container view instance
      * @param musicControlViewModel the music control view model
      * @return StudySessionView
      */
     public StudySessionView createStudySessionView(StudySessionViewModel studySessionViewModel,
-            DialogService dialogService, CatView catView, MusicControlViewModel musicControlViewModel) {
-        return new StudySessionView(studySessionViewModel, dialogService, catView, musicControlViewModel);
+                                                   BreakSessionViewModel breakSessionViewModel,
+                                                   InitializeCatsViewModel initializeCatsViewModel,
+                                                   DialogService dialogService,
+                                                   CatContainerView catContainerView,
+                                                   MusicControlViewModel musicControlViewModel) {
+        return new StudySessionView(studySessionViewModel, breakSessionViewModel,
+                initializeCatsViewModel, dialogService, catContainerView, musicControlViewModel);
     }
 
     /**
@@ -155,6 +161,22 @@ public class ViewFactory {
     }
 
     /**
+     * Creates a Cat Container View.
+     * @param initializeCatsViewModel the initialize cats view model
+     * @param inventoryViewModel the inventory view model
+     * @param dialogService the dialog service
+     * @param getCatFactView get cat fact view
+     * @return CatContainer View
+     */
+    public CatContainerView createCatContainerView(InitializeCatsViewModel initializeCatsViewModel,
+                                                   InventoryViewModel inventoryViewModel,
+                                                   DialogService dialogService,
+                                                   GetCatFactView getCatFactView) {
+        return new CatContainerView(initializeCatsViewModel, inventoryViewModel, dialogService, getCatFactView,
+                catViewModelFactory, displayCatStatsViewModelFactory);
+    }
+
+    /**
      * Creates a Get Cat Fact View.
      * @param getCatFactViewModel the get cat fact view model
      * @return GetCatFactView
@@ -184,11 +206,18 @@ public class ViewFactory {
     /**
      * Creates Break Session View.
      * @param breakSessionViewModel the break session view model
-     * @param breakSessionState the break session state
+     * @param breakSessionState     the break session state
+     * @param adoptionViewModel the adoption view model
+     * @param dialogService the dialog service
+     * @param catContainerView the cat container view
      * @return BreakSessionView
      */
     public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel,
-                                                   BreakSessionState breakSessionState) {
-        return new BreakSessionView(breakSessionViewModel, breakSessionState);
+                                                   BreakSessionState breakSessionState,
+                                                   AdoptionViewModel adoptionViewModel,
+                                                   DialogService dialogService,
+                                                   CatContainerView catContainerView) {
+        return new BreakSessionView(breakSessionViewModel,
+                breakSessionState, adoptionViewModel, dialogService, catContainerView);
     }
 }
