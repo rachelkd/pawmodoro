@@ -47,7 +47,7 @@ public class DbCatDataAccessObject implements CatDataAccessInterface {
     private final CatFactory catFactory;
 
     /**
-     * Creates a new DBCatDataAccessObject.
+     * Creates a new DbCatDataAccessObject.
      * @param catFactory the factory to create Cat entities
      */
     public DbCatDataAccessObject(CatFactory catFactory) {
@@ -77,7 +77,6 @@ public class DbCatDataAccessObject implements CatDataAccessInterface {
                     .addHeader(CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON)
                     .addHeader(PREFER_HEADER, PREFER_RETURN_MINIMAL)
                     .build();
-
             try {
                 final Response response = client.newCall(request).execute();
                 isSuccessful = response.isSuccessful();
@@ -112,6 +111,7 @@ public class DbCatDataAccessObject implements CatDataAccessInterface {
                         catJson.getInt(HAPPINESS_LEVEL_COLUMN),
                         catJson.getInt(HUNGER_LEVEL_COLUMN),
                         catJson.getString(IMAGE_FILE_NAME_COLUMN));
+
             }
         }
         catch (final IOException exception) {
@@ -145,6 +145,7 @@ public class DbCatDataAccessObject implements CatDataAccessInterface {
                             catJson.getInt(HUNGER_LEVEL_COLUMN),
                             catJson.getString(IMAGE_FILE_NAME_COLUMN));
                     cats.add(cat);
+
                 }
             }
         }
@@ -242,6 +243,7 @@ public class DbCatDataAccessObject implements CatDataAccessInterface {
                 .addHeader(API_KEY_HEADER, apiKey)
                 .addHeader(AUTH_HEADER, BEARER_PREFIX + apiKey)
                 .addHeader(PREFER_HEADER, PREFER_RETURN_MINIMAL)
+
                 .build();
 
         if (existsByNameAndOwner(name, ownerUsername)) {
