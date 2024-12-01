@@ -77,12 +77,10 @@ public class DbCatDataAccessObject implements CatDataAccessInterface {
                     .addHeader(CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON)
                     .addHeader(PREFER_HEADER, PREFER_RETURN_MINIMAL)
                     .build();
-
             try {
                 final Response response = client.newCall(request).execute();
                 isSuccessful = response.isSuccessful();
             }
-
             catch (final IOException exception) {
                 // Keep isSuccessful as false
             }
