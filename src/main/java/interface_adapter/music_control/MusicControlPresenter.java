@@ -14,16 +14,23 @@ public class MusicControlPresenter implements MusicControlOutputBoundary {
 
     @Override
     public void prepareSuccessView(boolean isPlaying) {
-        MusicControlState state = musicControlViewModel.getState();
+        final MusicControlState state = musicControlViewModel.getState();
+        final String buttonText;
         state.setPlaying(isPlaying);
-        state.setButtonText(isPlaying ? "Pause" : "Play");
+        if (isPlaying) {
+            buttonText = "Pause Ambient Noise";
+        }
+        else {
+            buttonText = "Play Ambient Noise";
+        }
+        state.setButtonText(buttonText);
         musicControlViewModel.setState(state);
         musicControlViewModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String error) {
-        MusicControlState state = musicControlViewModel.getState();
+        final MusicControlState state = musicControlViewModel.getState();
         state.setError(error);
         musicControlViewModel.setState(state);
         musicControlViewModel.firePropertyChanged();

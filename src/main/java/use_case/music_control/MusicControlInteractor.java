@@ -43,14 +43,14 @@ public class MusicControlInteractor implements MusicControlInputBoundary {
             musicPlayer.setPlaying(false);
 
         }
-        catch (UnsupportedAudioFileException e) {
-            musicPresenter.prepareFailView("Unsupported audio format: " + e.getMessage());
+        catch (UnsupportedAudioFileException evt) {
+            musicPresenter.prepareFailView("Unsupported audio format: " + evt.getMessage());
         }
-        catch (IOException e) {
-            musicPresenter.prepareFailView("Error reading audio file: " + e.getMessage());
+        catch (IOException evt) {
+            musicPresenter.prepareFailView("Error reading audio file: " + evt.getMessage());
         }
-        catch (LineUnavailableException e) {
-            musicPresenter.prepareFailView("Audio line unavailable: " + e.getMessage());
+        catch (LineUnavailableException evt) {
+            musicPresenter.prepareFailView("Audio line unavailable: " + evt.getMessage());
         }
     }
 
@@ -74,8 +74,8 @@ public class MusicControlInteractor implements MusicControlInputBoundary {
             }
             musicPresenter.prepareSuccessView(musicPlayer.isPlaying());
         }
-        catch (Exception e) {
-            musicPresenter.prepareFailView("Error toggling playback: " + e.getMessage());
+        catch (NumberFormatException evt) {
+            musicPresenter.prepareFailView("Error toggling playback: " + evt.getMessage());
 
             // Try to reinitialize audio if there's an error
             initializeAudio();

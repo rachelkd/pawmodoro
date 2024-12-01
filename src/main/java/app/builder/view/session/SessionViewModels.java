@@ -2,10 +2,10 @@ package app.builder.view.session;
 
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.music_control.MusicControlViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
 import interface_adapter.timer.TimerViewModel;
-import interface_adapter.music_control.MusicControlViewModel;
 
 /**
  * Container for session-related view models.
@@ -53,6 +53,5 @@ public class SessionViewModels {
     public MusicControlViewModel getMusicControlViewModel() {
         return musicControlViewModel;
     }
-
 
 }

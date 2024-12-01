@@ -1,5 +1,7 @@
 package entity;
 
+import constants.Constants;
+
 /**
  * Represents a MusicPlayer with a current playlist, playing state, volume, and current track.
  */
@@ -12,7 +14,7 @@ public class MusicPlayer {
      */
     public MusicPlayer() {
         this.isPlaying = false;
-        this.volume = 50;
+        this.volume = Constants.DEFAULT_VOLUME;
     }
 
     public boolean isPlaying() {

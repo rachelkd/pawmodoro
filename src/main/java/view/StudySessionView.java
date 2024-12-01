@@ -358,7 +358,11 @@ public class StudySessionView extends JPanel implements ActionListener, Property
             // Toggle playback
             musicControlController.togglePlayback();
             // Update button text based on the new state
-            playPauseButton.setText(musicControlViewModel.getState().isPlaying() ? "Pause" : "Play");
+            String buttonText = "Play Ambient Noise";
+            if (musicControlViewModel.getState().isPlaying()) {
+                buttonText = "Pause Ambient Noise";
+            }
+            playPauseButton.setText(buttonText);
         }
     }
 

@@ -3,9 +3,9 @@ package app.builder;
 import app.builder.usecase.AuthUseCaseBuilder;
 import app.builder.usecase.CatDisplayUseCaseBuilder;
 import app.builder.usecase.CatManagementUseCaseBuilder;
+import app.builder.usecase.MusicControlUseCaseBuilder;
 import app.builder.usecase.SharedUseCaseBuilder;
 import app.builder.usecase.TimerUseCaseBuilder;
-import app.builder.usecase.MusicControlUseCaseBuilder;
 import app.builder.view.Views;
 import app.components.DataAccessComponents;
 
@@ -32,7 +32,6 @@ public class UseCaseBuilder {
         final CatManagementUseCaseBuilder catManagementBuilder = new CatManagementUseCaseBuilder(views, dataAccess);
         final TimerUseCaseBuilder timerBuilder = new TimerUseCaseBuilder(views, dataAccess);
         final MusicControlUseCaseBuilder musicBuilder = new MusicControlUseCaseBuilder(views, dataAccess);
-
 
         sharedBuilder.build();
         authBuilder.build();

@@ -109,7 +109,8 @@ public class SessionViewBuilder {
                 viewModels.getBreakSessionViewModel(),
                 sharedViewsAndModels.getViewModels().getInitializeCatsViewModel(),
                 dialogService,
-                sharedViewsAndModels.getViews().getCatContainerView());
+                sharedViewsAndModels.getViews().getCatContainerView(),
+                viewModels.getMusicControlViewModel());
         cardPanel.add(studySessionView, studySessionView.getViewName());
         return this;
     }
