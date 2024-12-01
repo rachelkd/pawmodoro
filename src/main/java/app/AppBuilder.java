@@ -1,6 +1,8 @@
 package app;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -36,7 +38,6 @@ public class AppBuilder {
 
     /**
      * Builds and returns the application frame.
-     *
      * @return the configured application frame
      */
     public JFrame build() {
@@ -55,12 +56,26 @@ public class AppBuilder {
         viewManagerModel.setState(views.getAuth().getViews().getSignupView().getViewName());
         viewManagerModel.firePropertyChanged();
 
+        // Pack the frame to calculate preferred size based on components
+        application.pack();
+
+        // Calculate and set to 60% of screen dimensions
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) (screenSize.getWidth() * 0.6);
+        int height = (int) (screenSize.getHeight() * 0.6);
+        application.setMinimumSize(new Dimension(width, height));
+        application.setPreferredSize(new Dimension(width, height));
+        application.setSize(width, height);
+        application.pack();
+
+        // Center the frame on screen
+        application.setLocationRelativeTo(null);
+
         return application;
     }
 
     /**
      * Initializes all components of the application.
-     *
      * @return this builder
      */
     public AppBuilder initialize() {
