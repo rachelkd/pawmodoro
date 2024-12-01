@@ -5,6 +5,7 @@ import app.components.DataAccessComponents;
 import entity.CatFactory;
 import entity.DefaultHappinessCalculator;
 import entity.DefaultHungerCalculator;
+import entity.FoodFactory;
 import entity.FoodItemFactory;
 import entity.HappinessCalculator;
 import entity.HungerCalculator;
@@ -40,7 +41,7 @@ import use_case.runawaycat.RunawayCatOutputBoundary;
 public class CatManagementUseCaseBuilder extends AbstractUseCaseBuilder {
     private final HappinessCalculator happinessCalculator;
     private final HungerCalculator hungerCalculator;
-    private final FoodItemFactory foodItemFactory;
+    private final FoodFactory foodItemFactory;
     private final CatFactory catFactory;
 
     /**

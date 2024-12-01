@@ -3,7 +3,7 @@ package use_case.food_management.add_to_inventory;
 import java.util.Map;
 
 import entity.AbstractFood;
-import entity.FoodItemFactory;
+import entity.FoodFactory;
 import entity.Inventory;
 import use_case.food_management.FoodMappingService;
 import use_case.food_management.InventoryDataAccessInterface;
@@ -14,12 +14,12 @@ import use_case.food_management.InventoryDataAccessInterface;
 public class AddToInventoryInteractor implements AddToInventoryInputBoundary {
     private final InventoryDataAccessInterface inventoryDataAccessObject;
     private final AddToInventoryOutputBoundary addToInventoryPresenter;
-    private final FoodItemFactory foodFactory;
+    private final FoodFactory foodFactory;
     private final FoodMappingService foodMappingService;
 
     public AddToInventoryInteractor(InventoryDataAccessInterface inventoryDataAccessObject,
                                     AddToInventoryOutputBoundary addToInventoryOutputBoundary,
-                                    FoodItemFactory foodFactory) {
+                                    FoodFactory foodFactory) {
         // repository of inventories
         this.inventoryDataAccessObject = inventoryDataAccessObject;
         this.addToInventoryPresenter = addToInventoryOutputBoundary;

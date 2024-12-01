@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import config.SupabaseConfig;
 import entity.AbstractFood;
-import entity.FoodItemFactory;
+import entity.FoodFactory;
 import entity.Inventory;
 import entity.InventoryFactory;
 import okhttp3.MediaType;
@@ -45,14 +45,14 @@ public class DBInventoryDataAccessObject implements InventoryDataAccessInterface
     private final String apiUrl = SupabaseConfig.getUrl();
     private final String apiKey = SupabaseConfig.getAnonKey();
     private final InventoryFactory foodInventoryFactory;
-    private final FoodItemFactory foodItemFactory;
+    private final FoodFactory foodItemFactory;
 
     /**
      * Creates new DBInventoryDAO.
      * @param foodInventoryFactory factory for creating inventories
      * @param foodItemFactory factory for creating food items
      */
-    public DBInventoryDataAccessObject(InventoryFactory foodInventoryFactory, FoodItemFactory foodItemFactory) {
+    public DBInventoryDataAccessObject(InventoryFactory foodInventoryFactory, FoodFactory foodItemFactory) {
         this.foodInventoryFactory = foodInventoryFactory;
         this.foodItemFactory = foodItemFactory;
     }

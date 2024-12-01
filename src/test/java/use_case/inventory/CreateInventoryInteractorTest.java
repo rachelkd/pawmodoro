@@ -5,10 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import data_access.InMemoryInventoryDataAccessObject;
 import entity.AbstractFood;
+import entity.FoodFactory;
 import entity.FoodInventoryFactory;
 import entity.FoodItemFactory;
 import entity.Inventory;
@@ -23,13 +25,19 @@ import use_case.food_management.create_inventory.CreateInventoryOutputData;
  * Testing the Create Inventory Interactor.
  */
 class CreateInventoryInteractorTest {
+    private InventoryFactory inventoryFactory;
+    private FoodFactory foodItemFactory;
+
+    @BeforeEach
+    void setUp() {
+        this.foodItemFactory = new FoodItemFactory();
+        this.inventoryFactory = new FoodInventoryFactory();
+    }
 
     @Test
     void successCreateNonExistentInventoryTest() {
         final CreateInventoryInputData inputData = new CreateInventoryInputData("chiually");
         final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
-
-        final InventoryFactory inventoryFactory = new FoodInventoryFactory();
 
         final CreateInventoryOutputBoundary successPresenter = new CreateInventoryOutputBoundary() {
 
@@ -48,9 +56,6 @@ class CreateInventoryInteractorTest {
     void successCreateExistingInventoryTest() {
         final CreateInventoryInputData inputData = new CreateInventoryInputData("chiually");
         final InMemoryInventoryDataAccessObject inventoryRepository = new InMemoryInventoryDataAccessObject();
-
-        final InventoryFactory inventoryFactory = new FoodInventoryFactory();
-        final FoodItemFactory foodItemFactory = new FoodItemFactory();
 
         final Inventory inventory = inventoryFactory.create("chiually");
         final AbstractFood foodItem = foodItemFactory.create("milk");
