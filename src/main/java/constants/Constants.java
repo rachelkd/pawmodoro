@@ -26,12 +26,9 @@ public final class Constants {
     public static final int TIMER_VERTICAL_SPACING = 20;
     public static final String TIME_FORMAT_PATTERN = "mm:ss";
 
-<<<<<<< HEAD
     // UI Constants
     public static final int COMPONENT_VERTICAL_SPACING = 10;
-=======
     public static final int POPUP_FONT_SIZE = 14;
->>>>>>> origin/main
 
     // BreakSession and StudySession Constants
     public static final int DEFAULT_BUTTON_SIZE_W = 150;
