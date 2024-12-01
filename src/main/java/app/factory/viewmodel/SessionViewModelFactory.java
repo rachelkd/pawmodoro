@@ -69,7 +69,4 @@ public class SessionViewModelFactory {
         return new BreakSessionViewModel();
     }
 
-    public DisplayCatStatsViewModel createDisplayCatStatsViewModel() {
-        return new DisplayCatStatsViewModel();
-    }
 }

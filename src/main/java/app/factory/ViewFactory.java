@@ -19,7 +19,21 @@ import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
-import view.*;
+import view.AdoptionView;
+import view.BreakSessionView;
+import view.CatContainerView;
+import view.CatView;
+import view.DisplayCatImageView;
+import view.DisplayCatStatsView;
+import view.GetCatFactView;
+import view.InventoryView;
+import view.LoggedInView;
+import view.LoginView;
+import view.MaxCatsErrorView;
+import view.RunawayCatView;
+import view.SetupSessionView;
+import view.SignupView;
+import view.StudySessionView;
 
 /**
  * The ViewFactory class.
