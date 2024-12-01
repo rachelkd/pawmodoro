@@ -18,16 +18,18 @@ import use_case.cat_management.create_cat.CreateCatOutputData;
 
 class CreateCatInteractorTest {
     private CatFactory catFactory;
+    private InMemoryCatDataAccessObject catRepository;
 
     @BeforeEach
     void setUp() {
+
         this.catFactory = new CatFactory();
+        this.catRepository = new InMemoryCatDataAccessObject();
     }
 
     @Test
     void successCreateCatTest() {
         final CreateCatInputData inputData = new CreateCatInputData("Billy", "<3");
-        final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
 
         final CreateCatOutputBoundary successPresenter = new CreateCatOutputBoundary() {
             @Override
@@ -49,7 +51,6 @@ class CreateCatInteractorTest {
     @Test
     void failureSameCatNameTest() {
         final CreateCatInputData inputData = new CreateCatInputData("Billy", "<3");
-        final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
         final Cat existingCat = catFactory.create("Billy", "<3");
         catRepository.saveCat(existingCat);
 
@@ -73,7 +74,6 @@ class CreateCatInteractorTest {
     @Test
     void failureMaxCatsTest() {
         final CreateCatInputData inputData = new CreateCatInputData("Billy", "<3");
-        final InMemoryCatDataAccessObject catRepository = new InMemoryCatDataAccessObject();
         final String[] catNames = {"a", "b", "c", "d", "e"};
 
         for (String name: catNames) {
