@@ -20,7 +20,7 @@ import use_case.food_management.InventoryDataAccessInterface;
 /**
  * Database implementation of the Inventory Data Access Object.
  */
-public class DBInventoryDataAccessObject implements InventoryDataAccessInterface {
+public class DbInventoryDataAccessObject implements InventoryDataAccessInterface {
     private static final String FOOD_KEY = "food_name";
     private static final String QUANTITY_KEY = "quantity";
 
@@ -48,7 +48,7 @@ public class DBInventoryDataAccessObject implements InventoryDataAccessInterface
      * Creates new DBInventoryDAO.
      * @param foodInventoryFactory factory for creating inventories
      */
-    public DBInventoryDataAccessObject(InventoryFactory foodInventoryFactory) {
+    public DbInventoryDataAccessObject(InventoryFactory foodInventoryFactory) {
         this.foodInventoryFactory = foodInventoryFactory;
     }
 

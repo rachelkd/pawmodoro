@@ -24,7 +24,7 @@ import use_case.signup.SignupUserDataAccessInterface;
  * The DAO for user data using Supabase database.
  * Implements interfaces for signup, login, change password, and logout.
  */
-public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
+public class DbUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface,
@@ -51,7 +51,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
     private final UserFactory userFactory;
     private String currentUsername;
 
-    public DBUserDataAccessObject(UserFactory userFactory) {
+    public DbUserDataAccessObject(UserFactory userFactory) {
         this.userFactory = userFactory;
     }
 

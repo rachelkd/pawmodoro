@@ -5,16 +5,16 @@ import app.factory.DataAccessFactory;
 import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
-import data_access.DBInventoryDataAccessObject;
-import data_access.DBUserDataAccessObject;
+import data_access.DbInventoryDataAccessObject;
+import data_access.DbUserDataAccessObject;
 
 /**
  * Builder for data access components.
  */
 public class DataAccessBuilder {
     private final DataAccessFactory factory;
-    private DBUserDataAccessObject userDataAccess;
-    private DBInventoryDataAccessObject inventoryDataAccess;
+    private DbUserDataAccessObject userDataAccess;
+    private DbInventoryDataAccessObject inventoryDataAccess;
     private ApiDisplayCatImageDataAccessObject displayCatImageDataAccess;
     private DBCatDataAccessObject catDataAccess;
     private ApiCatFactDataAccessObject catFactDataAccess;

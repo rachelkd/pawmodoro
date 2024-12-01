@@ -1,15 +1,15 @@
 package app.factory;
 
 import app.service.DialogService;
-import interface_adapter.break_session.BreakSessionState;
+import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.initialize_cats.InitializeCatsViewModel;
 import interface_adapter.music_control.MusicControlViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
-import interface_adapter.adoption.AdoptionViewModel;
 import view.BreakSessionView;
 import view.CatContainerView;
+import view.DisplayCatImageView;
 import view.SetupSessionView;
 import view.StudySessionView;
 
@@ -49,18 +49,17 @@ public class SessionViewFactory {
     /** 
      * Creates a Break Session View.
      * @param breakSessionViewModel the break session view model
-     * @param breakSessionState the break session state
      * @param adoptionViewModel the adoption view model
      * @param dialogService the dialog service
+     * @param displayCatImageView the cat image view
      * @param catContainerView the cat container view
      * @return BreakSessionView
      */
     public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel,
-                                                    BreakSessionState breakSessionState,
                                                     AdoptionViewModel adoptionViewModel,
                                                     DialogService dialogService,
+                                                    DisplayCatImageView displayCatImageView,
                                                     CatContainerView catContainerView) {
-        return new BreakSessionView(breakSessionViewModel, 
-                breakSessionState, adoptionViewModel, dialogService, catContainerView);
+        return new BreakSessionView(breakSessionViewModel, adoptionViewModel, dialogService, displayCatImageView, catContainerView);
     }
 }

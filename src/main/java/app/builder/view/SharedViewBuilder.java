@@ -83,7 +83,7 @@ public class SharedViewBuilder {
     }
 
     private SharedViewBuilder buildAdoptionView() {
-        adoptionView = viewFactory.createAdoptionView(viewModels.getAdoptionViewModel(), dialogService);
+        adoptionView = viewFactory.createAdoptionView(viewModels.getAdoptionViewModel());
         return this;
     }
 

@@ -2,14 +2,15 @@ package app.factory;
 
 import app.service.DialogService;
 import interface_adapter.adoption.AdoptionViewModel;
-import interface_adapter.break_session.BreakSessionState;
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.cat.CatViewModel;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.display_cat_image.DisplayCatImageViewModel;
 import interface_adapter.display_cat_stats.DisplayCatStatsViewModel;
+import interface_adapter.display_cat_stats.DisplayCatStatsViewModelFactory;
 import interface_adapter.get_cat_fact.GetCatFactViewModel;
+import interface_adapter.initialize_cats.CatViewFactory;
 import interface_adapter.initialize_cats.InitializeCatsViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.music_control.MusicControlViewModel;
@@ -17,9 +18,6 @@ import interface_adapter.runawaycat.RunawayCatViewModel;
 import interface_adapter.setupsession.SetupSessionViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.study_session.StudySessionViewModel;
-import interface_adapter.display_cat_stats.DisplayCatStatsViewModelFactory;
-import interface_adapter.initialize_cats.CatViewFactory;
-
 import view.AdoptionView;
 import view.BreakSessionView;
 import view.CatContainerView;
@@ -109,24 +107,26 @@ public class ViewFactory {
                                                    DialogService dialogService,
                                                    CatContainerView catContainerView,
                                                    MusicControlViewModel musicControlViewModel) {
-        return sessionViewFactory.createStudySessionView(studySessionViewModel, breakSessionViewModel, initializeCatsViewModel, dialogService, catContainerView, musicControlViewModel);
+        return sessionViewFactory.createStudySessionView(studySessionViewModel, breakSessionViewModel,
+                initializeCatsViewModel, dialogService, catContainerView, musicControlViewModel);
     }
 
     /**
      * Delegates to sessionViewFactory to create Break Session View.
      * @param breakSessionViewModel the break session view model
-     * @param breakSessionState     the break session state
      * @param adoptionViewModel the adoption view model
      * @param dialogService the dialog service
+     * @param displayCatImageView the cat image view
      * @param catContainerView the cat container view
      * @return BreakSessionView
      */
     public BreakSessionView createBreakSessionView(BreakSessionViewModel breakSessionViewModel,
-                                                   BreakSessionState breakSessionState,
                                                    AdoptionViewModel adoptionViewModel,
                                                    DialogService dialogService,
+                                                   DisplayCatImageView displayCatImageView,
                                                    CatContainerView catContainerView) {
-        return sessionViewFactory.createBreakSessionView(breakSessionViewModel, breakSessionState, adoptionViewModel, dialogService, catContainerView);
+        return sessionViewFactory.createBreakSessionView(breakSessionViewModel, adoptionViewModel,
+                dialogService, displayCatImageView, catContainerView);
     }
 
     /**
@@ -187,7 +187,8 @@ public class ViewFactory {
                                 InventoryViewModel inventoryViewModel,
                                 DialogService dialogService,
                                 GetCatFactView getCatFactView) {
-        return catRelatedViewFactory.createCatView(catViewModel, displayCatStatsViewModel, inventoryViewModel, dialogService, getCatFactView);
+        return catRelatedViewFactory.createCatView(catViewModel, displayCatStatsViewModel,
+                inventoryViewModel, dialogService, getCatFactView);
     }
 
     /**

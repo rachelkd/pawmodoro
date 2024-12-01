@@ -3,8 +3,8 @@ package app.factory;
 import data_access.ApiCatFactDataAccessObject;
 import data_access.ApiDisplayCatImageDataAccessObject;
 import data_access.DBCatDataAccessObject;
-import data_access.DBInventoryDataAccessObject;
-import data_access.DBUserDataAccessObject;
+import data_access.DbInventoryDataAccessObject;
+import data_access.DbUserDataAccessObject;
 import data_access.InMemoryInventoryDataAccessObject;
 import data_access.InMemoryTimerDataAccessObject;
 import entity.CatFactory;
@@ -21,8 +21,8 @@ public class DataAccessFactory {
      *
      * @return the user data access object
      */
-    public DBUserDataAccessObject createUserDataAccess() {
-        return new DBUserDataAccessObject(new CommonUserFactory());
+    public DbUserDataAccessObject createUserDataAccess() {
+        return new DbUserDataAccessObject(new CommonUserFactory());
     }
 
     /**
@@ -74,7 +74,7 @@ public class DataAccessFactory {
      * Creates a inventory data access object.
      * @return the inventory data access object
      */
-    public DBInventoryDataAccessObject createInventoryAccessFactory() {
-        return new DBInventoryDataAccessObject(new FoodInventoryFactory());
+    public DbInventoryDataAccessObject createInventoryAccessFactory() {
+        return new DbInventoryDataAccessObject(new FoodInventoryFactory());
     }
 }

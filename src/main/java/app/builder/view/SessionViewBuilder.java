@@ -129,8 +129,8 @@ public class SessionViewBuilder {
                 viewModels.getBreakSessionViewModel(),
                 sharedViewsAndModels.getViewModels().getAdoptionViewModel(),
                 dialogService,
-                sharedViewsAndModels.getViews().getCatContainerView(),
-                catViewsAndModels.getViews().getDisplayCatImageView());
+                catViewsAndModels.getViews().getDisplayCatImageView(),
+                sharedViewsAndModels.getViews().getCatContainerView());
         cardPanel.add(breakSessionView, breakSessionView.getViewName());
         return this;
     }
