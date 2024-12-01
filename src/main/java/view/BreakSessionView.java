@@ -41,10 +41,10 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     private LogoutController logoutController;
     private BreakSessionController breakSessionController;
 
-    private final JButton logOutSettings;
-    private final JButton startTimerButton;
+    private JButton logOutSettings;
+    private JButton startTimerButton;
 
-    private final JLabel timerLabel;
+    private JLabel timerLabel;
     private Timer swingTimer;
     private long remainingTime;
 
@@ -67,45 +67,51 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
         this.breakSessionState = breakSessionViewModel.getState();
         this.catContainerView = catContainerView;
         this.displayCatImageView = displayCatImageView;
-
         this.adoptionViewModel = adoptionViewModel;
         this.dialogService = dialogService;
-
         this.catsPanel = new JPanel(new BorderLayout());
+        initializeTimerComponents();
+        initializeButtons();
+        setupLayout();
+        initializeSwingTimer();
+        finalizeSetup();
+    }
 
-        // Initialize remaining time with the break interval from the state
+    private void initializeTimerComponents() {
         breakSessionViewModel.addPropertyChangeListener(this);
         this.remainingTime = breakSessionState.getBreakInterval();
 
-        // Timer label to display the countdown timer
         timerLabel = new JLabel(formatTime(remainingTime), SwingConstants.CENTER);
         timerLabel.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TIMER_FONT_SIZE));
         timerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    }
 
-        // Create buttons
+    private void initializeButtons() {
         logOutSettings = createButton("Log Out");
         startTimerButton = createButton("Start Timer");
 
-        // Set preferred size to match buttons
         final Dimension buttonSize = new Dimension(Constants.DEFAULT_BUTTON_SIZE_W, Constants.DEFAULT_BUTTON_SIZE_H);
         startTimerButton.setPreferredSize(buttonSize);
 
         logOutSettings.addActionListener(this);
         startTimerButton.addActionListener(this);
+    }
 
+    private void setupLayout() {
         final JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
 
-        // Add components to main panel
         add(createTitlePanel());
         add(createTimerPanel());
 
         bottomPanel.add(drawCatsPanel());
         addDisplayCatImageView();
-        bottomPanel.add(createAdoptionAndLogOutPanel(buttonSize));
+        bottomPanel.add(createAdoptionAndLogOutPanel(new Dimension(Constants.DEFAULT_BUTTON_SIZE_W,
+                Constants.DEFAULT_BUTTON_SIZE_H)));
         add(bottomPanel);
+    }
 
-        // Initialize the timer to decrement remaining time
+    private void initializeSwingTimer() {
         swingTimer = new Timer(Constants.SECONDS_TO_MILLIS, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -114,26 +120,27 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
                     updateTimerLabel();
                 }
                 else {
-                    swingTimer.stop();
-                    breakSessionController.switchToStudySessionView();
-                    studySessionView.showCatContainerView();
-                    breakSessionState.resetToDefaultBreakInterval();
-                    remainingTime = breakSessionState.getBreakInterval();
-                    updateTimerLabel();
-
-                    // Reset buttons
-                    startTimerButton.setEnabled(true);
+                    handleTimerCompletion();
                 }
             }
         });
+    }
 
-        // Make sure this panel is visible
-        this.setVisible(true);
-        this.setOpaque(true);
+    private void handleTimerCompletion() {
+        swingTimer.stop();
+        breakSessionController.switchToStudySessionView();
+        studySessionView.showCatContainerView();
+        breakSessionState.resetToDefaultBreakInterval();
+        remainingTime = breakSessionState.getBreakInterval();
+        updateTimerLabel();
+        startTimerButton.setEnabled(true);
+    }
 
-        // Force layout update
-        this.revalidate();
-        this.repaint();
+    private void finalizeSetup() {
+        setVisible(true);
+        setOpaque(true);
+        revalidate();
+        repaint();
     }
 
     private JButton createButton(String text) {
