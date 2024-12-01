@@ -27,7 +27,16 @@ public class StudySessionInteractor implements StudySessionInputBoundary {
     }
 
     @Override
-    public void stopStudyTimer() {
-        studySessionPresenter.stopStudyTimer();
+    public void handle(StudySessionInputData studySessionInputData) {
+        stopStudyTimer(studySessionInputData);
+    }
+
+    @Override
+    public void stopStudyTimer(StudySessionInputData studySessionInputData) {
+        final int studySessionInterval = studySessionInputData.getCurrentWorkInterval();
+        final boolean studySessionIsSuccess = studySessionInputData.isTimerRunning();
+        final StudySessionOutputData studySessionOutputData = new StudySessionOutputData(studySessionInterval,
+                studySessionIsSuccess);
+        studySessionPresenter.stopStudyTimer(studySessionOutputData);
     }
 }
