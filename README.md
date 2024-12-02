@@ -103,8 +103,8 @@ Our project uses the following packages:
    ```bash
    mvn clean install
    ```
-
-3. Start studying in the Java Swing application!
+3. Run the `Main.java` file in the `app` package
+4. Start studying in the Java Swing application!
 
 ### Common Installation Issues
 
