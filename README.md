@@ -128,7 +128,7 @@ For any other issues, please check our [Issues page](https://github.com/rachelkd
 
 3. **Cat Care**
    - Feed your cat with earned rewards
-   - Interact with your cat during breaks
+   - Interact with your cat
    - Monitor happiness and hunger levels
 
 ## 🤝 Contributing
