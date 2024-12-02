@@ -6,9 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -281,27 +278,6 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         catsPanel.add(catContainerView, BorderLayout.CENTER);
         catsPanel.revalidate();
         catsPanel.repaint();
-    }
-
-    /**
-     * Turn on MouseListner for cats.
-     */
-    public void enableCatContainerMouseEvents() {
-        for (MouseListener listener : catContainerView.getMouseListeners()) {
-            catContainerView.removeMouseListener(listener);
-        }
-    }
-
-    /**
-     * Turn off MouseListener for cats.
-     */
-    public void disableCatContainerMouseEvents() {
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent event) {
-                event.consume();
-            }
-        });
     }
 
     public String getViewName() {
