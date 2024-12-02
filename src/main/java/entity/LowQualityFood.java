@@ -11,13 +11,11 @@ public class LowQualityFood extends AbstractFood {
      *
      * @param name
      *            display name (e.g., "Basic Kibble", "Premium Dry Food")
-     * @param quantity
-     *            the initial quantity
      * @throws IllegalArgumentException
      *             if foodId/name is invalid or quantity is negative
      */
-    public LowQualityFood(String name, int quantity) {
-        super(name, DEFAULT_POINTS, quantity);
+    public LowQualityFood(String name) {
+        super(name, DEFAULT_POINTS);
     }
 
     @Override

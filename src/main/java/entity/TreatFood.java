@@ -11,13 +11,11 @@ public class TreatFood extends AbstractFood {
      *
      * @param name
      *            the unique name of this treat (e.g., "cookie", "snack")
-     * @param quantity
-     *            the initial quantity
      * @throws IllegalArgumentException
      *             if name is null/empty or quantity is negative
      */
-    public TreatFood(String name, int quantity) {
-        super(name, DEFAULT_POINTS, quantity);
+    public TreatFood(String name) {
+        super(name, DEFAULT_POINTS);
     }
 
     @Override

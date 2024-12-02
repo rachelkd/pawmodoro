@@ -28,16 +28,16 @@ public class FoodItemFactory implements FoodFactory {
         AbstractFood food = null;
 
         if (foodName.equalsIgnoreCase(MILK)) {
-            food = new LowQualityFood(MILK, 1);
+            food = new LowQualityFood(MILK);
         }
         else if (foodName.equalsIgnoreCase(CHEESE)) {
-            food = new LowQualityFood(CHEESE, 1);
+            food = new LowQualityFood(CHEESE);
         }
         else if (foodName.equalsIgnoreCase(TUNA)) {
-            food = new WetFood(TUNA, 1);
+            food = new WetFood(TUNA);
         }
         else if (foodName.equalsIgnoreCase(TREAT)) {
-            food = new TreatFood(TREAT, 1);
+            food = new TreatFood(TREAT);
         }
         return food;
     }
