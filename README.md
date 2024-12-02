@@ -103,8 +103,8 @@ Our project uses the following packages:
    ```bash
    mvn clean install
    ```
-
-3. Start studying in the Java Swing application!
+3. Run the `Main.java` file in the `app` package
+4. Start studying in the Java Swing application!
 
 ### Common Installation Issues
 
@@ -128,7 +128,7 @@ For any other issues, please check our [Issues page](https://github.com/rachelkd
 
 3. **Cat Care**
    - Feed your cat with earned rewards
-   - Interact with your cat during breaks
+   - Interact with your cat
    - Monitor happiness and hunger levels
 
 ## 🤝 Contributing
