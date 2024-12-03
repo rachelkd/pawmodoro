@@ -19,7 +19,7 @@ import interface_adapter.adoption.AdoptionViewModel;
 import interface_adapter.create_cat.CreateCatController;
 
 /**
- * The view for the Adopting a cat use case.
+ * AdoptionView class.
  */
 public class AdoptionView extends JDialog implements ActionListener, PropertyChangeListener {
     private final AdoptionViewModel adoptionViewModel;
@@ -28,20 +28,14 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
     private CreateCatController createCatController;
     private final AdoptionPanel adoptionPanel;
 
-    /**
-     * Creates a new AdoptionView.
-     *
-     * @param parent            the application
-     * @param adoptionViewModel the view model for the adoption use case
-     */
     public AdoptionView(JFrame parent, AdoptionViewModel adoptionViewModel) {
         super(parent, AdoptionViewModel.TITLE_LABEL, true);
         this.adoptionViewModel = adoptionViewModel;
         this.adoptionViewModel.addPropertyChangeListener(this);
-
+        
         this.adoptionPanel = new AdoptionPanel(adoptionViewModel);
         setupListeners();
-
+        
         this.add(adoptionPanel);
         this.pack();
         this.setLocationRelativeTo(parent);
@@ -68,10 +62,6 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
         }
     }
 
-    /**
-     * Gets the name of this view.
-     * @return the view name
-     */
     public String getViewName() {
         return viewName;
     }
@@ -85,7 +75,7 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
     }
 
     /**
-     * A listener for the name field.
+     * NameFieldDocumentListener method.
      */
     private final class NameFieldDocumentListener implements DocumentListener {
         @Override
@@ -102,7 +92,7 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
         public void changedUpdate(DocumentEvent e) {
             updateState();
         }
-
+        
         private void updateState() {
             final AdoptionState currentState = adoptionViewModel.getState();
             currentState.setCatName(adoptionPanel.getNameField().getText());
@@ -111,10 +101,9 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
     }
 
     /**
-     * A listener for the confirm button.
-     */ 
+     * ConfirmButtonListener method.
+     */
     private final class ConfirmButtonListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (evt.getSource().equals(adoptionPanel.getConfirmButton())) {
@@ -122,7 +111,7 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
                 createCatController.execute(currentState.getCatName(),
                         currentState.getOwner());
                 adoptionController.execute(currentState.getCatName());
-
+                
                 if (currentState.getIsSuccess()) {
                     updatePanelForSuccess();
                 }
@@ -131,11 +120,11 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
                 }
             }
         }
-
+        
         private void updatePanelForSuccess() {
             final JPanel mainPanel = adoptionPanel.getMainPanel();
-            mainPanel.remove(adoptionPanel.getInformationPanel());
-            mainPanel.remove(adoptionPanel.getFinishPanel());
+            mainPanel.remove(adoptionPanel.getInformation());
+            mainPanel.remove(adoptionPanel.getFinish());
             mainPanel.add(adoptionPanel.getAdoptionCompletePanel(), BorderLayout.CENTER);
             mainPanel.revalidate();
             mainPanel.repaint();
@@ -143,21 +132,20 @@ public class AdoptionView extends JDialog implements ActionListener, PropertyCha
     }
 
     /**
-     * A listener for the return button.
-     */ 
+     * ReturnButtonListener method.
+     */
     private final class ReturnButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent evt) {
             if (evt.getSource().equals(adoptionPanel.getReturnButton())) {
                 final JPanel mainPanel = adoptionPanel.getMainPanel();
-                mainPanel.add(adoptionPanel.getInformationPanel(), BorderLayout.CENTER);
-                mainPanel.add(adoptionPanel.getFinishPanel(), BorderLayout.SOUTH);
+                mainPanel.add(adoptionPanel.getInformation(), BorderLayout.CENTER);
+                mainPanel.add(adoptionPanel.getFinish(), BorderLayout.SOUTH);
                 mainPanel.remove(adoptionPanel.getAdoptionCompletePanel());
                 adoptionPanel.getNameField().setText("");
                 dispose();
             }
         }
     }
-
 }
 

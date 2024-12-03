@@ -120,7 +120,7 @@ public final class Constants {
     // Adoption label
     public static final String ADOPTION_LABEL = "Adopt a new cat!";
 
-    // Adoption Panel
+    // Adoption panel
     public static final int COLUMN_SIZE = 15;
 
     private Constants() {
