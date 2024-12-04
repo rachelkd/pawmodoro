@@ -57,13 +57,12 @@ public class SessionUiFactory {
      * @return A configured Timer
      */
     public static Timer createSessionTimer(long initialTime, TimerCallback callback) {
-        return new Timer(Constants.SECONDS_TO_MILLIS, evt -> {
+        return new Timer(Constants.SECONDS_TO_MILLIS, e -> {
             if (initialTime > 0) {
                 final long remaining = initialTime - Constants.SECONDS_TO_MILLIS;
                 callback.onTick(formatTime(remaining));
-            }
-            else {
-                ((Timer) evt.getSource()).stop();
+            } else {
+                ((Timer) e.getSource()).stop();
                 callback.onComplete();
             }
         });

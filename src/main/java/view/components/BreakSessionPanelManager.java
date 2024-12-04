@@ -71,7 +71,7 @@ public class BreakSessionPanelManager {
      */
     public static JPanel createControlPanel(JButton adoptionButton, JButton logOutSettings) {
         final JPanel panel = new JPanel(new BorderLayout());
-
+        
         adoptionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(adoptionButton, BorderLayout.CENTER);
 
@@ -118,16 +118,16 @@ public class BreakSessionPanelManager {
 
         mainView.add(createTitlePanel("BREAK SESSION"));
         mainView.add(createTimerPanel(components.getTimerLabel(), components.getStartTimerButton()));
-
+        
         final JButton adoptionButton = SessionUiFactory.createStandardButton(Constants.ADOPTION_LABEL);
-        adoptionButton.addActionListener(evt -> components.getAdoptionHandler().run());
-
+        adoptionButton.addActionListener(e -> components.getAdoptionHandler().run());
+        
         addDisplayCatImageView(bottomPanel, components.getDisplayCatImageView());
-
+        
         final JPanel catsPanel = createCatsPanel(components.getCatContainerView());
         bottomPanel.add(catsPanel);
         bottomPanel.add(createControlPanel(adoptionButton, components.getLogOutSettings()));
-
+        
         mainView.add(bottomPanel);
         return catsPanel;
     }
@@ -144,9 +144,9 @@ public class BreakSessionPanelManager {
         private final Component displayCatImageView;
         private final Runnable adoptionHandler;
 
-        public ComponentBundle(JLabel timerLabel, JButton startTimerButton,
-                               JButton logOutSettings, Component catContainerView,
-                               Component displayCatImageView, Runnable adoptionHandler) {
+        public ComponentBundle(JLabel timerLabel, JButton startTimerButton, 
+                JButton logOutSettings, Component catContainerView, 
+                Component displayCatImageView, Runnable adoptionHandler) {
             this.timerLabel = timerLabel;
             this.startTimerButton = startTimerButton;
             this.logOutSettings = logOutSettings;
@@ -179,4 +179,4 @@ public class BreakSessionPanelManager {
             return adoptionHandler;
         }
     }
-}
+} 
