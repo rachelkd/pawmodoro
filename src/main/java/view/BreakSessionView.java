@@ -125,6 +125,9 @@ public class BreakSessionView extends JPanel implements PropertyChangeListener {
         adoptionViewModel.setState(adoptionState);
     }
 
+    /**
+     * Shows catContainerView.
+     */
     public void showCatContainerView() {
         catsPanel.removeAll();
         catsPanel.add(catContainerView, BorderLayout.CENTER);
