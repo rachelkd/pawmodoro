@@ -1,21 +1,16 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -24,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
 
 import interface_adapter.add_to_inventory.AddToInventoryController;
 import interface_adapter.change_cat_hunger.ChangeCatHungerController;
@@ -32,6 +26,7 @@ import interface_adapter.create_inventory.CreateInventoryController;
 import interface_adapter.create_inventory.InventoryState;
 import interface_adapter.create_inventory.InventoryViewModel;
 import interface_adapter.use_item_in_inventory.UseItemController;
+import view.components.InventoryUIFactory;
 
 /**
  * The View when user is viewing contents of their inventory.
@@ -50,7 +45,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
     private final JPanel mainPanel;
     private final JPanel inventoryPanel;
     private final JPanel buttonPanel;
-    private final JLabel[] selectedLabel;
+    private final JLabel[] selectedLabel = new JLabel[]{null};
 
     /**
      * Creates the Inventory View.
@@ -63,31 +58,26 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
         super(parent, InventoryViewModel.TITLE_LABEL, false);
         this.inventoryViewModel = inventoryViewModel;
 
-        this.mainPanel = new JPanel();
+        this.mainPanel = InventoryUIFactory.createMainPanel();
+        this.buttonPanel = new JPanel();
+        this.inventoryPanel = InventoryUIFactory.createInventoryPanel(true);
 
-        mainPanel.setLayout(new BorderLayout());
-        final Border border = BorderFactory.createLineBorder(Color.black);
-        mainPanel.setBorder(border);
+        setupInitialLayout(parent);
+        inventoryViewModel.addPropertyChangeListener(this);
+    }
 
+    private void setupInitialLayout(JFrame parent) {
         final JLabel title = new JLabel(InventoryViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setBorder(BorderFactory.createEmptyBorder(0, INDENT, 0, 0));
-        mainPanel.add(title, BorderLayout.NORTH);
 
-        this.buttonPanel = new JPanel();
+        mainPanel.add(title, BorderLayout.NORTH);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         this.add(mainPanel);
         this.pack();
         this.setLocationRelativeTo(parent);
         this.setSize(new Dimension(INVENTORY_WIDTH, INVENTORY_HEIGHT));
-
-        this.inventoryPanel = new JPanel();
-        // Track the selected label in view
-        this.selectedLabel = new JLabel[] {null};
-
-        // listens for property changes to inventory view model
-        inventoryViewModel.addPropertyChangeListener(this);
     }
 
     @Override
@@ -136,18 +126,16 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
     }
 
     void buildInventory(String ownerId) {
+        inventoryPanel.removeAll();
         if (!userInventory.isEmpty()) {
             inventoryPanel.setLayout(new BoxLayout(inventoryPanel, BoxLayout.Y_AXIS));
-
             for (Map.Entry<String, Integer> entry : userInventory.entrySet()) {
                 addFoodLabel(entry.getKey(), entry.getValue());
             }
             addCloseButton();
             addSelectItemButton(ownerId);
-
         }
         else {
-            // user does not have an existing inventory or their inventory is empty
             inventoryPanel.setLayout(new GridBagLayout());
             final JLabel items = new JLabel(InventoryViewModel.EMPTY_INVENTORY_LABEL);
             items.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -221,30 +209,7 @@ public class InventoryView extends JDialog implements ActionListener, PropertyCh
     }
 
     void addFoodLabel(String foodName, Integer quantity) {
-        // panel to put food and quantity labels side by side
-        final JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-
-        // Define a border to indicate label selection
-        final Border selectedBorder = BorderFactory.createLineBorder(Color.BLUE, 2);
-
-        final JLabel foodLabel = new JLabel(foodName);
-        final JLabel quantityLabel = new JLabel(": " + quantity);
-        foodLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // Deselect previous label if any
-                if (selectedLabel[0] != null) {
-                    selectedLabel[0].setBorder(BorderFactory.createEmptyBorder());
-                }
-                // Set new selected label and add border
-                selectedLabel[0] = foodLabel;
-                foodLabel.setBorder(selectedBorder);
-            }
-        });
-        labelPanel.add(foodLabel);
-        labelPanel.add(Box.createHorizontalGlue());
-        labelPanel.add(quantityLabel);
-
+        final JPanel labelPanel = InventoryUIFactory.createFoodLabelPanel(foodName, quantity, selectedLabel);
         inventoryPanel.add(labelPanel);
     }
 

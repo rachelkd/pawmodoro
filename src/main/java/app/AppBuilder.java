@@ -1,93 +1,52 @@
 package app;
 
 import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 
 import app.builder.DataAccessBuilder;
 import app.builder.UseCaseBuilder;
 import app.builder.ViewBuilder;
 import app.builder.view.Views;
 import app.components.DataAccessComponents;
-import app.factory.ViewFactory;
-import app.service.DialogService;
-import interface_adapter.ViewManagerModel;
-import view.ViewManager;
+import app.config.BuilderConfiguration;
 
 /**
- * Main builder class that orchestrates the construction of the application.
+ * The AppBuilder class.
  */
 public class AppBuilder {
     private final CardLayout cardLayout = new CardLayout();
     private final JPanel cardPanel = new JPanel(cardLayout);
-    private final ViewManagerModel viewManagerModel = new ViewManagerModel();
-    private final DialogService dialogService = new DialogService(cardPanel);
-    private final ViewFactory viewFactory = new ViewFactory(dialogService);
-    private final ViewManager viewManager;
-
+    private final BuilderConfiguration config;
+    
     private Views views;
     private DataAccessComponents dataAccess;
 
     public AppBuilder() {
-        this.viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
+        this.config = new BuilderConfiguration(cardPanel, cardLayout);
     }
 
     /**
-     * Builds and returns the application frame.
-     * @return the configured application frame
+     * Builds the application.
+     * @return the main application frame
      */
     public JFrame build() {
         if (views == null || dataAccess == null) {
             initialize();
         }
-
-        final JFrame application = new JFrame("Pawmodoro");
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        application.add(cardPanel);
-
-        // Set the main frame in the dialog service
-        dialogService.setMainFrame(application);
-
-        // Set initial view to signup
-        viewManagerModel.setState(views.getAuth().getViews().getSignupView().getViewName());
-        viewManagerModel.firePropertyChanged();
-
-        // Pack the frame to calculate preferred size based on components
-        application.pack();
-
-        // Calculate and set to 60% of screen dimensions
-        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        final int width = (int) (screenSize.getWidth() * 0.6);
-        final int height = (int) (screenSize.getHeight() * 0.6);
-        application.setMinimumSize(new Dimension(width, height));
-        application.setPreferredSize(new Dimension(width, height));
-        application.setSize(width, height);
-        application.pack();
-
-        // Center the frame on screen
-        application.setLocationRelativeTo(null);
-
-        return application;
+        return config.createMainFrame(views);
     }
 
     /**
-     * Initializes all components of the application.
-     * @return this builder
+     * Initializes the AppBuilder.
+     * @return this AppBuilder
      */
     public AppBuilder initialize() {
-        // Build data access layer
         this.dataAccess = new DataAccessBuilder().build();
-
-        // Build views
-        this.views = new ViewBuilder(cardPanel, cardLayout, viewManagerModel).build();
-
-        // Build use cases
+        this.views = new ViewBuilder(cardPanel, cardLayout, config.getViewManagerModel(), 
+                                   config.getViewFactory(), config.getDialogService()).build();
         new UseCaseBuilder(views, dataAccess).build();
-
         return this;
     }
 }

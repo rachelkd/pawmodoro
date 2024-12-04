@@ -1,22 +1,12 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.logging.Logger;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -28,32 +18,27 @@ import interface_adapter.break_session.BreakSessionController;
 import interface_adapter.break_session.BreakSessionState;
 import interface_adapter.break_session.BreakSessionViewModel;
 import interface_adapter.logout.LogoutController;
+import view.components.BreakSessionPanelManager;
+import view.components.SessionUiFactory;
 
 /**
- * Views for Break Session.
+ * The BreakSessionView class.
  */
-public class BreakSessionView extends JPanel implements ActionListener, PropertyChangeListener {
-    private static final Logger LOGGER = Logger.getLogger(BreakSessionView.class.getName());
-
+public class BreakSessionView extends JPanel implements PropertyChangeListener {
     private final BreakSessionViewModel breakSessionViewModel;
     private final BreakSessionState breakSessionState;
-
     private LogoutController logoutController;
     private BreakSessionController breakSessionController;
-
-    private JButton logOutSettings;
-    private JButton startTimerButton;
-
-    private JLabel timerLabel;
     private Timer swingTimer;
     private long remainingTime;
-
-    private CatContainerView catContainerView;
+    private JLabel timerLabel;
+    private JButton startTimerButton;
+    private JButton logOutSettings;
+    private final CatContainerView catContainerView;
     private StudySessionView studySessionView;
     private final AdoptionViewModel adoptionViewModel;
     private final DialogService dialogService;
-    private DisplayCatImageView displayCatImageView;
-
+    private final DisplayCatImageView displayCatImageView;
     private JPanel catsPanel;
 
     public BreakSessionView(BreakSessionViewModel breakSessionViewModel,
@@ -61,180 +46,96 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
             DialogService dialogService,
             DisplayCatImageView displayCatImageView,
             CatContainerView catContainerView) {
-
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.breakSessionViewModel = breakSessionViewModel;
         this.breakSessionState = breakSessionViewModel.getState();
         this.catContainerView = catContainerView;
         this.displayCatImageView = displayCatImageView;
         this.adoptionViewModel = adoptionViewModel;
         this.dialogService = dialogService;
-        this.catsPanel = new JPanel(new BorderLayout());
+        
+        breakSessionViewModel.addPropertyChangeListener(this);
+        initializeComponents();
+        this.catsPanel = BreakSessionPanelManager.setupLayout(this, createComponents());
+    }
+
+    private void initializeComponents() {
         initializeTimerComponents();
         initializeButtons();
-        setupLayout();
-        initializeSwingTimer();
-        finalizeSetup();
     }
 
     private void initializeTimerComponents() {
-        breakSessionViewModel.addPropertyChangeListener(this);
         this.remainingTime = breakSessionState.getBreakInterval();
-
-        timerLabel = new JLabel(formatTime(remainingTime), SwingConstants.CENTER);
-        timerLabel.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TIMER_FONT_SIZE));
-        timerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-    }
-
-    private void initializeButtons() {
-        logOutSettings = createButton("Log Out");
-        startTimerButton = createButton("Start Timer");
-
-        final Dimension buttonSize = new Dimension(Constants.DEFAULT_BUTTON_SIZE_W, Constants.DEFAULT_BUTTON_SIZE_H);
-        startTimerButton.setPreferredSize(buttonSize);
-
-        logOutSettings.addActionListener(this);
-        startTimerButton.addActionListener(this);
-    }
-
-    private void setupLayout() {
-        final JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
-
-        add(createTitlePanel());
-        add(createTimerPanel());
-
-        bottomPanel.add(drawCatsPanel());
-        addDisplayCatImageView();
-        bottomPanel.add(createAdoptionAndLogOutPanel(new Dimension(Constants.DEFAULT_BUTTON_SIZE_W,
-                Constants.DEFAULT_BUTTON_SIZE_H)));
-        add(bottomPanel);
-    }
-
-    private void initializeSwingTimer() {
-        swingTimer = new Timer(Constants.SECONDS_TO_MILLIS, new ActionListener() {
+        timerLabel = SessionUiFactory.createTimerLabel(SessionUiFactory.formatTime(remainingTime));
+        
+        swingTimer = SessionUiFactory.createSessionTimer(remainingTime, new SessionUiFactory.TimerCallback() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if (remainingTime > 0) {
-                    remainingTime -= Constants.SECONDS_TO_MILLIS;
-                    updateTimerLabel();
-                }
-                else {
-                    handleTimerCompletion();
-                }
+            public void onTick(String formattedTime) {
+                remainingTime -= Constants.SECONDS_TO_MILLIS;
+                timerLabel.setText(formattedTime);
+            }
+
+            @Override
+            public void onComplete() {
+                handleTimerCompletion();
             }
         });
     }
 
+    private void initializeButtons() {
+        logOutSettings = SessionUiFactory.createStandardButton("Log Out");
+        startTimerButton = SessionUiFactory.createStandardButton("Start Timer");
+
+        logOutSettings.addActionListener(evt -> handleLogout());
+        startTimerButton.addActionListener(evt -> handleStartTimer());
+    }
+
+    private BreakSessionPanelManager.ComponentBundle createComponents() {
+        return new BreakSessionPanelManager.ComponentBundle(
+            timerLabel, startTimerButton, logOutSettings, 
+            catContainerView, displayCatImageView, 
+            () -> handleAdoptionButton()
+        );
+    }
+
+    private void handleStartTimer() {
+        swingTimer.start();
+        startTimerButton.setEnabled(false);
+    }
+
+    private void handleLogout() {
+        if (logoutController != null) {
+            studySessionView.showCatContainerView();
+            logoutController.execute("");
+        }
+    }
+
     private void handleTimerCompletion() {
-        swingTimer.stop();
         breakSessionController.switchToStudySessionView();
         studySessionView.showCatContainerView();
         breakSessionState.resetToDefaultBreakInterval();
         remainingTime = breakSessionState.getBreakInterval();
-        updateTimerLabel();
+        timerLabel.setText(SessionUiFactory.formatTime(remainingTime));
         startTimerButton.setEnabled(true);
     }
 
-    private void finalizeSetup() {
-        setVisible(true);
-        setOpaque(true);
-        revalidate();
-        repaint();
-    }
-
-    private JButton createButton(String text) {
-        return new JButton(text);
-    }
-
-    private JPanel createTitlePanel() {
-        final JLabel title = new JLabel("BREAK SESSION", SwingConstants.CENTER);
-        title.setFont(new Font(Constants.FONT_FAMILY, Font.BOLD, Constants.TITLE));
-
-        final JPanel titlePanel = new JPanel(new BorderLayout());
-        titlePanel.add(title, BorderLayout.CENTER);
-        return titlePanel;
-    }
-
-    private JPanel createTimerPanel() {
-        // Create a panel to hold the timer and start button
-        final JPanel timerPanel = new JPanel();
-        timerPanel.setLayout(new BoxLayout(timerPanel, BoxLayout.Y_AXIS));
-        timerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        // Add the timer label
-        timerPanel.add(timerLabel);
-        timerPanel.add(Box.createVerticalStrut(Constants.TIMER_VERTICAL_SPACING));
-
-        // Add the start button below the timer label
-        startTimerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        timerPanel.add(startTimerButton);
-
-        return timerPanel;
-    }
-
-    private JPanel createAdoptionAndLogOutPanel(Dimension buttonSize) {
-        final JPanel adoptionAndLogOutPanel = new JPanel(new BorderLayout());
-
-        // Create and add the adoption button in the center
-        final JButton adoptionButton = createButton(Constants.ADOPTION_LABEL);
-        adoptionButton.setPreferredSize(buttonSize);
-        adoptionButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        adoptionButton.addActionListener(event -> {
-            dialogService.createAdoptionDialog(adoptionViewModel);
-            dialogService.showAdoptionDialog(adoptionViewModel);
-
-            final AdoptionState adoptionState = adoptionViewModel.getState();
-            adoptionViewModel.setState(adoptionState);
-        });
-        adoptionAndLogOutPanel.add(adoptionButton, BorderLayout.CENTER);
-
-        // Create and add the log out button in the right corner
-        final JPanel logOutPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        logOutPanel.add(logOutSettings);
-        adoptionAndLogOutPanel.add(logOutPanel, BorderLayout.EAST);
-
-        return adoptionAndLogOutPanel;
-    }
-
-    private JPanel drawCatsPanel() {
-        catsPanel.setVisible(true);
-        catsPanel.setOpaque(true);
-
-        catContainerView.setVisible(true);
-        catContainerView.setOpaque(true);
-
-        catsPanel.add(catContainerView, BorderLayout.CENTER);
-
-        SwingUtilities.invokeLater(() -> {
-            catContainerView.setVisible(true);
-            catContainerView.revalidate();
-            catContainerView.repaint();
-        });
-
-        catsPanel.revalidate();
-        catsPanel.repaint();
-
-        return catsPanel;
+    private void handleAdoptionButton() {
+        dialogService.createAdoptionDialog(adoptionViewModel);
+        dialogService.showAdoptionDialog(adoptionViewModel);
+        final AdoptionState adoptionState = adoptionViewModel.getState();
+        adoptionViewModel.setState(adoptionState);
     }
 
     /**
-     * Helper method to add the DisplayCatImageView to the panel.
-     */
-    private void addDisplayCatImageView() {
-        displayCatImageView.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(displayCatImageView);
-        add(Box.createVerticalStrut(Constants.COMPONENT_VERTICAL_SPACING));
-    }
-
-    /**
-     * Switch the cat container view to this view.
+     * Shows catContainerView.
      */
     public void showCatContainerView() {
         catsPanel.removeAll();
         catsPanel.add(catContainerView, BorderLayout.CENTER);
-        catsPanel.revalidate();
-        catsPanel.repaint();
+        SwingUtilities.invokeLater(() -> {
+            catContainerView.setVisible(true);
+            catsPanel.revalidate();
+            catsPanel.repaint();
+        });
     }
 
     public void setBreakSessionController(BreakSessionController breakSessionController) {
@@ -250,43 +151,16 @@ public class BreakSessionView extends JPanel implements ActionListener, Property
     }
 
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource().equals(logOutSettings)) {
-            if (logoutController != null) {
-                studySessionView.showCatContainerView();
-                logoutController.execute("");
-            }
-            else {
-                LOGGER.severe("LogoutController is not initialized.");
-            }
-        }
-        else if (evt.getSource().equals(startTimerButton)) {
-            swingTimer.start();
-            startTimerButton.setEnabled(false);
-        }
-    }
-
-    private void updateTimerLabel() {
-        timerLabel.setText(formatTime(remainingTime));
-    }
-
-    private String formatTime(long timeInMillis) {
-        final long minutes = timeInMillis / (Constants.SECONDS_TO_MILLIS * Constants.MINUTES_TO_SECONDS);
-        final long seconds = (timeInMillis / Constants.SECONDS_TO_MILLIS) % Constants.MINUTES_TO_SECONDS;
-        return String.format("%02d:%02d", minutes, seconds);
-    }
-
-    public String getViewName() {
-        return breakSessionViewModel.getViewName();
-    }
-
-    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
             final BreakSessionState newState = (BreakSessionState) evt.getNewValue();
             remainingTime = newState.getBreakInterval();
-            updateTimerLabel();
+            timerLabel.setText(SessionUiFactory.formatTime(remainingTime));
             startTimerButton.setEnabled(true);
         }
+    }
+
+    public String getViewName() {
+        return breakSessionViewModel.getViewName();
     }
 }
