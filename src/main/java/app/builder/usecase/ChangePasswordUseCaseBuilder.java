@@ -35,4 +35,4 @@ public class ChangePasswordUseCaseBuilder extends AbstractUseCaseBuilder {
         final ChangePasswordController controller = new ChangePasswordController(interactor);
         getViews().getAuth().getViews().getLoggedInView().setChangePasswordController(controller);
     }
-} 
+}

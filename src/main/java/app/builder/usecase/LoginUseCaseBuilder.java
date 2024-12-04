@@ -35,4 +35,4 @@ public class LoginUseCaseBuilder extends AbstractUseCaseBuilder {
         final LoginController controller = new LoginController(interactor);
         getViews().getAuth().getViews().getLoginView().setLoginController(controller);
     }
-} 
+}
