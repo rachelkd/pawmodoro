@@ -33,7 +33,16 @@ public interface LoginUserDataAccessInterface {
     User get(String username) throws DatabaseAccessException;
 
     /**
-     * Returns the username of the curren user of the application.
+     * Authenticates a user with their email and password.
+     * @param email the user's email
+     * @param password the user's password
+     * @return the authenticated User
+     * @throws DatabaseAccessException if authentication fails
+     */
+    User authenticate(String email, String password) throws DatabaseAccessException;
+
+    /**
+     * Returns the username of the current user of the application.
      * @return the username of the current user; null indicates that no one is logged into the application.
      * @throws DatabaseAccessException if there is an error accessing the database
      */

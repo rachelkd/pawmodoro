@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import entity.User;
+import entity.exceptions.DatabaseAccessException;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
@@ -36,6 +37,21 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     @Override
     public User get(String username) {
         return users.get(username);
+    }
+
+    @Override
+    public User authenticate(String email, String password) throws DatabaseAccessException {
+        // For in-memory implementation, we'll authenticate using the stored password
+        for (User user : users.values()) {
+            if (user.getEmail().equals(email)) {
+                final String storedPassword = passwords.get(user.getName());
+                if (password.equals(storedPassword)) {
+                    return user;
+                }
+                throw new DatabaseAccessException("Incorrect password.");
+            }
+        }
+        throw new DatabaseAccessException("User not found with email: " + email);
     }
 
     @Override
