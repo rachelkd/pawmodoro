@@ -1,7 +1,7 @@
 package config;
 
 /**
- * Configuration for Supabase database connection.
+ * Configuration class for Supabase credentials.
  */
 public final class SupabaseConfig {
     private static final String SUPABASE_URL = "https://xuqqtivutcipoavzpfme.supabase.co";

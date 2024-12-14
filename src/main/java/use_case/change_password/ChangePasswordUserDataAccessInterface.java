@@ -11,9 +11,10 @@ public interface ChangePasswordUserDataAccessInterface {
     /**
      * Updates the system to record this user's password.
      * @param user the user whose password is to be updated
+     * @param newPassword the new password for the user
      * @throws DatabaseAccessException if there is an error accessing the database
      */
-    void changePassword(User user) throws DatabaseAccessException;
+    void changePassword(User user, String newPassword) throws DatabaseAccessException;
 
     /**
      * Checks if a user with the given name exists in the system.

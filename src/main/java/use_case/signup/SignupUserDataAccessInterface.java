@@ -19,7 +19,8 @@ public interface SignupUserDataAccessInterface {
     /**
      * Saves the user.
      * @param user the user to save
+     * @param password the user's password (not stored in User entity)
      * @throws DatabaseAccessException if there is an error accessing the database
      */
-    void save(User user) throws DatabaseAccessException;
+    void save(User user, String password) throws DatabaseAccessException;
 }

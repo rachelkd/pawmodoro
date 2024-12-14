@@ -19,9 +19,10 @@ public interface LoginUserDataAccessInterface {
     /**
      * Saves the user.
      * @param user the user to save
+     * @param password the password to save
      * @throws DatabaseAccessException if there is an error accessing the database
      */
-    void save(User user) throws DatabaseAccessException;
+    void save(User user, String password) throws DatabaseAccessException;
 
     /**
      * Returns the user with the given username.

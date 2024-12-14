@@ -11,8 +11,7 @@ import use_case.signup.SignupUserDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing user data. This
- * implementation does
- * NOT persist data between runs of the program.
+ * implementation does NOT persist data between runs of the program.
  */
 public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
@@ -20,7 +19,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         LogoutUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
-
+    private final Map<String, String> passwords = new HashMap<>();
     private String currentUsername;
 
     @Override
@@ -29,8 +28,9 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
-    public void save(User user) {
+    public void save(User user, String password) {
         users.put(user.getName(), user);
+        passwords.put(user.getName(), password);
     }
 
     @Override
@@ -39,9 +39,8 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
-    public void changePassword(User user) {
-        // Replace the old entry with the new password
-        users.put(user.getName(), user);
+    public void changePassword(User user, String newPassword) {
+        passwords.put(user.getName(), newPassword);
     }
 
     @Override
