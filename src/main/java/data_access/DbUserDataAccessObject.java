@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import config.SupabaseConfig;
 import entity.User;
 import entity.UserFactory;
+import entity.exceptions.DatabaseAccessException;
 import entity.exceptions.UserNotFoundException;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -56,7 +57,7 @@ public class DbUserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public void changePassword(User user) {
+    public void changePassword(User user) throws DatabaseAccessException {
         final JSONObject jsonBody = new JSONObject();
         jsonBody.put(USERNAME_COLUMN, user.getName());
         jsonBody.put(PASSWORD_COLUMN, user.getPassword());
@@ -86,7 +87,7 @@ public class DbUserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public User get(String username) {
+    public User get(String username) throws DatabaseAccessException {
         final Request request = new Request.Builder()
                 .url(apiUrl + USERS_ENDPOINT + USERNAME_QUERY + username)
                 .get()
@@ -124,7 +125,7 @@ public class DbUserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public boolean existsByName(String username) {
+    public boolean existsByName(String username) throws DatabaseAccessException {
         final Request request = new Request.Builder()
                 .url(apiUrl + USERS_ENDPOINT + USERNAME_QUERY + username)
                 .addHeader(API_KEY_HEADER, apiKey)
@@ -141,7 +142,7 @@ public class DbUserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public void save(User user) {
+    public void save(User user) throws DatabaseAccessException {
         final JSONObject jsonBody = new JSONObject();
         jsonBody.put(USERNAME_COLUMN, user.getName());
         jsonBody.put(PASSWORD_COLUMN, user.getPassword());
@@ -167,21 +168,7 @@ public class DbUserDataAccessObject implements SignupUserDataAccessInterface,
             }
         }
         catch (IOException exception) {
-            throw new UserNotFoundException("Network error while saving user: " + exception.getMessage());
-        }
-    }
-
-    @Override
-    public String getOwnerName() {
-        return currentUsername;
-    }
-
-    /**
-     * Exception for database/network issues.
-     */
-    public static class DatabaseAccessException extends RuntimeException {
-        public DatabaseAccessException(String message, Throwable cause) {
-            super(message, cause);
+            throw new DatabaseAccessException("Network error while saving user", exception);
         }
     }
 }

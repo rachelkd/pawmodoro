@@ -9,5 +9,5 @@ public interface AdoptionDataAccessInterface {
      * Returns the name of the owner.
      * @return the owner's name
      */
-    String getOwnerName();
+    String getCurrentUsername();
 }

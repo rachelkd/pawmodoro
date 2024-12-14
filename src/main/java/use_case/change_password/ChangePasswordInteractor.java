@@ -2,6 +2,7 @@ package use_case.change_password;
 
 import entity.User;
 import entity.UserFactory;
+import entity.exceptions.DatabaseAccessException;
 
 /**
  * The Change Password Interactor.
@@ -21,22 +22,28 @@ public class ChangePasswordInteractor implements ChangePasswordInputBoundary {
 
     @Override
     public void execute(ChangePasswordInputData changePasswordInputData) {
-        if (!userDataAccessObject.existsByName(changePasswordInputData.getUsername())) {
-            userPresenter.prepareFailView("User does not exist.");
-        }
-        else if (changePasswordInputData.getPassword().isEmpty()) {
-            userPresenter.prepareFailView("Password cannot be empty.");
-        }
-        else {
-            final User user =
-                    userFactory.create(changePasswordInputData.getUsername(), changePasswordInputData.getPassword());
+        try {
+            if (!userDataAccessObject.existsByName(changePasswordInputData.getUsername())) {
+                userPresenter.prepareFailView("User does not exist.");
+            }
+            else if (changePasswordInputData.getPassword().isEmpty()) {
+                userPresenter.prepareFailView("Password cannot be empty.");
+            }
+            else {
+                final User user =
+                        userFactory.create(changePasswordInputData.getUsername(),
+                                changePasswordInputData.getPassword());
 
-            userDataAccessObject.changePassword(user);
+                userDataAccessObject.changePassword(user);
 
-            final ChangePasswordOutputData changePasswordOutputData = new ChangePasswordOutputData(user.getName(),
-                    false);
-            userPresenter.prepareSuccessView(changePasswordOutputData);
+                final ChangePasswordOutputData changePasswordOutputData = new ChangePasswordOutputData(user.getName(),
+                        false);
+                userPresenter.prepareSuccessView(changePasswordOutputData);
+            }
         }
-
+        catch (DatabaseAccessException exception) {
+            userPresenter.prepareFailView(
+                    "Network error: Unable to change password. Please check your internet connection and try again.");
+        }
     }
 }

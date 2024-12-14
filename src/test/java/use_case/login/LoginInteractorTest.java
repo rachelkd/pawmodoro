@@ -12,6 +12,7 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.User;
 import entity.UserFactory;
+import entity.exceptions.DatabaseAccessException;
 
 class LoginInteractorTest {
 
@@ -22,7 +23,12 @@ class LoginInteractorTest {
 
         final UserFactory factory = new CommonUserFactory();
         final User user = factory.create("Paul", "password");
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        }
+        catch (DatabaseAccessException exception) {
+            fail("Database access exception should not be thrown.");
+        }
 
         final LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
             @Override
@@ -58,12 +64,22 @@ class LoginInteractorTest {
 
         final UserFactory factory = new CommonUserFactory();
         final User user = factory.create("Paul", "password");
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        }
+        catch (DatabaseAccessException exception) {
+            fail("Database access exception should not be thrown.");
+        }
 
         final LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
             @Override
             public void prepareSuccessView(LoginOutputData user) {
-                assertEquals("Paul", userRepository.getCurrentUsername());
+                try {
+                    assertEquals("Paul", userRepository.getCurrentUsername());
+                }
+                catch (DatabaseAccessException exception) {
+                    fail("Database access exception should not be thrown.");
+                }
                 assertEquals("Paul", user.getUsername());
                 assertFalse(user.isUseCaseFailed());
             }
@@ -85,7 +101,12 @@ class LoginInteractorTest {
         };
 
         final LoginInputBoundary interactor = new LoginInteractor(userRepository, successPresenter);
-        assertNull(userRepository.getCurrentUsername());
+        try {
+            assertNull(userRepository.getCurrentUsername());
+        }
+        catch (DatabaseAccessException exception) {
+            fail("Database access exception should not be thrown.");
+        }
 
         interactor.execute(inputData);
     }
@@ -97,7 +118,12 @@ class LoginInteractorTest {
 
         final UserFactory factory = new CommonUserFactory();
         final User user = factory.create("Paul", "password");
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        }
+        catch (DatabaseAccessException exception) {
+            fail("Database access exception should not be thrown.");
+        }
 
         final LoginOutputBoundary failurePresenter = new LoginOutputBoundary() {
             @Override

@@ -13,7 +13,7 @@ public class AdoptionController {
     private final AdoptionDataAccessInterface userDataAccessObject;
 
     public AdoptionController(AdoptionInputBoundary adoptionUseCaseInteractor,
-                              AdoptionDataAccessInterface userDataAccessObject) {
+            AdoptionDataAccessInterface userDataAccessObject) {
         this.adoptionUseCaseInteractor = adoptionUseCaseInteractor;
         this.userDataAccessObject = userDataAccessObject;
     }
@@ -23,7 +23,8 @@ public class AdoptionController {
      * @param catName the name of the adopted cat
      */
     public void execute(String catName) {
-        final AdoptionInputData adoptionInputData = new AdoptionInputData(catName, userDataAccessObject.getOwnerName());
+        final AdoptionInputData adoptionInputData =
+                new AdoptionInputData(catName, userDataAccessObject.getCurrentUsername());
 
         adoptionUseCaseInteractor.execute(adoptionInputData);
     }

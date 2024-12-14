@@ -11,6 +11,7 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.User;
 import entity.UserFactory;
+import entity.exceptions.DatabaseAccessException;
 
 class SignupInteractorTest {
 
@@ -24,7 +25,12 @@ class SignupInteractorTest {
             public void prepareSuccessView(SignupOutputData user) {
                 assertEquals("Paul", user.getUsername());
                 assertFalse(user.isUseCaseFailed());
-                assertTrue(userRepository.existsByName("Paul"));
+                try {
+                    assertTrue(userRepository.existsByName("Paul"));
+                }
+                catch (DatabaseAccessException exception) {
+                    fail("Database access exception should not be thrown.");
+                }
             }
 
             @Override
@@ -80,7 +86,12 @@ class SignupInteractorTest {
 
         final UserFactory factory = new CommonUserFactory();
         final User user = factory.create("Paul", "pwd");
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        }
+        catch (DatabaseAccessException exception) {
+            fail("Database access exception should not be thrown.");
+        }
 
         final SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
             @Override
