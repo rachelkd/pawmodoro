@@ -11,6 +11,7 @@ public class SignupState {
     private String usernameError;
     private String emailError;
     private String passwordError;
+    private boolean useCaseFailed = false;
 
     public SignupState(SignupState copy) {
         username = copy.username;
@@ -20,6 +21,7 @@ public class SignupState {
         usernameError = copy.usernameError;
         emailError = copy.emailError;
         passwordError = copy.passwordError;
+        useCaseFailed = copy.useCaseFailed;
     }
 
     public SignupState() {
@@ -54,6 +56,10 @@ public class SignupState {
         return passwordError;
     }
 
+    public boolean isUseCaseFailed() {
+        return useCaseFailed;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -82,6 +88,10 @@ public class SignupState {
         this.passwordError = error;
     }
 
+    public void setUseCaseFailed(boolean failed) {
+        this.useCaseFailed = failed;
+    }
+
     @Override
     public String toString() {
         return "SignupState{"
@@ -89,6 +99,7 @@ public class SignupState {
                 + ", email='" + email + '\''
                 + ", password='" + password + '\''
                 + ", repeatPassword='" + repeatPassword + '\''
+                + ", useCaseFailed=" + useCaseFailed
                 + '}';
     }
 }

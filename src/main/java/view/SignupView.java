@@ -236,8 +236,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 currentState.getEmail(),
                 currentState.getPassword(),
                 currentState.getRepeatPassword());
-        createInventoryController.execute(currentState.getUsername());
-        createCatController.execute(Constants.DEFAULT_CAT_NAME, currentState.getUsername());
     }
 
     /**
@@ -308,6 +306,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         final SignupState state = (SignupState) evt.getNewValue();
         if (state.getUsernameError() != null) {
             JOptionPane.showMessageDialog(this, state.getUsernameError());
+        }
+        else if (!state.isUseCaseFailed()) {
+            createInventoryController.execute(state.getUsername());
+            createCatController.execute(Constants.DEFAULT_CAT_NAME, state.getUsername());
         }
     }
 
