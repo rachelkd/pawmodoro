@@ -11,24 +11,31 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.User;
 import entity.UserFactory;
+import entity.exceptions.DatabaseAccessException;
 
 class ChangePasswordInteractorTest {
     @Test
     void successTest() {
         // Given a user with an old password
         final String username = "Paul";
+        final String email = "paul@example.com";
         final String oldPassword = "oldpassword";
         final String newPassword = "newpassword123";
 
         final UserFactory factory = new CommonUserFactory();
-        final User user = factory.create(username, oldPassword);
+        final User user = factory.create(username, email);
 
         final InMemoryUserDataAccessObject userRepository = new InMemoryUserDataAccessObject();
-        userRepository.save(user);
+        userRepository.save(user, oldPassword);
 
         // Verify user exists before attempting change
         assertTrue(userRepository.existsByName(username));
-        assertEquals(oldPassword, userRepository.get(username).getPassword());
+        try {
+            userRepository.authenticate(email, oldPassword);
+        }
+        catch (DatabaseAccessException exception) {
+            fail("Authentication should succeed with old password");
+        }
 
         // When changing password
         final ChangePasswordOutputBoundary successPresenter = new ChangePasswordOutputBoundary() {
@@ -52,8 +59,12 @@ class ChangePasswordInteractorTest {
         interactor.execute(inputData);
 
         // And verify password was actually changed
-        final User updatedUser = userRepository.get(username);
-        assertEquals(newPassword, updatedUser.getPassword());
+        try {
+            userRepository.authenticate(email, newPassword);
+        }
+        catch (DatabaseAccessException exception) {
+            fail("Authentication should succeed with new password");
+        }
     }
 
     @Test
@@ -93,18 +104,24 @@ class ChangePasswordInteractorTest {
     void failureEmptyPasswordTest() {
         // Given a user with an empty new password
         final String username = "Paul";
+        final String email = "paul@example.com";
         final String oldPassword = "oldpassword";
         final String newPassword = "";
 
         final UserFactory factory = new CommonUserFactory();
-        final User user = factory.create(username, oldPassword);
+        final User user = factory.create(username, email);
 
         final InMemoryUserDataAccessObject userRepository = new InMemoryUserDataAccessObject();
-        userRepository.save(user);
+        userRepository.save(user, oldPassword);
 
-        // Verify user exists with correct password
+        // Verify user exists and can authenticate
         assertTrue(userRepository.existsByName(username));
-        assertEquals(oldPassword, userRepository.get(username).getPassword());
+        try {
+            userRepository.authenticate(email, oldPassword);
+        }
+        catch (DatabaseAccessException exception) {
+            fail("Authentication should succeed with old password");
+        }
 
         // When attempting to change to empty password
         final ChangePasswordOutputBoundary failurePresenter = new ChangePasswordOutputBoundary() {
@@ -127,7 +144,11 @@ class ChangePasswordInteractorTest {
         interactor.execute(inputData);
 
         // And verify password was not changed
-        final User unchangedUser = userRepository.get(username);
-        assertEquals(oldPassword, unchangedUser.getPassword());
+        try {
+            userRepository.authenticate(email, oldPassword);
+        }
+        catch (DatabaseAccessException exception) {
+            fail("Authentication should still succeed with old password");
+        }
     }
 }

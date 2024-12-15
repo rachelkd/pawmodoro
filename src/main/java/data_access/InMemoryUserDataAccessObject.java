@@ -60,6 +60,16 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
+    public boolean logout() {
+        boolean success = false;
+        if (getCurrentUsername() != null) {
+            setCurrentUsername(null);
+            success = true;
+        }
+        return success;
+    }
+
+    @Override
     public void setCurrentUsername(String name) {
         this.currentUsername = name;
     }

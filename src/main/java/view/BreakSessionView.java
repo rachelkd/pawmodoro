@@ -52,7 +52,7 @@ public class BreakSessionView extends JPanel implements PropertyChangeListener {
         this.displayCatImageView = displayCatImageView;
         this.adoptionViewModel = adoptionViewModel;
         this.dialogService = dialogService;
-        
+
         breakSessionViewModel.addPropertyChangeListener(this);
         initializeComponents();
         this.catsPanel = BreakSessionPanelManager.setupLayout(this, createComponents());
@@ -66,7 +66,7 @@ public class BreakSessionView extends JPanel implements PropertyChangeListener {
     private void initializeTimerComponents() {
         this.remainingTime = breakSessionState.getBreakInterval();
         timerLabel = SessionUiFactory.createTimerLabel(SessionUiFactory.formatTime(remainingTime));
-        
+
         swingTimer = SessionUiFactory.createSessionTimer(remainingTime, new SessionUiFactory.TimerCallback() {
             @Override
             public void onTick(String formattedTime) {
@@ -91,10 +91,9 @@ public class BreakSessionView extends JPanel implements PropertyChangeListener {
 
     private BreakSessionPanelManager.ComponentBundle createComponents() {
         return new BreakSessionPanelManager.ComponentBundle(
-            timerLabel, startTimerButton, logOutSettings, 
-            catContainerView, displayCatImageView, 
-            () -> handleAdoptionButton()
-        );
+                timerLabel, startTimerButton, logOutSettings,
+                catContainerView, displayCatImageView,
+                () -> handleAdoptionButton());
     }
 
     private void handleStartTimer() {
@@ -105,7 +104,7 @@ public class BreakSessionView extends JPanel implements PropertyChangeListener {
     private void handleLogout() {
         if (logoutController != null) {
             studySessionView.showCatContainerView();
-            logoutController.execute("");
+            logoutController.execute(breakSessionState.getUsername());
         }
     }
 

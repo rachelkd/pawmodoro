@@ -16,9 +16,8 @@ public class LogoutController {
 
     /**
      * Executes the Logout Use Case.
-     * 
      * @param username
-     *            the username of the user logging in
+     *     the username of the user logging in
      */
     public void execute(String username) {
         final LogoutInputData logoutInputData = new LogoutInputData(username);

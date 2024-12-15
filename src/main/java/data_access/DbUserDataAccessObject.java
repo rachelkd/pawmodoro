@@ -345,4 +345,37 @@ public class DbUserDataAccessObject implements SignupUserDataAccessInterface,
                 .addHeader(CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON)
                 .build();
     }
+
+    @Override
+    public boolean logout() {
+        boolean success = false;
+        if (accessToken != null) {
+            final Request request = buildLogoutRequest();
+            success = executeLogoutRequest(request);
+        }
+        return success;
+    }
+
+    private Request buildLogoutRequest() {
+        return new Request.Builder()
+                .url(apiUrl + AUTH_SIGNOUT_ENDPOINT)
+                .post(RequestBody.create("", MediaType.parse(CONTENT_TYPE_JSON)))
+                .addHeader(AUTH_HEADER, BEARER_PREFIX + accessToken)
+                .addHeader(API_KEY_HEADER, apiKey)
+                .build();
+    }
+
+    private boolean executeLogoutRequest(Request request) {
+        boolean result = false;
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                this.accessToken = null;
+                result = true;
+            }
+        }
+        catch (IOException exception) {
+            // Log error if needed
+        }
+        return result;
+    }
 }

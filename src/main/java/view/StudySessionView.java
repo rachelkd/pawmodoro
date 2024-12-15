@@ -73,11 +73,11 @@ public class StudySessionView extends JPanel implements ActionListener, Property
     private JPopupMenu catsPopupMenu;
 
     public StudySessionView(StudySessionViewModel studySessionViewModel,
-                            BreakSessionViewModel breakSessionViewModel,
-                            InitializeCatsViewModel initializeCatsViewModel,
-                            DialogService dialogService,
-                            CatContainerView catContainerView,
-                            MusicControlViewModel musicControlViewModel) {
+            BreakSessionViewModel breakSessionViewModel,
+            InitializeCatsViewModel initializeCatsViewModel,
+            DialogService dialogService,
+            CatContainerView catContainerView,
+            MusicControlViewModel musicControlViewModel) {
 
         this.dialogService = dialogService;
         studySessionViewModel.addPropertyChangeListener(this);
@@ -251,11 +251,11 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         catsPopupMenu.add(label);
 
         final Collection<String> catNamesList = new ArrayList<>();
-        for (Cat cat: initializeCatsViewModel.getState().getCats()) {
+        for (Cat cat : initializeCatsViewModel.getState().getCats()) {
             catNamesList.add(cat.getName());
         }
 
-        for (String catName: catNamesList) {
+        for (String catName : catNamesList) {
             final JMenuItem option = new JMenuItem(catName);
             catsPopupMenu.add(option);
             option.addActionListener(event -> {
@@ -319,7 +319,7 @@ public class StudySessionView extends JPanel implements ActionListener, Property
         }
         else if (evt.getSource().equals(logOutSettings)) {
             // Execute the logout use case through the Controller
-            this.logoutController.execute("");
+            this.logoutController.execute(studySessionViewModel.getState().getUsername());
         }
         else if (evt.getSource().equals(startTimerButton)) {
             // Start the timer
