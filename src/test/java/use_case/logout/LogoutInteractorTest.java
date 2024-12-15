@@ -1,9 +1,7 @@
 package use_case.logout;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
@@ -14,56 +12,60 @@ import entity.User;
 import entity.UserFactory;
 
 class LogoutInteractorTest {
-
     @Test
     void successTest() {
-        final LogoutInputData inputData = new LogoutInputData("Paul");
-        final InMemoryUserDataAccessObject userRepository = new InMemoryUserDataAccessObject();
+        // Given a logged-in user
+        final String username = "Paul";
+        final String email = "paul@example.com";
+        final String password = "password";
 
         final UserFactory factory = new CommonUserFactory();
-        final User user = factory.create("Paul", "password");
-        userRepository.save(user);
-        userRepository.setCurrentUsername("Paul");
+        final User user = factory.create(username, email);
 
+        final InMemoryUserDataAccessObject userRepository = new InMemoryUserDataAccessObject();
+        userRepository.save(user, password);
+        userRepository.setCurrentUsername(username);
+
+        // When logging out
         final LogoutOutputBoundary successPresenter = new LogoutOutputBoundary() {
             @Override
-            public void prepareSuccessView(LogoutOutputData user) {
-                assertEquals("Paul", user.getUsername());
-                assertFalse(user.isUseCaseFailed());
+            public void prepareSuccessView(LogoutOutputData outputData) {
+                // Then verify the user is logged out
+                assertNull(userRepository.getCurrentUsername());
+                assertEquals(username, outputData.getUsername());
             }
 
             @Override
             public void prepareFailView(String error) {
-                fail("Use case failure is unexpected.");
+                fail("Use case failure is unexpected: " + error);
             }
         };
 
         final LogoutInputBoundary interactor = new LogoutInteractor(userRepository, successPresenter);
+        final LogoutInputData inputData = new LogoutInputData(username);
         interactor.execute(inputData);
-        assertNull(userRepository.getCurrentUsername());
     }
 
     @Test
     void failureUserNotLoggedInTest() {
-        final LogoutInputData inputData = new LogoutInputData("Paul");
+        // Given no user is logged in
         final InMemoryUserDataAccessObject userRepository = new InMemoryUserDataAccessObject();
 
+        // When attempting to logout
         final LogoutOutputBoundary failurePresenter = new LogoutOutputBoundary() {
             @Override
-            public void prepareSuccessView(LogoutOutputData user) {
-                fail("Use case success is unexpected.");
+            public void prepareSuccessView(LogoutOutputData outputData) {
+                fail("Use case success is unexpected");
             }
 
             @Override
             public void prepareFailView(String error) {
                 assertEquals("No user is currently logged in.", error);
-                final LogoutOutputData outputData = new LogoutOutputData("Paul", true);
-                assertTrue(outputData.isUseCaseFailed());
-                assertEquals("Paul", outputData.getUsername());
             }
         };
 
         final LogoutInputBoundary interactor = new LogoutInteractor(userRepository, failurePresenter);
+        final LogoutInputData inputData = new LogoutInputData(null);
         interactor.execute(inputData);
     }
 }

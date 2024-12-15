@@ -35,6 +35,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     private final SignupViewModel signupViewModel;
     private final JTextField usernameInputField = new JTextField(15);
+    private final JTextField emailInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
     private SignupController signupController;
@@ -101,6 +102,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private JPanel createInputPanel() {
         final LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.USERNAME_LABEL), usernameInputField);
+        final LabelTextPanel emailInfo = new LabelTextPanel(
+                new JLabel(SignupViewModel.EMAIL_LABEL), emailInputField);
         final LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.PASSWORD_LABEL), passwordInputField);
         final LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
@@ -109,6 +112,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         final JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(usernameInfo);
+        panel.add(emailInfo);
         panel.add(passwordInfo);
         panel.add(repeatPasswordInfo);
         return panel;
@@ -145,39 +149,50 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     }
 
     /**
-     * Sets up all listeners for buttons and input fields.
+     * Adds document listeners for all input fields.
      */
     private void addListeners() {
         setupSignUpButtonListener();
         setupLoginButtonListener();
         addUsernameListener();
+        addEmailListener();
         addPasswordListener();
         addRepeatPasswordListener();
     }
 
     /**
-     * Sets up the listener for the sign up button.
+     * Adds a document listener for the email input field.
+     * Updates the SignupState whenever the email field changes.
      */
-    private void setupSignUpButtonListener() {
-        signUp.addActionListener(evt -> {
-            if (evt.getSource().equals(signUp)) {
+    private void addEmailListener() {
+        emailInputField.getDocument().addDocumentListener(new DocumentListener() {
+            private void documentListenerHelper() {
                 final SignupState currentState = signupViewModel.getState();
-                signupController.execute(currentState.getUsername(), currentState.getPassword(),
-                        currentState.getRepeatPassword());
-                createInventoryController.execute(currentState.getUsername());
-                // default cat user gets when they sign up
-                createCatController.execute(Constants.DEFAULT_CAT_NAME, currentState.getUsername());
+                currentState.setEmail(emailInputField.getText());
+                signupViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
             }
         });
     }
 
     /**
-     * Sets up the listener for the login button.
+     * Adds a document listener for the username input field.
+     * Updates the SignupState whenever the username field changes.
      */
-    private void setupLoginButtonListener() {
-        toLogin.addActionListener(evt -> signupController.switchToLoginView());
-    }
-
     private void addUsernameListener() {
         usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
             private void documentListenerHelper() {
@@ -201,6 +216,35 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 documentListenerHelper();
             }
         });
+    }
+
+    /**
+     * Sets up the listener for the sign up button.
+     */
+    private void setupSignUpButtonListener() {
+        signUp.addActionListener(evt -> {
+            if (evt.getSource().equals(signUp)) {
+                handleSignUp();
+            }
+        });
+    }
+
+    private void handleSignUp() {
+        final SignupState currentState = signupViewModel.getState();
+        signupController.execute(
+                currentState.getUsername(),
+                currentState.getEmail(),
+                currentState.getPassword(),
+                currentState.getRepeatPassword());
+        createInventoryController.execute(currentState.getUsername());
+        createCatController.execute(Constants.DEFAULT_CAT_NAME, currentState.getUsername());
+    }
+
+    /**
+     * Sets up the listener for the login button.
+     */
+    private void setupLoginButtonListener() {
+        toLogin.addActionListener(evt -> signupController.switchToLoginView());
     }
 
     private void addPasswordListener() {

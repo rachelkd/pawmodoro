@@ -3,11 +3,13 @@ package data_access;
 import java.io.IOException;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import config.SupabaseConfig;
 import entity.User;
 import entity.UserFactory;
+import entity.exceptions.DatabaseAccessException;
 import entity.exceptions.UserNotFoundException;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -21,8 +23,7 @@ import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 /**
- * The DAO for user data using Supabase database.
- * Implements interfaces for signup, login, change password, and logout.
+ * Data access object for user authentication and management using Supabase.
  */
 public class DbUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
@@ -30,86 +31,254 @@ public class DbUserDataAccessObject implements SignupUserDataAccessInterface,
         LogoutUserDataAccessInterface,
         AdoptionDataAccessInterface {
 
+    private static final String CONTENT_TYPE_JSON = "application/json";
+    private static final String CONTENT_TYPE_HEADER = "Content-Type";
     private static final String API_KEY_HEADER = "apikey";
     private static final String AUTH_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
-    private static final String CONTENT_TYPE_JSON = "application/json";
+    private static final String EMPTY_ARRAY = "[]";
+    private static final String ID_FIELD = "id";
+    private static final String EMAIL_FIELD = "email";
+    private static final String PASSWORD_FIELD = "password";
+    private static final String USERNAME_FIELD = "username";
+    private static final String ACCESS_TOKEN_FIELD = "access_token";
+    private static final String USER_FIELD = "user";
     private static final String PREFER_HEADER = "Prefer";
-    private static final String PREFER_RETURN_MINIMAL = "return=minimal";
-    private static final String CONTENT_TYPE_HEADER = "Content-Type";
-    private static final String EMPTY_JSON_ARRAY = "[]";
+    private static final String PREFER_REPRESENTATION = "return=representation";
+    private static final String PREFER_MINIMAL = "return=minimal";
+    private static final String MSG_FIELD = "msg";
+    private static final String QUERY_START = "?";
+    private static final String QUERY_EQUALS = "=eq.";
 
-    private static final String USERS_ENDPOINT = "/rest/v1/users";
-    private static final String USERNAME_QUERY = "?username=eq.";
+    private static final String AUTH_SIGNUP_ENDPOINT = "/auth/v1/signup";
+    private static final String AUTH_SIGNIN_ENDPOINT = "/auth/v1/token?grant_type=password";
+    private static final String AUTH_SIGNOUT_ENDPOINT = "/auth/v1/logout";
+    private static final String AUTH_PASSWORD_RESET = "/auth/v1/user/password";
+    private static final String USER_PROFILES_ENDPOINT = "/rest/v1/user_profiles";
+    private static final String AUTH_USERS_ENDPOINT = "/auth/v1/user";
 
-    private static final String USERNAME_COLUMN = "username";
-    private static final String PASSWORD_COLUMN = "password";
-
-    private final OkHttpClient client = new OkHttpClient().newBuilder().build();
-    private final String apiUrl = SupabaseConfig.getUrl();
-    private final String apiKey = SupabaseConfig.getAnonKey();
+    private final OkHttpClient client;
+    private final String apiUrl;
+    private final String apiKey;
     private final UserFactory userFactory;
     private String currentUsername;
+    private String accessToken;
 
+    /**
+     * Creates a new DbUserDataAccessObject.
+     * @param userFactory factory for creating User objects
+     */
     public DbUserDataAccessObject(UserFactory userFactory) {
         this.userFactory = userFactory;
+        this.client = new OkHttpClient().newBuilder().build();
+        this.apiUrl = SupabaseConfig.getUrl();
+        this.apiKey = SupabaseConfig.getAnonKey();
+    }
+
+    /**
+     * Parses the error message from a JSON response.
+     * @param jsonResponse the JSON response
+     * @return the error message
+     */
+    private String parseErrorMessage(String jsonResponse) {
+        String result = "";
+        try {
+            final JSONObject error = new JSONObject(jsonResponse);
+            result = error.getString(MSG_FIELD);
+        }
+        catch (JSONException exception) {
+            result = jsonResponse;
+        }
+        return result;
     }
 
     @Override
-    public void changePassword(User user) {
-        final JSONObject jsonBody = new JSONObject();
-        jsonBody.put(USERNAME_COLUMN, user.getName());
-        jsonBody.put(PASSWORD_COLUMN, user.getPassword());
+    public void save(User user, String password) throws DatabaseAccessException {
+        try {
+            // First create the auth user
+            final JSONObject authResponse = createAuthUser(user.getEmail(), password);
+            final String userId = authResponse.getJSONObject(USER_FIELD).getString(ID_FIELD);
+            this.accessToken = authResponse.getString(ACCESS_TOKEN_FIELD);
+
+            // Create the profile with both username and email
+            final JSONObject profileBody = new JSONObject()
+                    .put(ID_FIELD, userId)
+                    .put(USERNAME_FIELD, user.getName())
+                    .put(EMAIL_FIELD, user.getEmail());
+
+            final RequestBody body = RequestBody.create(
+                    profileBody.toString(),
+                    MediaType.parse(CONTENT_TYPE_JSON));
+
+            final Request request = new Request.Builder()
+                    .url(apiUrl + USER_PROFILES_ENDPOINT)
+                    .post(body)
+                    .addHeader(API_KEY_HEADER, apiKey)
+                    .addHeader(AUTH_HEADER, BEARER_PREFIX + accessToken)
+                    .addHeader(CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON)
+                    .addHeader(PREFER_HEADER, PREFER_MINIMAL)
+                    .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                final String responseBody = response.body().string();
+                if (!response.isSuccessful()) {
+                    throw new DatabaseAccessException("Failed to create user profile: " + responseBody);
+                }
+            }
+        }
+        catch (DatabaseAccessException | IOException exception) {
+            throw new DatabaseAccessException("Failed to create user: " + exception.getMessage());
+        }
+    }
+
+    /**
+     * Creates a new auth user in Supabase.
+     * @param email the user's email
+     * @param password the user's password
+     * @return JSONObject containing the response from Supabase auth
+     * @throws DatabaseAccessException if the user creation fails
+     */
+    private JSONObject createAuthUser(String email, String password) throws DatabaseAccessException {
+        final JSONObject authBody = new JSONObject()
+                .put(EMAIL_FIELD, email)
+                .put(PASSWORD_FIELD, password);
 
         final RequestBody body = RequestBody.create(
-                jsonBody.toString(),
+                authBody.toString(),
                 MediaType.parse(CONTENT_TYPE_JSON));
 
         final Request request = new Request.Builder()
-                .url(apiUrl + USERS_ENDPOINT + USERNAME_QUERY + user.getName())
-                .patch(body)
+                .url(apiUrl + AUTH_SIGNUP_ENDPOINT)
+                .post(body)
                 .addHeader(API_KEY_HEADER, apiKey)
-                .addHeader(AUTH_HEADER, BEARER_PREFIX + apiKey)
                 .addHeader(CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON)
-                .addHeader(PREFER_HEADER, PREFER_RETURN_MINIMAL)
                 .build();
 
-        try {
-            final Response response = client.newCall(request).execute();
+        try (Response response = client.newCall(request).execute()) {
+            final String responseBody = response.body().string();
             if (!response.isSuccessful()) {
-                throw new UserNotFoundException("Failed to update password");
+                throw new DatabaseAccessException(parseErrorMessage(responseBody));
             }
+            return new JSONObject(responseBody);
         }
         catch (IOException exception) {
-            throw new DatabaseAccessException("Failed to access database", exception);
+            throw new DatabaseAccessException("Failed to create auth user: " + exception.getMessage());
+        }
+    }
+
+    /**
+     * Authenticates a user with Supabase and returns their profile.
+     * @param email the user's email
+     * @param password the user's password
+     * @return JSONObject containing the auth response
+     * @throws DatabaseAccessException if authentication fails
+     */
+    private JSONObject authenticateUser(String email, String password) throws DatabaseAccessException {
+        final JSONObject authBody = new JSONObject()
+                .put(EMAIL_FIELD, email)
+                .put(PASSWORD_FIELD, password);
+
+        final RequestBody body = RequestBody.create(
+                authBody.toString(),
+                MediaType.parse(CONTENT_TYPE_JSON));
+
+        final Request request = new Request.Builder()
+                .url(apiUrl + AUTH_SIGNIN_ENDPOINT)
+                .post(body)
+                .addHeader(API_KEY_HEADER, apiKey)
+                .addHeader(CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            final String responseBody = response.body().string();
+            if (!response.isSuccessful()) {
+                throw new DatabaseAccessException(parseErrorMessage(responseBody));
+            }
+            return new JSONObject(responseBody);
+        }
+        catch (IOException exception) {
+            throw new DatabaseAccessException("Failed to authenticate user: " + exception.getMessage());
         }
     }
 
     @Override
-    public User get(String username) {
+    public User get(String username) throws DatabaseAccessException {
         final Request request = new Request.Builder()
-                .url(apiUrl + USERS_ENDPOINT + USERNAME_QUERY + username)
+                .url(apiUrl + USER_PROFILES_ENDPOINT + QUERY_START + USERNAME_FIELD + QUERY_EQUALS + username)
                 .get()
                 .addHeader(API_KEY_HEADER, apiKey)
-                .addHeader(AUTH_HEADER, BEARER_PREFIX + apiKey)
+                .addHeader(CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON)
+                .addHeader(PREFER_HEADER, PREFER_REPRESENTATION)
                 .build();
 
         try {
             final Response response = client.newCall(request).execute();
             final String responseBody = response.body().string();
 
-            if (!response.isSuccessful() || responseBody.equals(EMPTY_JSON_ARRAY)) {
+            if (!response.isSuccessful() || responseBody.equals(EMPTY_ARRAY)) {
                 throw new UserNotFoundException("User not found: " + username);
             }
 
-            final JSONArray jsonArray = new JSONArray(responseBody);
-            final JSONObject userJson = jsonArray.getJSONObject(0);
-            return userFactory.create(
-                    userJson.getString(USERNAME_COLUMN),
-                    userJson.getString(PASSWORD_COLUMN));
+            // Parse the array response from Supabase
+            final JSONArray profiles = new JSONArray(responseBody);
+            if (profiles.length() == 0) {
+                throw new UserNotFoundException("User not found: " + username);
+            }
+
+            final JSONObject userProfile = profiles.getJSONObject(0);
+            final String email = userProfile.getString(EMAIL_FIELD);
+
+            return userFactory.create(username, email);
         }
         catch (IOException exception) {
             throw new DatabaseAccessException("Failed to access database", exception);
+        }
+    }
+
+    /**
+     * Authenticates and retrieves a user by their email and password.
+     * @param email the user's email
+     * @param password the user's password
+     * @return the authenticated User
+     * @throws DatabaseAccessException if authentication fails
+     */
+    public User authenticate(String email, String password) throws DatabaseAccessException {
+        final JSONObject authResponse = authenticateUser(email, password);
+        this.accessToken = authResponse.getString(ACCESS_TOKEN_FIELD);
+
+        // The auth response already contains the user's email
+        final JSONObject userInfo = authResponse.getJSONObject(USER_FIELD);
+        final String userId = userInfo.getString(ID_FIELD);
+        final String userEmail = userInfo.getString(EMAIL_FIELD);
+
+        final Request request = new Request.Builder()
+                .url(apiUrl + USER_PROFILES_ENDPOINT + QUERY_START + ID_FIELD + QUERY_EQUALS + userId)
+                .get()
+                .addHeader(API_KEY_HEADER, apiKey)
+                .addHeader(CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON)
+                .addHeader(PREFER_HEADER, PREFER_REPRESENTATION)
+                .build();
+
+        try {
+            final Response response = client.newCall(request).execute();
+            final String responseBody = response.body().string();
+
+            if (!response.isSuccessful() || responseBody.equals(EMPTY_ARRAY)) {
+                throw new UserNotFoundException("User profile not found");
+            }
+
+            // Parse the array response from Supabase
+            final JSONArray profiles = new JSONArray(responseBody);
+            if (profiles.length() == 0) {
+                throw new UserNotFoundException("User profile not found");
+            }
+
+            final JSONObject userProfile = profiles.getJSONObject(0);
+            final String username = userProfile.getString(USERNAME_FIELD);
+            return userFactory.create(username, userEmail);
+        }
+        catch (IOException exception) {
+            throw new DatabaseAccessException("Failed to get user profile", exception);
         }
     }
 
@@ -124,64 +293,89 @@ public class DbUserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public boolean existsByName(String username) {
+    public boolean existsByName(String username) throws DatabaseAccessException {
         final Request request = new Request.Builder()
-                .url(apiUrl + USERS_ENDPOINT + USERNAME_QUERY + username)
+                .url(apiUrl + USER_PROFILES_ENDPOINT + QUERY_START + USERNAME_FIELD + QUERY_EQUALS + username)
+                .get()
                 .addHeader(API_KEY_HEADER, apiKey)
-                .addHeader(AUTH_HEADER, BEARER_PREFIX + apiKey)
+                .addHeader(CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON)
+                .addHeader(PREFER_HEADER, PREFER_REPRESENTATION)
                 .build();
+
         try {
             final Response response = client.newCall(request).execute();
             final String responseBody = response.body().string();
-            return response.isSuccessful() && !responseBody.equals(EMPTY_JSON_ARRAY);
+            return response.isSuccessful() && !responseBody.equals(EMPTY_ARRAY);
         }
         catch (IOException exception) {
-            throw new UserNotFoundException("Network error while checking user existence: " + exception.getMessage());
+            throw new DatabaseAccessException("Failed to check user existence", exception);
         }
     }
 
     @Override
-    public void save(User user) {
-        final JSONObject jsonBody = new JSONObject();
-        jsonBody.put(USERNAME_COLUMN, user.getName());
-        jsonBody.put(PASSWORD_COLUMN, user.getPassword());
+    public void changePassword(User user, String newPassword) throws DatabaseAccessException {
+        if (accessToken == null) {
+            throw new DatabaseAccessException("User not authenticated");
+        }
 
-        // POST METHOD
-        final RequestBody body = RequestBody.create(
-                jsonBody.toString(),
-                MediaType.parse(CONTENT_TYPE_JSON));
-
-        final Request request = new Request.Builder()
-                .url(apiUrl + USERS_ENDPOINT)
-                .post(body)
-                .addHeader(API_KEY_HEADER, apiKey)
-                .addHeader(AUTH_HEADER, BEARER_PREFIX + apiKey)
-                .addHeader(CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON)
-                .addHeader(PREFER_HEADER, PREFER_RETURN_MINIMAL)
-                .build();
+        final JSONObject jsonBody = new JSONObject().put(PASSWORD_FIELD, newPassword);
+        final Request request = buildPasswordResetRequest(jsonBody);
 
         try {
             final Response response = client.newCall(request).execute();
             if (!response.isSuccessful()) {
-                throw new UserNotFoundException("Failed to save user");
+                throw new DatabaseAccessException("Failed to update password");
             }
         }
         catch (IOException exception) {
-            throw new UserNotFoundException("Network error while saving user: " + exception.getMessage());
+            throw new DatabaseAccessException("Failed to access database", exception);
         }
+    }
+
+    private Request buildPasswordResetRequest(JSONObject jsonBody) {
+        final RequestBody body = RequestBody.create(
+                jsonBody.toString(),
+                MediaType.parse(CONTENT_TYPE_JSON));
+
+        return new Request.Builder()
+                .url(apiUrl + AUTH_PASSWORD_RESET)
+                .put(body)
+                .addHeader(AUTH_HEADER, BEARER_PREFIX + accessToken)
+                .addHeader(API_KEY_HEADER, apiKey)
+                .addHeader(CONTENT_TYPE_HEADER, CONTENT_TYPE_JSON)
+                .build();
     }
 
     @Override
-    public String getOwnerName() {
-        return currentUsername;
+    public boolean logout() {
+        boolean success = false;
+        if (accessToken != null) {
+            final Request request = buildLogoutRequest();
+            success = executeLogoutRequest(request);
+        }
+        return success;
     }
 
-    /**
-     * Exception for database/network issues.
-     */
-    public static class DatabaseAccessException extends RuntimeException {
-        public DatabaseAccessException(String message, Throwable cause) {
-            super(message, cause);
+    private Request buildLogoutRequest() {
+        return new Request.Builder()
+                .url(apiUrl + AUTH_SIGNOUT_ENDPOINT)
+                .post(RequestBody.create("", MediaType.parse(CONTENT_TYPE_JSON)))
+                .addHeader(AUTH_HEADER, BEARER_PREFIX + accessToken)
+                .addHeader(API_KEY_HEADER, apiKey)
+                .build();
+    }
+
+    private boolean executeLogoutRequest(Request request) {
+        boolean result = false;
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                this.accessToken = null;
+                result = true;
+            }
         }
+        catch (IOException exception) {
+            // Log error if needed
+        }
+        return result;
     }
 }
